@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 
@@ -12,6 +11,8 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	_ "github.com/mattn/go-sqlite3"
+	"github.com/rs/zerolog"
+	"github.com/rs/zerolog/log"
 	"github.com/urfave/cli/v2"
 )
 
@@ -55,15 +56,24 @@ func main() {
 				Name:  "server",
 				Usage: "launches the application web server",
 				Action: func(c *cli.Context) error {
+					zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
+					// log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
+					zerolog.SetGlobalLevel(zerolog.InfoLevel)
+					if debug {
+						zerolog.SetGlobalLevel(zerolog.DebugLevel)
+					}
+
 					sql.Open("sqlite3", dbPath)
 					r := chi.NewRouter()
+
+					// A good base middleware stack
+					r.Use(middleware.RequestID)
+					r.Use(middleware.RealIP)
 					r.Use(middleware.Logger)
+					r.Use(middleware.Recoverer)
 
 					r.Route("/", func(r chi.Router) {
-						r.Get("/healthcheck", func(w http.ResponseWriter, r *http.Request) {
-							w.WriteHeader(http.StatusOK)
-						})
-
+						r.Mount("/healthcheck", controller.HealthcheckResources{}.Routes())
 						r.Mount("/api", controller.APIsResource{}.Routes())
 
 						r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
@@ -71,7 +81,7 @@ func main() {
 						})
 					})
 
-					// log.Debugf("Launching server listening on: %s\n", port)
+					log.Debug().Msgf("Launching server listening on: %s", port)
 					http.ListenAndServe(fmt.Sprintf(":%s", port), r)
 
 					return nil
@@ -82,6 +92,6 @@ func main() {
 
 	err := app.Run(os.Args)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal().Err(err).Send()
 	}
 }

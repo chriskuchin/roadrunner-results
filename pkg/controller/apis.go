@@ -1,25 +1,22 @@
 package controller
 
-import "github.com/go-chi/chi"
+import (
+	v1 "github.com/chriskuchin/roadrunner-results/pkg/controller/v1"
+	"github.com/go-chi/chi"
+)
 
 type APIsResource struct{}
 
 func (rs APIsResource) Routes() chi.Router {
 	r := chi.NewRouter()
 
-	r.Mount("/races", RacesResources{}.Routes())
+	r.Mount("/v1", v1.Resources{}.Routes())
 
 	return r
 }
 
 // /races
 // POST /races
-// GET /races/{id}
-
-// /races/{id}/participants
-// POST /races/{id}/participants/csv
-// GET /races/{id}/participants
-// GET /races/{id}/participants/{id}/results
 
 // /races/{id}/events
 // POST /races/{id}/events
