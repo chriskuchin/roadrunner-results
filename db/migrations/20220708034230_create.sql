@@ -1,30 +1,25 @@
 -- migrate:up
-CREATE TABLE participants {
-    id integer,
-    raceID integer,
-    firstName varchar(255),
-    lastName varchar(255),
+CREATE TABLE participants (
+    first_name varchar(255),
+    last_name varchar(255),
     team varchar(255),
-    birthYear integer,
-}
+    birth_year integer
+);
 
-CREATE TABLE races {
-    id integer,
-    race varchar(255),
-}
+CREATE TABLE races (
+    race varchar(255)
+);
 
-CREATE TABLE events {
-    id integer,
-    event varchar(255),
-    measurement varchar(255),
-}
+CREATE TABLE events (
+    event_description varchar(255),
+    measurement varchar(255)
+);
 
-CREATE TABLE results {
-    id integer,
-    raceID integer,
-    participantID integer,
-    eventID integer,
-}
+CREATE TABLE results (
+    race_id integer,
+    participant_id integer,
+    event_id integer
+);
 
 -- migrate:down
 DROP TABLE participants;

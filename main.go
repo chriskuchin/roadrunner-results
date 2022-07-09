@@ -5,11 +5,11 @@ import (
 	"net/http"
 	"os"
 
-	"database/sql"
-
 	"github.com/chriskuchin/roadrunner-results/pkg/controller"
+	dao "github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -63,7 +63,12 @@ func main() {
 						zerolog.SetGlobalLevel(zerolog.DebugLevel)
 					}
 
-					sql.Open("sqlite3", dbPath)
+					db, err := sqlx.Open("sqlite3", dbPath)
+					if err != nil {
+						log.Fatal().Err(err).Send()
+					}
+
+					dao.NewRaceDAO(db)
 					r := chi.NewRouter()
 
 					// A good base middleware stack
