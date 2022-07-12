@@ -7,6 +7,15 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+func setup() {
+	// run migration
+}
+
+func teardown() {
+	// delete database
+
+}
+
 func TestRaceDAO_CreateRace(t *testing.T) {
 	type fields struct {
 		db *sqlx.DB
@@ -34,7 +43,9 @@ func TestRaceDAO_CreateRace(t *testing.T) {
 			r := &RaceDAO{
 				db: tt.fields.db,
 			}
+			setup()
 			r.CreateRace(tt.args.name)
+			teardown()
 		})
 	}
 }

@@ -1,6 +1,7 @@
 package db
 
 import (
+	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 )
@@ -10,8 +11,9 @@ type RaceDAO struct {
 }
 
 type RaceDTO struct {
-	ID   int    `db:"rowid"`
-	Race string `db:"race"`
+	RaceID  string `db:"race_id"`
+	OwnerID string `db:"owner_id"`
+	Race    string `db:"race"`
 }
 
 func NewRaceDAO(db *sqlx.DB) *RaceDAO {
@@ -21,16 +23,18 @@ func NewRaceDAO(db *sqlx.DB) *RaceDAO {
 	}
 }
 
-func (r *RaceDAO) CreateRace(name string) {
-	_, err := r.db.Exec("insert into races (race) VALUES(:race)", name)
+func (r *RaceDAO) CreateRace(name string) (string, error) {
+	id := uuid.New()
+	_, err := r.db.Exec("insert into races (race_id, race, owner_id) VALUES(?, ?, ?)", id, name, "123")
+	if err != nil {
+		return "", err
+	}
 
-	log.Error().Err(err).Send()
-
-	dto := []RaceDTO{}
-	r.db.Select(&dto, "select * from races")
-	log.Info().Msgf("%+v", dto)
+	return id.String(), nil
 }
 
-func (r *RaceDAO) GetRaceByID(id int) {
-
+func (r *RaceDAO) GetRaceByID(id string) {
+	dto := []RaceDTO{}
+	r.db.Select(&dto, "select * from races where race_id = ?", id)
+	log.Debug().Msgf("%+v", dto)
 }
