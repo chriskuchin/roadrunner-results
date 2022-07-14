@@ -1,14 +1,32 @@
 package db
 
 import (
+	"context"
 	"testing"
 
 	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
 )
 
+var (
+	testDBUrl = "../../results.db"
+)
+
 func setup() {
 	// run migration
+
+	// u, err := getDatabaseURL(c)
+	// if err != nil {
+	// 	return err
+	// }
+	// dbUrl, _ := url.Parse(fmt.Sprintf("sqlite:%s", testDBUrl))
+	// db := dbmate.New(dbUrl)
+	// db.MigrationsDir = "../../db/migrations"
+
+	// err := db.CreateAndMigrate()
+	// if err != nil {
+	// 	log.Error().Err(err).Send()
+	// }
 }
 
 func teardown() {
@@ -31,7 +49,7 @@ func TestRaceDAO_CreateRace(t *testing.T) {
 		{
 			name: "test",
 			fields: fields{
-				db: sqlx.MustOpen("sqlite3", "../../results.db"),
+				db: sqlx.MustOpen("sqlite3", testDBUrl),
 			},
 			args: args{
 				name: "2022 Spring Invitational",
@@ -41,10 +59,14 @@ func TestRaceDAO_CreateRace(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			r := &RaceDAO{
-				db: tt.fields.db,
+				db:    tt.fields.db,
+				limit: 10,
 			}
 			setup()
-			r.CreateRace(tt.args.name)
+			id, _ := r.CreateRace(context.TODO(), tt.args.name)
+			r.GetRaceByID(context.TODO(), id)
+			r.ListRaces(context.TODO())
+			r.DeleteRace(context.TODO(), id)
 			teardown()
 		})
 	}

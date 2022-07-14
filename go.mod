@@ -4,6 +4,7 @@ go 1.17
 
 require (
 	github.com/go-chi/chi v1.5.4
+	github.com/google/uuid v1.3.0
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/mattn/go-sqlite3 v1.14.14
 	github.com/rs/zerolog v1.27.0
@@ -12,7 +13,7 @@ require (
 
 require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.2 // indirect
-	github.com/google/uuid v1.3.0 // indirect
+	github.com/lib/pq v1.10.4 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
