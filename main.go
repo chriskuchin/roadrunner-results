@@ -30,7 +30,7 @@ func main() {
 				Name:        "port",
 				Usage:       "Port for the server to listen on",
 				Aliases:     []string{"p"},
-				EnvVars:     []string{"PORT"},
+				EnvVars:     []string{"PORT", "NOMAD_HOST_PORT_run"},
 				Destination: &port,
 				Value:       "3030",
 			},
@@ -82,7 +82,7 @@ func main() {
 						r.Mount("/api", controller.APIsResource{}.Routes())
 
 						r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
-							http.FileServer(http.Dir("./public/dist")).ServeHTTP(w, r)
+							http.FileServer(http.Dir("./dist")).ServeHTTP(w, r)
 						})
 					})
 

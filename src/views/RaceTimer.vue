@@ -1,10 +1,15 @@
 <template>
-  <div></div>
+  <div>
+    <stopwatch></stopwatch>
+  </div>
 </template>
 
 <script>
+import StopWatch from '../components/StopWatch.vue'
 export default {
-  components: {},
+  components: {
+    'stopwatch': StopWatch,
+  },
   data: function () {
     return {};
   },
