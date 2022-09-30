@@ -7,7 +7,7 @@
     <button class="button is-danger" v-on:click="reset">Reset</button>
     <button class="button" v-on:click="record">Record</button>
     {{ results }}
-    <button class="button is-warn" v-on:click="clear">Clear</button>
+    <button class="button is-warning" v-on:click="clear">Clear</button>
   </div>
 </template>
 
