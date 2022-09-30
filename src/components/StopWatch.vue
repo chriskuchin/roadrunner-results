@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { formatStopwatch } from "../utilities";
 export default {
   components: {},
   props: [],
@@ -66,22 +67,7 @@ export default {
   },
   computed: {
     stopwatch: function () {
-      var minString = this.minutes;
-      if (this.minutes < 10) {
-        minString = "0" + this.minutes;
-      }
-
-      var secString = this.seconds;
-      if (this.seconds < 10) {
-        secString = "0" + this.seconds;
-      }
-
-      var millisString = this.milliseconds;
-      if (this.milliseconds < 10) {
-        millisString = "0" + this.milliseconds;
-      }
-
-      return minString + ":" + secString + ":" + millisString;
+      return formatStopwatch(this.minutes, this.seconds, this.milliseconds);
     },
   },
 };
