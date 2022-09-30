@@ -53,7 +53,7 @@ module.exports = (env, argv) => {
         plugins: [
             new VueLoaderPlugin(),
             new HtmlWebpackPlugin({
-                title: "BarcodeLayout.com | Barcode layout engine",
+                title: "results.roadrunners.club | Roadrunners Timing System",
                 filename: "index.html",
                 template: 'src/index.ejs',
                 favicon: 'src/assets/images/favicon.ico',
