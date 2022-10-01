@@ -1,23 +1,39 @@
 <template>
-  <div v-on:keydown="record">
-    <h1>TEST</h1>
+  <div v-on:keypress="record">
     {{ stopwatch }}
-    <button class="button is-primary" v-on:click="start">Start</button>
-    <button class="button" v-on:click="stop">Stop</button>
-    <button class="button is-danger" v-on:click="reset">Reset</button>
-    <button class="button" v-on:click="record">Record</button>
+    <div class="field has-addons">
+      <p class="control">
+        <button class="button is-dark" v-on:click="start">
+          <span v-if="running">Pause</span>
+          <span v-else>Play</span>
+        </button>
+      </p>
+      <p class="control">
+        <button class="button is-dark" v-on:click="reset">Reset</button>
+      </p>
+      <p class="control">
+        <button class="button is-dark" v-on:click="record">Record</button>
+      </p>
+    </div>
     {{ results }}
+    {{ running }}
     <button class="button is-warning" v-on:click="clear">Clear</button>
   </div>
 </template>
 
 <script>
 import { formatStopwatch } from "../utilities";
+
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faPlay } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faPlay);
 export default {
   components: {},
   props: [],
   data: function () {
     return {
+      running: false,
       timeoutID: null,
       minutes: 0,
       seconds: 0,
@@ -27,9 +43,15 @@ export default {
   },
   methods: {
     start: function () {
-      this.timeoutID = setTimeout(this.increment, 10);
+      if (!this.running) {
+        this.running = true;
+        this.timeoutID = setTimeout(this.increment, 10);
+      } else {
+        this.stop();
+      }
     },
     stop: function () {
+      this.running = false;
       clearTimeout(this.timeoutID);
     },
     reset: function () {
@@ -68,6 +90,9 @@ export default {
   computed: {
     stopwatch: function () {
       return formatStopwatch(this.minutes, this.seconds, this.milliseconds);
+    },
+    playIcon: function () {
+      return faPlay;
     },
   },
 };
