@@ -25,6 +25,11 @@
         "webpack-cli": "^4.9.2"
     },
     "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^6.2.0",
+        "@fortawesome/free-brands-svg-icons": "^6.2.0",
+        "@fortawesome/free-regular-svg-icons": "^6.2.0",
+        "@fortawesome/free-solid-svg-icons": "^6.2.0",
+        "@fortawesome/vue-fontawesome": "^2.0.8",
         "bootstrap": "^4.6.1",
         "bootstrap-vue": "^2.21.2",
         "vue": "^2.6.14",

@@ -11,7 +11,7 @@ module.exports = (env, argv) => {
 
     var config = {
         entry: {
-            barcode: {
+            results: {
                 import: './src/results.js',
             },
         },

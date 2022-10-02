@@ -1,35 +1,58 @@
 <template>
-  <div v-on:keypress="record">
+  <div>
     {{ stopwatch }}
     <div class="field has-addons">
       <p class="control">
         <button class="button is-dark" v-on:click="start">
-          <span v-if="running">Pause</span>
-          <span v-else>Play</span>
+          <span v-if="running"
+            ><font-awesome-icon icon="fa-solid fa-pause" />
+          </span>
+          <span v-else>
+            <font-awesome-icon icon="fa-solid fa-play" />
+          </span>
         </button>
       </p>
       <p class="control">
-        <button class="button is-dark" v-on:click="reset">Reset</button>
+        <button class="button is-dark" v-on:click="reset">
+          <font-awesome-icon icon="fa-solid fa-stop" />
+        </button>
       </p>
       <p class="control">
-        <button class="button is-dark" v-on:click="record">Record</button>
+        <button class="button is-dark" v-on:click="record" :disabled="!running">
+          <font-awesome-icon icon="fa-solid fa-circle" />
+        </button>
       </p>
     </div>
     {{ results }}
     {{ running }}
+    {{ $route.name }}
     <button class="button is-warning" v-on:click="clear">Clear</button>
   </div>
 </template>
 
 <script>
-import { formatStopwatch } from "../utilities";
+import { formatStopwatch, keyHandler } from "../utilities";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlay,
+  faPause,
+  faStop,
+  faCircle,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faPlay);
+library.add(faPlay, faPause, faStop, faCircle);
 export default {
-  components: {},
+  mounted: function () {
+    window.addEventListener("keydown", keyHandler(32, this.record));
+  },
+  destroyed: function () {
+    window.removeEventListener("keydown", keyHandler(32, this.record));
+  },
+  components: {
+    "font-awesome-icon": FontAwesomeIcon,
+  },
   props: [],
   data: function () {
     return {
@@ -61,13 +84,16 @@ export default {
       this.seconds = 0;
       this.minutes = 0;
     },
-    record: function () {
-      this.results.push({
-        timestamp: Date.now(),
-        minutes: this.minutes,
-        seconds: this.seconds,
-        milliseconds: this.milliseconds,
-      });
+    record: function (e) {
+      console.log(e, "record");
+      if (this.running) {
+        this.results.push({
+          timestamp: Date.now(),
+          minutes: this.minutes,
+          seconds: this.seconds,
+          milliseconds: this.milliseconds,
+        });
+      }
     },
     clear: function () {
       this.results = [];
@@ -90,9 +116,6 @@ export default {
   computed: {
     stopwatch: function () {
       return formatStopwatch(this.minutes, this.seconds, this.milliseconds);
-    },
-    playIcon: function () {
-      return faPlay;
     },
   },
 };

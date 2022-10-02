@@ -17,6 +17,16 @@ function formatStopwatch(min, sec, ms) {
     return minString + ":" + secString + ":" + millisString;
 }
 
+function keyHandler(charCode, handler) {
+    return function (e) {
+        if (e.keyCode == charCode) {
+            e.preventDefault();
+            handler(e);
+        }
+    }
+}
+
 export {
-    formatStopwatch
+    formatStopwatch,
+    keyHandler,
 }
