@@ -6,13 +6,12 @@
   <title>
     <%= htmlWebpackPlugin.options.title %>
   </title>
-  <script src="//cdn.jsdelivr.net/npm/eruda"></script>
-  <script>eruda.init();</script>
+  <% if (mode=='development' ){ print('<script src="//cdn.jsdelivr.net/npm/eruda"></script>')} %>
+  <% if (mode=='development' ){ print('<script>eruda.init();</script>')} %>
 </head>
 
 <body>
-  <%= mode %>
-    <div id="app"></div>
+  <div id="app"></div>
 </body>
 
 </html>
