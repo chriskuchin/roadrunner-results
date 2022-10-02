@@ -15,16 +15,22 @@
         aria-label="menu"
         aria-expanded="false"
         data-target="navbarBasicExample"
+        @click="toggleBurger"
+        :class="{ 'is-active': activeBurger }"
       >
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </a>
     </div>
-    <div id="navbarBasicExample" class="navbar-menu">
+    <div
+      id="navbarBasicExample"
+      class="navbar-menu"
+      :class="{ 'is-active': activeBurger }"
+    >
       <div class="navbar-start">
-        <router-link to="/record" class="navbar-item"> Record </router-link>
-        <router-link to="/timer" class="navbar-item"> Timer </router-link>
+        <router-link to="/record" class="navbar-item">Record</router-link>
+        <router-link to="/timer" class="navbar-item">Timer</router-link>
       </div>
       <div class="navbar-end">
         <div class="navbar-item">
@@ -46,8 +52,17 @@
 import logo from "../assets/images/logo.png";
 
 export default {
+  data: function () {
+    return {
+      activeBurger: false,
+    };
+  },
   components: {},
-  methods: {},
+  methods: {
+    toggleBurger: function () {
+      this.activeBurger = !this.activeBurger;
+    },
+  },
   computed: {
     logo_url: function () {
       return logo;

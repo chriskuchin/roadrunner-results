@@ -6,7 +6,8 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "webpack",
-        "debug": "webpack --mode=development"
+        "debug": "webpack --mode=development",
+        "serve": "go run main.go -debug server"
     },
     "keywords": [],
     "author": "",
