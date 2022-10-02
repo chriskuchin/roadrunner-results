@@ -59,6 +59,9 @@ module.exports = (env, argv) => {
                 favicon: 'src/assets/images/favicon.ico',
                 meta: {
                     viewport: "initial-scale=1, maximum-scale=1",
+                },
+                templateParameters: {
+                    mode: mode,
                 }
             }),
             new MiniCssExtractPlugin({

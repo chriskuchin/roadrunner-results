@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     {{ stopwatch }}
     <div class="field has-addons">
       <p class="control">
@@ -85,13 +85,13 @@ export default {
       this.minutes = 0;
     },
     record: function (e) {
-      console.log(e, "record");
       if (this.running) {
         this.results.push({
           timestamp: Date.now(),
           minutes: this.minutes,
           seconds: this.seconds,
           milliseconds: this.milliseconds,
+          place: this.results.length + 1,
         });
       }
     },
