@@ -47,7 +47,7 @@ export default {
   mounted: function () {
     window.addEventListener("keydown", keyHandler(32, this.record));
   },
-  destroyed: function () {
+  unmounted: function () {
     window.removeEventListener("keydown", keyHandler(32, this.record));
   },
   components: {
