@@ -1,10 +1,15 @@
 <template>
-  <div></div>
+  <div>
+    <result-scanner />
+  </div>
 </template>
 
   <script>
+import Scanner from "../components/Scanner.vue";
 export default {
-  components: {},
+  components: {
+    "result-scanner": Scanner,
+  },
   data: function () {
     return {};
   },
