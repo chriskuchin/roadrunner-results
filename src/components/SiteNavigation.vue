@@ -29,8 +29,15 @@
       :class="{ 'is-active': activeBurger }"
     >
       <div class="navbar-start">
-        <router-link to="/record" class="navbar-item">Record</router-link>
-        <router-link to="/timer" class="navbar-item">Timer</router-link>
+        <router-link to="/record" class="navbar-item">Races</router-link>
+        <router-link to="/timer" class="navbar-item">Results</router-link>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link"> Manage </a>
+          <div class="navbar-dropdown">
+            <router-link to="/record" class="navbar-item">Record</router-link>
+            <router-link to="/timer" class="navbar-item">Timer</router-link>
+          </div>
+        </div>
       </div>
       <div class="navbar-end">
         <div class="navbar-item">

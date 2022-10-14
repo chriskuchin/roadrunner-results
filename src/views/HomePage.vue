@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="section">
   </div>
 </template>
 

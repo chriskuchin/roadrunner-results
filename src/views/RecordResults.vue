@@ -1,5 +1,11 @@
 <template>
-  <div>
+  <div class="section">
+    <div class="tabs">
+      <ul>
+        <li class="is-active"><a>Scanner</a></li>
+        <li><a>Manual</a></li>
+      </ul>
+    </div>
     <result-scanner />
     <result-input />
   </div>
