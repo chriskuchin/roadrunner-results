@@ -2,6 +2,7 @@ const { VueLoaderPlugin } = require('vue-loader');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const { DefinePlugin } = require('webpack');
 
 module.exports = (env, argv) => {
     var mode = "production"
@@ -51,6 +52,10 @@ module.exports = (env, argv) => {
             ]
         },
         plugins: [
+            new DefinePlugin({
+                __VUE_OPTIONS_API__: true,
+                __VUE_PROD_DEVTOOLS__: false,
+            }),
             new VueLoaderPlugin(),
             new HtmlWebpackPlugin({
                 title: "results.roadrunners.club | Roadrunners Timing System",
