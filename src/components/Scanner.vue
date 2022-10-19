@@ -1,9 +1,10 @@
 <template>
-  <div id="qr-code-full-region" style="height: 300px; width: 300px"></div>
+  <div id="scanner"></div>
+  <button @click="toggleScanner" class="button">Start Scanning</button>
 </template>
 
 <script>
-import { Html5QrcodeScanner } from "html5-qrcode";
+import { Html5Qrcode, Html5QrcodeScannerState } from "html5-qrcode";
 
 export default {
   props: {
@@ -16,21 +17,38 @@ export default {
       default: 10,
     },
   },
-  data: function () {},
-  mounted: function () {
-    const config = {
-      fps: this.fps,
-      qrbox: this.qrbox,
+  data: function () {
+    return {
+      html5QRCode: null,
+      qrCodeConfig: {
+        fps: this.fps,
+        qrbox: { height: this.qrbox, width: this.qrbox },
+      },
     };
-    const html5QrcodeScanner = new Html5QrcodeScanner(
-      "qr-code-full-region",
-      config
-    );
-    html5QrcodeScanner.render(this.onScanSuccess);
+  },
+  mounted: function () {
+    this.html5QRCode = new Html5Qrcode("scanner");
+  },
+  unmounted: function () {
+    if (this.html5QRCode.getState() == Html5QrcodeScannerState.SCANNING) {
+      this.html5QRCode
+        .stop()
+        .then((ignore) => {})
+        .catch((err) => {
+          console.log("Failed to stop", err);
+        });
+    }
   },
   methods: {
     onScanSuccess: function (decodedText, decodedResult) {
       console.log(decodedText, decodedResult);
+    },
+    toggleScanner: function () {
+      this.html5QRCode.start(
+        { facingMode: "environment" },
+        this.qrCodeConfig,
+        this.onScanSuccess
+      );
     },
   },
 };

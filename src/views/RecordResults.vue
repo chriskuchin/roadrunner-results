@@ -2,12 +2,24 @@
   <div class="section">
     <div class="tabs">
       <ul>
-        <li class="is-active"><a>Scanner</a></li>
-        <li><a>Manual</a></li>
+        <li
+          @click="tabSelect('scanner')"
+          :class="{ 'is-active': isActiveTab('scanner') }"
+        >
+          <a>Scanner</a>
+        </li>
+        <li
+          @click="tabSelect('manual')"
+          :class="{ 'is-active': isActiveTab('manual') }"
+        >
+          <a>Manual</a>
+        </li>
       </ul>
     </div>
-    <result-scanner />
-    <result-input />
+    <div class="container">
+      <result-scanner v-if="isActiveTab('scanner')" />
+      <result-input v-else-if="isActiveTab('manual')" />
+    </div>
   </div>
 </template>
 
@@ -21,9 +33,19 @@ export default {
     "result-input": RacerInput,
   },
   data: function () {
-    return {};
+    return {
+      activeTab: "scanner",
+    };
   },
   created: function () {},
+  methods: {
+    isActiveTab: function (tab) {
+      return this.activeTab == tab;
+    },
+    tabSelect: function (tab) {
+      this.activeTab = tab;
+    },
+  },
   computed: {},
 };
 </script>
