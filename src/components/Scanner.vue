@@ -1,6 +1,15 @@
 <template>
   <div id="scanner"></div>
-  <button @click="toggleScanner" class="button">Start Scanning</button>
+  <div class="select">
+    <select>
+      <option>Select dropdown</option>
+      <option>With options</option>
+    </select>
+  </div>
+  <button @click="toggleScanner" class="button">{{ scannerToggleDescription }}</button>
+  active: {{ scannerActive }}
+  inactive: {{ scannerInactive }}
+  unknown: {{ scannerStateUnknown }}
 </template>
 
 <script>
@@ -30,13 +39,11 @@ export default {
     this.html5QRCode = new Html5Qrcode("scanner");
   },
   unmounted: function () {
-    if (this.html5QRCode.getState() == Html5QrcodeScannerState.SCANNING) {
+    if (this.scannerActive) {
       this.html5QRCode
         .stop()
-        .then((ignore) => {})
-        .catch((err) => {
-          console.log("Failed to stop", err);
-        });
+        .then((ignore) => { })
+        .catch((err) => { });
     }
   },
   methods: {
@@ -44,12 +51,38 @@ export default {
       console.log(decodedText, decodedResult);
     },
     toggleScanner: function () {
-      this.html5QRCode.start(
-        { facingMode: "environment" },
-        this.qrCodeConfig,
-        this.onScanSuccess
-      );
+      // console.log(this.html5QRCode.getState() == Html5QrcodeScannerState.PAUSED, "paused")
+      // console.log(this.html5QRCode.getState() == Html5QrcodeScannerState.SCANNING, "scanning")
+      // console.log(this.html5QRCode.getState() == Html5QrcodeScannerState.UNKNOWN, "unknown")
+      // console.log(this.html5QRCode.getState() == Html5QrcodeScannerState.NOT_STARTED, "not started")
+      if (this.scannerInactive) {
+        this.html5QRCode.start(
+          { facingMode: "environment" },
+          this.qrCodeConfig,
+          this.onScanSuccess
+        );
+      } else {
+        this.html5QRCode.stop().then((ignore) => {
+          // QR Code scanning is stopped.
+        }).catch((err) => {
+          // Stop failed, handle it.
+        });
+      }
     },
   },
+  computed: {
+    scannerToggleDescription: function () {
+      return !this.scannerActive ? "Start Scanner" : "Stop Scanner"
+    },
+    scannerStateUnknown: function () {
+      return this.html5QRCode && this.html5QRCode.getState() == Html5QrcodeScannerState.UNKNOWN
+    },
+    scannerActive: function () {
+      return this.html5QRCode && this.html5QRCode.getState() == Html5QrcodeScannerState.SCANNING
+    },
+    scannerInactive: function () {
+      return this.html5QRCode == null || this.html5QRCode.getState() == Html5QrcodeScannerState.NOT_STARTED
+    }
+  }
 };
 </script>

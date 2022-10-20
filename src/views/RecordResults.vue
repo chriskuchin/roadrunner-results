@@ -2,17 +2,11 @@
   <div class="section">
     <div class="tabs">
       <ul>
-        <li
-          @click="tabSelect('scanner')"
-          :class="{ 'is-active': isActiveTab('scanner') }"
-        >
-          <a>Scanner</a>
-        </li>
-        <li
-          @click="tabSelect('manual')"
-          :class="{ 'is-active': isActiveTab('manual') }"
-        >
+        <li @click="tabSelect('manual')" :class="{ 'is-active': isActiveTab('manual') }">
           <a>Manual</a>
+        </li>
+        <li @click="tabSelect('scanner')" :class="{ 'is-active': isActiveTab('scanner') }">
+          <a>Scanner</a>
         </li>
       </ul>
     </div>
@@ -23,7 +17,7 @@
   </div>
 </template>
 
-  <script>
+<script>
 import Scanner from "../components/Scanner.vue";
 import RacerInput from "../components/ResultsInput.vue";
 
@@ -34,10 +28,10 @@ export default {
   },
   data: function () {
     return {
-      activeTab: "scanner",
+      activeTab: "manual",
     };
   },
-  created: function () {},
+  created: function () { },
   methods: {
     isActiveTab: function (tab) {
       return this.activeTab == tab;
