@@ -23,8 +23,6 @@
         </button>
       </p>
     </div>
-    {{ results }}
-    {{ running }}
     {{ $route.name }}
     <button class="button is-warning" v-on:click="clear">Clear</button>
   </div>
@@ -32,8 +30,10 @@
 
 <script>
 import { formatStopwatch, keyHandler } from "../utilities";
-
+import { useResultsStore } from "../store/results";
+import { mapActions, mapState } from "pinia";
 import { library } from "@fortawesome/fontawesome-svg-core";
+
 import {
   faPlay,
   faPause,
@@ -61,10 +61,10 @@ export default {
       minutes: 0,
       seconds: 0,
       milliseconds: 0,
-      results: [],
     };
   },
   methods: {
+    ...mapActions(useResultsStore, ["recordFinishTime"]),
     start: function () {
       if (!this.running) {
         this.running = true;
@@ -86,12 +86,12 @@ export default {
     },
     record: function (e) {
       if (this.running) {
-        this.results.push({
+        console.log("Test Test Test");
+        this.recordFinishTime({
           timestamp: Date.now(),
           minutes: this.minutes,
           seconds: this.seconds,
           milliseconds: this.milliseconds,
-          place: this.results.length + 1,
         });
       }
     },
