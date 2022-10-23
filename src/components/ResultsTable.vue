@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{ mergedResults }}
+    {{ raceResults }}
   </div>
 </template>
 
@@ -14,7 +14,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapState(useResultsStore, ["mergedResults"]),
+    ...mapState(useResultsStore, { raceResults: "getResults" }),
   },
 };
 </script>

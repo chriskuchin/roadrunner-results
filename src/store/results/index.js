@@ -2,39 +2,32 @@ import { defineStore } from "pinia";
 
 export const useResultsStore = defineStore("results", {
   state: () => ({
-    finishTime: [],
-    runnerOrder: []
+    results: {}
   }),
   getters: {
-    mergedResults: function () {
-      var mergedResult = []
-      for (let i = 0; i < this.finishTime.length; i++) {
-        var mergedEntry = {
-          ...finishTime,
-          runnerBibNumber: this.runnerOrder[i] ? 0 : 1,
-          runnerRecordTS: this.runnerOrder[i] ? 1 : 0,
-        }
-
-
-        mergedResult.push({
-          ...this.finishTime[i]
-        })
-      }
-      return mergedResult
+    getResults: function (state) {
+      return state.results
     }
   },
   actions: {
     recordFinishTime: function (finishTime) {
-      this.finishTime.push({
-        ...finishTime,
-        place: this.finishTime.length + 1
-      })
+      if (!this.results[finishTime.place]) {
+        this.results[finishTime.place] = {}
+      }
+
+      this.results[finishTime.place].finishTimestamp = finishTime.timestamp
+      this.results[finishTime.place].finishMinutes = finishTime.minutes
+      this.results[finishTime.place].finishSeconds = finishTime.seconds
+      this.results[finishTime.place].finishMilliseconds = finishTime.milliseconds
+
     },
     recordRunnerResult: function (runner) {
-      this.runnerOrder.push({
-        ...runner,
-        place: this.runnerOrder.length + 1
-      })
+      if (!this.results[runner.place]) {
+        this.results[finishTime.place] = {}
+      }
+
+      this.results[runner.place].runnerTimestamp = runner.timestamp
+      this.results[runner.place].runnerBib = runner.bib
     }
   }
 })

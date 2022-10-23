@@ -73,6 +73,7 @@ export default {
       minutes: 0,
       seconds: 0,
       milliseconds: 0,
+      finisher: 0
     };
   },
   methods: {
@@ -160,11 +161,11 @@ export default {
           minutes: this.minutes,
           seconds: this.seconds,
           milliseconds: this.milliseconds,
+          place: ++this.finisher
         });
       }
     },
     clear: function () {
-      this.results = [];
     },
     increment: function () {
       this.timeoutID = setTimeout(this.increment, 10);
