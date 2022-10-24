@@ -23,7 +23,7 @@ export const useResultsStore = defineStore("results", {
     },
     recordRunnerResult: function (runner) {
       if (!this.results[runner.place]) {
-        this.results[finishTime.place] = {}
+        this.results[runner.place] = {}
       }
 
       this.results[runner.place].runnerTimestamp = runner.timestamp

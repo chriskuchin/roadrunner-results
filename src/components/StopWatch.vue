@@ -1,12 +1,25 @@
 <template>
   <div class="container">
-
-    <div id="scanner-wrapper" ref="scanner-wrapper" :class="{'camera-active': cameraActive}">
+    <div
+      id="scanner-wrapper"
+      ref="scanner-wrapper"
+      :class="{ 'camera-active': cameraActive }"
+    >
       <h1>{{ stopwatch }}</h1>
-      <video ref="finish-line-camera" id="finish-line-camera" @loadedmetadata="resizeVideo" />
+      <video
+        ref="finish-line-camera"
+        id="finish-line-camera"
+        @loadedmetadata="resizeVideo"
+      />
     </div>
 
-    <canvas ref="finish-line-pics" height="300" width="300" id="finish-line-pics" style="display: none;"></canvas>
+    <canvas
+      ref="finish-line-pics"
+      height="300"
+      width="300"
+      id="finish-line-pics"
+      style="display: none"
+    ></canvas>
     <div class="field has-addons">
       <p class="control">
         <button class="button is-dark" v-on:click="start">
@@ -73,7 +86,7 @@ export default {
       minutes: 0,
       seconds: 0,
       milliseconds: 0,
-      finisher: 0
+      finisher: 0,
     };
   },
   methods: {
@@ -104,16 +117,16 @@ export default {
           video: {
             mandatory: {
               minWidth: 1280,
-              minHeight: 720
+              minHeight: 720,
             },
-            facingMode: { ideal: "environment" }
+            facingMode: { ideal: "environment" },
           },
         })
         .then((stream) => {
           var video = this.$refs["finish-line-camera"];
           video.srcObject = stream;
           video.play();
-          this.cameraActive = true
+          this.cameraActive = true;
         });
     },
     takePic: function (e) {
@@ -148,25 +161,22 @@ export default {
       this.$refs["finish-line-camera"].srcObject = null;
     },
     resizeVideo: function (e) {
-      this.$refs['scanner-wrapper'].style.height = e.target.videoHeight + "px"
-      this.$refs['scanner-wrapper'].style.width = e.target.videoWidth + "px"
-      console.log(e.target.videoHeight, e.target.videoWidth)
-
+      this.$refs["scanner-wrapper"].style.height = e.target.videoHeight + "px";
+      this.$refs["scanner-wrapper"].style.width = e.target.videoWidth + "px";
+      console.log(e.target.videoHeight, e.target.videoWidth);
     },
     record: function (e) {
       if (this.running) {
-        console.log("Test Test Test");
         this.recordFinishTime({
           timestamp: Date.now(),
           minutes: this.minutes,
           seconds: this.seconds,
           milliseconds: this.milliseconds,
-          place: ++this.finisher
+          place: ++this.finisher,
         });
       }
     },
-    clear: function () {
-    },
+    clear: function () {},
     increment: function () {
       this.timeoutID = setTimeout(this.increment, 10);
 
