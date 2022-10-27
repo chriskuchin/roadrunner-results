@@ -2,7 +2,9 @@ import { defineStore } from "pinia";
 
 export const useResultsStore = defineStore("results", {
   state: () => ({
-    results: {}
+    results: {},
+    finishers: 0,
+    runners: 0
   }),
   getters: {
     getResults: function (state) {
@@ -11,23 +13,22 @@ export const useResultsStore = defineStore("results", {
   },
   actions: {
     recordFinishTime: function (finishTime) {
-      if (!this.results[finishTime.place]) {
-        this.results[finishTime.place] = {}
-      }
+      this.finishers++
 
-      this.results[finishTime.place].finishTimestamp = finishTime.timestamp
-      this.results[finishTime.place].finishMinutes = finishTime.minutes
-      this.results[finishTime.place].finishSeconds = finishTime.seconds
-      this.results[finishTime.place].finishMilliseconds = finishTime.milliseconds
+      this.results[this.finishers] = {}
+      this.results[this.finishers].finishTimestamp = finishTime.timestamp
+      this.results[this.finishers].finishMinutes = finishTime.minutes
+      this.results[this.finishers].finishSeconds = finishTime.seconds
+      this.results[this.finishers].finishMilliseconds = finishTime.milliseconds
 
     },
     recordRunnerResult: function (runner) {
-      if (!this.results[runner.place]) {
-        this.results[runner.place] = {}
+      if (!this.results[++this.runners]) {
+        this.results[++this.finishers] = {}
       }
 
-      this.results[runner.place].runnerTimestamp = runner.timestamp
-      this.results[runner.place].runnerBib = runner.bib
+      this.results[this.runners].runnerTimestamp = runner.timestamp
+      this.results[this.runners].runnerBib = runner.bib
     }
   }
 })

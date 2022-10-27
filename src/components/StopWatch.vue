@@ -1,25 +1,11 @@
 <template>
   <div class="container">
-    <div
-      id="scanner-wrapper"
-      ref="scanner-wrapper"
-      :class="{ 'camera-active': cameraActive }"
-    >
+    <div id="scanner-wrapper" ref="scanner-wrapper" :class="{ 'camera-active': cameraActive }">
       <h1>{{ stopwatch }}</h1>
-      <video
-        ref="finish-line-camera"
-        id="finish-line-camera"
-        @loadedmetadata="resizeVideo"
-      />
+      <video ref="finish-line-camera" id="finish-line-camera" @loadedmetadata="resizeVideo" />
     </div>
 
-    <canvas
-      ref="finish-line-pics"
-      height="300"
-      width="300"
-      id="finish-line-pics"
-      style="display: none"
-    ></canvas>
+    <canvas ref="finish-line-pics" height="300" width="300" id="finish-line-pics" style="display: none"></canvas>
     <div class="field has-addons">
       <p class="control">
         <button class="button is-dark" v-on:click="start">
@@ -86,7 +72,6 @@ export default {
       minutes: 0,
       seconds: 0,
       milliseconds: 0,
-      finisher: 0,
     };
   },
   methods: {
@@ -172,11 +157,10 @@ export default {
           minutes: this.minutes,
           seconds: this.seconds,
           milliseconds: this.milliseconds,
-          place: ++this.finisher,
         });
       }
     },
-    clear: function () {},
+    clear: function () { },
     increment: function () {
       this.timeoutID = setTimeout(this.increment, 10);
 
