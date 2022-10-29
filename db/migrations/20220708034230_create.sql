@@ -9,7 +9,7 @@ CREATE TABLE participants (
 CREATE TABLE races (
     race_id varchar(255),
     owner_id varchar(255),
-    race varchar(255)
+    race_name varchar(255)
 );
 
 CREATE TABLE events (

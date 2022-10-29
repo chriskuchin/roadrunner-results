@@ -7,6 +7,7 @@ import (
 
 	"github.com/chriskuchin/roadrunner-results/pkg/controller"
 	dao "github.com/chriskuchin/roadrunner-results/pkg/db"
+	"github.com/chriskuchin/roadrunner-results/pkg/services"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/jmoiron/sqlx"
@@ -57,10 +58,10 @@ func main() {
 				Usage: "launches the application web server",
 				Action: func(c *cli.Context) error {
 					zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
-					// log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 					zerolog.SetGlobalLevel(zerolog.InfoLevel)
 					if debug {
 						zerolog.SetGlobalLevel(zerolog.DebugLevel)
+						log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 					}
 
 					db, err := sqlx.Open("sqlite3", dbPath)
@@ -68,7 +69,8 @@ func main() {
 						log.Fatal().Err(err).Send()
 					}
 
-					dao.NewRaceDAO(db)
+					raceDAO := dao.NewRaceDAO(db)
+					services.NewRaceService(*raceDAO)
 					r := chi.NewRouter()
 
 					// A good base middleware stack
@@ -76,6 +78,10 @@ func main() {
 					r.Use(middleware.RealIP)
 					r.Use(middleware.Logger)
 					r.Use(middleware.Recoverer)
+
+					if debug {
+						r.Use(Debug)
+					}
 
 					r.Route("/", func(r chi.Router) {
 						r.Mount("/healthcheck", controller.HealthcheckResources{}.Routes())
@@ -99,4 +105,12 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Send()
 	}
+}
+
+func Debug(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Add("Access-Control-Allow-Origin", "*")
+
+		next.ServeHTTP(w, r)
+	})
 }

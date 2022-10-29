@@ -17,7 +17,7 @@ type RaceDAO struct {
 type RaceDTO struct {
 	RaceID  string `db:"race_id"`
 	OwnerID string `db:"owner_id"`
-	Race    string `db:"race"`
+	Name    string `db:"race_name"`
 }
 
 func NewRaceDAO(db *sqlx.DB) *RaceDAO {
@@ -31,7 +31,7 @@ func NewRaceDAO(db *sqlx.DB) *RaceDAO {
 
 func (r *RaceDAO) CreateRace(ctx context.Context, name string) (string, error) {
 	id := uuid.New()
-	_, err := r.db.Exec("insert into races (race_id, race, owner_id) VALUES(?, ?, ?)", id, name, "123")
+	_, err := r.db.Exec("insert into races (race_id, race_name, owner_id) VALUES(?, ?, ?)", id, name, "123")
 	if err != nil {
 		log.Error().Err(err).Send()
 		return "", err
