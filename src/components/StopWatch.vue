@@ -66,6 +66,18 @@ export default {
   props: [],
   data: function () {
     return {
+      videoQuality: [{
+        width: 1920,
+        height: 1080,
+      },
+      {
+        width: 1280,
+        height: 720
+      },
+      {
+        width: 960,
+        height: 540
+      }],
       cameraActive: false,
       running: false,
       timeoutID: null,
@@ -96,6 +108,9 @@ export default {
       this.minutes = 0;
     },
     startCamera: function (e) {
+
+      console.log(this.$refs["scanner-wrapper"].clientHeight)
+      console.log(this.$refs["scanner-wrapper"].clientWidth)
       navigator.mediaDevices
         .getUserMedia({
           audio: false,
@@ -144,8 +159,8 @@ export default {
       this.$refs["finish-line-camera"].srcObject = null;
     },
     resizeVideo: function (e) {
-      this.$refs["scanner-wrapper"].style.height = e.target.videoHeight + "px";
-      this.$refs["scanner-wrapper"].style.width = e.target.videoWidth + "px";
+      // this.$refs["scanner-wrapper"].style.height = e.target.videoHeight + "px";
+      // this.$refs["scanner-wrapper"].style.width = e.target.videoWidth + "px";
       console.log(e.target.videoHeight, e.target.videoWidth);
     },
     record: function (e) {
