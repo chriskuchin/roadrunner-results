@@ -1,10 +1,12 @@
 package v1
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
+	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
 	"github.com/rs/zerolog/log"
@@ -21,6 +23,7 @@ func (rs racesResources) Routes() chi.Router {
 	r.Post("/", createRace)
 
 	r.Route("/{raceID}", func(r chi.Router) {
+		r.Use(RaceCtx)
 		r.Options("/", Cors)
 		r.Delete("/", deleteRace)
 
@@ -63,7 +66,6 @@ func createRace(w http.ResponseWriter, r *http.Request) {
 
 	raceID, err := raceService.CreateRace(ctx, raceRequest.Name)
 	if err != nil {
-		log.Debug()
 		log.Error().Err(err).Send()
 		render.Status(r, http.StatusInternalServerError)
 		response := map[string]string{
@@ -95,6 +97,18 @@ func deleteRace(w http.ResponseWriter, r *http.Request) {
 	}
 
 	render.NoContent(w, r)
+}
+
+func RaceCtx(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		raceID := chi.URLParam(r, "raceID")
+		if raceID == "" {
+			log.Error().Msg("Unable to locate RaceID")
+		}
+
+		ctx := context.WithValue(r.Context(), util.RaceID, raceID)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
 }
 
 type RaceRequest struct {

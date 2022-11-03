@@ -100,10 +100,8 @@ export default {
         .getUserMedia({
           audio: false,
           video: {
-            mandatory: {
-              minWidth: 1280,
-              minHeight: 720,
-            },
+            width: 1920,
+            height: 1080,
             facingMode: { ideal: "environment" },
           },
         })

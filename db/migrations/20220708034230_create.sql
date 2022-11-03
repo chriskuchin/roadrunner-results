@@ -1,5 +1,6 @@
 -- migrate:up
 CREATE TABLE participants (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     first_name varchar(255),
     last_name varchar(255),
     team varchar(255),
@@ -7,23 +8,27 @@ CREATE TABLE participants (
 );
 
 CREATE TABLE races (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     race_id varchar(255),
     owner_id varchar(255),
     race_name varchar(255)
 );
 
 CREATE TABLE events (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     event_description varchar(255),
-    measurement varchar(255)
+    distance varchar(255)
 );
 
 CREATE TABLE results (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     race_id integer,
     participant_id integer,
     event_id integer
 );
 
 CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id varchar(255),
     email varchar(255)
 );
