@@ -7,7 +7,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-var instance *RaceService
+var raceInstance *RaceService
 
 type RaceService struct {
 	raceDAO dao.RaceDAO
@@ -20,15 +20,15 @@ type RaceResult struct {
 }
 
 func NewRaceService(raceDAO dao.RaceDAO) {
-	if instance == nil {
-		instance = &RaceService{
+	if raceInstance == nil {
+		raceInstance = &RaceService{
 			raceDAO: raceDAO,
 		}
 	}
 }
 
 func GetRaceServiceInstance() *RaceService {
-	return instance
+	return raceInstance
 }
 
 func (rs *RaceService) CreateRace(ctx context.Context, name string) (string, error) {

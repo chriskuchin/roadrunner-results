@@ -27,3 +27,7 @@ func (e *EventDao) GetRaceEvents(ctx context.Context) {
 func (e *EventDao) DeleteEvent(ctx context.Context) {
 
 }
+
+func (e *EventDao) GetRaceEvent(ctx context.Context) {
+
+}
