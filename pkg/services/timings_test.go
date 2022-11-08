@@ -25,7 +25,25 @@ func Test_parseFinishingTime(t *testing.T) {
 			wantHundredths: 0,
 		},
 		{
-			name: "26-minute-change",
+			name: "one-second",
+			args: args{
+				time: "00:01:00",
+			},
+			wantMin:        0,
+			wantSec:        1,
+			wantHundredths: 0,
+		},
+		{
+			name: "one-hundredth",
+			args: args{
+				time: "00:00:01",
+			},
+			wantMin:        0,
+			wantSec:        0,
+			wantHundredths: 1,
+		},
+		{
+			name: "realistic",
 			args: args{
 				time: "26:24:51",
 			},
@@ -87,6 +105,15 @@ func Test_calculateMilisecondsFromTiming(t *testing.T) {
 				hund: 01,
 			},
 			want: 10,
+		},
+		{
+			name: "realistic",
+			args: args{
+				min:  26,
+				sec:  32,
+				hund: 51,
+			},
+			want: 1592510,
 		},
 	}
 	for _, tt := range tests {
