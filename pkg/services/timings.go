@@ -1,6 +1,7 @@
 package services
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -22,4 +23,16 @@ func parseFinishingTime(time string) (min int, sec int, hundredeths int) {
 
 func calculateMilisecondsFromTiming(min, sec, hund int) int {
 	return msPerMin*min + msPerSec*sec + hund*10
+}
+
+func formatFinishingTime(ms int) string {
+	current := ms
+
+	min := current / msPerMin
+	current = current % msPerMin
+
+	sec := current / msPerSec
+	current = current % msPerSec
+
+	return fmt.Sprintf("%02d:%02d:%02d", min, sec, current/10)
 }
