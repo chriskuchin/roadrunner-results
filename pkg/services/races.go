@@ -10,7 +10,7 @@ import (
 var raceInstance *RaceService
 
 type RaceService struct {
-	raceDAO dao.RaceDAO
+	raceDAO *dao.RaceDAO
 }
 
 type RaceResult struct {
@@ -19,7 +19,7 @@ type RaceResult struct {
 	OwnerID string
 }
 
-func NewRaceService(raceDAO dao.RaceDAO) {
+func NewRaceService(raceDAO *dao.RaceDAO) {
 	if raceInstance == nil {
 		raceInstance = &RaceService{
 			raceDAO: raceDAO,

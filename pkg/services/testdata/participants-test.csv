@@ -1,0 +1,575 @@
+Bib Number,Name,Team,Year,Gender,Category
+1,Amy Moon,Lehi,2014,F,2013-2014
+2,Aura Beck,Lehi,2011,F,2011-2012
+3,Brooke Young,Lehi,2015,F,2015-2017
+4,Ella Nielsen,Lehi,2010,F,2009-2010
+5,Emelia Kerr,Lehi,2012,F,2011-2012
+6,Emily Burr,Lehi,2013,F,2013-2014
+7,Eva Smith,Lehi,2011,F,2011-2012
+8,Grace Hauley,Lehi,2010,F,2009-2010
+9,Jace Packer,Lehi,2009,F,2009-2010
+10,Jane Moon,Lehi,2010,F,2009-2010
+11,Kaitlyn Liston,Lehi,2009,F,2009-2010
+12,Kelsie Burr,Lehi,2011,F,2011-2012
+13,Lia Springer,Lehi,2014,F,2013-2014
+14,Lucie Allen,Lehi,2010,F,2009-2010
+15,Nora Hunsaker,Lehi,2014,F,2013-2014
+16,Violet Blanco,Lehi,2010,F,2009-2010
+17,Carson Howard,Lehi,2012,M,2011-2012
+18,Carter Lundskog,Lehi,2014,M,2013-2014
+19,Colten Christensen,Lehi,2011,M,2011-2012
+20,David Hemingway,Lehi,2012,M,2011-2012
+21,Emerson Hackett,Lehi,2010,M,2009-2010
+22,Everett Hobbs,Lehi,2011,M,2011-2012
+23,Grant Knighton,Lehi,2013,M,2013-2014
+24,Harvey Benson,Lehi,2014,M,2013-2014
+25,Ian Barnett,Lehi,2012,M,2011-2012
+26,Jack Burbidge,Lehi,2015,M,2015-2017
+27,Jackson Bergeron,Lehi,2015,M,2015-2017
+28,Jeancarlo Falabella,Lehi,2007,M,2006-2008
+29,Keaton Jackman,Lehi,2014,M,2013-2014
+30,Liam Benson,Lehi,2009,M,2009-2010
+31,Louie Springer,Lehi,2014,M,2013-2014
+32,Mark Moon,Lehi,2012,M,2011-2012
+33,Mason Christensen,Lehi,2014,M,2013-2014
+34,Matthew Harnagel,Lehi,2013,M,2013-2014
+35,Nani Peddola,Lehi,2014,M,2013-2014
+36,Raider Turner,Lehi,2011,M,2011-2012
+37,Russell Jackman,Lehi,2015,M,2015-2017
+38,Ryker Tidwell,Lehi,2011,M,2011-2012
+39,Tad Benson,Lehi,2011,M,2011-2012
+40,Talon Carling,Lehi,2012,M,2011-2012
+41,Teagan Burr,Lehi,2009,M,2009-2010
+42,Tucker Jackman,Lehi,2012,M,2011-2012
+43,William Harnagel,Lehi,2012,M,2011-2012
+44,William Liston,Lehi,2011,M,2011-2012
+45,William Lyde,Lehi,2014,M,2013-2014
+46,William O'Neill,Lehi,2011,M,2011-2012
+47,Hazel Dance,Mercury Track Club,2013,F,2013-2014
+48,Trevor Dance,Mercury Track Club,2011,M,2011-2012
+49,Ava Palmer,Orem Rec,2015,F,2015-2017
+50,Eliza Stevens,Orem Rec,2014,F,2013-2014
+51,Elsa Arellano,Orem Rec,2008,F,2006-2008
+52,Emma Palmer,Orem Rec,2015,F,2015-2017
+53,Hannah Anderson,Orem Rec,2013,F,2013-2014
+54,Juliette Arellano,Orem Rec,2010,F,2009-2010
+55,Opal Pedersen,Orem Rec,2014,F,2013-2014
+56,Benjamin Walker,Orem Rec,2012,M,2011-2012
+57,Connor Pinkston,Orem Rec,2010,M,2009-2010
+58,Griffin Palmer,Orem Rec,2013,M,2013-2014
+59,Jack Thorup,Orem Rec,2011,M,2011-2012
+60,Jasher Valentine,Orem Rec,2014,M,2013-2014
+61,Logan Moncur,Orem Rec,2012,M,2011-2012
+62,Nash Simmons,Orem Rec,2011,M,2011-2012
+63,Seth Anderson,Orem Rec,2011,M,2011-2012
+64,Thomas Perl,Orem Rec,2013,M,2013-2014
+65,Addie Low,Pleasant Grove,2010,F,2009-2010
+66,Brynn McMurtrey,Pleasant Grove,2010,F,2009-2010
+67,Cambrie Ouimette,Pleasant Grove,2013,F,2013-2014
+68,Gabby Williams,Pleasant Grove,2014,F,2013-2014
+69,Hannah Hurst,Pleasant Grove,2013,F,2013-2014
+70,Isla Robertson,Pleasant Grove,2014,F,2013-2014
+71,Jessy Williams,Pleasant Grove,2011,F,2011-2012
+72,Maile Barlow,Pleasant Grove,2014,F,2013-2014
+73,Makenzie Filhart,Pleasant Grove,2012,F,2011-2012
+74,Molly Filhart,Pleasant Grove,2015,F,2015-2017
+75,Nohealani Barlow,Pleasant Grove,2011,F,2011-2012
+76,Ammon Forsyth,Pleasant Grove,2011,M,2011-2012
+77,August Domino,Pleasant Grove,2011,M,2011-2012
+78,Beckem Hurst,Pleasant Grove,2011,M,2011-2012
+79,Braden Moulton,Pleasant Grove,2012,M,2011-2012
+80,Brayden Whitworth,Pleasant Grove,2014,M,2013-2014
+81,Brian Cook,Pleasant Grove,2011,M,2011-2012
+82,Brooks Low,Pleasant Grove,2013,M,2013-2014
+83,Canyon Adams,Pleasant Grove,2011,M,2011-2012
+84,Charlie Jeppsen,Pleasant Grove,2013,M,2013-2014
+85,Crosby Taylor,Pleasant Grove,2015,M,2015-2017
+86,Duncan McClellan,Pleasant Grove,2011,M,2011-2012
+87,Eli Moulton,Pleasant Grove,2014,M,2013-2014
+88,Feltcher Morris,Pleasant Grove,2011,M,2011-2012
+89,Jacob Smith,Pleasant Grove,2010,M,2009-2010
+90,Jaxen Pead,Pleasant Grove,2011,M,2011-2012
+91,Malachi Ward,Pleasant Grove,2011,M,2011-2012
+92,Mozzie McClellan,Pleasant Grove,2013,M,2013-2014
+93,Owen Hurst,Pleasant Grove,2010,M,2009-2010
+94,Race Low,Pleasant Grove,2009,M,2009-2010
+95,Zachary Whitworth,Pleasant Grove,2015,M,2015-2017
+96,Adrianna Herold,Provo Rec,2009,F,2009-2010
+97,Charlotte Williams,Provo Rec,2010,F,2009-2010
+98,Eden Crane,Provo Rec,2007,F,2006-2008
+99,Elena Herold,Provo Rec,2013,F,2013-2014
+100,Elisa Hardy,Provo Rec,2013,F,2013-2014
+101,Ella Astle,Provo Rec,2015,F,2015-2017
+102,Emily Astle,Provo Rec,2011,F,2011-2012
+103,Eve Harding,Provo Rec,2013,F,2013-2014
+104,Evony M Rolon,Provo Rec,2012,F,2011-2012
+105,Fe Packard,Provo Rec,2011,F,2011-2012
+106,Greta Danklef,Provo Rec,2014,F,2013-2014
+107,Gwenyth Hall,Provo Rec,2013,F,2013-2014
+108,Indigo Gray,Provo Rec,2009,F,2009-2010
+109,Iris Walsh,Provo Rec,2012,F,2011-2012
+110,Ivory Rolon,Provo Rec,2015,F,2015-2017
+111,Katie Mayo,Provo Rec,2012,F,2011-2012
+112,Kaylie Watson,Provo Rec,2011,F,2011-2012
+113,Lauren Watson,Provo Rec,2012,F,2011-2012
+114,Lilly Lopez,Provo Rec,2015,F,2015-2017
+115,Lily Sybrowsky,Provo Rec,2013,F,2013-2014
+116,Porsha Caffaro,Provo Rec,2011,F,2011-2012
+117,Reya Hirst,Provo Rec,2008,F,2006-2008
+118,Sadie Thomas,Provo Rec,2008,F,2006-2008
+119,Skye Caffaro,Provo Rec,2012,F,2011-2012
+120,Tahna Jansen,Provo Rec,2012,F,2011-2012
+121,Whitney Fukuyasu,Provo Rec,2010,F,2009-2010
+122,Alexander Gamarra,Provo Rec,2010,M,2009-2010
+123,Alexander Parmley,Provo Rec,2011,M,2011-2012
+124,Benjamin Gardiner,Provo Rec,2010,M,2009-2010
+125,Bennett Marshall,Provo Rec,2011,M,2011-2012
+126,Blake Grimley,Provo Rec,2011,M,2011-2012
+127,Braden Whitney,Provo Rec,2012,M,2011-2012
+128,Bridger Wilson,Provo Rec,2014,M,2013-2014
+129,Charles Andrus,Provo Rec,2011,M,2011-2012
+130,Christian Rodrigues,Provo Rec,2011,M,2011-2012
+131,Cohen Crane,Provo Rec,2009,M,2009-2010
+132,Connor Whitney,Provo Rec,2009,M,2009-2010
+133,Gideon Tylka,Provo Rec,2013,M,2013-2014
+134,Henry Danklef,Provo Rec,2011,M,2011-2012
+135,Jacob Mayo,Provo Rec,2008,M,2006-2008
+136,Jaxon Daley,Provo Rec,2010,M,2009-2010
+137,Jordan Swab,Provo Rec,2015,M,2015-2017
+138,Joseph Sybrowsky,Provo Rec,2011,M,2011-2012
+139,Logan Astle,Provo Rec,2013,M,2013-2014
+140,Mason Schwab,Provo Rec,2013,M,2013-2014
+141,Matteo Charry,Provo Rec,2014,M,2013-2014
+142,Michael Bronson,Provo Rec,2010,M,2009-2010
+143,Milo Andrus,Provo Rec,2013,M,2013-2014
+144,Oliver Cordero,Provo Rec,2013,M,2013-2014
+145,Paxton Park,Provo Rec,2011,M,2011-2012
+146,Peter Luke,Provo Rec,2013,M,2013-2014
+147,Seth Crane,Provo Rec,2011,M,2011-2012
+148,Stephen Zhao,Provo Rec,2012,M,2011-2012
+149,Sylar Greer,Provo Rec,2012,M,2011-2012
+150,Will Hatch,Provo Rec,2012,M,2011-2012
+151,Xavier Daley,Provo Rec,2006,M,2006-2008
+152,Ada Bingham,Provo RR,2012,F,2011-2012
+153,Alana Parry,Provo RR,2010,F,2009-2010
+154,Aliza Howell,Provo RR,2009,F,2009-2010
+155,Allison Burt,Provo RR,2009,F,2009-2010
+156,Anne Smalley,Provo RR,2010,F,2009-2010
+157,Annelise Hamblin,Provo RR,2014,F,2013-2014
+158,Ashlyn Kuchin,Provo RR,2012,F,2011-2012
+159,Audrey Moore,Provo RR,2010,F,2009-2010
+160,Camilla Malcom,Provo RR,2009,F,2009-2010
+161,Caroline Ridge,Provo RR,2010,F,2009-2010
+162,Cassidy Hutchins,Provo RR,2011,F,2011-2012
+163,Charlotte Jensen,Provo RR,2011,F,2011-2012
+164,Cheyenne Pratt,Provo RR,2009,F,2009-2010
+165,Clara Gifford,Provo RR,2016,F,2015-2017
+166,Clara King,Provo RR,2013,F,2013-2014
+167,Elise Pace,Provo RR,2010,F,2009-2010
+168,Elixabete Meecham,Provo RR,2013,F,2013-2014
+169,Elodie Lewis,Provo RR,2009,F,2009-2010
+170,Elsie Blake,Provo RR,2011,F,2011-2012
+171,Emelia Salazar,Provo RR,2008,F,2006-2008
+172,Emily Jenkins,Provo RR,2014,F,2013-2014
+173,Emma Christensen,Provo RR,2015,F,2015-2017
+174,Genevieve Frandsen,Provo RR,2014,F,2013-2014
+175,Hazel Malcom,Provo RR,2011,F,2011-2012
+176,Hazel Platt,Provo RR,2014,F,2013-2014
+177,Helen King,Provo RR,2015,F,2015-2017
+178,Jill Jensen,Provo RR,2008,F,2006-2008
+179,Joy Allen,Provo RR,2011,F,2011-2012
+180,Julia Lewis,Provo RR,2011,F,2011-2012
+181,Kara Moore,Provo RR,2012,F,2011-2012
+182,Kinsey Moore,Provo RR,2010,F,2009-2010
+183,Lee Harmon,Provo RR,2012,F,2011-2012
+184,Lily Platt,Provo RR,2014,F,2013-2014
+185,Madeline Frandsen,Provo RR,2010,F,2009-2010
+186,Mary Golding,Provo RR,2012,F,2011-2012
+187,McKenzie Kuchin,Provo RR,2014,F,2013-2014
+188,Mila Mecham,Provo RR,2011,F,2011-2012
+189,Milianna DeMartini,Provo RR,2014,F,2013-2014
+190,Nikell Lewis,Provo RR,2014,F,2013-2014
+191,Oaklie Rohatinsky,Provo RR,2012,F,2011-2012
+192,Olivia Jensen,Provo RR,2012,F,2011-2012
+193,Olympia Salmon,Provo RR,2011,F,2011-2012
+194,Paige Harmon,Provo RR,2014,F,2013-2014
+195,Penny Thomas,Provo RR,2012,F,2011-2012
+196,Preslee Probert,Provo RR,2015,F,2015-2017
+197,River Van Dyke,Provo RR,2012,F,2011-2012
+198,Rome Smith,Provo RR,2015,F,2015-2017
+199,Rylee Probert,Provo RR,2011,F,2011-2012
+200,Sadie Moore,Provo RR,2008,F,2006-2008
+201,Sarah Jenkins,Provo RR,2012,F,2011-2012
+202,Sariah Kempton,Provo RR,2008,F,2006-2008
+203,Sienna Bucy,Provo RR,2009,F,2009-2010
+204,Sienna Smallcanyon,Provo RR,2008,F,2006-2008
+205,Skye Lund,Provo RR,2011,F,2011-2012
+206,Sophia Kawa,Provo RR,2011,F,2011-2012
+207,SueHaley Frandsen,Provo RR,2008,F,2006-2008
+208,Susan Hedengren,Provo RR,2011,F,2011-2012
+209,Victoria DeMartini,Provo RR,2014,F,2013-2014
+210,Aaron Schiffman,Provo RR,2009,M,2009-2010
+211,Abe Nelson,Provo RR,2009,M,2009-2010
+212,Aiden Pestana,Provo RR,2009,M,2009-2010
+213,Alec George,Provo RR,2009,M,2009-2010
+214,Alexander Parmley,Provo RR,2011,M,2011-2012
+215,Andrew Napierski,Provo RR,2011,M,2011-2012
+216,Ansel Esplin,Provo RR,2010,M,2009-2010
+217,Benjamin Seegmiller,Provo RR,2011,M,2011-2012
+218,Bob Wilcox,Provo RR,2012,M,2011-2012
+219,Brady Bryson,Provo RR,2016,M,2015-2017
+220,Brandon Jenkins,Provo RR,2012,M,2011-2012
+221,Cache Griffiths,Provo RR,2014,M,2013-2014
+222,Cade Gonzalez,Provo RR,2014,M,2013-2014
+223,Calvin Craig,Provo RR,2009,M,2009-2010
+224,Cash Aslett,Provo RR,2008,M,2006-2008
+225,Charles Frandsen,Provo RR,2012,M,2011-2012
+226,Charlie King,Provo RR,2011,M,2011-2012
+227,Clark Rohatinsky,Provo RR,2015,M,2015-2017
+228,Cooper Ostler,Provo RR,2011,M,2011-2012
+229,Cyrus Allen,Provo RR,2011,M,2011-2012
+230,Daniel Kulbeth,Provo RR,2010,M,2009-2010
+231,Donovan DeMartini,Provo RR,2011,M,2011-2012
+232,Eli Gifford,Provo RR,2011,M,2011-2012
+233,Elias Kahler,Provo RR,2010,M,2009-2010
+234,Emmett Madsen,Provo RR,2012,M,2011-2012
+235,Ezra Allen,Provo RR,2015,M,2015-2017
+236,Gavin Christensen,Provo RR,2010,M,2009-2010
+237,Harold Bingham,Provo RR,2009,M,2009-2010
+238,Heath Stanley,Provo RR,2011,M,2011-2012
+239,Hyrum Arnegard,Provo RR,2011,M,2011-2012
+240,Hyrum Child,Provo RR,2009,M,2009-2010
+241,Isaac Allen,Provo RR,2008,M,2006-2008
+242,Jackson Eyre,Provo RR,2009,M,2009-2010
+243,Jacob Carrasco,Provo RR,2011,M,2011-2012
+244,Jamian Hancock,Provo RR,2010,M,2009-2010
+245,Jefferson Priddis,Provo RR,2013,M,2013-2014
+246,Jonah Child,Provo RR,2012,M,2011-2012
+247,Jonathan Blanchard,Provo RR,2009,M,2009-2010
+248,Jonathan King,Provo RR,2017,M,2015-2017
+249,Joseph Reid,Provo RR,2012,M,2011-2012
+250,Joshua Jenkins,Provo RR,2010,M,2009-2010
+251,Joshua Kenney,Provo RR,2010,M,2009-2010
+252,Joshua Moore,Provo RR,2011,M,2011-2012
+253,Joshua Smith,Provo RR,2010,M,2009-2010
+254,Langley Bailey,Provo RR,2009,M,2009-2010
+255,Lars Priddis,Provo RR,2016,M,2015-2017
+256,Leif Hunsaker,Provo RR,2010,M,2009-2010
+257,Levi Payne,Provo RR,2012,M,2011-2012
+258,Levi Teemant,Provo RR,2010,M,2009-2010
+259,Liam Probert,Provo RR,2008,M,2006-2008
+260,Lincoln Frandsen,Provo RR,2009,M,2009-2010
+261,Lincoln Priddis,Provo RR,2010,M,2009-2010
+262,Logan Rohatinsky,Provo RR,2008,M,2006-2008
+263,Luke Jensen,Provo RR,2015,M,2015-2017
+264,Luke Nuttall,Provo RR,2009,M,2009-2010
+265,Matthew Moore,Provo RR,2012,M,2011-2012
+266,Matthew Oaks,Provo RR,2009,M,2009-2010
+267,Micah Sears,Provo RR,2011,M,2011-2012
+268,Peter Hedengren,Provo RR,2008,M,2006-2008
+269,Richard Wilcox,Provo RR,2015,M,2015-2017
+270,Samuel Gifford,Provo RR,2013,M,2013-2014
+271,Samuel Napierski,Provo RR,2015,M,2015-2017
+272,Sean Yamada,Provo RR,2009,M,2009-2010
+273,Seth Napierski,Provo RR,2013,M,2013-2014
+274,Shaffer Rohatinsky,Provo RR,2009,M,2009-2010
+275,Teo Oscarson,Provo RR,2009,M,2009-2010
+276,Timothy Jenkins,Provo RR,2009,M,2009-2010
+277,Timothy Spencer,Provo RR,2013,M,2013-2014
+278,Truman Madsen,Provo RR,2010,M,2009-2010
+279,Tyler Christensen,Provo RR,2012,M,2011-2012
+280,Washington Salmon,Provo RR,2013,M,2013-2014
+281,Weston Smith,Provo RR,2012,M,2011-2012
+282,William McLaughlin,Provo RR,2010,M,2009-2010
+283,William Reid,Provo RR,2010,M,2009-2010
+284,William Thomas,Provo RR,2014,M,2013-2014
+285,Adina Lau,Race Cats,2013,F,2013-2014
+286,Ava DeMille,Race Cats,2015,F,2015-2017
+287,Avery Grover,Race Cats,2011,F,2011-2012
+288,Eliza Lau,Race Cats,2009,F,2009-2010
+289,Isabel Preston,Race Cats,2008,F,2006-2008
+290,Kennedy Anderson,Race Cats,2009,F,2009-2010
+291,Lydia Johnson,Race Cats,2011,F,2011-2012
+292,Mayla Heiner,Race Cats,2011,F,2011-2012
+293,Mya DeMille,Race Cats,2013,F,2013-2014
+294,Beau Bostwick,Race Cats,2009,M,2009-2010
+295,Benjamin Ludwig,Race Cats,2013,M,2013-2014
+296,Benson Woolf,Race Cats,2011,M,2011-2012
+297,Clark Perry,Race Cats,2010,M,2009-2010
+298,Dane Moody,Race Cats,2009,M,2009-2010
+299,Elijah Jarrett,Race Cats,2015,M,2015-2017
+300,Ethan Sorenson,Race Cats,2013,M,2013-2014
+301,Jacob Johnson,Race Cats,2013,M,2013-2014
+302,Jacob Lucio,Race Cats,2009,M,2009-2010
+303,Jaxon Woolf,Race Cats,2009,M,2009-2010
+304,Kacen Jones,Race Cats,2009,M,2009-2010
+305,Kai DeMille,Race Cats,2011,M,2011-2012
+306,Luke Baughman,Race Cats,2009,M,2009-2010
+307,Luke Hammond,Race Cats,2013,M,2013-2014
+308,Marcus Navarro,Race Cats,2009,M,2009-2010
+309,Mason Hadlock,Race Cats,2010,M,2009-2010
+310,Rafe Browne,Race Cats,2008,M,2006-2008
+311,Sam Jarrett,Race Cats,2010,M,2009-2010
+312,Sam Ludwig,Race Cats,2013,M,2013-2014
+313,Sean Walsh,Race Cats,2013,M,2013-2014
+314,Adina Lau,Race Cats Davis,2013,F,2013-2014
+315,Eliana Eichelberger,Race Cats Davis,2009,F,2009-2010
+316,Eliza Lau,Race Cats Davis,2009,F,2009-2010
+317,Ella Draxler,Race Cats Davis,2008,F,2006-2008
+318,Lydia Lau,Race Cats Davis,2011,F,2011-2012
+319,Marshall Haines,Race Cats Davis,2010,M,2009-2010
+320,Nathan Eichelberger,Race Cats Davis,2012,M,2011-2012
+321,Quentin Draxler,Race Cats Davis,2013,M,2013-2014
+322,Ainsley Barzee,Saratoga Springs,2012,F,2011-2012
+323,Autumn Padilla,Saratoga Springs,2015,F,2015-2017
+324,Daniela Ipince,Saratoga Springs,2011,F,2011-2012
+325,Dollie Wilson,Saratoga Springs,2013,F,2013-2014
+326,Eden Padilla,Saratoga Springs,2014,F,2013-2014
+327,Emily Kessel,Saratoga Springs,2010,F,2009-2010
+328,Esther Burnside,Saratoga Springs,2010,F,2009-2010
+329,Grace Sullivan,Saratoga Springs,2011,F,2011-2012
+330,Henley Copenhaver,Saratoga Springs,2013,F,2013-2014
+331,Inara Barnes,Saratoga Springs,2012,F,2011-2012
+332,Ivy Richards,Saratoga Springs,2013,F,2013-2014
+333,Kate Dyreng,Saratoga Springs,2013,F,2013-2014
+334,Lexie Giles,Saratoga Springs,2011,F,2011-2012
+335,Livi Beckham,Saratoga Springs,2013,F,2013-2014
+336,Loralei Hostetler,Saratoga Springs,2011,F,2011-2012
+337,Maddilyn Hoffman,Saratoga Springs,2012,F,2011-2012
+338,Madelyn Lambert,Saratoga Springs,2010,F,2009-2010
+339,Marie Atutiga,Saratoga Springs,2015,F,2015-2017
+340,Stella Nicol,Saratoga Springs,2014,F,2013-2014
+341,Aaron Tingey,Saratoga Springs,2009,M,2009-2010
+342,Asher Ercanbrack,Saratoga Springs,2012,M,2011-2012
+343,Bentley Hardman,Saratoga Springs,2014,M,2013-2014
+344,Boston Warner,Saratoga Springs,2010,M,2009-2010
+345,Burke Hurst,Saratoga Springs,2014,M,2013-2014
+346,Caden Riley,Saratoga Springs,2012,M,2011-2012
+347,Chase Anderson,Saratoga Springs,2013,M,2013-2014
+348,Chase Hellyar,Saratoga Springs,2009,M,2009-2010
+349,Chase Holland,Saratoga Springs,2010,M,2009-2010
+350,Colin Summerhays,Saratoga Springs,2014,M,2013-2014
+351,Elias Gutierrez,Saratoga Springs,2010,M,2009-2010
+352,Evan Griffiths,Saratoga Springs,2014,M,2013-2014
+353,Gavin Grant,Saratoga Springs,2011,M,2011-2012
+354,Grayson Griffiths,Saratoga Springs,2012,M,2011-2012
+355,Grayson O’Neal,Saratoga Springs,2010,M,2009-2010
+356,Grayson Robinson,Saratoga Springs,2012,M,2011-2012
+357,Isaac Gunther,Saratoga Springs,2012,M,2011-2012
+358,Jacob Peterson,Saratoga Springs,2011,M,2011-2012
+359,Jacob Stewart,Saratoga Springs,2014,M,2013-2014
+360,Jasper Luczak,Saratoga Springs,2012,M,2011-2012
+361,Jenson Robinson,Saratoga Springs,2015,M,2015-2017
+362,Josh Gibby,Saratoga Springs,2011,M,2011-2012
+363,Kieran Weeks,Saratoga Springs,2012,M,2011-2012
+364,Liam Frandsen,Saratoga Springs,2010,M,2009-2010
+365,Lincoln Morris,Saratoga Springs,2012,M,2011-2012
+366,Mason Porter,Saratoga Springs,2011,M,2011-2012
+367,Miles Griffiths,Saratoga Springs,2012,M,2011-2012
+368,Owen McNett,Saratoga Springs,2012,M,2011-2012
+369,Peyton Erickson,Saratoga Springs,2011,M,2011-2012
+370,Ray Wells,Saratoga Springs,2011,M,2011-2012
+371,Robert Andersen,Saratoga Springs,2013,M,2013-2014
+372,Ryan Wittleder,Saratoga Springs,2012,M,2011-2012
+373,Samuel Blumell,Saratoga Springs,2014,M,2013-2014
+374,Samuel Hair,Saratoga Springs,2012,M,2011-2012
+375,Sebastian Jensen,Saratoga Springs,2013,M,2013-2014
+376,Tyler Wangsgard,Saratoga Springs,2010,M,2009-2010
+377,Wyatt Heuer,Saratoga Springs,2011,M,2011-2012
+378,Zander Mazziotti,Saratoga Springs,2012,M,2011-2012
+379,Carlei Hansen,Uintah Middle School,2011,F,2011-2012
+380,Haylie Chapoose,Uintah Middle School,2010,F,2009-2010
+381,Julianna Richards,Uintah Middle School,2011,F,2011-2012
+382,Kennadee Justice,Uintah Middle School,2010,F,2009-2010
+383,Lilia Peden,Uintah Middle School,2009,F,2009-2010
+384,Mailey Rimmasch,Uintah Middle School,2009,F,2009-2010
+385,Natalie Chapoose,Uintah Middle School,2009,F,2009-2010
+386,Natalie Strasburg,Uintah Middle School,2011,F,2011-2012
+387,Rachael Anderson,Uintah Middle School,2007,F,2006-2008
+388,Robyn Hodgkinson,Uintah Middle School,2009,F,2009-2010
+389,Braxton O'Crowley,Uintah Middle School,2009,M,2009-2010
+390,Bridger Taylor,Uintah Middle School,2009,M,2009-2010
+391,Carson Shearer,Uintah Middle School,2009,M,2009-2010
+392,Dagen Stilson,Uintah Middle School,2011,M,2011-2012
+393,Easton Madson,Uintah Middle School,2010,M,2009-2010
+394,Eli Hadlock,Uintah Middle School,2011,M,2011-2012
+395,Jack Demick,Uintah Middle School,2010,M,2009-2010
+396,Jason Wiley,Uintah Middle School,2009,M,2009-2010
+397,Jaxon Christensen,Uintah Middle School,2011,M,2011-2012
+398,Kyle Hadlock,Uintah Middle School,2008,M,2006-2008
+399,Marcus Purcell,Uintah Middle School,2009,M,2009-2010
+400,Michael Phillips,Uintah Middle School,2008,M,2006-2008
+401,Parker Strasburg,Uintah Middle School,2008,M,2006-2008
+402,Rohnin Hodgkinson,Uintah Middle School,2011,M,2011-2012
+403,Ryder Ottley,Uintah Middle School,2009,M,2009-2010
+404,Tatum Eldridge,Uintah Middle School,2010,M,2009-2010
+405,Tayson Collett,Uintah Middle School,2009,M,2009-2010
+406,William Summers,Uintah Middle School,2010,M,2009-2010
+407,Wyatt Madson,Uintah Middle School,2009,M,2009-2010
+408,Alice Clayton,Unattached,2014,F,2013-2014
+409,Brooklyn Smith,Unattached,2014,F,2013-2014
+410,Charli Barber,Unattached,2019,F,2015-2017
+411,Claire Lee,Unattached,2016,F,2015-2017
+412,Claire Moody,Unattached,2019,F,2015-2017
+413,Cora Clayton,Unattached,2009,F,2009-2010
+414,Eleanor Maruell,Unattached,2016,F,2015-2017
+415,Eliana Clark,Unattached,2013,F,2013-2014
+416,Giselle Thompson,Unattached,2011,F,2011-2012
+417,Hope Thompson,Unattached,2015,F,2015-2017
+418,Jonas Clayton ,Unattached,2009,M,2009-2010
+419,Kaylie Watson,Unattached,2011,F,2011-2012
+420,Lauren Watson,Unattached,2012,F,2011-2012
+421,Lynden Lee,Unattached,2014,F,2013-2014
+422,Marianna Taylor,Unattached,2011,F,2011-2012
+423,Maylon McGowan,Unattached,2009,F,2009-2010
+424,Tessa Plewe,Unattached,2012,F,2011-2012
+425,Valerie Thompson,Unattached,2012,F,2011-2012
+426,Victoria Baird,Unattached,2017,F,2015-2017
+427,Aaron Blackburn,Unattached,2011,M,2011-2012
+428,Benji Clayton,Unattached,2014,M,2013-2014
+429,Benson Sponbeck,Unattached,2016,M,2015-2017
+430,Caleb Lee,Unattached,2015,M,2015-2017
+431,Charlee Thompson,Unattached,2012,M,2011-2012
+432,Ethan Fisher,Unattached,2014,M,2013-2014
+433,Gavin McGowan,Unattached,2014,M,2013-2014
+434,Isaac Lee,Unattached,2012,M,2011-2012
+435,Jay Taylor,Unattached,2015,M,2015-2017
+436,Kade Jenson,Unattached,2015,M,2015-2017
+437,Leif Thompson,Unattached,2014,M,2013-2014
+438,Logan Jenson,Unattached,2017,M,2015-2017
+439,Logan Rodrigues,Unattached,2014,M,2013-2014
+440,Noah Lawrence,Unattached,2014,M,2013-2014
+441,Nolan Baird,Unattached,2015,M,2015-2017
+442,Parker Whitney,Unattached,2014,M,2013-2014
+443,Patrick Lee,Unattached,2014,M,2013-2014
+444,Pierce Thompson,Unattached,2011,M,2011-2012
+445,Quincy Thompson,Unattached,2014,M,2013-2014
+446,Remington Baird,Unattached,2015,M,2015-2017
+447,Simeon Gray,Unattached,2011,M,2011-2012
+448,Stone Andrews,Unattached,2012,M,2011-2012
+449,Talmage McGowan,Unattached,2016,M,2015-2017
+450,Trent Fisher,Unattached,2016,M,2015-2017
+451,Trust Thompson ,Unattached,2017,M,2015-2017
+452,Tyson Taylor,Unattached,2014,M,2013-2014
+453,Wesley Lawrence,Unattached,2016,M,2015-2017
+454,William Nuttall,Unattached,2014,M,2013-2014
+455,Zachary Carnett,Unattached,2010,M,2009-2010
+456,Zane Thompson,Unattached,2010,M,2009-2010
+457,Abigail VanHouten,Vernal Middle School,2011,F,2011-2012
+458,Addy Hall,Vernal Middle School,2010,F,2009-2010
+459,Alivia Johnson,Vernal Middle School,2009,F,2009-2010
+460,Maddi Williams,Vernal Middle School,2010,F,2009-2010
+461,Cale Manwaring,Vernal Middle School,2008,M,2006-2008
+462,Clark Dillman,Vernal Middle School,2009,M,2009-2010
+463,Emmanuel Ayon,Vernal Middle School,2011,M,2011-2012
+464,Hank Van Oostendorp,Vernal Middle School,2010,M,2009-2010
+465,Jackson Boyd,Vernal Middle School,2010,M,2009-2010
+466,Jamin Truman,Vernal Middle School,2009,M,2009-2010
+467,Kamden Gleason,Vernal Middle School,2009,M,2009-2010
+468,Kasen Cook,Vernal Middle School,2010,M,2009-2010
+469,Parker Manwaring,Vernal Middle School,2010,M,2009-2010
+470,Parker Morris,Vernal Middle School,2011,M,2011-2012
+471,Rhett Van Oostendorp,Vernal Middle School,2008,M,2006-2008
+472,Rigden Horrocks,Vernal Middle School,2011,M,2011-2012
+473,Sam Hirschi,Vernal Middle School,2010,M,2009-2010
+474,Tyler Huber,Vernal Middle School,2011,M,2011-2012
+475,Ella Madson,Vernal Running Club,2015,F,2015-2017
+476,Ryker Madson,Vernal Running Club,2011,M,2011-2012
+477,Abby Ackerson,Wasatch MS,2009,F,2009-2010
+478,Alexa Goode,Wasatch MS,2010,F,2009-2010
+479,Avery Crawford,Wasatch MS,2009,F,2009-2010
+480,Callie Bocanegra,Wasatch MS,2008,F,2006-2008
+481,Eleanor Bird,Wasatch MS,2011,F,2011-2012
+482,Gloria Krull,Wasatch MS,2008,F,2006-2008
+483,Jessie Murdock,Wasatch MS,2008,F,2006-2008
+484,Millie Neerings,Wasatch MS,2010,F,2009-2010
+485,Rhagen Tobler,Wasatch MS,2009,F,2009-2010
+486,Asher Quinn,Wasatch MS,2008,M,2006-2008
+487,Ben Lawson,Wasatch MS,2008,M,2006-2008
+488,Cam Quinn,Wasatch MS,2011,M,2011-2012
+489,Charlie Baird,Wasatch MS,2011,M,2011-2012
+490,Daeman Edwards,Wasatch MS,2010,M,2009-2010
+491,Harper Williams,Wasatch MS,2010,M,2009-2010
+492,Jackson Rogers,Wasatch MS,2008,M,2006-2008
+493,Logan Cunningham,Wasatch MS,2009,M,2009-2010
+494,Luke Giles,Wasatch MS,2008,M,2006-2008
+495,McKay Bennett,Wasatch MS,2009,M,2009-2010
+496,Rowe Christensen,Wasatch MS,2011,M,2011-2012
+497,Sam King,Wasatch MS,2008,M,2006-2008
+498,Ty Griffeth,Wasatch MS,2008,M,2006-2008
+499,Tyler Rowser,Wasatch MS,2010,M,2009-2010
+500,Edie Warren,Wolf Pack,2012,F,2011-2012
+797,Mina Ivanovc,Wolf Pack,2012,F,2011-2012
+798,,,,,2006-2008
+799,Brynlee Astle,Unattached,2010,F,2009-2010
+800,Jackson Sybrowsky,Unattached,2008,M,2006-2008
+801,,,,,2006-2008
+802,Jared Garcia,Roadrunners,2009,M,2009-2010
+803,,,,,2006-2008
+804,,,,,2006-2008
+805,,,,,2006-2008
+806,Joseph Sybrowsky,Unattached,2011,M,2011-2012
+807,Lily Sybrowsky,Unattached,2013,F,2013-2014
+808,Ethan Jenne,Orem,2011,M,2011-2012
+809,Dia Petersen,Orem,2012,F,2011-2012
+810,Zane Stanfill,Orem,2011,F,2011-2012
+811,,,,,2006-2008
+812,,,,,2006-2008
+813,Zoe Stanfill,,2011,F,2011-2012
+814,Jed Stanfill,Orem,2011,M,2011-2012
+815,,,,,2006-2008
+816,Van Stanfill,Orem,2014,M,2013-2014
+817,Zachary Carnett,Race Cats Davis,2010,M,2009-2010
+818,,,,,2006-2008
+819,,,,,2006-2008
+820,,,,,2006-2008
+821,,,,,2006-2008
+822,,,,,2006-2008
+823,,,,,2006-2008
+824,,,,,2006-2008
+825,,,,,2006-2008
+826,,,,,2006-2008
+827,Brynlee Westfall,Orem,2011,F,2011-2012
+828,,,,,2006-2008
+829,,,,,2006-2008
+830,,,,,2006-2008
+831,Bryan Bronson,Unattached,2005,M,2006-2008
+832,William Pachev,Roadrunners,2008,M,2006-2008
+833,Kessiah Valentine,Orem,2013,F,2013-2014
+834,Siri Valentine,Orem,2012,F,2011-2012
+835,,,,,2006-2008
+836,Hyrum Beus,Orem,2010,M,2009-2010
+837,,,,,2006-2008
+838,Addisen Pedersen,Orem,2007,F,2006-2008
+839,Nash Simmons,Orem,2011,M,2011-2012
+840,James Barrington,Orem,2013,M,2013-2014
+841,Bonnie Gow,Roadrunners,2006,F,2006-2008
+842,Jacob Pachev,Roadrunners,2006,M,2006-2008
+843,,,,,2006-2008
+844,Matthew Pachev,Roadrunners,2012,M,2011-2012
+845,Eddie Okazaki,Unattached,2014,M,2013-2014
+846,,,,,2006-2008
+847,,,,,2006-2008
+848,,,,,2006-2008
+849,,,,,2006-2008
+850,Alta Okazaki,Unattached,2016,F,2015-2017
+851,Mary Pachev,Roadrunners,2014,F,2013-2014
+852,,,,,2006-2008
+853,,,,,2006-2008
+854,Bella Pachev,Roadrunners,2016,F,2015-2017
+855,Chip Okazaki,Unattached,2019,M,2015-2017
+856,,,,,2006-2008
+857,,,,,2006-2008
+858,,,,,2006-2008
+859,Colette Hjelmstad,Unattached,2016,F,2015-2017
+860,Joseph Stevens,Orem,2011,M,2011-2012
+861,Madden Hruban,Orem,2012,M,2011-2012
+862,,,,,2006-2008
+863,Wendy Hjelmstad,Unattached,2018,F,2015-2017
+864,,,,,2006-2008
+865,Joshua Moore,Orem,2011,M,2011-2012
+866,Crew Harper,Orem,2011,M,2011-2012
+867,Wesley Lawrence,Unattached,2016,M,2015-2017
+868,,,,,2006-2008
+869,,,,,2006-2008
+870,,,,,2006-2008

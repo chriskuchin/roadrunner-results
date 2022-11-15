@@ -23,9 +23,7 @@ type RaceDTO struct {
 func NewRaceDAO(db *sqlx.DB) *RaceDAO {
 
 	return &RaceDAO{
-		db:     db,
-		offset: 0,
-		limit:  10,
+		db: db,
 	}
 }
 
