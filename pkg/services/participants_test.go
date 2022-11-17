@@ -11,8 +11,9 @@ import (
 )
 
 var (
-	testDBUrl = "../../results.db"
-	raceDAO   = db.NewRaceDAO(sqlx.MustOpen("sqlite3", testDBUrl))
+	testDBUrl       = "../../results.db"
+	raceDAO         = db.NewRaceDAO(sqlx.MustOpen("sqlite3", testDBUrl))
+	participantsDAO = db.NewParticipantsDAO(*sqlx.MustOpen("sqlite3", testDBUrl))
 )
 
 func setup() context.Context {
@@ -24,27 +25,35 @@ func setup() context.Context {
 }
 
 func TestParticipantsService_ProcessParticipantCSV(t *testing.T) {
+	type fields struct {
+		participantsDAO *db.ParticipantsDAO
+	}
 	type args struct {
+		ctx      context.Context
 		filePath string
 	}
 	tests := []struct {
-		name string
-		ps   *ParticipantsService
-		args args
+		name   string
+		fields fields
+		args   args
 	}{
 		{
 			name: "basic",
-			ps:   &ParticipantsService{},
+			fields: fields{
+				participantsDAO: participantsDAO,
+			},
 			args: args{
 				filePath: "testdata/participants-test.csv",
+				ctx:      setup(),
 			},
 		},
 	}
 	for _, tt := range tests {
-		ctx := setup()
 		t.Run(tt.name, func(t *testing.T) {
-			ps := &ParticipantsService{}
-			ps.ProcessParticipantCSV(ctx, tt.args.filePath)
+			ps := &ParticipantsService{
+				participantsDAO: tt.fields.participantsDAO,
+			}
+			ps.ProcessParticipantCSV(tt.args.ctx, tt.args.filePath)
 		})
 	}
 }
