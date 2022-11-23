@@ -1,11 +1,25 @@
 <template>
   <div class="container">
-    <div id="scanner-wrapper" ref="scanner-wrapper" :class="{ 'camera-active': cameraActive }">
+    <div
+      id="scanner-wrapper"
+      ref="scanner-wrapper"
+      :class="{ 'camera-active': cameraActive }"
+    >
       <h1>{{ stopwatch }}</h1>
-      <video ref="finish-line-camera" id="finish-line-camera" @loadedmetadata="resizeVideo" />
+      <video
+        ref="finish-line-camera"
+        id="finish-line-camera"
+        @loadedmetadata="resizeVideo"
+      />
     </div>
 
-    <canvas ref="finish-line-pics" height="300" width="300" id="finish-line-pics" style="display: none"></canvas>
+    <canvas
+      ref="finish-line-pics"
+      height="300"
+      width="300"
+      id="finish-line-pics"
+      style="display: none"
+    ></canvas>
     <div class="field has-addons">
       <p class="control">
         <button class="button is-dark" v-on:click="start">
@@ -31,6 +45,15 @@
         <button class="button is-dark" v-on:click="startCamera">
           start camera
         </button>
+      </p>
+      <p class="control">
+        <div class="select">
+          <select>
+            <option v-for="(quality, index) in videoQuality" :key="index">
+              {{ quality.width }} x {{ quality.height }}
+            </option>
+          </select>
+        </div>
       </p>
     </div>
     <button class="button is-warning" v-on:click="clear">Clear</button>
@@ -66,18 +89,20 @@ export default {
   props: [],
   data: function () {
     return {
-      videoQuality: [{
-        width: 1920,
-        height: 1080,
-      },
-      {
-        width: 1280,
-        height: 720
-      },
-      {
-        width: 960,
-        height: 540
-      }],
+      videoQuality: [
+        {
+          width: 1920,
+          height: 1080,
+        },
+        {
+          width: 1280,
+          height: 720,
+        },
+        {
+          width: 960,
+          height: 540,
+        },
+      ],
       cameraActive: false,
       running: false,
       timeoutID: null,
@@ -108,9 +133,8 @@ export default {
       this.minutes = 0;
     },
     startCamera: function (e) {
-
-      console.log(this.$refs["scanner-wrapper"].clientHeight)
-      console.log(this.$refs["scanner-wrapper"].clientWidth)
+      console.log(this.$refs["scanner-wrapper"].clientHeight);
+      console.log(this.$refs["scanner-wrapper"].clientWidth);
       navigator.mediaDevices
         .getUserMedia({
           audio: false,
@@ -173,7 +197,7 @@ export default {
         });
       }
     },
-    clear: function () { },
+    clear: function () {},
     increment: function () {
       this.timeoutID = setTimeout(this.increment, 10);
 
