@@ -5,11 +5,13 @@ const RaceTimer = () => import('../views/RaceTimer.vue')
 const RecordResults = () => import('../views/RecordResults.vue')
 const LoginPage = () => import('../views/LoginPage.vue')
 const SignupPage = () => import('../views/SignupPage.vue')
+const RegisterParticipant = () => import('../views/RegisterParticipant.vue')
 
 const routes = [
   { path: "/", component: HomePage },
-  { path: "/timer", component: RaceTimer },
-  { path: "/record", component: RecordResults },
+  { path: "/:raceId/timer", component: RaceTimer, name: "timer" },
+  { path: "/:raceId/record", component: RecordResults, name: "record" },
+  { path: "/:raceId/register", component: RegisterParticipant, name: "register" },
   { path: "/login", component: LoginPage },
   { path: "/signup", component: SignupPage }
 ]

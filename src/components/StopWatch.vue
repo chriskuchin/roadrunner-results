@@ -1,25 +1,14 @@
 <template>
   <div class="container">
-    <div
-      id="scanner-wrapper"
-      ref="scanner-wrapper"
-      :class="{ 'camera-active': cameraActive }"
-    >
+    <div id="scanner-wrapper" ref="scanner-wrapper" :class="{
+      'camera-active': cameraActive,
+      'camera-inactive': !cameraActive
+    }">
       <h1>{{ stopwatch }}</h1>
-      <video
-        ref="finish-line-camera"
-        id="finish-line-camera"
-        @loadedmetadata="resizeVideo"
-      />
+      <video ref="finish-line-camera" id="finish-line-camera" @loadedmetadata="resizeVideo" />
     </div>
 
-    <canvas
-      ref="finish-line-pics"
-      height="300"
-      width="300"
-      id="finish-line-pics"
-      style="display: none"
-    ></canvas>
+    <canvas ref="finish-line-pics" height="300" width="300" id="finish-line-pics" style="display: none"></canvas>
     <div class="field has-addons">
       <p class="control">
         <button class="button is-dark" v-on:click="start">
@@ -42,19 +31,20 @@
         </button>
       </p>
       <p class="control">
-        <button class="button is-dark" v-on:click="startCamera">
+        <button class="button is-dark" v-on:click="stopCamera" v-if="cameraActive">
+          stop camera
+        </button>
+        <button class="button is-dark" v-on:click="startCamera" v-else>
           start camera
         </button>
       </p>
-      <p class="control">
-        <div class="select">
-          <select>
-            <option v-for="(quality, index) in videoQuality" :key="index">
-              {{ quality.width }} x {{ quality.height }}
-            </option>
-          </select>
-        </div>
-      </p>
+      <div class="select">
+        <select ref="camera-quality" :disabled="cameraActive">
+          <option v-for="(quality, index) in videoQuality" :key="index" :value="quality">
+            {{ quality.width }} x {{ quality.height }}
+          </option>
+        </select>
+      </div>
     </div>
     <button class="button is-warning" v-on:click="clear">Clear</button>
   </div>
@@ -133,14 +123,14 @@ export default {
       this.minutes = 0;
     },
     startCamera: function (e) {
-      console.log(this.$refs["scanner-wrapper"].clientHeight);
-      console.log(this.$refs["scanner-wrapper"].clientWidth);
+      let selectedIndex = this.$refs['camera-quality'].selectedIndex
+      let videoDimensions = this.videoQuality[selectedIndex]
       navigator.mediaDevices
         .getUserMedia({
           audio: false,
           video: {
-            width: 1920,
-            height: 1080,
+            width: videoDimensions.width,
+            height: videoDimensions.height,
             facingMode: { ideal: "environment" },
           },
         })
@@ -181,11 +171,12 @@ export default {
       }
 
       this.$refs["finish-line-camera"].srcObject = null;
+      this.cameraActive = false;
     },
     resizeVideo: function (e) {
       // this.$refs["scanner-wrapper"].style.height = e.target.videoHeight + "px";
       // this.$refs["scanner-wrapper"].style.width = e.target.videoWidth + "px";
-      console.log(e.target.videoHeight, e.target.videoWidth);
+      // console.log(e.target.videoHeight, e.target.videoWidth);
     },
     record: function (e) {
       if (this.running) {
@@ -197,7 +188,7 @@ export default {
         });
       }
     },
-    clear: function () {},
+    clear: function () { },
     increment: function () {
       this.timeoutID = setTimeout(this.increment, 10);
 

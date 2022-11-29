@@ -25,12 +25,17 @@ input[type=number] {
 
 #scanner-wrapper h1 {
     font-weight: bold;
-    font-size: 48px;
+    font-size: 96px;
+}
+
+#scanner-wrapper.camera-inactive h1 {
+    text-align: center;
+    display: block;
+    margin: auto 0px auto 0px;
 }
 
 #scanner-wrapper.camera-active h1 {
     font-weight: normal;
-    font-size: 96px;
     line-height: 1;
     color: white;
     top: 0px;
