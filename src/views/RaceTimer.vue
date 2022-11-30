@@ -1,7 +1,9 @@
 <template>
-  <div class="section">
-    <breadcrumb></breadcrumb>
-    <stopwatch></stopwatch>
+  <div>
+    <breadcrumb :paths="paths"></breadcrumb>
+    <div class="section">
+      <stopwatch></stopwatch>
+    </div>
   </div>
 </template>
 
@@ -19,5 +21,23 @@ export default {
     };
   },
   methods: {},
+  computed: {
+    paths: function () {
+      return [
+        {
+          path: "/races",
+          display: "Races",
+        },
+        {
+          path: "/races/" + this.$route.params.raceId,
+          display: "Race 123",
+        },
+        {
+          path: "/races/" + this.$route.params.raceId + "/timer",
+          display: "Timer",
+        },
+      ];
+    },
+  },
 };
 </script>
