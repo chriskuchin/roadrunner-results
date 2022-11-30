@@ -6,6 +6,7 @@
 
 <script>
 import Breadcrumb from "../components/Breadcrumb.vue";
+
 export default {
   components: {
     breadcrumb: Breadcrumb,
