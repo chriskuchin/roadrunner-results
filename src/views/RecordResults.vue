@@ -1,6 +1,8 @@
 <template>
   <div>
-    <breadcrumb :paths="paths"></breadcrumb>
+    <header>
+      <breadcrumb :paths="paths"></breadcrumb>
+    </header>
     <div class="section">
       <div class="tabs">
         <ul>

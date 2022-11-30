@@ -1,7 +1,11 @@
 <template>
-  <breadcrumb :paths="paths"></breadcrumb>
+  <div>
+    <header>
+      <breadcrumb :paths="paths"></breadcrumb>
+    </header>
 
-  Hello World Register a Racer
+    Hello World Register a Racer
+  </div>
 </template>
 
 <script>
@@ -14,21 +18,23 @@ export default {
   data: function () {
     return {};
   },
-  computed: function () {
-    return [
-      {
-        path: "/races",
-        display: "Races",
-      },
-      {
-        path: "/races/" + this.$route.params.raceId,
-        display: "Race 123",
-      },
-      {
-        path: "/races/" + this.$route.params.raceId + "/register",
-        display: "Register",
-      },
-    ];
+  computed: {
+    paths: function () {
+      return [
+        {
+          path: "/races",
+          display: "Races",
+        },
+        {
+          path: "/races/" + this.$route.params.raceId,
+          display: "Race 123",
+        },
+        {
+          path: "/races/" + this.$route.params.raceId + "/register",
+          display: "Register",
+        },
+      ];
+    },
   },
 };
 </script>
