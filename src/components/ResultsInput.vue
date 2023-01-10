@@ -1,6 +1,11 @@
 <template>
   <div>
-    <input class="input is-large" type="number" placeholder="Bib Number Input" v-on:keyup.enter="recordRunner" />
+    <input
+      class="input is-large"
+      type="number"
+      placeholder="Bib Number Input"
+      v-on:keyup.enter="recordRunner"
+    />
   </div>
 </template>
 
@@ -10,8 +15,7 @@ import { useResultsStore } from "../store/results";
 
 export default {
   data: function () {
-    return {
-    };
+    return {};
   },
   methods: {
     ...mapActions(useResultsStore, ["recordRunnerResult"]),
