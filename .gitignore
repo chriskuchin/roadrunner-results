@@ -2,3 +2,5 @@
 node_modules
 .nuxt
 dist
+credentials.json
+token.json
