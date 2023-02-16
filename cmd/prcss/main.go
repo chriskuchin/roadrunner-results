@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"os"
 	"regexp"
+	"strconv"
+	"strings"
 
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
@@ -15,8 +17,45 @@ import (
 	"google.golang.org/api/sheets/v4"
 )
 
+type (
+	Race struct {
+		Name string
+	}
+
+	Event struct {
+		Description string
+		Distance    int
+	}
+
+	Participant struct {
+		FirstName string
+		LastName  string
+		BirthYear string
+		Gender    string
+	}
+
+	RaceParticipant struct {
+		Participant string
+		Event       string
+		Team        string
+		BibNumber   string
+	}
+
+	Result struct {
+		Participant string
+		Event       string
+		Time        int
+	}
+)
+
 var (
 	raceXCDistance = regexp.MustCompile(`\d[kK]`)
+
+	race             Race
+	events           []Event
+	particpants      []Participant
+	results          []Result
+	raceParticipants []RaceParticipant
 )
 
 // Retrieve a token, saves the token, then returns the generated client.
@@ -100,7 +139,17 @@ func main() {
 	spreadsheetId := "18Nj62AJHI-IbQaSn3dB_1TpGOmWFgQH8zMPKSkdC8fw"
 	rslt, _ := srv.Spreadsheets.Get(spreadsheetId).Do()
 
-	fmt.Println(raceXCDistance.FindAllString(rslt.Properties.Title, 1))
+	race = Race{
+		Name: rslt.Properties.Title,
+	}
+
+	xcDistance := raceXCDistance.FindAllString(rslt.Properties.Title, 1)
+	distanceMeters, _ := strconv.Atoi(strings.TrimSuffix(strings.ToLower(xcDistance[0]), "k"))
+	events = append(events, Event{
+		Description: xcDistance[0],
+		Distance:    distanceMeters,
+	})
+
 	readRange := "Overall Results!A:F"
 	resp, err := srv.Spreadsheets.Values.Get(spreadsheetId, readRange).ValueRenderOption("FORMATTED_VALUE").Do()
 	if err != nil {
@@ -111,16 +160,46 @@ func main() {
 		fmt.Println("No data found.")
 	} else {
 		for idx, row := range resp.Values {
-			if idx == 0 {
-				// Header
-				fmt.Println(row)
-			} else if len(row) > 1 {
-				// Results
-				fmt.Printf("%s, %s, %s, %s, %s, %s\n", row[0], row[1], row[2], row[3], row[4], row[5])
+			if idx == 0 || len(row) <= 1 {
+				continue
 			} else {
-				// Race Results Sub Heading
-				fmt.Println(row[0])
+				particpants = append(particpants, Participant{
+					FirstName: strings.Split(row[1].(string), " ")[0],
+					LastName:  strings.Join(strings.Split(row[1].(string), " ")[1:], " "),
+					BirthYear: row[3].(string),
+					Gender:    row[4].(string),
+				})
+
+				results = append(results, Result{
+					Participant: row[1].(string),
+					Event:       rslt.Properties.Title,
+					Time:        convertToMilliseconds(row[5].(string)),
+				})
+
+				raceParticipants = append(raceParticipants, RaceParticipant{
+					Participant: row[1].(string),
+					Event:       rslt.Properties.Title,
+					Team:        row[2].(string),
+					BibNumber:   row[0].(string),
+				})
 			}
 		}
+		fmt.Println(len(particpants))
+		fmt.Printf("Participant:     %+v\n", particpants[0])
+		fmt.Printf("Result:          %+v\n", results[0])
+		fmt.Printf("RaceParticipant: %+v\n", raceParticipants[0])
 	}
+}
+
+func convertToMilliseconds(timing string) int {
+	split := strings.Split(timing, ":")
+	seconds := strings.Split(split[1], ".")
+
+	min, _ := strconv.Atoi(split[0])
+	sec, _ := strconv.Atoi(seconds[0])
+	tenth, _ := strconv.Atoi(seconds[1])
+
+	result := min*60000 + sec*1000 + tenth*10
+
+	return result
 }
