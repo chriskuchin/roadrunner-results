@@ -133,10 +133,7 @@ func main() {
 		log.Fatalf("Unable to retrieve Sheets client: %v", err)
 	}
 
-	// Prints the names and majors of students in a sample spreadsheet:
-	// https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
 	// https://docs.google.com/spreadsheets/d/18Nj62AJHI-IbQaSn3dB_1TpGOmWFgQH8zMPKSkdC8fw/edit?usp=drivesdk
-	// spreadsheetId := "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
 	spreadsheetId := "18Nj62AJHI-IbQaSn3dB_1TpGOmWFgQH8zMPKSkdC8fw"
 	rslt, _ := srv.Spreadsheets.Get(spreadsheetId).Do()
 
