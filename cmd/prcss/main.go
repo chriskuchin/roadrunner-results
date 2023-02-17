@@ -23,6 +23,7 @@ type (
 	}
 
 	Event struct {
+		Race        string
 		Description string
 		Distance    int
 	}
@@ -36,6 +37,7 @@ type (
 
 	RaceParticipant struct {
 		Participant string
+		Race        string
 		Event       string
 		Team        string
 		BibNumber   string
@@ -43,14 +45,13 @@ type (
 
 	Result struct {
 		Participant string
+		Race        string
 		Event       string
 		Time        int
 	}
 )
 
 var (
-	raceXCDistance = regexp.MustCompile(`\d[kK]`)
-
 	race             Race
 	events           []Event
 	particpants      []Participant
@@ -143,52 +144,66 @@ func main() {
 		Name: rslt.Properties.Title,
 	}
 
-	xcDistance := raceXCDistance.FindAllString(rslt.Properties.Title, 1)
-	distanceMeters, _ := strconv.Atoi(strings.TrimSuffix(strings.ToLower(xcDistance[0]), "k"))
-	events = append(events, Event{
-		Description: xcDistance[0],
-		Distance:    distanceMeters,
-	})
-
-	readRange := "Overall Results!A:F"
-	resp, err := srv.Spreadsheets.Values.Get(spreadsheetId, readRange).ValueRenderOption("FORMATTED_VALUE").Do()
-	if err != nil {
-		log.Fatalf("Unable to retrieve data from sheet: %v", err)
-	}
-
-	if len(resp.Values) == 0 {
-		fmt.Println("No data found.")
-	} else {
-		for idx, row := range resp.Values {
-			if idx == 0 || len(row) <= 1 {
-				continue
-			} else {
-				particpants = append(particpants, Participant{
-					FirstName: strings.Split(row[1].(string), " ")[0],
-					LastName:  strings.Join(strings.Split(row[1].(string), " ")[1:], " "),
-					BirthYear: row[3].(string),
-					Gender:    row[4].(string),
-				})
-
-				results = append(results, Result{
-					Participant: row[1].(string),
-					Event:       rslt.Properties.Title,
-					Time:        convertToMilliseconds(row[5].(string)),
-				})
-
-				raceParticipants = append(raceParticipants, RaceParticipant{
-					Participant: row[1].(string),
-					Event:       rslt.Properties.Title,
-					Team:        row[2].(string),
-					BibNumber:   row[0].(string),
-				})
-			}
+	heats := []string{}
+	for _, sheet := range rslt.Sheets {
+		if isRaceHeatResultsTab(sheet.Properties.Title) {
+			heats = append(heats, sheet.Properties.Title)
 		}
-		fmt.Println(len(particpants))
-		fmt.Printf("Participant:     %+v\n", particpants[0])
-		fmt.Printf("Result:          %+v\n", results[0])
-		fmt.Printf("RaceParticipant: %+v\n", raceParticipants[0])
 	}
+
+	for _, heat := range heats {
+		events = append(events, Event{
+			Race:        rslt.Properties.Title,
+			Description: heat,
+			Distance:    getHeatDistanceMeters(rslt.Properties.Title, heat),
+		})
+
+		readRange := fmt.Sprintf("%s!A:F", heat)
+		resp, err := srv.Spreadsheets.Values.Get(spreadsheetId, readRange).ValueRenderOption("FORMATTED_VALUE").Do()
+		if err != nil {
+			log.Fatalf("Unable to retrieve data from sheet: %v", err)
+		}
+
+		if len(resp.Values) == 0 {
+			fmt.Println("No data found.")
+		} else {
+			for idx, row := range resp.Values {
+				if idx == 0 || len(row) <= 1 {
+					continue
+				} else {
+					if row[0].(string) == "" {
+						break
+					}
+					particpants = append(particpants, Participant{
+						FirstName: strings.Split(row[1].(string), " ")[0],
+						LastName:  strings.Join(strings.Split(row[1].(string), " ")[1:], " "),
+						BirthYear: row[3].(string),
+						Gender:    row[4].(string),
+					})
+
+					results = append(results, Result{
+						Participant: row[1].(string),
+						Race:        rslt.Properties.Title,
+						Event:       heat,
+						Time:        convertToMilliseconds(row[5].(string)),
+					})
+
+					raceParticipants = append(raceParticipants, RaceParticipant{
+						Participant: row[1].(string),
+						Race:        rslt.Properties.Title,
+						Event:       heat,
+						Team:        row[2].(string),
+						BibNumber:   row[0].(string),
+					})
+				}
+			}
+			fmt.Println(len(particpants))
+			fmt.Printf("Participant:     %+v\n", particpants[0])
+			fmt.Printf("Result:          %+v\n", results[0])
+			fmt.Printf("RaceParticipant: %+v\n", raceParticipants[0])
+		}
+	}
+
 }
 
 func convertToMilliseconds(timing string) int {
@@ -202,4 +217,31 @@ func convertToMilliseconds(timing string) int {
 	result := min*60000 + sec*1000 + tenth*10
 
 	return result
+}
+
+var raceID regexp.Regexp = *regexp.MustCompile(`Race|(\d+)([mMkK])`)
+var raceDistance regexp.Regexp = *regexp.MustCompile(`(\d+)([mMkK])`)
+
+func isRaceHeatResultsTab(tab string) bool {
+	return raceID.MatchString(tab)
+}
+
+func getHeatDistanceMeters(description ...string) int {
+	for _, race := range description {
+		matches := raceDistance.FindStringSubmatch(race)
+
+		if len(matches) != 3 {
+			return 0
+		}
+
+		if strings.ToLower(matches[2]) == "k" {
+			dist, _ := strconv.Atoi(matches[1])
+
+			return dist * 1000
+		} else if strings.ToLower(matches[2]) == "m" {
+			dist, _ := strconv.Atoi(matches[1])
+			return dist
+		}
+	}
+	return 0
 }
