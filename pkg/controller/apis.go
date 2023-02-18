@@ -42,3 +42,12 @@ func (rs APIsResource) Routes() chi.Router {
 // Per Event View
 // Per Participant View
 // Participant Linking??
+
+
+// v1/import
+// v1/auth
+
+// import
+// google oauth for import
+// csv import
+// google sheet import for roadrunner results

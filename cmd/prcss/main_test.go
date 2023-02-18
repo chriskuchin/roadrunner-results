@@ -179,3 +179,36 @@ func Test_getHeatDistanceMeters(t *testing.T) {
 		})
 	}
 }
+
+func Test_extractSpreadsheetIDFromURL(t *testing.T) {
+	type args struct {
+		url string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "test",
+			args: args{
+				url: "https://docs.google.com/spreadsheets/d/18Nj62AJHI-IbQaSn3dB_1TpGOmWFgQH8zMPKSkdC8fw/edit?usp=drivesdk",
+			},
+			want: "18Nj62AJHI-IbQaSn3dB_1TpGOmWFgQH8zMPKSkdC8fw",
+		},
+		{
+			name: "test",
+			args: args{
+				url: "https://docs.google.com/spreadsheets/d/1TR0ps_GlVqm_gthEcHvsFKJ5wFAwRd-ytCVeuDjjpLk/edit?usp=drivesdk",
+			},
+			want: "1TR0ps_GlVqm_gthEcHvsFKJ5wFAwRd-ytCVeuDjjpLk",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := extractSpreadsheetIDFromURL(tt.args.url); got != tt.want {
+				t.Errorf("extractSpreadsheetIDFromURL() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

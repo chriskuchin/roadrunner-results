@@ -17,6 +17,8 @@ import (
 	"google.golang.org/api/sheets/v4"
 )
 
+var spreadsheetIdRegex *regexp.Regexp = regexp.MustCompile(`https:\/\/docs.google.com\/spreadsheets\/d\/([\w\d_-]+)\/.*`)
+
 type (
 	Race struct {
 		Name string
@@ -203,6 +205,15 @@ func main() {
 
 }
 
+func extractSpreadsheetIDFromURL(url string) string {
+	matches := spreadsheetIdRegex.FindStringSubmatch(url)
+	if len(matches) != 2 {
+		return ""
+	}
+
+	return matches[1]
+}
+
 func convertToMilliseconds(timing string) int {
 	split := strings.Split(timing, ":")
 	seconds := strings.Split(split[1], ".")
@@ -216,8 +227,8 @@ func convertToMilliseconds(timing string) int {
 	return result
 }
 
-var raceID regexp.Regexp = *regexp.MustCompile(`Race|(\d+)([mMkK])`)
-var raceDistance regexp.Regexp = *regexp.MustCompile(`(\d+)([mMkK])`)
+var raceID *regexp.Regexp = regexp.MustCompile(`Race|(\d+)([mMkK])`)
+var raceDistance *regexp.Regexp = regexp.MustCompile(`(\d+)([mMkK])`)
 
 func isRaceHeatResultsTab(tab string) bool {
 	return raceID.MatchString(tab)
