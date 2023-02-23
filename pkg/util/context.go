@@ -2,11 +2,12 @@ package util
 
 import "context"
 
-type key string
+type key int
 
 const (
-	RaceID  key = "raceID"
-	EventID key = "eventID"
+	OAuthTokenID key = 0
+	RaceID       key = 1
+	EventID      key = 2
 )
 
 func GetRaceIDFromContext(ctx context.Context) string {

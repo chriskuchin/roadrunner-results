@@ -2,6 +2,8 @@ package v1
 
 import (
 	"context"
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -10,6 +12,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
 	"github.com/rs/zerolog/log"
+	"golang.org/x/oauth2"
 )
 
 // GET /races/{id}
@@ -21,6 +24,11 @@ func (rs racesResources) Routes() chi.Router {
 	r.Options("/", Cors)
 	r.Get("/", listRaces)
 	r.Post("/", createRace)
+
+	r.Route("/import", func(r chi.Router) {
+		r.Use(handleOAuth2Creds)
+		r.Get("/", importRaceAndResults)
+	})
 
 	r.Route("/{raceID}", func(r chi.Router) {
 		r.Use(RaceCtx)
@@ -39,6 +47,41 @@ func Cors(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Access-Control-Allow-Headers", "*")
 	w.WriteHeader(http.StatusNoContent)
 	w.Write(nil)
+}
+
+func handleOAuth2Creds(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		encodedToken, err := r.Cookie("oauth-token")
+		if err != nil {
+			log.Error().Err(err).Send()
+			url := getOAuth2Config().AuthCodeURL(r.URL.Path, oauth2.AccessTypeOffline)
+
+			http.Redirect(w, r, url, http.StatusFound)
+			return
+		}
+
+		token, err := base64.StdEncoding.DecodeString(encodedToken.Value)
+		if err != nil {
+			log.Error().Err(err).Send()
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		tok := &oauth2.Token{}
+		err = json.Unmarshal([]byte(token), tok)
+		if err != nil {
+			log.Error().Err(err).Send()
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		ctx := context.WithValue(r.Context(), util.OAuthTokenID, tok)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
+}
+
+func importRaceAndResults(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("test import"))
 }
 
 // GET /races
