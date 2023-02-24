@@ -8,6 +8,7 @@ const (
 	OAuthTokenID key = 0
 	RaceID       key = 1
 	EventID      key = 2
+	GoogleClient key = 3
 )
 
 func GetRaceIDFromContext(ctx context.Context) string {
