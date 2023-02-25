@@ -3,7 +3,6 @@ package db
 import (
 	"context"
 
-	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 )
@@ -23,26 +22,20 @@ type RaceDTO struct {
 func NewRaceDAO(db *sqlx.DB) *RaceDAO {
 
 	return &RaceDAO{
-		db: db,
+		db:    db,
+		limit: 10,
 	}
 }
 
-func (r *RaceDAO) CreateRace(ctx context.Context, name string) (string, error) {
-	id := uuid.New()
+func (r *RaceDAO) CreateRace(ctx context.Context, id, name string) error {
 	_, err := r.db.Exec("insert into races (race_id, race_name, owner_id) VALUES(?, ?, ?)", id, name, "123")
-	if err != nil {
-		log.Error().Err(err).Send()
-		return "", err
-	}
-
-	return id.String(), nil
+	return err
 }
 
 func (r *RaceDAO) GetRaceByID(ctx context.Context, id string) (RaceDTO, error) {
 	dto := []RaceDTO{}
 	err := r.db.Select(&dto, "select * from races where race_id = ?", id)
 	if err != nil {
-		log.Error().Err(err).Send()
 		return RaceDTO{}, err
 	}
 	log.Debug().Msgf("%+v", dto)

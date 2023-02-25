@@ -9,10 +9,10 @@ import (
 var eventsInstance *EventsService
 
 type EventsService struct {
-	eventsDao db.EventDao
+	eventsDao *db.EventDao
 }
 
-func NewEventService(dao db.EventDao) {
+func NewEventService(dao *db.EventDao) {
 	if eventsInstance == nil {
 		eventsInstance = &EventsService{
 			eventsDao: dao,
@@ -24,8 +24,8 @@ func GetEventsServiceInstance() *EventsService {
 	return eventsInstance
 }
 
-func (e *EventsService) AddEvent(ctx context.Context) {
-
+func (e *EventsService) AddEvent(ctx context.Context, raceID, description string, distance int) error {
+	return e.eventsDao.AddEvent(ctx, raceID, description, distance)
 }
 
 func (e *EventsService) GetRaceEvents(ctx context.Context) {

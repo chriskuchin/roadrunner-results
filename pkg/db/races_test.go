@@ -4,6 +4,7 @@ import (
 	"context"
 	"testing"
 
+	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -40,6 +41,7 @@ func TestRaceDAO_CreateRace(t *testing.T) {
 	}
 	type args struct {
 		name string
+		id   string
 	}
 	tests := []struct {
 		name   string
@@ -53,6 +55,7 @@ func TestRaceDAO_CreateRace(t *testing.T) {
 			},
 			args: args{
 				name: "2022 Spring Invitational",
+				id:   uuid.NewString(),
 			},
 		},
 	}
@@ -63,10 +66,10 @@ func TestRaceDAO_CreateRace(t *testing.T) {
 				limit: 10,
 			}
 			setup()
-			id, _ := r.CreateRace(context.TODO(), tt.args.name)
-			r.GetRaceByID(context.TODO(), id)
+			r.CreateRace(context.TODO(), tt.args.id, tt.args.name)
+			r.GetRaceByID(context.TODO(), tt.args.id)
 			r.ListRaces(context.TODO())
-			r.DeleteRace(context.TODO(), id)
+			r.DeleteRace(context.TODO(), tt.args.id)
 			teardown()
 		})
 	}

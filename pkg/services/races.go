@@ -4,7 +4,7 @@ import (
 	"context"
 
 	dao "github.com/chriskuchin/roadrunner-results/pkg/db"
-	"github.com/rs/zerolog/log"
+	"github.com/google/uuid"
 )
 
 var raceInstance *RaceService
@@ -32,13 +32,13 @@ func GetRaceServiceInstance() *RaceService {
 }
 
 func (rs *RaceService) CreateRace(ctx context.Context, name string) (string, error) {
-	id, err := rs.raceDAO.CreateRace(ctx, name)
-	if err != nil {
-		log.Error().Err(err).Send()
-		return "", err
-	}
+	id := uuid.NewString()
 
-	return id, nil
+	return id, rs.CreateRaceWithID(ctx, id, name)
+}
+
+func (rs *RaceService) CreateRaceWithID(ctx context.Context, id, name string) error {
+	return rs.raceDAO.CreateRace(ctx, id, name)
 }
 
 func (rs *RaceService) ListRaces(ctx context.Context) ([]RaceResult, error) {

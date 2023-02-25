@@ -31,21 +31,26 @@ func ImportFromSheet(ctx context.Context, sheetId string) {
 
 	log.Info().Str("sheet", rslt.Properties.Title).Send()
 
+	err = GetRaceServiceInstance().CreateRaceWithID(ctx, sheetId, rslt.Properties.Title)
+	if err != nil {
+		log.Error().Err(err).Send()
+	}
+
+	eventService := GetEventsServiceInstance()
 	heats := []string{}
 	for _, sheet := range rslt.Sheets {
 		if isRaceHeatResultsTab(sheet.Properties.Title) {
 			heats = append(heats, sheet.Properties.Title)
+			err := eventService.AddEvent(ctx, sheetId, sheet.Properties.Title, getHeatDistanceMeters(sheet.Properties.Title))
+			if err != nil {
+				log.Error().Err(err).Send()
+			}
 		}
 	}
 
 	log.Info().Strs("heats", heats).Send()
 
 	for _, heat := range heats {
-		// events = append(events, Event{
-		// 	Race:        rslt.Properties.Title,
-		// 	Description: heat,
-		// 	Distance:    getHeatDistanceMeters(rslt.Properties.Title, heat),
-		// })
 
 		readRange := fmt.Sprintf("%s!A:F", heat)
 		resp, err := sheets.Spreadsheets.Values.Get(sheetId, readRange).ValueRenderOption("FORMATTED_VALUE").Do()
@@ -58,20 +63,16 @@ func ImportFromSheet(ctx context.Context, sheetId string) {
 		} else {
 			for idx, row := range resp.Values {
 				if idx == 0 || len(row) <= 1 {
-					log.Info().Msg("Header")
 					continue
 				} else {
 					if row[0].(string) == "" {
 						break
 					}
-					log.Info().Msg("Participant and Result")
-					// particpants = append(particpants, Participant{
-					// 	FirstName: strings.Split(row[1].(string), " ")[0],
-					// 	LastName:  strings.Join(strings.Split(row[1].(string), " ")[1:], " "),
-					// 	BirthYear: row[3].(string),
-					// 	Gender:    row[4].(string),
-					// })
-
+					birthYear, _ := strconv.Atoi(row[3].(string))
+					err = GetMembersServiceInstance().UpsertMember(ctx, strings.Split(row[1].(string), " ")[0], strings.Join(strings.Split(row[1].(string), " ")[1:], " "), row[4].(string), birthYear)
+					if err != nil {
+						log.Error().Err(err).Send()
+					}
 					// results = append(results, Result{
 					// 	Participant: row[1].(string),
 					// 	Race:        rslt.Properties.Title,

@@ -16,8 +16,9 @@ func NewEventDAO(db *sqlx.DB) *EventDao {
 	}
 }
 
-func (e *EventDao) AddEvent(ctx context.Context) {
-
+func (e *EventDao) AddEvent(ctx context.Context, raceID, description string, distance int) error {
+	_, err := e.db.Exec("insert into events (race_id, event_description, distance) VALUES(?, ?, ?)", raceID, description, distance)
+	return err
 }
 
 func (e *EventDao) GetRaceEvents(ctx context.Context) {
