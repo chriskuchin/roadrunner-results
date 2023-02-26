@@ -1,6 +1,8 @@
 package services
 
 import (
+	"context"
+
 	"github.com/chriskuchin/roadrunner-results/pkg/db"
 )
 
@@ -20,44 +22,10 @@ func NewParticipantsService(db *db.ParticipantsDAO) {
 	}
 }
 
-// func (ps *ParticipantsService) ProcessParticipantCSV(ctx context.Context, filePath string) {
-// 	log.Info().Str("raceID", util.GetRaceIDFromContext(ctx)).Msg("Starting processing")
-// 	file, err := os.Open(filePath)
-// 	if err != nil {
-// 		log.Error().Err(err).Msgf("Failed to open CSV File: %s", filePath)
-// 		return
-// 	}
+func GetParticipantServiceInstance() *ParticipantsService {
+	return participantServiceInstance
+}
 
-// 	reader := csv.NewReader(bufio.NewReader(file))
-
-// 	participants := []db.Participant{}
-// 	lines := 0
-// 	for {
-// 		line, err := reader.Read()
-
-// 		if err == io.EOF {
-// 			break
-// 		}
-
-// 		if err != nil {
-// 			log.Error().Err(err).Msg("Failed to read line from file")
-// 		}
-// 		lines++
-// 		if lines == 1 {
-// 			continue
-// 		}
-// 		fmt.Printf("%+v", line)
-// 		name := strings.Split(line[1], " ")
-// 		if len(name) < 2 {
-// 			continue
-// 		}
-// 		birthYear, _ := strconv.Atoi(line[3])
-// 		participants = append(participants, db.Participant{
-// 			RaceID:    util.GetRaceIDFromContext(ctx),
-// 			FirstName: name[0],
-// 			LastName:  name[1],
-// 			BirthYear: birthYear,
-// 		})
-// 	}
-// 	ps.participantsDAO.BatchInsertParticipants(ctx, participants)
-// }
+func (ps *ParticipantsService) AddParticipant(ctx context.Context, participant db.Participant) error {
+	return ps.participantsDAO.InsertParticipant(ctx, participant)
+}

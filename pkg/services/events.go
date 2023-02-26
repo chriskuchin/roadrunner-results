@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/db"
+	"github.com/google/uuid"
 )
 
 var eventsInstance *EventsService
@@ -24,8 +25,9 @@ func GetEventsServiceInstance() *EventsService {
 	return eventsInstance
 }
 
-func (e *EventsService) AddEvent(ctx context.Context, raceID, description string, distance int) error {
-	return e.eventsDao.AddEvent(ctx, raceID, description, distance)
+func (e *EventsService) AddEvent(ctx context.Context, raceID, description string, distance int) (string, error) {
+	id := uuid.NewString()
+	return id, e.eventsDao.AddEvent(ctx, raceID, id, description, distance)
 }
 
 func (e *EventsService) GetRaceEvents(ctx context.Context) {

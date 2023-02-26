@@ -8,7 +8,9 @@
         "test": "peeky run",
         "build": "webpack",
         "debug": "webpack --mode=development",
-        "serve": "go run main.go -debug server"
+        "serve": "go run main.go -debug server",
+        "db-up": "DATABASE_URL=sqlite:./results.db dbmate up",
+        "db-down": "DATABASE_URL=sqlite:./results.db dbmate down"
     },
     "keywords": [],
     "author": "",

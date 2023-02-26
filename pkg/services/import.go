@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/api/option"
@@ -15,8 +16,6 @@ import (
 )
 
 func ImportFromSheet(ctx context.Context, sheetId string) {
-	log.Info().Msg("Start Import")
-
 	sheets, err := sheets.NewService(ctx, option.WithHTTPClient(ctx.Value(util.GoogleClient).(*http.Client)))
 	if err != nil {
 		log.Error().Err(err).Send()
@@ -29,8 +28,6 @@ func ImportFromSheet(ctx context.Context, sheetId string) {
 		return
 	}
 
-	log.Info().Str("sheet", rslt.Properties.Title).Send()
-
 	err = GetRaceServiceInstance().CreateRaceWithID(ctx, sheetId, rslt.Properties.Title)
 	if err != nil {
 		log.Error().Err(err).Send()
@@ -38,19 +35,19 @@ func ImportFromSheet(ctx context.Context, sheetId string) {
 
 	eventService := GetEventsServiceInstance()
 	heats := []string{}
+	events := []string{}
 	for _, sheet := range rslt.Sheets {
 		if isRaceHeatResultsTab(sheet.Properties.Title) {
 			heats = append(heats, sheet.Properties.Title)
-			err := eventService.AddEvent(ctx, sheetId, sheet.Properties.Title, getHeatDistanceMeters(sheet.Properties.Title))
+			eventID, err := eventService.AddEvent(ctx, sheetId, sheet.Properties.Title, getHeatDistanceMeters(sheet.Properties.Title))
 			if err != nil {
 				log.Error().Err(err).Send()
 			}
+			events = append(events, eventID)
 		}
 	}
 
-	log.Info().Strs("heats", heats).Send()
-
-	for _, heat := range heats {
+	for heatID, heat := range heats {
 
 		readRange := fmt.Sprintf("%s!A:F", heat)
 		resp, err := sheets.Spreadsheets.Values.Get(sheetId, readRange).ValueRenderOption("FORMATTED_VALUE").Do()
@@ -69,30 +66,26 @@ func ImportFromSheet(ctx context.Context, sheetId string) {
 						break
 					}
 					birthYear, _ := strconv.Atoi(row[3].(string))
-					err = GetMembersServiceInstance().UpsertMember(ctx, strings.Split(row[1].(string), " ")[0], strings.Join(strings.Split(row[1].(string), " ")[1:], " "), row[4].(string), birthYear)
+					GetParticipantServiceInstance().AddParticipant(ctx, db.Participant{
+						RaceID:    sheetId,
+						EventID:   events[heatID],
+						FirstName: strings.Split(row[1].(string), " ")[0],
+						LastName:  strings.Join(strings.Split(row[1].(string), " ")[1:], " "),
+						BirthYear: birthYear,
+						Gender:    row[4].(string),
+						Team:      row[2].(string),
+						BibNumber: row[0].(string),
+					})
 					if err != nil {
 						log.Error().Err(err).Send()
 					}
-					// results = append(results, Result{
-					// 	Participant: row[1].(string),
-					// 	Race:        rslt.Properties.Title,
-					// 	Event:       heat,
-					// 	Time:        convertToMilliseconds(row[5].(string)),
-					// })
 
-					// raceParticipants = append(raceParticipants, RaceParticipant{
-					// 	Participant: row[1].(string),
-					// 	Race:        rslt.Properties.Title,
-					// 	Event:       heat,
-					// 	Team:        row[2].(string),
-					// 	BibNumber:   row[0].(string),
-					// })
+					err = GetResultsServiceInstance().InsertResults(ctx, sheetId, events[heatID], row[0].(string), row[5].(string))
+					if err != nil {
+						log.Error().Err(err).Send()
+					}
 				}
 			}
-			// fmt.Println(len(particpants))
-			// fmt.Printf("Participant:     %+v\n", particpants[0])
-			// fmt.Printf("Result:          %+v\n", results[0])
-			// fmt.Printf("RaceParticipant: %+v\n", raceParticipants[0])
 		}
 	}
 

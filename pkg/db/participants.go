@@ -13,11 +13,39 @@ type (
 
 	Participant struct {
 		RaceID    string `db:"race_id"`
+		EventID   string `db:"event_id"`
+		BibNumber string `db:"bib_number"`
 		FirstName string `db:"first_name"`
 		LastName  string `db:"last_name"`
 		BirthYear int    `db:"birth_year"`
 		Gender    string `db:"gender"`
+		Team      string `db:"team"`
 	}
+)
+
+const (
+	addParticipantQuery = `
+		insert into participants (
+			race_id,
+			event_id,
+			bib_number,
+			first_name,
+			last_name,
+			gender,
+			team,
+			birth_year
+		)
+		VALUES (
+			:race_id,
+			:event_id,
+			:bib_number,
+			:first_name,
+			:last_name,
+			:gender,
+			:team,
+			:birth_year
+		)
+	`
 )
 
 func NewParticipantsDAO(db *sqlx.DB) *ParticipantsDAO {
@@ -26,7 +54,7 @@ func NewParticipantsDAO(db *sqlx.DB) *ParticipantsDAO {
 	}
 }
 
-func (dao *ParticipantsDAO) BatchInsertParticipants(ctx context.Context, participants []Participant) error {
-	_, err := dao.db.NamedExec("insert into participants (race_id, first_name, last_name, team, birth_year) VALUES (:race_id, :first_name, :last_name, :team, :birth_year)", participants)
+func (dao *ParticipantsDAO) InsertParticipant(ctx context.Context, participant Participant) error {
+	_, err := dao.db.NamedExec(addParticipantQuery, participant)
 	return err
 }

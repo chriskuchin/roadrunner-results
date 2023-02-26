@@ -13,6 +13,17 @@ type RaceDAO struct {
 	offset int
 }
 
+const (
+	createRaceQuery string = `
+		insert into races (
+			race_id,
+			race_name,
+			owner_id
+		)
+		VALUES(?, ?, ?)
+	`
+)
+
 type RaceDTO struct {
 	RaceID  string `db:"race_id"`
 	OwnerID string `db:"owner_id"`
@@ -20,7 +31,6 @@ type RaceDTO struct {
 }
 
 func NewRaceDAO(db *sqlx.DB) *RaceDAO {
-
 	return &RaceDAO{
 		db:    db,
 		limit: 10,
@@ -28,7 +38,7 @@ func NewRaceDAO(db *sqlx.DB) *RaceDAO {
 }
 
 func (r *RaceDAO) CreateRace(ctx context.Context, id, name string) error {
-	_, err := r.db.Exec("insert into races (race_id, race_name, owner_id) VALUES(?, ?, ?)", id, name, "123")
+	_, err := r.db.Exec(createRaceQuery, id, name, "123")
 	return err
 }
 
