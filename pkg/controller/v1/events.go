@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/chriskuchin/roadrunner-results/pkg/services"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
@@ -31,8 +32,20 @@ func (rs eventsResources) getEvent(w http.ResponseWriter, r *http.Request) {
 }
 
 func (rs eventsResources) listEvents(w http.ResponseWriter, r *http.Request) {
-	log.Info().Msgf("%v", r.Context().Value(util.RaceID))
-	render.JSON(w, r, []string{})
+	log.Info().Str("raceID", util.GetRaceIDFromContext(r.Context())).Send()
+	if util.GetRaceIDFromContext(r.Context()) == "" {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("Missing RaceID"))
+		return
+	}
+
+	results, err := services.GetEventsServiceInstance().GetRaceEvents(r.Context())
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte("Unknown error please try again"))
+		return
+	}
+	render.JSON(w, r, results)
 }
 
 func (rs eventsResources) addEvent(w http.ResponseWriter, r *http.Request) {

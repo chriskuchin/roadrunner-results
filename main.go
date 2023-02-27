@@ -78,6 +78,9 @@ func main() {
 					participantsDAO := dao.NewParticipantsDAO(db)
 					services.NewParticipantsService(participantsDAO)
 
+					eventParticipationDAO := dao.NewEventParticipationDAO(db)
+					services.NewEventParticipationService(eventParticipationDAO)
+
 					resultsDao := dao.NewResultsDAO(db)
 					services.NewResultsService(resultsDao)
 

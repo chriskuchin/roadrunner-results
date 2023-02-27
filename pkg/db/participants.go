@@ -13,7 +13,6 @@ type (
 
 	Participant struct {
 		RaceID    string `db:"race_id"`
-		EventID   string `db:"event_id"`
 		BibNumber string `db:"bib_number"`
 		FirstName string `db:"first_name"`
 		LastName  string `db:"last_name"`
@@ -27,7 +26,6 @@ const (
 	addParticipantQuery = `
 		insert into participants (
 			race_id,
-			event_id,
 			bib_number,
 			first_name,
 			last_name,
@@ -37,7 +35,6 @@ const (
 		)
 		VALUES (
 			:race_id,
-			:event_id,
 			:bib_number,
 			:first_name,
 			:last_name,
@@ -45,6 +42,13 @@ const (
 			:team,
 			:birth_year
 		)
+	`
+
+	listParticipantsQuery string = `
+		select * from participants
+			where
+				race_id = ?
+			limit ? offset ?
 	`
 )
 
@@ -57,4 +61,9 @@ func NewParticipantsDAO(db *sqlx.DB) *ParticipantsDAO {
 func (dao *ParticipantsDAO) InsertParticipant(ctx context.Context, participant Participant) error {
 	_, err := dao.db.NamedExec(addParticipantQuery, participant)
 	return err
+}
+
+func (dao *ParticipantsDAO) ListParticipants(ctx context.Context, raceID string, limit, offset int) ([]Participant, error) {
+	var results []Participant
+	return results, dao.db.Select(&results, listParticipantsQuery, raceID, limit, offset)
 }

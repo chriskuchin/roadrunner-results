@@ -67,8 +67,8 @@ func ImportFromSheet(ctx context.Context, sheetId string) {
 					}
 					birthYear, _ := strconv.Atoi(row[3].(string))
 					GetParticipantServiceInstance().AddParticipant(ctx, db.Participant{
-						RaceID:    sheetId,
-						EventID:   events[heatID],
+						RaceID: sheetId,
+						// EventID:   events[heatID],
 						FirstName: strings.Split(row[1].(string), " ")[0],
 						LastName:  strings.Join(strings.Split(row[1].(string), " ")[1:], " "),
 						BirthYear: birthYear,
@@ -76,6 +76,11 @@ func ImportFromSheet(ctx context.Context, sheetId string) {
 						Team:      row[2].(string),
 						BibNumber: row[0].(string),
 					})
+					if err != nil {
+						log.Error().Err(err).Send()
+					}
+
+					err = GetEventParticipationInstance().RecordEventParticipation(ctx, sheetId, events[heatID], row[0].(string))
 					if err != nil {
 						log.Error().Err(err).Send()
 					}
