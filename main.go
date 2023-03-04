@@ -84,6 +84,9 @@ func main() {
 					resultsDao := dao.NewResultsDAO(db)
 					services.NewResultsService(resultsDao)
 
+					eventResultsDao := dao.NewEventResultsDAO(db)
+					services.NewEventResultsService(eventResultsDao)
+
 					r := chi.NewRouter()
 
 					// A good base middleware stack

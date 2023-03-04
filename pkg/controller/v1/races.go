@@ -28,7 +28,7 @@ func (rs racesResources) Routes() chi.Router {
 	})
 
 	r.Route("/{raceID}", func(r chi.Router) {
-		r.Use(RaceCtx)
+		r.Use(raceCtx)
 		r.Options("/", Cors)
 		r.Delete("/", deleteRace)
 
@@ -116,7 +116,7 @@ func deleteRace(w http.ResponseWriter, r *http.Request) {
 	render.NoContent(w, r)
 }
 
-func RaceCtx(next http.Handler) http.Handler {
+func raceCtx(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		raceID := chi.URLParam(r, "raceID")
 		if raceID == "" {

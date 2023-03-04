@@ -1,12 +1,15 @@
 package v1
 
 import (
+	"context"
 	"net/http"
 	"strconv"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
+	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
+	"github.com/rs/zerolog/log"
 )
 
 type participantsResources struct{}
@@ -20,6 +23,7 @@ func (rs participantsResources) Routes() chi.Router {
 
 	r.Get("/", rs.listParticipants)
 	r.Route("/{participantID}", func(r chi.Router) {
+		r.Use(participantCtx)
 		r.Get("/", rs.getParticipant)
 	})
 
@@ -60,4 +64,16 @@ func (rs participantsResources) listParticipants(w http.ResponseWriter, r *http.
 
 func (rs participantsResources) getParticipant(w http.ResponseWriter, r *http.Request) {
 
+}
+
+func participantCtx(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		ParticipantID := chi.URLParam(r, "ParticipantID")
+		if ParticipantID == "" {
+			log.Error().Msg("Unable to locate ParticipantID")
+		}
+
+		ctx := context.WithValue(r.Context(), util.ParticipantID, ParticipantID)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
 }

@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 
@@ -21,7 +22,9 @@ func (rs eventsResources) Routes() chi.Router {
 	r.Post("/", rs.addEvent)
 
 	r.Route("/{eventID}", func(r chi.Router) {
+		r.Use(eventCtx)
 		r.Get("/", rs.getEvent)
+		r.Mount("/results", EventResultsResources{}.Routes())
 	})
 	return r
 }
@@ -59,6 +62,18 @@ func (rs eventsResources) addEvent(w http.ResponseWriter, r *http.Request) {
 	}
 
 	render.NoContent(w, r)
+}
+
+func eventCtx(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		eventID := chi.URLParam(r, "eventID")
+		if eventID == "" {
+			log.Error().Msg("Unable to locate eventID")
+		}
+
+		ctx := context.WithValue(r.Context(), util.EventID, eventID)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
 }
 
 type EventRequest struct {
