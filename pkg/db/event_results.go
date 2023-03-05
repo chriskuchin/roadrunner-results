@@ -5,7 +5,6 @@ import (
 
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/jmoiron/sqlx"
-	"github.com/rs/zerolog/log"
 )
 
 type EventResultsDao struct {
@@ -40,28 +39,19 @@ const (
 		JOIN results as r
 			USING(bib_number, race_id)
 		WHERE
-			p.bib_number in (
-				SELECT bib_number
-				FROM event_participation
-				WHERE
-					race_id = ?
-					AND
-					event_id = ?
-			)
+			race_id = ?
+			AND
+			event_id = ?
 		ORDER by p.birth_year, p.gender, r.result;
 	`
 )
 
-func (er *EventResultsDao) GetEventResults(ctx context.Context) error {
+func (er *EventResultsDao) GetEventResults(ctx context.Context) ([]EventResultsDTO, error) {
 	var results []EventResultsDTO
 	err := er.db.Select(&results, getEventResults, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	for _, result := range results {
-		log.Info().Msgf("%+v", result)
-	}
-
-	return nil
+	return results, nil
 }
