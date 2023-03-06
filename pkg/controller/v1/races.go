@@ -31,6 +31,7 @@ func (rs racesResources) Routes() chi.Router {
 		r.Use(raceCtx)
 		r.Options("/", Cors)
 		r.Delete("/", deleteRace)
+		r.Get("/", getRace)
 
 		r.Mount("/participants", participantsResources{}.Routes())
 		r.Mount("/events", eventsResources{}.Routes())
@@ -56,6 +57,16 @@ func importRaceAndResults(w http.ResponseWriter, r *http.Request) {
 	services.ImportFromSheet(r.Context(), sheetId)
 
 	w.Write([]byte("test import, " + sheetId))
+}
+
+func getRace(w http.ResponseWriter, r *http.Request) {
+	race, err := services.GetRaceServiceInstance().GetRace(r.Context())
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	render.JSON(w, r, race)
 }
 
 // GET /races

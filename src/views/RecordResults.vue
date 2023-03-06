@@ -1,21 +1,12 @@
 <template>
   <div>
-    <header>
-      <breadcrumb :paths="paths"></breadcrumb>
-    </header>
     <div class="section">
       <div class="tabs">
         <ul>
-          <li
-            @click="tabSelect('manual')"
-            :class="{ 'is-active': isActiveTab('manual') }"
-          >
+          <li @click="tabSelect('manual')" :class="{ 'is-active': isActiveTab('manual') }">
             <a>Manual</a>
           </li>
-          <li
-            @click="tabSelect('scanner')"
-            :class="{ 'is-active': isActiveTab('scanner') }"
-          >
+          <li @click="tabSelect('scanner')" :class="{ 'is-active': isActiveTab('scanner') }">
             <a>Scanner</a>
           </li>
         </ul>

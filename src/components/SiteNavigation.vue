@@ -2,45 +2,25 @@
   <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
-        <img
-          v-bind:src="logo_url"
-          height="30px"
-          alt="RoadRunner Results"
-          title="results.roadrunners.club"
-        />
+        <img v-bind:src="logo_url" height="30px" alt="RoadRunner Results" title="results.roadrunners.club" />
       </a>
-      <a
-        role="button"
-        class="navbar-burger"
-        aria-label="menu"
-        aria-expanded="false"
-        data-target="navbarBasicExample"
-        @click="toggleBurger"
-        :class="{ 'is-active': activeBurger }"
-      >
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample"
+        @click="toggleBurger" :class="{ 'is-active': activeBurger }">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
       </a>
     </div>
-    <div
-      id="navbarBasicExample"
-      class="navbar-menu"
-      :class="{ 'is-active': activeBurger }"
-    >
+    <div id="navbarBasicExample" class="navbar-menu" :class="{ 'is-active': activeBurger }">
       <div class="navbar-start">
-        <router-link to="/123/record" class="navbar-item">Races</router-link>
-        <router-link to="/123/timer" class="navbar-item">Results</router-link>
+        <router-link to="/races" class="navbar-item">Races</router-link>
+        <router-link to="/races/123/timer" class="navbar-item">Results</router-link>
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link"> Manage </a>
           <div class="navbar-dropdown">
-            <router-link to="/123/register" class="navbar-item"
-              >Register</router-link
-            >
-            <router-link to="/123/record" class="navbar-item"
-              >Record</router-link
-            >
-            <router-link to="/123/timer" class="navbar-item">Timer</router-link>
+            <router-link to="/races/123/register" class="navbar-item">Register</router-link>
+            <router-link to="/races/123/record" class="navbar-item">Record</router-link>
+            <router-link to="/races/123/timer" class="navbar-item">Timer</router-link>
           </div>
         </div>
       </div>

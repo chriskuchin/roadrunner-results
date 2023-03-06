@@ -4,6 +4,7 @@ import (
 	"context"
 
 	dao "github.com/chriskuchin/roadrunner-results/pkg/db"
+	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/google/uuid"
 )
 
@@ -14,9 +15,9 @@ type RaceService struct {
 }
 
 type RaceResult struct {
-	Name    string
-	ID      string
-	OwnerID string
+	Name    string `json:"name"`
+	ID      string `json:"id"`
+	OwnerID string `json:"owner_id"`
 }
 
 func NewRaceService(raceDAO *dao.RaceDAO) {
@@ -29,6 +30,15 @@ func NewRaceService(raceDAO *dao.RaceDAO) {
 
 func GetRaceServiceInstance() *RaceService {
 	return raceInstance
+}
+
+func (rs *RaceService) GetRace(ctx context.Context) (RaceResult, error) {
+	race, err := rs.raceDAO.GetRaceByID(ctx, util.GetRaceIDFromContext(ctx))
+	if err != nil {
+		return RaceResult{}, err
+	}
+
+	return RaceResult(race), err
 }
 
 func (rs *RaceService) CreateRace(ctx context.Context, name string) (string, error) {
@@ -51,7 +61,7 @@ func (rs *RaceService) ListRaces(ctx context.Context) ([]RaceResult, error) {
 	for _, race := range races {
 		result = append(result, RaceResult{
 			Name:    race.Name,
-			ID:      race.RaceID,
+			ID:      race.ID,
 			OwnerID: race.OwnerID,
 		})
 	}

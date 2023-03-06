@@ -25,9 +25,9 @@ const (
 )
 
 type RaceDTO struct {
-	RaceID  string `db:"race_id"`
-	OwnerID string `db:"owner_id"`
 	Name    string `db:"race_name"`
+	ID      string `db:"race_id"`
+	OwnerID string `db:"owner_id"`
 }
 
 func NewRaceDAO(db *sqlx.DB) *RaceDAO {
