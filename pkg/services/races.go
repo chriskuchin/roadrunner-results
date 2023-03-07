@@ -6,6 +6,7 @@ import (
 	dao "github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/google/uuid"
+	"github.com/rs/zerolog/log"
 )
 
 var raceInstance *RaceService
@@ -15,9 +16,11 @@ type RaceService struct {
 }
 
 type RaceResult struct {
-	Name    string `json:"name"`
-	ID      string `json:"id"`
-	OwnerID string `json:"owner_id"`
+	Name             string `json:"name"`
+	ID               string `json:"id"`
+	OwnerID          string `json:"owner_id"`
+	EventCount       int    `json:"event_count"`
+	ParticipantCount int    `json:"participant_count"`
 }
 
 func NewRaceService(raceDAO *dao.RaceDAO) {
@@ -38,7 +41,25 @@ func (rs *RaceService) GetRace(ctx context.Context) (RaceResult, error) {
 		return RaceResult{}, err
 	}
 
-	return RaceResult(race), err
+	eventCount, err := rs.raceDAO.GetRaceEventCount(ctx)
+	if err != nil {
+		log.Error().Err(err).Send()
+		return RaceResult{}, err
+	}
+
+	participantCount, err := rs.raceDAO.GetRaceParticipantCount(ctx)
+	if err != nil {
+		log.Error().Err(err).Send()
+		return RaceResult{}, err
+	}
+
+	return RaceResult{
+		Name:             race.Name,
+		ID:               race.ID,
+		OwnerID:          race.OwnerID,
+		EventCount:       eventCount,
+		ParticipantCount: participantCount,
+	}, nil
 }
 
 func (rs *RaceService) CreateRace(ctx context.Context, name string) (string, error) {

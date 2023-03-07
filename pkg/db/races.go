@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 
+	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 )
@@ -21,6 +22,17 @@ const (
 			owner_id
 		)
 		VALUES(?, ?, ?)
+	`
+	selectRaceEventCountQuery string = `
+		select count(1) from events
+			where
+				race_id = ?
+	`
+
+	selectRaceParticipantCountQuery = `
+		select count(1) from participants
+			where
+				race_id = ?
 	`
 )
 
@@ -72,4 +84,32 @@ func (r *RaceDAO) DeleteRace(ctx context.Context, id string) error {
 		return err
 	}
 	return nil
+}
+
+func (e *RaceDAO) GetRaceEventCount(ctx context.Context) (int, error) {
+	row := e.db.QueryRow(selectRaceEventCountQuery, util.GetRaceIDFromContext(ctx))
+	if row.Err() != nil {
+		log.Error().Msg("err")
+		return 0, row.Err()
+	}
+
+	var count int
+	err := row.Scan(&count)
+	if err != nil {
+		return 0, err
+	}
+
+	return count, nil
+}
+
+func (r *RaceDAO) GetRaceParticipantCount(ctx context.Context) (int, error) {
+	row := r.db.QueryRow(selectRaceParticipantCountQuery, util.GetRaceIDFromContext(ctx))
+	if row.Err() != nil {
+		return 0, row.Err()
+	}
+
+	var count int
+	err := row.Scan(&count)
+
+	return count, err
 }
