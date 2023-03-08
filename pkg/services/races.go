@@ -16,11 +16,18 @@ type RaceService struct {
 }
 
 type RaceResult struct {
-	Name             string `json:"name"`
-	ID               string `json:"id"`
-	OwnerID          string `json:"owner_id"`
-	EventCount       int    `json:"event_count"`
-	ParticipantCount int    `json:"participant_count"`
+	Name             string           `json:"name"`
+	ID               string           `json:"id"`
+	OwnerID          string           `json:"owner_id"`
+	EventCount       int              `json:"event_count"`
+	ParticipantStats ParticipantStats `json:"participant_stats"`
+}
+
+type ParticipantStats struct {
+	MaleCount          int              `json:"male"`
+	FemaleCount        int              `json:"female"`
+	Total              int              `json:"total"`
+	BirthYearHistogram []map[string]int `json:"birth_year_distribution"`
 }
 
 func NewRaceService(raceDAO *dao.RaceDAO) {
@@ -44,21 +51,34 @@ func (rs *RaceService) GetRace(ctx context.Context) (RaceResult, error) {
 	eventCount, err := rs.raceDAO.GetRaceEventCount(ctx)
 	if err != nil {
 		log.Error().Err(err).Send()
-		return RaceResult{}, err
 	}
 
 	participantCount, err := rs.raceDAO.GetRaceParticipantCount(ctx)
 	if err != nil {
 		log.Error().Err(err).Send()
-		return RaceResult{}, err
+	}
+
+	femaleCount, maleCount, err := rs.raceDAO.GetRaceGenderCount(ctx)
+	if err != nil {
+		log.Error().Err(err).Send()
+	}
+
+	birthYearDistro, err := rs.raceDAO.GetRaceParticipantsBirthYearCount(ctx)
+	if err != nil {
+		log.Error().Err(err).Send()
 	}
 
 	return RaceResult{
-		Name:             race.Name,
-		ID:               race.ID,
-		OwnerID:          race.OwnerID,
-		EventCount:       eventCount,
-		ParticipantCount: participantCount,
+		Name:       race.Name,
+		ID:         race.ID,
+		OwnerID:    race.OwnerID,
+		EventCount: eventCount,
+		ParticipantStats: ParticipantStats{
+			Total:              participantCount,
+			FemaleCount:        femaleCount,
+			MaleCount:          maleCount,
+			BirthYearHistogram: birthYearDistro,
+		},
 	}, nil
 }
 

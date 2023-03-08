@@ -34,6 +34,19 @@ const (
 			where
 				race_id = ?
 	`
+
+	selectRaceParticipantGenderCountQuery = `
+		select gender, count(1) from participants
+			where race_id = ?
+			GROUP BY gender
+	`
+
+	selectRaceParticipantBirthYearCountQuery = `
+		select birth_year, count(1) from participants
+			where race_id = ?
+			GROUP BY birth_year
+			ORDER BY birth_year
+	`
 )
 
 type RaceDTO struct {
@@ -112,4 +125,46 @@ func (r *RaceDAO) GetRaceParticipantCount(ctx context.Context) (int, error) {
 	err := row.Scan(&count)
 
 	return count, err
+}
+
+func (r *RaceDAO) GetRaceGenderCount(ctx context.Context) (female int, male int, err error) {
+	rows, err := r.db.Query(selectRaceParticipantGenderCountQuery, util.GetRaceIDFromContext(ctx))
+	if err != nil {
+		return
+	}
+
+	for rows.Next() {
+		var gender string
+		var count int
+		rows.Scan(&gender, &count)
+
+		if gender == "F" {
+			female = count
+		} else if gender == "M" {
+			male = count
+		}
+	}
+
+	return
+}
+
+func (r *RaceDAO) GetRaceParticipantsBirthYearCount(ctx context.Context) ([]map[string]int, error) {
+	rows, err := r.db.Query(selectRaceParticipantBirthYearCountQuery, util.GetRaceIDFromContext(ctx))
+	if err != nil {
+		return nil, err
+	}
+
+	var results []map[string]int = []map[string]int{}
+	for rows.Next() {
+		var year int
+		var count int
+
+		rows.Scan(&year, &count)
+		results = append(results, map[string]int{
+			"year":  year,
+			"count": count,
+		})
+	}
+
+	return results, nil
 }

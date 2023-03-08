@@ -7,7 +7,9 @@
 
 <script>
 import Breadcrumb from "../components/Breadcrumb.vue";
+import { useRaceStore } from "../store/races";
 
+const store = useRaceStore()
 export default {
     components: {
         breadcrumb: Breadcrumb,
@@ -22,20 +24,9 @@ export default {
         }
     },
     mounted: function () {
-        this.getRaceInfo()
+        store.loadRace(this.$route.params.raceId)
     },
-    methods: {
-        getRaceInfo: function () {
-            fetch("/api/v1/races/" + this.$route.params.raceId, {
-                method: "GET"
-            }).then(res => {
-                return res.json()
-            }).then(res => {
-                console.log(res)
-                this.race.name = res.name
-            })
-        },
-    },
+    methods: {},
     computed: {
         paths: function () {
             var breadcrumb = [{
@@ -46,8 +37,8 @@ export default {
             var pathSegments = this.$route.path.replace("/races/", "").split("/")
             for (let i = 0; i < pathSegments.length; i++) {
                 var display = pathSegments[i]
-                if (i == 0 && this.race.name != "") {
-                    display = this.race.name
+                if (i == 0 && store.getName != "") {
+                    display = store.getName
                 }
                 path += "/" + pathSegments[i]
                 breadcrumb.push({
