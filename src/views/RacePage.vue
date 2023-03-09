@@ -1,10 +1,26 @@
 <template>
     <div>
-        {{ getName }}
-        {{ yearValues }}
-        {{ yearLabels }}
-        <div style="width: 400px;">
-            <canvas id="birth-year"></canvas>
+        <div class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">Participants</p>
+                    <p class="title">{{ totalParticipants }}</p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">Events</p>
+                    <p class="title">{{ eventTotal }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="tile is-ancestor">
+            <div class="tile is-parent">
+                <div class="tile is-6 is-child">
+                    <p class="title">Participants</p>
+                    <canvas id="birth-year"></canvas>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -18,27 +34,41 @@ const raceState = useRaceStore()
 
 export default {
     mounted: function () {
-        raceState.$subscribe(this.updateChart)
+        raceState.$subscribe(this.updateCharts)
     },
     data: function () {
         return {
-            chart: null
+            birthYearChart: null
         }
     },
     methods: {
-        updateChart: function () {
-            if (this.chart == null) {
-                this.chart = new Chart(document.getElementById('birth-year'),
+        updateCharts: function () {
+            if (this.birthYearChart == null) {
+                this.birthYearChart = new Chart(document.getElementById('birth-year'),
                     {
                         type: 'bar',
                         data: {
                             labels: this.yearLabels,
                             datasets: [
                                 {
-                                    label: 'Athletes by birth year',
-                                    data: this.yearValues
-                                }
+                                    label: 'Male Athletes',
+                                    data: this.maleValues
+                                },
+                                {
+                                    label: 'Female Athletes',
+                                    data: this.femaleValues
+                                },
                             ]
+                        },
+                        options: {
+                            scales: {
+                                x: {
+                                    stacked: true
+                                },
+                                y: {
+                                    stacked: true
+                                }
+                            }
                         }
                     }
                 );
@@ -46,7 +76,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(useRaceStore, ['getName', 'getID', 'yearValues', 'yearLabels'])
+        ...mapState(useRaceStore, ['yearLabels', 'maleValues', 'femaleValues', 'totalParticipants', 'eventTotal'])
     }
 };
 </script>

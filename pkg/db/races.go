@@ -42,9 +42,9 @@ const (
 	`
 
 	selectRaceParticipantBirthYearCountQuery = `
-		select birth_year, count(1) from participants
+		select birth_year, gender, count(1) from participants
 			where race_id = ?
-			GROUP BY birth_year
+			GROUP BY birth_year, gender
 			ORDER BY birth_year
 	`
 )
@@ -148,21 +148,23 @@ func (r *RaceDAO) GetRaceGenderCount(ctx context.Context) (female int, male int,
 	return
 }
 
-func (r *RaceDAO) GetRaceParticipantsBirthYearCount(ctx context.Context) ([]map[string]int, error) {
+func (r *RaceDAO) GetRaceParticipantsBirthYearCount(ctx context.Context) ([]map[string]interface{}, error) {
 	rows, err := r.db.Query(selectRaceParticipantBirthYearCountQuery, util.GetRaceIDFromContext(ctx))
 	if err != nil {
 		return nil, err
 	}
 
-	var results []map[string]int = []map[string]int{}
+	var results []map[string]interface{} = []map[string]interface{}{}
 	for rows.Next() {
 		var year int
 		var count int
+		var gender string
 
-		rows.Scan(&year, &count)
-		results = append(results, map[string]int{
-			"year":  year,
-			"count": count,
+		rows.Scan(&year, &gender, &count)
+		results = append(results, map[string]interface{}{
+			"year":   year,
+			"gender": gender,
+			"count":  count,
 		})
 	}
 

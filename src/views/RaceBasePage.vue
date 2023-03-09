@@ -1,6 +1,10 @@
 <template>
-    <div>
-        <breadcrumb :paths="paths"></breadcrumb>
+    <div class="container">
+        <div class="level">
+            <div class="level-left">
+                <breadcrumb :paths="paths"></breadcrumb>
+            </div>
+        </div>
         <router-view></router-view>
     </div>
 </template>
@@ -16,11 +20,6 @@ export default {
     },
     data: function () {
         return {
-            race: {
-                name: "",
-                owner: "",
-                id: "",
-            }
         }
     },
     mounted: function () {

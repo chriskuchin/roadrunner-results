@@ -24,10 +24,10 @@ type RaceResult struct {
 }
 
 type ParticipantStats struct {
-	MaleCount          int              `json:"male"`
-	FemaleCount        int              `json:"female"`
-	Total              int              `json:"total"`
-	BirthYearHistogram []map[string]int `json:"birth_year_distribution"`
+	MaleCount          int                      `json:"male"`
+	FemaleCount        int                      `json:"female"`
+	Total              int                      `json:"total"`
+	BirthYearHistogram []map[string]interface{} `json:"birth_year_distribution"`
 }
 
 func NewRaceService(raceDAO *dao.RaceDAO) {
