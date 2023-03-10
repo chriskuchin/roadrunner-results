@@ -36,6 +36,9 @@ export default {
             var pathSegments = this.$route.path.replace("/races/", "").split("/")
             for (let i = 0; i < pathSegments.length; i++) {
                 var display = pathSegments[i]
+                if (display == "")
+                    continue
+
                 if (i == 0 && store.getName != "") {
                     display = store.getName
                 }
