@@ -17,6 +17,22 @@ function formatStopwatch(min, sec, ms) {
     return minString + ":" + secString + ":" + millisString;
 }
 
+function formatMilliseconds(ms) {
+    let min = 0
+    let sec = 0
+    while (ms > 60000) {
+        min += 1
+        ms -= 60000
+    }
+
+    while (ms > 1000) {
+        sec += 1
+        ms -= 1000
+    }
+
+    return min + ":" + sec + ":" + ms / 10
+}
+
 function keyHandler(charCode, handler) {
     return function (e) {
         if (e.keyCode == charCode) {
@@ -28,5 +44,6 @@ function keyHandler(charCode, handler) {
 
 export {
     formatStopwatch,
+    formatMilliseconds,
     keyHandler,
 }

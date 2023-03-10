@@ -22,9 +22,9 @@ const routes = [
       { path: "timer", component: RaceTimer, name: "timer" },
       { path: "record", component: RecordResults, name: "record" },
       { path: "register", component: RegisterParticipant, name: "register" },
-      { path: "events", component: RaceEventsPage },
       { path: "participants", component: RaceParticipantsPage },
-      { path: "results", component: RaceResultsPage }
+      { path: "results", component: RaceResultsPage },
+      { path: "events/:eventId", component: RaceEventsPage }
     ]
   },
   { path: "/login", component: LoginPage },
