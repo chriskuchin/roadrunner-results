@@ -30,7 +30,15 @@ function formatMilliseconds(ms) {
         ms -= 1000
     }
 
-    return min + ":" + sec + ":" + ms / 10
+    return min + ":" + addLeadingZeros(sec) + ":" + ms / 10
+}
+
+function addLeadingZeros(val) {
+    if (val < 10) {
+        return "0" + val
+    }
+
+    return val
 }
 
 function keyHandler(charCode, handler) {

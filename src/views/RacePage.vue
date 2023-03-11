@@ -30,7 +30,7 @@
           <p class="title">Events</p>
           <ul class="has-text-centered">
             <li v-for="event in events" :key="event.eventId">
-              <router-link :to="'./events/' + event.eventId">
+              <router-link :to="'/races/' + this.$route.params.raceId + '/events/' + event.eventId">
                 {{ event.description }}
               </router-link>
             </li>
