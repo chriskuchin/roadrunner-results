@@ -54,8 +54,6 @@ export default {
     "router-link": RouterLink
   },
   mounted: function () {
-    this.getRaceEvents(this.$route.params.raceId)
-
     if (this.maleValues.length > 0) {
       this.updateCharts()
     }
@@ -66,14 +64,9 @@ export default {
   },
   data: function () {
     return {
-      birthYearChart: null,
-      events: []
     }
   },
   methods: {
-    async getRaceEvents(raceID) {
-      this.events = await (await fetch("/api/v1/races/" + raceID + "/events")).json()
-    },
     updateCharts: function () {
       if (this.birthYearChart == null) {
         this.birthYearChart = new Chart(document.getElementById('birth-year'),
@@ -108,7 +101,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(useRaceStore, ['yearLabels', 'maleValues', 'femaleValues', 'totalParticipants', 'eventTotal'])
+    ...mapState(useRaceStore, ['yearLabels', 'maleValues', 'femaleValues', 'totalParticipants', 'eventTotal', 'events'])
   }
 };
 </script>
