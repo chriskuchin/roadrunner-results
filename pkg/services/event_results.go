@@ -13,10 +13,10 @@ type EventResultsService struct {
 	eventResultsDao *db.EventResultsDao
 }
 
-func NewEventResultsService(dao *db.EventResultsDao) {
+func NewEventResultsService() {
 	if eventResultsInstance == nil {
 		eventResultsInstance = &EventResultsService{
-			eventResultsDao: dao,
+			eventResultsDao: db.NewEventResultsDAO(),
 		}
 	}
 }

@@ -1,47 +1,75 @@
 <template>
     <div>
-        <nav class="level">
-            <div class="level-left">
-                <div class="level-item">
-                    <div class="field is-horizontal">
-                        <div class="field-label is-small">
-                            <label class="label">Birth Year</label>
-                        </div>
-                        <div class="select is-small">
-                            <select v-model="filters.year">
-                                <option value="0">None</option>
-                                <option v-for="filter in birthYears" :key="filter" :value="filter">{{ filter }}
-                                </option>
-                            </select>
-                        </div>
+        <nav class="level has-text-centered">
+            <div class="level-item">
+                <div class="field is-horizontal">
+                    <div class="field-label is-small">
+                        <label class="label">Birth Year</label>
                     </div>
-                </div>
-                <div class="level-item">
-                    <div class="field is-horizontal">
-                        <div class="field-label is-small">
-                            <label class="label">Gender</label>
-                        </div>
-                        <div class="select is-small">
-                            <select v-model="filters.gender">
-                                <option value="">None</option>
-                                <option v-for="filter in genders" :key="filter" :value="filter">{{ filter }}
-                                </option>
-                            </select>
-                        </div>
+                    <div class="select is-small">
+                        <select v-model="filters.year">
+                            <option value="0">None</option>
+                            <option v-for="filter in birthYears" :key="filter" :value="filter">{{ filter }}
+                            </option>
+                        </select>
                     </div>
                 </div>
             </div>
+            <div class="level-item">
+                <div class="field is-horizontal">
+                    <div class="field-label is-small">
+                        <label class="label">Gender</label>
+                    </div>
+                    <div class="select is-small">
+                        <select v-model="filters.gender">
+                            <option value="">None</option>
+                            <option v-for="filter in genders" :key="filter" :value="filter">{{ filter }}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="level-item">
+                <input class="input is-small" type="text" placeholder="Search" v-model="filters.search" />
+                {{ filters.search }}
+            </div>
         </nav>
-        <table class="table">
-            <tr v-for="result in filtered" :key="result.bib_number">
-                <td>{{ result.bib_number }}</td>
-                <td>{{ result.first_name }}</td>
-                <td>{{ result.last_name }}</td>
-                <td>{{ result.birth_year }}</td>
-                <td>{{ result.gender }}</td>
-                <td>{{ formatTime(result.result_ms) }}</td>
-            </tr>
-        </table>
+        <div class="level">
+            <div class="level-item has-text-centered">
+                <table class="table is-hoverable">
+                    <thead>
+                        <tr>
+                            <th>Bib Number</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Birth Year</th>
+                            <th>Gender</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Bib Number</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Birth Year</th>
+                            <th>Gender</th>
+                            <th>Time</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr v-for="result in filtered" :key="result.bib_number">
+                            <td>{{ result.bib_number }}</td>
+                            <td>{{ result.first_name }}</td>
+                            <td>{{ result.last_name }}</td>
+                            <td>{{ result.birth_year }}</td>
+                            <td>{{ result.gender }}</td>
+                            <td>{{ formatTime(result.result_ms) }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -57,6 +85,7 @@ export default {
             results: [],
             sortField: "result_ms",
             filters: {
+                search: "",
                 year: 0,
                 gender: "",
             }
@@ -87,13 +116,11 @@ export default {
         },
         isfiltered: function (result) {
             if (this.filters.year != 0 && this.filters.gender != "") {
-                console.log("bother are set")
-                return this.filters.year == result.birth_year && this.filters.gender == result.gender
+                return this.filters.year == result.birth_year &&
+                    this.filters.gender == result.gender
             } else if (this.filters.year != 0) {
-                console.log("year only")
                 return this.filters.year == result.birth_year
             } else if (this.filters.gender != "") {
-                console.log("only gender")
                 return this.filters.gender == result.gender
             }
 

@@ -22,9 +22,9 @@ const (
 	`
 )
 
-func NewResultsDAO(db *sqlx.DB) *ResultsDAO {
+func NewResultsDAO() *ResultsDAO {
 	return &ResultsDAO{
-		db: db,
+		db: getDBInstance(),
 	}
 }
 

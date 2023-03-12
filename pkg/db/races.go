@@ -55,9 +55,9 @@ type RaceDTO struct {
 	OwnerID string `db:"owner_id"`
 }
 
-func NewRaceDAO(db *sqlx.DB) *RaceDAO {
+func NewRaceDAO() *RaceDAO {
 	return &RaceDAO{
-		db:    db,
+		db:    getDBInstance(),
 		limit: 10,
 	}
 }

@@ -30,7 +30,7 @@ function formatMilliseconds(ms) {
         ms -= 1000
     }
 
-    return min + ":" + addLeadingZeros(sec) + ":" + ms / 10
+    return min + ":" + addLeadingZeros(sec) + ":" + addLeadingZeros(Math.floor(ms / 10))
 }
 
 function addLeadingZeros(val) {

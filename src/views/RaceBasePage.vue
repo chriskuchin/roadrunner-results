@@ -36,13 +36,16 @@ export default {
             var pathSegments = this.$route.path.replace("/races/", "").split("/")
             for (let i = 0; i < pathSegments.length; i++) {
                 var display = pathSegments[i]
-                if (display == "")
+                path += "/" + pathSegments[i]
+                if (display == "" || display == "events")
                     continue
 
                 if (i == 0 && store.getName != "") {
                     display = store.getName
+                } else if (i == 2) {
+                    display = store.eventName(pathSegments[i])
                 }
-                path += "/" + pathSegments[i]
+                console.log(display)
                 breadcrumb.push({
                     path: path,
                     display: display

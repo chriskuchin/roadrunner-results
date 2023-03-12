@@ -36,9 +36,9 @@ const (
 	`
 )
 
-func NewEventDAO(db *sqlx.DB) *EventDao {
+func NewEventDAO() *EventDao {
 	return &EventDao{
-		db: db,
+		db: getDBInstance(),
 	}
 }
 

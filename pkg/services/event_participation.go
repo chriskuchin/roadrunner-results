@@ -14,10 +14,10 @@ type (
 	}
 )
 
-func NewEventParticipationService(db *db.EventParticipationDao) {
+func NewEventParticipationService() {
 	if eventParticipationInstance == nil {
 		eventParticipationInstance = &EventParticipationService{
-			eventParticipationDao: db,
+			eventParticipationDao: db.NewEventParticipationDAO(),
 		}
 	}
 }

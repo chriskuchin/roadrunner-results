@@ -52,9 +52,9 @@ const (
 	`
 )
 
-func NewParticipantsDAO(db *sqlx.DB) *ParticipantsDAO {
+func NewParticipantsDAO() *ParticipantsDAO {
 	return &ParticipantsDAO{
-		db: db,
+		db: getDBInstance(),
 	}
 }
 

@@ -20,10 +20,10 @@ type EventObject struct {
 	Distance    int    `json:"distance"`
 }
 
-func NewEventService(dao *db.EventDao) {
+func NewEventService() {
 	if eventsInstance == nil {
 		eventsInstance = &EventsService{
-			eventsDao: dao,
+			eventsDao: db.NewEventDAO(),
 		}
 	}
 }

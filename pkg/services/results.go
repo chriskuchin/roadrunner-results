@@ -12,15 +12,20 @@ type ResultsService struct {
 	dao *db.ResultsDAO
 }
 
-func NewResultsService(dao *db.ResultsDAO) {
+func NewResultsService() {
 	if resultsServiceInstance == nil {
 		resultsServiceInstance = &ResultsService{
-			dao: dao,
+			dao: db.NewResultsDAO(),
 		}
 	}
 }
 
 func GetResultsServiceInstance() *ResultsService {
+	if resultsServiceInstance == nil {
+		resultsServiceInstance = &ResultsService{
+			dao: db.NewResultsDAO(),
+		}
+	}
 	return resultsServiceInstance
 }
 

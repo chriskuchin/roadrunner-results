@@ -21,9 +21,9 @@ const (
 	`
 )
 
-func NewEventParticipationDAO(db *sqlx.DB) *EventParticipationDao {
+func NewEventParticipationDAO() *EventParticipationDao {
 	return &EventParticipationDao{
-		db: db,
+		db: getDBInstance(),
 	}
 }
 

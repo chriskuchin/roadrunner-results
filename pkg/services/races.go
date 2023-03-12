@@ -3,7 +3,7 @@ package services
 import (
 	"context"
 
-	dao "github.com/chriskuchin/roadrunner-results/pkg/db"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/google/uuid"
 	"github.com/rs/zerolog/log"
@@ -12,7 +12,7 @@ import (
 var raceInstance *RaceService
 
 type RaceService struct {
-	raceDAO *dao.RaceDAO
+	raceDAO *db.RaceDAO
 }
 
 type RaceResult struct {
@@ -20,6 +20,7 @@ type RaceResult struct {
 	ID               string           `json:"id"`
 	OwnerID          string           `json:"owner_id"`
 	EventCount       int              `json:"event_count"`
+	Events           []EventObject    `json:"events"`
 	ParticipantStats ParticipantStats `json:"participant_stats"`
 }
 
@@ -30,10 +31,10 @@ type ParticipantStats struct {
 	BirthYearHistogram []map[string]interface{} `json:"birth_year_distribution"`
 }
 
-func NewRaceService(raceDAO *dao.RaceDAO) {
+func NewRaceService() {
 	if raceInstance == nil {
 		raceInstance = &RaceService{
-			raceDAO: raceDAO,
+			raceDAO: db.NewRaceDAO(),
 		}
 	}
 }
@@ -68,11 +69,26 @@ func (rs *RaceService) GetRace(ctx context.Context) (RaceResult, error) {
 		log.Error().Err(err).Send()
 	}
 
+	events, err := db.NewEventDAO().GetRaceEvents(ctx)
+	if err != nil {
+		log.Error().Err(err).Send()
+	}
+
+	eventResults := []EventObject{}
+	for _, event := range events {
+		eventResults = append(eventResults, EventObject{
+			Description: event.Description,
+			EventID:     event.EventID,
+			Distance:    event.Distance,
+		})
+	}
+
 	return RaceResult{
 		Name:       race.Name,
 		ID:         race.ID,
 		OwnerID:    race.OwnerID,
 		EventCount: eventCount,
+		Events:     eventResults,
 		ParticipantStats: ParticipantStats{
 			Total:              participantCount,
 			FemaleCount:        femaleCount,

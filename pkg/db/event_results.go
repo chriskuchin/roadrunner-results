@@ -20,9 +20,9 @@ type EventResultsDTO struct {
 	Result    int    `db:"result"`
 }
 
-func NewEventResultsDAO(db *sqlx.DB) *EventResultsDao {
+func NewEventResultsDAO() *EventResultsDao {
 	return &EventResultsDao{
-		db: db,
+		db: getDBInstance(),
 	}
 }
 
@@ -48,7 +48,7 @@ const (
 
 func (er *EventResultsDao) GetEventResults(ctx context.Context) ([]EventResultsDTO, error) {
 	var results []EventResultsDTO
-	err := er.db.Select(&results, getEventResults, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))
+	err := getDBInstance().Select(&results, getEventResults, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))
 	if err != nil {
 		return nil, err
 	}

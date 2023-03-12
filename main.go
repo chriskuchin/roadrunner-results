@@ -69,23 +69,14 @@ func main() {
 						log.Fatal().Err(err).Send()
 					}
 
-					raceDAO := dao.NewRaceDAO(db)
-					services.NewRaceService(raceDAO)
+					dao.Configure(db)
 
-					eventsDAO := dao.NewEventDAO(db)
-					services.NewEventService(eventsDAO)
-
-					participantsDAO := dao.NewParticipantsDAO(db)
-					services.NewParticipantsService(participantsDAO)
-
-					eventParticipationDAO := dao.NewEventParticipationDAO(db)
-					services.NewEventParticipationService(eventParticipationDAO)
-
-					resultsDao := dao.NewResultsDAO(db)
-					services.NewResultsService(resultsDao)
-
-					eventResultsDao := dao.NewEventResultsDAO(db)
-					services.NewEventResultsService(eventResultsDao)
+					services.NewRaceService()
+					services.NewEventService()
+					services.NewParticipantsService()
+					services.NewEventParticipationService()
+					services.NewResultsService()
+					services.NewEventResultsService()
 
 					r := chi.NewRouter()
 

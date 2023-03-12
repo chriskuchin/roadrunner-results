@@ -24,10 +24,10 @@ type (
 	}
 )
 
-func NewParticipantsService(db *db.ParticipantsDAO) {
+func NewParticipantsService() {
 	if participantServiceInstance == nil {
 		participantServiceInstance = &ParticipantsService{
-			participantsDAO: db,
+			participantsDAO: db.NewParticipantsDAO(),
 		}
 	}
 }

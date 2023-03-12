@@ -6,6 +6,7 @@ export const useRaceStore = defineStore("races", {
         name: "",
         ownerID: "",
         eventCount: 0,
+        events: [],
         participantStats: {
             total: 0,
             male: 0,
@@ -19,6 +20,16 @@ export const useRaceStore = defineStore("races", {
         yearLabels: state => [...new Set(state.participantStats.birthYearDistro.map(row => row.year))],
         totalParticipants: state => state.participantStats.total,
         eventTotal: state => state.eventCount,
+        eventName: state => {
+            return function (eventID) {
+                let event = state.events.filter(val => val.eventId == eventID)[0]
+
+                if (event)
+                    return event.description
+
+                return ""
+            }
+        },
         maleValues() {
             let values = []
             this.yearLabels.forEach(year => {
@@ -57,7 +68,8 @@ export const useRaceStore = defineStore("races", {
             this.participantStats.male = race.participant_stats.male
             this.participantStats.female = race.participant_stats.female
             this.participantStats.total = race.participant_stats.total
-            console.log("state:", race)
+            this.eventCount = race.eventCount
+            this.events = race.events
         }
     }
 })
