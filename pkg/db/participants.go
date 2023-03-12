@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/jmoiron/sqlx"
+	"github.com/rs/zerolog/log"
 )
 
 type (
@@ -64,6 +65,7 @@ func (dao *ParticipantsDAO) InsertParticipant(ctx context.Context, participant P
 }
 
 func (dao *ParticipantsDAO) ListParticipants(ctx context.Context, raceID string, limit, offset int) ([]Participant, error) {
+	log.Info().Int("limit", limit).Int("offset", offset).Send()
 	var results []Participant
 	return results, dao.db.Select(&results, listParticipantsQuery, raceID, limit, offset)
 }

@@ -45,7 +45,7 @@ export default {
                 } else if (i == 2) {
                     display = store.eventName(pathSegments[i])
                 }
-                console.log(display)
+
                 breadcrumb.push({
                     path: path,
                     display: display

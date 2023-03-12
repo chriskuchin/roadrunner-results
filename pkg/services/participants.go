@@ -5,6 +5,7 @@ import (
 
 	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
+	"github.com/rs/zerolog/log"
 )
 
 var participantServiceInstance *ParticipantsService
@@ -42,6 +43,8 @@ func (ps *ParticipantsService) AddParticipant(ctx context.Context, participant d
 
 func (ps *ParticipantsService) ListParticipants(ctx context.Context, limit, offset int) ([]ParticipantObject, error) {
 	dbResults, err := ps.participantsDAO.ListParticipants(ctx, util.GetRaceIDFromContext(ctx), limit, offset)
+	log.Info().Int("limit", limit).Int("offset", offset).Send()
+
 	if err != nil {
 		return nil, err
 	}

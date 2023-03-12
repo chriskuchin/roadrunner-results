@@ -55,7 +55,14 @@ export default {
   },
   mounted: function () {
     this.getRaceEvents(this.$route.params.raceId)
+
+    if (this.maleValues.length > 0) {
+      this.updateCharts()
+    }
     raceState.$subscribe(this.updateCharts)
+  },
+  unmounted: function () {
+    this.birthYearChart = null
   },
   data: function () {
     return {

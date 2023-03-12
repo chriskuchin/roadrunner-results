@@ -44,7 +44,7 @@ func (rs participantsResources) listParticipants(w http.ResponseWriter, r *http.
 
 	var offset int = 0
 	if r.URL.Query().Get("offset") != "" {
-		limit, err = strconv.Atoi(r.URL.Query().Get("offset"))
+		offset, err = strconv.Atoi(r.URL.Query().Get("offset"))
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte("Bad offset"))

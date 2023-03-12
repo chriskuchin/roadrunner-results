@@ -16,19 +16,19 @@ type RaceService struct {
 }
 
 type RaceResult struct {
-	Name             string           `json:"name"`
-	ID               string           `json:"id"`
-	OwnerID          string           `json:"owner_id"`
-	EventCount       int              `json:"event_count"`
-	Events           []EventObject    `json:"events"`
-	ParticipantStats ParticipantStats `json:"participant_stats"`
+	Name             string            `json:"name"`
+	ID               string            `json:"id"`
+	OwnerID          string            `json:"owner_id"`
+	EventCount       int               `json:"event_count,omitempty"`
+	Events           []EventObject     `json:"events,omitempty"`
+	ParticipantStats *ParticipantStats `json:"participant_stats,omitempty"`
 }
 
 type ParticipantStats struct {
-	MaleCount          int                      `json:"male"`
-	FemaleCount        int                      `json:"female"`
-	Total              int                      `json:"total"`
-	BirthYearHistogram []map[string]interface{} `json:"birth_year_distribution"`
+	MaleCount          int                      `json:"male,omitempty"`
+	FemaleCount        int                      `json:"female,omitempty"`
+	Total              int                      `json:"total,omitempty"`
+	BirthYearHistogram []map[string]interface{} `json:"birth_year_distribution,omitempty"`
 }
 
 func NewRaceService() {
@@ -89,7 +89,7 @@ func (rs *RaceService) GetRace(ctx context.Context) (RaceResult, error) {
 		OwnerID:    race.OwnerID,
 		EventCount: eventCount,
 		Events:     eventResults,
-		ParticipantStats: ParticipantStats{
+		ParticipantStats: &ParticipantStats{
 			Total:              participantCount,
 			FemaleCount:        femaleCount,
 			MaleCount:          maleCount,
