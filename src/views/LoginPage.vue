@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="login-form">
     <form class="box">
       <div class="field">
         <label class="label">Email</label>
@@ -17,6 +17,7 @@
 
       <button class="button is-primary">Sign in</button>
     </form>
+
   </div>
 </template>
 
