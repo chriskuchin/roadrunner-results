@@ -73,7 +73,6 @@ func (r *RaceDAO) GetRaceByID(ctx context.Context, id string) (RaceDTO, error) {
 	if err != nil {
 		return RaceDTO{}, err
 	}
-	log.Debug().Msgf("%+v", dto)
 
 	return dto[0], nil
 }
@@ -85,7 +84,6 @@ func (r *RaceDAO) ListRaces(ctx context.Context) ([]RaceDTO, error) {
 		log.Error().Err(err).Send()
 		return nil, err
 	}
-	log.Debug().Msgf("%+v - %d", dto, len(dto))
 
 	return dto, nil
 }
