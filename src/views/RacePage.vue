@@ -43,7 +43,7 @@
 
 <script>
 import Chart from 'chart.js/auto'
-import { useRaceStore } from "../store/races";
+import { useRaceStore } from "../store/race";
 import { mapState } from "pinia";
 import { RouterLink } from 'vue-router';
 

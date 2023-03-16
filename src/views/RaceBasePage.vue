@@ -11,7 +11,7 @@
 
 <script>
 import Breadcrumb from "../components/Breadcrumb.vue";
-import { useRaceStore } from "../store/races";
+import { useRaceStore } from "../store/race";
 
 const store = useRaceStore()
 export default {

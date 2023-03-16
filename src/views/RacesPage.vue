@@ -9,6 +9,7 @@
               <th><abbr>Participants</abbr></th>
               <th><abbr>Events</abbr></th>
               <th><abbr>Results</abbr></th>
+              <th><abbr>Delete</abbr></th>
             </tr>
           </thead>
           <tbody>
@@ -17,6 +18,11 @@
               <td><router-link :to="'/races/' + race.id + '/participants'">Participants</router-link></td>
               <td><router-link :to="'/races/' + race.id + '/events'">Events</router-link></td>
               <td><router-link :to="'/races/' + race.id + '/results'">Results</router-link></td>
+              <td>
+                <button class="button is-danger is-outlined is-small" @click="deleteRace(race.id)">
+                  Delete
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -40,6 +46,8 @@
 </template>
 
 <script>
+import { getRaces, createRace, deleteRace } from '../api/races'
+
 export default {
   data: function () {
     return {
@@ -48,7 +56,7 @@ export default {
     };
   },
   mounted: function () {
-    this.getRaces();
+    getRaces().then(res => this.races = res)
   },
   computed: {
     isCreateDisabled: function () {
@@ -56,31 +64,12 @@ export default {
     }
   },
   methods: {
-    async createRace() {
-      let response = await fetch("/api/v1/races", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          name: this.createRaceInput
-        })
-      })
-
-      this.createRaceInput = ""
-
-      this.getRaces()
+    async deleteRace(raceID) {
+      this.races = await deleteRace(raceID)
     },
-    getRaces: function () {
-      fetch("/api/v1/races", {
-        method: "GET",
-      })
-        .then((res) => {
-          return res.json();
-        })
-        .then((res) => {
-          this.races = res;
-        });
+    async createRace() {
+      this.createRaceInput = ""
+      this.races = await createRace(this.createRaceInput)
     },
   },
 };
