@@ -68,8 +68,8 @@ export default {
       this.races = await deleteRace(raceID)
     },
     async createRace() {
-      this.createRaceInput = ""
       this.races = await createRace(this.createRaceInput)
+      this.createRaceInput = ""
     },
   },
 };

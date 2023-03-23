@@ -64,6 +64,10 @@ export default {
   },
   data: function () {
     return {
+      event: {
+        description: ""
+
+      }
     }
   },
   methods: {

@@ -28,7 +28,7 @@ func NewResultsDAO() *ResultsDAO {
 	}
 }
 
-func (dao *ResultsDAO) InsertResult(ctx context.Context, raceID, eventID, bibNumber string, result int) error {
+func (dao *ResultsDAO) InsertResult(ctx context.Context, raceID, eventID, bibNumber string, result int64) error {
 	_, err := dao.db.Exec(addResultQuery, raceID, eventID, bibNumber, result)
 	return err
 }

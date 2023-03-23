@@ -25,6 +25,7 @@ func (rs eventsResources) Routes() chi.Router {
 		r.Use(eventCtx)
 		r.Get("/", rs.getEvent)
 		r.Mount("/results", EventResultsResources{}.Routes())
+		r.Mount("/timers", timerResources{}.Routes())
 	})
 	return r
 }

@@ -96,15 +96,15 @@ func ImportFromSheet(ctx context.Context, sheetId string) {
 
 }
 
-func convertToMilliseconds(timing string) int {
+func convertToMilliseconds(timing string) int64 {
 	split := strings.Split(timing, ":")
 	seconds := strings.Split(split[1], ".")
 
-	min, _ := strconv.Atoi(split[0])
-	sec, _ := strconv.Atoi(seconds[0])
-	tenth, _ := strconv.Atoi(seconds[1])
+	min, _ := strconv.ParseInt(split[0], 10, 64)
+	sec, _ := strconv.ParseInt(seconds[0], 10, 64)
+	tenth, _ := strconv.ParseInt(seconds[1], 10, 64)
 
-	result := min*60000 + sec*1000 + tenth*10
+	var result int64 = min*60000 + sec*1000 + tenth*10
 
 	return result
 }

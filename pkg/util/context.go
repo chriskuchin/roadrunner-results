@@ -10,6 +10,7 @@ const (
 	EventID       key = 2
 	GoogleClient  key = 3
 	ParticipantID key = 4
+	TimerID       key = 5
 )
 
 func getValueFromContext(ctx context.Context, k key) string {
@@ -32,4 +33,8 @@ func GetRaceIDFromContext(ctx context.Context) string {
 
 func GetParticipantIDFromContext(ctx context.Context) string {
 	return getValueFromContext(ctx, ParticipantID)
+}
+
+func GetTimerIDFromContext(ctx context.Context) string {
+	return getValueFromContext(ctx, TimerID)
 }

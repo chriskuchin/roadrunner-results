@@ -35,6 +35,19 @@ CREATE TABLE results (
     result integer,
     UNIQUE(race_id, event_id, bib_number)
 );
+CREATE TABLE timers (
+    timer_id varchar(255),
+    race_id varchar(255),
+    event_id varchar(255),
+    start_ts integer
+);
+CREATE TABLE timer_results (
+    timer_id varchar(255),
+    race_id varchar(255),
+    event_id varchar(255),
+    result integer
+);
 -- Dbmate schema migrations
 INSERT INTO "schema_migrations" (version) VALUES
-  ('20220708034230');
+  ('20220708034230'),
+  ('20230321020148');
