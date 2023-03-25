@@ -14,7 +14,8 @@ import (
 type EventResultsResources struct{}
 
 type RecordResultRequestPayload struct {
-	End int64 `json:"end_ts"`
+	End int64  `json:"end_ts"`
+	Bib string `json:"bib_number"`
 }
 
 func (rs EventResultsResources) Routes() chi.Router {
@@ -51,7 +52,11 @@ func recordResult(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Info().Msgf("test: %+v", payload)
+	if payload.End > 0 {
+		services.GetEventResultsInstance().RecordTimerResult(r.Context(), payload.End)
+	}
 
-	services.GetEventResultsInstance().RecordResult(r.Context(), payload.End)
+	if payload.Bib != "" {
+		services.GetEventResultsInstance().RecordFinisherResult(r.Context(), payload.Bib)
+	}
 }

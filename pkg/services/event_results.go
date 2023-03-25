@@ -2,7 +2,6 @@ package services
 
 import (
 	"context"
-	"time"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/rs/zerolog/log"
@@ -39,32 +38,38 @@ func (ers *EventResultsService) GetEventResults(ctx context.Context) ([]Particip
 
 	var participantResults []ParticipantEventResult = []ParticipantEventResult{}
 	for _, result := range results {
-		participantResults = append(participantResults, ParticipantEventResult(result))
+		participantResults = append(participantResults, ParticipantEventResult{
+			BibNumber: result.BibNumber,
+			Result:    result.Result,
+			FirstName: result.FirstName.String,
+			LastName:  result.LastName.String,
+			BirthYear: int(result.BirthYear.Int32),
+			Gender:    result.Gender.String,
+		})
 	}
 
 	return participantResults, nil
 }
 
-func (ers *EventResultsService) RecordResult(ctx context.Context, endTS int64) {
-	start, timerID, err := ers.timerDao.GetActiveTimerStart(ctx)
-	log.Info().Int64("start", start).Int64("end", endTS).Err(err).Send()
+func (ers *EventResultsService) RecordTimerResult(ctx context.Context, endTS int64) error {
+	start, _, err := ers.timerDao.GetActiveTimerStart(ctx)
+	if err != nil {
+		log.Error().Err(err).Send()
+		return err
+	}
 
-	timerStart := time.Unix(start/1000, (start%1000)*1000000)
-	finishTime := time.Unix(endTS/1000, (endTS%1000)*1000000)
+	return ers.resultDao.InsertPartialResult(ctx, endTS-start)
+}
 
-	log.Info().Msgf("%+v", finishTime.Sub(timerStart))
-
-	log.Info().Str("timerID", timerID).Int64("result", endTS-start).Send()
-
-	ers.timerDao.RecordTime(ctx, timerID, endTS-start)
-
+func (ers *EventResultsService) RecordFinisherResult(ctx context.Context, bib string) error {
+	return ers.eventResultsDao.RecordFinisher(ctx, bib)
 }
 
 type ParticipantEventResult struct {
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
+	FirstName string `json:"first_name,omitempty"`
+	LastName  string `json:"last_name,omitempty"`
 	BibNumber string `json:"bib_number"`
-	BirthYear int    `json:"birth_year"`
-	Gender    string `json:"gender"`
+	BirthYear int    `json:"birth_year,omitempty"`
+	Gender    string `json:"gender,omitempty"`
 	Result    int    `json:"result_ms"`
 }

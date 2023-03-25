@@ -62,6 +62,8 @@ func (rs eventsResources) addEvent(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	services.GetEventsServiceInstance().AddEvent(r.Context(), util.GetRaceIDFromContext(r.Context()), eventRequest.Description, eventRequest.Distance)
+
 	render.NoContent(w, r)
 }
 
