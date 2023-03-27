@@ -6,8 +6,6 @@ import (
 	"os"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/controller"
-	dao "github.com/chriskuchin/roadrunner-results/pkg/db"
-	"github.com/chriskuchin/roadrunner-results/pkg/services"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/jmoiron/sqlx"
@@ -69,30 +67,16 @@ func main() {
 						log.Fatal().Err(err).Send()
 					}
 
-					dao.Configure(db)
-
-					services.NewRaceService()
-					services.NewEventService()
-					services.NewParticipantsService()
-					services.NewEventParticipationService()
-					services.NewResultsService()
-					services.NewEventResultsService()
-
 					r := chi.NewRouter()
-
 					// A good base middleware stack
 					r.Use(middleware.RequestID)
 					r.Use(middleware.RealIP)
 					r.Use(middleware.Logger)
 					r.Use(middleware.Recoverer)
 
-					if debug {
-						r.Use(Debug)
-					}
-
 					r.Route("/", func(r chi.Router) {
 						r.Mount("/healthcheck", controller.HealthcheckResources{}.Routes())
-						r.Mount("/api", controller.APIsResource{}.Routes())
+						r.Mount("/api", controller.Routes(db, debug))
 
 						r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
 							http.FileServer(http.Dir("./dist")).ServeHTTP(w, r)
@@ -112,12 +96,4 @@ func main() {
 	if err != nil {
 		log.Fatal().Err(err).Send()
 	}
-}
-
-func Debug(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Add("Access-Control-Allow-Origin", "*")
-
-		next.ServeHTTP(w, r)
-	})
 }

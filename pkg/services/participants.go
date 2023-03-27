@@ -3,18 +3,10 @@ package services
 import (
 	"context"
 
-	"github.com/chriskuchin/roadrunner-results/pkg/db"
-	"github.com/chriskuchin/roadrunner-results/pkg/util"
-	"github.com/rs/zerolog/log"
+	"github.com/jmoiron/sqlx"
 )
 
-var participantServiceInstance *ParticipantsService
-
 type (
-	ParticipantsService struct {
-		participantsDAO *db.ParticipantsDAO
-	}
-
 	ParticipantObject struct {
 		BibNumber string `json:"bibNumber"`
 		FirstName string `json:"firstName"`
@@ -25,26 +17,14 @@ type (
 	}
 )
 
-func NewParticipantsService() {
-	if participantServiceInstance == nil {
-		participantServiceInstance = &ParticipantsService{
-			participantsDAO: db.NewParticipantsDAO(),
-		}
-	}
+func AddParticipant(ctx context.Context, db *sqlx.DB, participant Participant) error {
+	_, err := db.NamedExec(addParticipantQuery, participant)
+	return err
 }
 
-func GetParticipantServiceInstance() *ParticipantsService {
-	return participantServiceInstance
-}
-
-func (ps *ParticipantsService) AddParticipant(ctx context.Context, participant db.Participant) error {
-	return ps.participantsDAO.InsertParticipant(ctx, participant)
-}
-
-func (ps *ParticipantsService) ListParticipants(ctx context.Context, limit, offset int) ([]ParticipantObject, error) {
-	dbResults, err := ps.participantsDAO.ListParticipants(ctx, util.GetRaceIDFromContext(ctx), limit, offset)
-	log.Info().Int("limit", limit).Int("offset", offset).Send()
-
+func ListParticipants(ctx context.Context, db *sqlx.DB, limit, offset int) ([]ParticipantObject, error) {
+	var dbResults []Participant
+	err := db.Select(&dbResults, listParticipantsQuery, raceID, limit, offset)
 	if err != nil {
 		return nil, err
 	}
@@ -62,4 +42,62 @@ func (ps *ParticipantsService) ListParticipants(ctx context.Context, limit, offs
 	}
 
 	return results, nil
+}
+
+type (
+	Participant struct {
+		RaceID    string `db:"race_id"`
+		BibNumber string `db:"bib_number"`
+		FirstName string `db:"first_name"`
+		LastName  string `db:"last_name"`
+		BirthYear int    `db:"birth_year"`
+		Gender    string `db:"gender"`
+		Team      string `db:"team"`
+	}
+)
+
+const (
+	addParticipantQuery = `
+		insert into participants (
+			race_id,
+			bib_number,
+			first_name,
+			last_name,
+			gender,
+			team,
+			birth_year
+		)
+		VALUES (
+			:race_id,
+			:bib_number,
+			:first_name,
+			:last_name,
+			:gender,
+			:team,
+			:birth_year
+		)
+	`
+
+	listParticipantsQuery string = `
+		select * from participants
+			where
+				race_id = ?
+			limit ? offset ?
+	`
+)
+
+const (
+	addEventParticipationQuery string = `
+		insert into event_participation(
+			race_id,
+			event_id,
+			bib_number
+		)
+		values (?,?,?)
+	`
+)
+
+func RecordEventParticipation(ctx context.Context, db *sqlx.DB, raceID, eventID, bibNumber string) error {
+	_, err := db.Exec(addEventParticipationQuery, raceID, eventID, bibNumber)
+	return err
 }

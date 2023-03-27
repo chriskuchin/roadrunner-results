@@ -12,30 +12,28 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-type eventsResources struct{}
-
-func (rs eventsResources) Routes() chi.Router {
+func EventsRoutes(handler *Handler) chi.Router {
 	r := chi.NewRouter()
 
 	r.Options("/", Cors)
-	r.Get("/", rs.listEvents)
-	r.Post("/", rs.addEvent)
+	r.Get("/", handler.listEvents)
+	r.Post("/", handler.addEvent)
 
 	r.Route("/{eventID}", func(r chi.Router) {
 		r.Use(eventCtx)
-		r.Get("/", rs.getEvent)
-		r.Mount("/results", EventResultsResources{}.Routes())
-		r.Mount("/timers", timerResources{}.Routes())
+		r.Get("/", handler.getEvent)
+		r.Mount("/results", EventResultsRoutes(handler))
+		r.Mount("/timers", TimerRoutes(handler))
 	})
 	return r
 }
 
-func (rs eventsResources) getEvent(w http.ResponseWriter, r *http.Request) {
+func (api *Handler) getEvent(w http.ResponseWriter, r *http.Request) {
 	log.Info().Msgf("%v", r.Context().Value(util.RaceID))
 	render.NoContent(w, r)
 }
 
-func (rs eventsResources) listEvents(w http.ResponseWriter, r *http.Request) {
+func (api *Handler) listEvents(w http.ResponseWriter, r *http.Request) {
 	log.Info().Str("raceID", util.GetRaceIDFromContext(r.Context())).Send()
 	if util.GetRaceIDFromContext(r.Context()) == "" {
 		w.WriteHeader(http.StatusBadRequest)
@@ -43,7 +41,7 @@ func (rs eventsResources) listEvents(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	results, err := services.GetEventsServiceInstance().GetRaceEvents(r.Context())
+	results, err := services.GetRaceEvents(r.Context(), api.db)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("Unknown error please try again"))
@@ -52,7 +50,7 @@ func (rs eventsResources) listEvents(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, r, results)
 }
 
-func (rs eventsResources) addEvent(w http.ResponseWriter, r *http.Request) {
+func (api *Handler) addEvent(w http.ResponseWriter, r *http.Request) {
 	eventRequest := &EventRequest{}
 	if err := render.DecodeJSON(r.Body, eventRequest); err != nil {
 		render.Status(r, http.StatusBadRequest)
@@ -62,7 +60,7 @@ func (rs eventsResources) addEvent(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	services.GetEventsServiceInstance().AddEvent(r.Context(), util.GetRaceIDFromContext(r.Context()), eventRequest.Description, eventRequest.Distance)
+	services.AddEvent(r.Context(), api.db, util.GetRaceIDFromContext(r.Context()), eventRequest.Description, eventRequest.Distance)
 
 	render.NoContent(w, r)
 }

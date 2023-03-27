@@ -12,31 +12,28 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-type timerResources struct{}
-
-func (tr timerResources) Routes() chi.Router {
+func TimerRoutes(handler *Handler) chi.Router {
 	r := chi.NewRouter()
-
-	r.Post("/", startTimer)
-	r.Get("/", listTimers)
+	r.Post("/", handler.startTimer)
+	r.Get("/", handler.listTimers)
 
 	r.Route("/{timerID}", func(r chi.Router) {
 		r.Use(timerCtx)
-		r.Get("/", getTimer)
-		r.Delete("/", deleteTimer)
+		r.Get("/", handler.getTimer)
+		r.Delete("/", handler.deleteTimer)
 	})
 
 	return r
 }
 
-func startTimer(w http.ResponseWriter, r *http.Request) {
-	services.GetTimerServiceInstance().StartTimer(r.Context(), time.Now().UnixMilli())
+func (api *Handler) startTimer(w http.ResponseWriter, r *http.Request) {
+	services.StartTimer(r.Context(), api.db, time.Now().UnixMilli())
 
 	w.WriteHeader(http.StatusAccepted)
 }
 
-func listTimers(w http.ResponseWriter, r *http.Request) {
-	result, err := services.GetTimerServiceInstance().ListTimers(r.Context(), 10, 0)
+func (api *Handler) listTimers(w http.ResponseWriter, r *http.Request) {
+	result, err := services.ListTimers(r.Context(), api.db, 10, 0)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -45,8 +42,8 @@ func listTimers(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, r, result)
 }
 
-func getTimer(w http.ResponseWriter, r *http.Request) {
-	result, err := services.GetTimerServiceInstance().GetTimer(r.Context())
+func (api *Handler) getTimer(w http.ResponseWriter, r *http.Request) {
+	result, err := services.GetTimer(r.Context(), api.db)
 	if err != nil {
 		if err.Error() == "timer not found" {
 			w.WriteHeader(http.StatusNotFound)
@@ -59,8 +56,8 @@ func getTimer(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, r, result)
 }
 
-func deleteTimer(w http.ResponseWriter, r *http.Request) {
-	err := services.GetTimerServiceInstance().DeleteTimer(r.Context())
+func (api *Handler) deleteTimer(w http.ResponseWriter, r *http.Request) {
+	err := services.DeleteTimer(r.Context(), api.db)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return

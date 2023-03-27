@@ -2,13 +2,21 @@ package v1
 
 import (
 	"github.com/go-chi/chi"
+	"github.com/jmoiron/sqlx"
 )
 
-type Resources struct{}
+type Handler struct {
+	db    *sqlx.DB
+	debug bool
+}
 
-func (rs Resources) Routes() chi.Router {
+func Routes(db *sqlx.DB, debug bool) chi.Router {
 	r := chi.NewRouter()
-	r.Mount("/races", racesResources{}.Routes())
-	r.Mount("/google", googleResources{}.Routes())
+	handler := &Handler{
+		db:    db,
+		debug: debug,
+	}
+	r.Mount("/races", RacesRoutes(handler))
+	r.Mount("/google", GoogleRoutes(handler))
 	return r
 }

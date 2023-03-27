@@ -11,24 +11,22 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-type EventResultsResources struct{}
-
 type RecordResultRequestPayload struct {
 	End int64  `json:"end_ts"`
 	Bib string `json:"bib_number"`
 }
 
-func (rs EventResultsResources) Routes() chi.Router {
+func EventResultsRoutes(handler *Handler) chi.Router {
 	r := chi.NewRouter()
 
-	r.Get("/", handleEventResults)
-	r.Post("/", recordResult)
+	r.Get("/", handler.handleEventResults)
+	r.Post("/", handler.recordResult)
 
 	return r
 }
 
-func handleEventResults(w http.ResponseWriter, r *http.Request) {
-	results, err := services.GetEventResultsInstance().GetEventResults(r.Context())
+func (api *Handler) handleEventResults(w http.ResponseWriter, r *http.Request) {
+	results, err := services.GetEventResults(r.Context(), api.db)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -36,7 +34,7 @@ func handleEventResults(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, r, results)
 }
 
-func recordResult(w http.ResponseWriter, r *http.Request) {
+func (api *Handler) recordResult(w http.ResponseWriter, r *http.Request) {
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		log.Debug().Err(err).Send()
@@ -53,10 +51,10 @@ func recordResult(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if payload.End > 0 {
-		services.GetEventResultsInstance().RecordTimerResult(r.Context(), payload.End)
+		services.RecordTimerResult(r.Context(), api.db, payload.End)
 	}
 
 	if payload.Bib != "" {
-		services.GetEventResultsInstance().RecordFinisherResult(r.Context(), payload.Bib)
+		services.RecordFinisherResult(r.Context(), api.db, payload.Bib)
 	}
 }

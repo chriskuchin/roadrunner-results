@@ -12,25 +12,19 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-type participantsResources struct{}
-
-// /races/{id}/participants
-// POST /races/{id}/participants/csv
-// GET /races/{id}/participants
-// GET /races/{id}/participants/{id}/results
-func (rs participantsResources) Routes() chi.Router {
+func ParticipantsRoutes(handler *Handler) chi.Router {
 	r := chi.NewRouter()
 
-	r.Get("/", rs.listParticipants)
+	r.Get("/", handler.listParticipants)
 	r.Route("/{participantID}", func(r chi.Router) {
 		r.Use(participantCtx)
-		r.Get("/", rs.getParticipant)
+		r.Get("/", handler.getParticipant)
 	})
 
 	return r
 }
 
-func (rs participantsResources) listParticipants(w http.ResponseWriter, r *http.Request) {
+func (api *Handler) listParticipants(w http.ResponseWriter, r *http.Request) {
 	var err error
 	var limit int = 10
 	if r.URL.Query().Get("limit") != "" {
@@ -52,7 +46,7 @@ func (rs participantsResources) listParticipants(w http.ResponseWriter, r *http.
 		}
 	}
 
-	results, err := services.GetParticipantServiceInstance().ListParticipants(r.Context(), limit, offset)
+	results, err := services.ListParticipants(r.Context(), api.db, limit, offset)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("failed request"))
@@ -62,7 +56,7 @@ func (rs participantsResources) listParticipants(w http.ResponseWriter, r *http.
 	render.JSON(w, r, results)
 }
 
-func (rs participantsResources) getParticipant(w http.ResponseWriter, r *http.Request) {
+func (api *Handler) getParticipant(w http.ResponseWriter, r *http.Request) {
 
 }
 

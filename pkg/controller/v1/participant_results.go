@@ -6,16 +6,14 @@ import (
 	"github.com/go-chi/chi"
 )
 
-type ParticipantResultsResources struct{}
-
-func (pr *ParticipantResultsResources) Routes() chi.Router {
+func ParticipantResultsRoutes(handler *Handler) chi.Router {
 	r := chi.NewRouter()
 
-	r.Get("/", handleParticipantResults)
+	r.Get("/", handler.handleParticipantResults)
 
 	return r
 }
 
-func handleParticipantResults(w http.ResponseWriter, r *http.Request) {
+func (api *Handler) handleParticipantResults(w http.ResponseWriter, r *http.Request) {
 
 }

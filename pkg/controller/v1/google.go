@@ -12,15 +12,13 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-type googleResources struct{}
-
-func (rs googleResources) Routes() chi.Router {
+func GoogleRoutes(handler *Handler) chi.Router {
 	r := chi.NewRouter()
-	r.HandleFunc("/oauth2/callback", handleOAuth2Callback)
+	r.HandleFunc("/oauth2/callback", handler.handleOAuth2Callback)
 	return r
 }
 
-func handleOAuth2Callback(w http.ResponseWriter, r *http.Request) {
+func (api *Handler) handleOAuth2Callback(w http.ResponseWriter, r *http.Request) {
 	state := r.URL.Query().Get("state")
 	code := r.URL.Query().Get("code")
 

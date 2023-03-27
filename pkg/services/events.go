@@ -3,16 +3,11 @@ package services
 import (
 	"context"
 
-	"github.com/chriskuchin/roadrunner-results/pkg/db"
+	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 )
-
-var eventsInstance *EventsService
-
-type EventsService struct {
-	eventsDao *db.EventDao
-}
 
 type EventObject struct {
 	EventID     string `json:"eventId"`
@@ -20,25 +15,15 @@ type EventObject struct {
 	Distance    int    `json:"distance"`
 }
 
-func NewEventService() {
-	if eventsInstance == nil {
-		eventsInstance = &EventsService{
-			eventsDao: db.NewEventDAO(),
-		}
-	}
-}
-
-func GetEventsServiceInstance() *EventsService {
-	return eventsInstance
-}
-
-func (e *EventsService) AddEvent(ctx context.Context, raceID, description string, distance int) (string, error) {
+func AddEvent(ctx context.Context, db *sqlx.DB, raceID, description string, distance int) (string, error) {
 	id := uuid.NewString()
-	return id, e.eventsDao.AddEvent(ctx, raceID, id, description, distance)
+	_, err := db.Exec(addEventQuery, raceID, id, description, distance)
+	return id, err
 }
 
-func (e *EventsService) GetRaceEvents(ctx context.Context) ([]EventObject, error) {
-	dbEvents, err := e.eventsDao.GetRaceEvents(ctx)
+func GetRaceEvents(ctx context.Context, db *sqlx.DB) ([]EventObject, error) {
+	var dbEvents []EventDto
+	err := db.Select(&dbEvents, listRaceEventsQuery, util.GetRaceIDFromContext(ctx))
 	if err != nil {
 		log.Error().Err(err).Send()
 		return nil, err
@@ -56,10 +41,35 @@ func (e *EventsService) GetRaceEvents(ctx context.Context) ([]EventObject, error
 	return results, nil
 }
 
-func (e *EventsService) GetRaceEvent(ctx context.Context) {
+func GetRaceEvent(ctx context.Context) {
 
 }
 
-func (e *EventsService) DeleteRaceEvent(ctx context.Context) {
+func DeleteRaceEvent(ctx context.Context) {
 
 }
+
+type EventDto struct {
+	RaceID      string `db:"race_id"`
+	EventID     string `db:"event_id"`
+	Description string `db:"event_description"`
+	Distance    int    `db:"distance"`
+}
+
+const (
+	addEventQuery string = `
+		insert into events (
+			race_id,
+			event_id,
+			event_description,
+			distance
+			)
+			VALUES(?, ?, ?, ?)
+	`
+
+	listRaceEventsQuery string = `
+		select * from events
+			where
+				race_id = ?
+	`
+)

@@ -13,28 +13,25 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-// GET /races/{id}
-type racesResources struct{}
-
-func (rs racesResources) Routes() chi.Router {
+func RacesRoutes(handler *Handler) chi.Router {
 	r := chi.NewRouter()
 
 	r.Options("/", Cors)
-	r.Get("/", listRaces)
-	r.Post("/", createRace)
+	r.Get("/", handler.listRaces)
+	r.Post("/", handler.createRace)
 	r.Route("/import", func(r chi.Router) {
 		r.Use(google.HandleOAuth2Creds)
-		r.Get("/", importRaceAndResults)
+		r.Get("/", handler.importRaceAndResults)
 	})
 
 	r.Route("/{raceID}", func(r chi.Router) {
 		r.Use(raceCtx)
 		r.Options("/", Cors)
-		r.Delete("/", deleteRace)
-		r.Get("/", getRace)
+		r.Delete("/", handler.deleteRace)
+		r.Get("/", handler.getRace)
 
-		r.Mount("/participants", participantsResources{}.Routes())
-		r.Mount("/events", eventsResources{}.Routes())
+		r.Mount("/participants", ParticipantsRoutes(handler))
+		r.Mount("/events", EventsRoutes(handler))
 	})
 
 	return r
@@ -47,20 +44,20 @@ func Cors(w http.ResponseWriter, r *http.Request) {
 	w.Write(nil)
 }
 
-func importRaceAndResults(w http.ResponseWriter, r *http.Request) {
+func (api *Handler) importRaceAndResults(w http.ResponseWriter, r *http.Request) {
 	sheetId := r.URL.Query().Get("sheetId")
 	if sheetId == "" {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte("no sheetId provided"))
 		return
 	}
-	services.ImportFromSheet(r.Context(), sheetId)
+	services.ImportFromSheet(r.Context(), api.db, sheetId)
 
 	w.Write([]byte("test import, " + sheetId))
 }
 
-func getRace(w http.ResponseWriter, r *http.Request) {
-	race, err := services.GetRaceServiceInstance().GetRace(r.Context())
+func (api *Handler) getRace(w http.ResponseWriter, r *http.Request) {
+	race, err := services.GetRace(r.Context(), api.db)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -70,19 +67,17 @@ func getRace(w http.ResponseWriter, r *http.Request) {
 }
 
 // GET /races
-func listRaces(w http.ResponseWriter, r *http.Request) {
+func (api *Handler) listRaces(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	raceService := services.GetRaceServiceInstance()
 
-	races, _ := raceService.ListRaces(ctx)
+	races, _ := services.ListRaces(ctx, api.db)
 
 	render.JSON(w, r, races)
 }
 
 // POST /races
-func createRace(w http.ResponseWriter, r *http.Request) {
+func (api *Handler) createRace(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-	raceService := services.GetRaceServiceInstance()
 
 	raceRequest := &RaceRequest{}
 	if err := render.DecodeJSON(r.Body, raceRequest); err != nil {
@@ -92,7 +87,7 @@ func createRace(w http.ResponseWriter, r *http.Request) {
 		})
 	}
 
-	raceID, err := raceService.CreateRace(ctx, raceRequest.Name)
+	raceID, err := services.CreateRace(ctx, api.db, raceRequest.Name)
 	if err != nil {
 		log.Error().Err(err).Send()
 		render.Status(r, http.StatusInternalServerError)
@@ -111,11 +106,11 @@ func createRace(w http.ResponseWriter, r *http.Request) {
 }
 
 // DELETE .races/{raceID}
-func deleteRace(w http.ResponseWriter, r *http.Request) {
+func (api Handler) deleteRace(w http.ResponseWriter, r *http.Request) {
 
 	id := chi.URLParam(r, "raceID")
 	ctx := r.Context()
-	err := services.GetRaceServiceInstance().DeleteRace(ctx, id)
+	err := services.DeleteRace(ctx, api.db, id)
 	if err != nil {
 		render.Status(r, http.StatusInternalServerError)
 		render.JSON(w, r, map[string]string{

@@ -8,14 +8,14 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
+	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/api/option"
 	"google.golang.org/api/sheets/v4"
 )
 
-func ImportFromSheet(ctx context.Context, sheetId string) {
+func ImportFromSheet(ctx context.Context, db *sqlx.DB, sheetId string) {
 	sheets, err := sheets.NewService(ctx, option.WithHTTPClient(ctx.Value(util.GoogleClient).(*http.Client)))
 	if err != nil {
 		log.Error().Err(err).Send()
@@ -28,18 +28,17 @@ func ImportFromSheet(ctx context.Context, sheetId string) {
 		return
 	}
 
-	err = GetRaceServiceInstance().CreateRaceWithID(ctx, sheetId, rslt.Properties.Title)
+	err = CreateRaceWithID(ctx, db, sheetId, rslt.Properties.Title)
 	if err != nil {
 		log.Error().Err(err).Send()
 	}
 
-	eventService := GetEventsServiceInstance()
 	heats := []string{}
 	events := []string{}
 	for _, sheet := range rslt.Sheets {
 		if isRaceHeatResultsTab(sheet.Properties.Title) {
 			heats = append(heats, sheet.Properties.Title)
-			eventID, err := eventService.AddEvent(ctx, sheetId, sheet.Properties.Title, getHeatDistanceMeters(sheet.Properties.Title))
+			eventID, err := AddEvent(ctx, db, sheetId, sheet.Properties.Title, getHeatDistanceMeters(sheet.Properties.Title))
 			if err != nil {
 				log.Error().Err(err).Send()
 			}
@@ -66,7 +65,7 @@ func ImportFromSheet(ctx context.Context, sheetId string) {
 						break
 					}
 					birthYear, _ := strconv.Atoi(row[3].(string))
-					GetParticipantServiceInstance().AddParticipant(ctx, db.Participant{
+					AddParticipant(ctx, db, Participant{
 						RaceID: sheetId,
 						// EventID:   events[heatID],
 						FirstName: strings.Split(row[1].(string), " ")[0],
@@ -80,12 +79,13 @@ func ImportFromSheet(ctx context.Context, sheetId string) {
 						log.Error().Err(err).Send()
 					}
 
-					err = GetEventParticipationInstance().RecordEventParticipation(ctx, sheetId, events[heatID], row[0].(string))
+					err = RecordEventParticipation(ctx, db, sheetId, events[heatID], row[0].(string))
+
 					if err != nil {
 						log.Error().Err(err).Send()
 					}
 
-					err = GetResultsServiceInstance().InsertResults(ctx, sheetId, events[heatID], row[0].(string), row[5].(string))
+					err = InsertResults(ctx, db, sheetId, events[heatID], row[0].(string), row[5].(string))
 					if err != nil {
 						log.Error().Err(err).Send()
 					}

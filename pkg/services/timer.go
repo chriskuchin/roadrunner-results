@@ -2,17 +2,13 @@ package services
 
 import (
 	"context"
+	"errors"
 
-	"github.com/chriskuchin/roadrunner-results/pkg/db"
+	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 )
-
-var timerServiceInstance *TimersService
-
-type TimersService struct {
-	dao *db.TimerDAO
-}
 
 type TimerResult struct {
 	TimerID string `json:"id"`
@@ -21,28 +17,14 @@ type TimerResult struct {
 	Start   int64  `json:"timer_start"`
 }
 
-func newTimersService() {
-	if timerServiceInstance == nil {
-		timerServiceInstance = &TimersService{
-			dao: db.NewTimerDAO(),
-		}
-	}
-}
-
-func GetTimerServiceInstance() *TimersService {
-	if timerServiceInstance == nil {
-		newTimersService()
-	}
-	return timerServiceInstance
-}
-
-func (t *TimersService) StartTimer(ctx context.Context, start int64) {
+func StartTimer(ctx context.Context, db *sqlx.DB, start int64) {
 	timerID := uuid.New().String()
-	t.dao.StartTimer(ctx, timerID, start)
+	db.Exec(startTimer, timerID, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), start)
 }
 
-func (t *TimersService) ListTimers(ctx context.Context, limit, offset int) ([]TimerResult, error) {
-	rows, err := t.dao.ListTimers(ctx, limit, offset)
+func ListTimers(ctx context.Context, db *sqlx.DB, limit, offset int) ([]TimerResult, error) {
+	var rows []TimerRow
+	err := db.Select(&rows, listEventTimersQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), limit, offset)
 	if err != nil {
 		log.Error().Err(err).Send()
 		return nil, err
@@ -62,21 +44,107 @@ func (t *TimersService) ListTimers(ctx context.Context, limit, offset int) ([]Ti
 	return results, nil
 }
 
-func (t *TimersService) DeleteTimer(ctx context.Context) error {
+func DeleteTimer(ctx context.Context, db *sqlx.DB) error {
+	_, err := db.Exec(deleteEventTimerQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetTimerIDFromContext(ctx))
+	return err
 
-	return t.dao.DeleteTimer(ctx)
 }
 
-func (t *TimersService) GetTimer(ctx context.Context) (*TimerResult, error) {
-	result, err := t.dao.GetTimer(ctx)
+func GetTimer(ctx context.Context, db *sqlx.DB) (*TimerResult, error) {
+	var result []*TimerRow
+	err := db.Select(&result, getEventTimerQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetTimerIDFromContext(ctx))
 	if err != nil {
 		return nil, err
+	} else if len(result) == 0 {
+		return nil, errors.New("timer not found")
 	}
 
 	return &TimerResult{
-		RaceID:  result.RaceID,
-		EventID: result.EventID,
-		TimerID: result.TimerID,
-		Start:   result.Start,
+		RaceID:  result[0].RaceID,
+		EventID: result[0].EventID,
+		TimerID: result[0].TimerID,
+		Start:   result[0].Start,
 	}, nil
+}
+
+type TimerRow struct {
+	TimerID string `db:"timer_id"`
+	RaceID  string `db:"race_id"`
+	EventID string `db:"event_id"`
+	Start   int64  `db:"start_ts"`
+}
+
+const (
+	startTimer string = `
+		insert into timers (
+			timer_id,
+			race_id,
+			event_id,
+			start_ts
+		)
+		VALUES(?, ?, ?, ?)
+	`
+
+	listEventTimersQuery string = `
+		select * from timers
+		where
+			race_id = ?
+			AND
+			event_id = ?
+		limit ? offset ?
+	`
+
+	getEventTimerQuery string = `
+		select * from timers
+		Where
+			race_id = ?
+			AND
+			event_id = ?
+			AND
+			timer_id = ?
+	`
+
+	getActiveEventTimerQuery string = `
+		select timer_id, max(start_ts) from timers
+		Where
+			race_id = ?
+			AND
+			event_id = ?
+	`
+
+	deleteEventTimerQuery string = `
+		delete from timers
+		Where
+			race_id = ?
+			AND
+			event_id = ?
+			AND
+			timer_id = ?
+	`
+
+	appendTimerResult string = `
+	insert into timer_results (
+		race_id,
+		event_id,
+		timer_id,
+		result
+	) VALUES (?, ?, ?, ?)
+	`
+)
+
+func GetActiveTimerStart(ctx context.Context, db *sqlx.DB) (int64, string, error) {
+	row := db.QueryRow(getActiveEventTimerQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))
+	if row.Err() != nil {
+		return 0, "", row.Err()
+	}
+
+	var start int64
+	var timerID string
+	row.Scan(&timerID, &start)
+	return start, timerID, nil
+}
+
+func RecordTime(ctx context.Context, db *sqlx.DB, timerID string, result int64) error {
+	_, err := db.Exec(appendTimerResult, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), timerID, result)
+	return err
 }
