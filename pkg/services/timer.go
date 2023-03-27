@@ -33,12 +33,7 @@ func ListTimers(ctx context.Context, db *sqlx.DB, limit, offset int) ([]TimerRes
 	var results []TimerResult
 	for _, row := range rows {
 
-		results = append(results, TimerResult{
-			TimerID: row.TimerID,
-			RaceID:  row.RaceID,
-			EventID: row.EventID,
-			Start:   row.Start,
-		})
+		results = append(results, TimerResult(row))
 	}
 
 	return results, nil
