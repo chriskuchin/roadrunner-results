@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
+	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
 	"github.com/rs/zerolog/log"
@@ -50,11 +51,12 @@ func (api *Handler) recordResult(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	ctx := util.SetDB(r.Context(), api.db)
 	if payload.End > 0 {
-		services.RecordTimerResult(r.Context(), api.db, payload.End)
+		services.RecordTimerResult(ctx, payload.End)
 	}
 
 	if payload.Bib != "" {
-		services.RecordFinisherResult(r.Context(), api.db, payload.Bib)
+		services.RecordFinisherResult(ctx, api.db, payload.Bib)
 	}
 }

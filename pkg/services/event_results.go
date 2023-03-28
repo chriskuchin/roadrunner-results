@@ -10,14 +10,25 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-type EventResultsDTO struct {
-	FirstName sql.NullString `db:"first_name"`
-	LastName  sql.NullString `db:"last_name"`
-	BibNumber string         `db:"bib_number"`
-	BirthYear sql.NullInt32  `db:"birth_year"`
-	Gender    sql.NullString `db:"gender"`
-	Result    int            `db:"result"`
-}
+type (
+	EventResultsRow struct {
+		FirstName sql.NullString `db:"first_name"`
+		LastName  sql.NullString `db:"last_name"`
+		BibNumber string         `db:"bib_number"`
+		BirthYear sql.NullInt32  `db:"birth_year"`
+		Gender    sql.NullString `db:"gender"`
+		Result    int            `db:"result"`
+	}
+
+	ParticipantEventResult struct {
+		FirstName string `json:"first_name,omitempty"`
+		LastName  string `json:"last_name,omitempty"`
+		BibNumber string `json:"bib_number"`
+		BirthYear int    `json:"birth_year,omitempty"`
+		Gender    string `json:"gender,omitempty"`
+		Result    int    `json:"result_ms"`
+	}
+)
 
 const (
 	getEventResults string = `
@@ -54,7 +65,7 @@ const (
 )
 
 func GetEventResults(ctx context.Context, db *sqlx.DB) ([]ParticipantEventResult, error) {
-	var results []EventResultsDTO
+	var results []EventResultsRow
 	err := db.Select(&results, getEventResults, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))
 	if err != nil {
 		return nil, err
@@ -79,14 +90,14 @@ func GetEventResults(ctx context.Context, db *sqlx.DB) ([]ParticipantEventResult
 	return participantResults, nil
 }
 
-func RecordTimerResult(ctx context.Context, db *sqlx.DB, endTS int64) error {
-	start, _, err := GetActiveTimerStart(ctx, db)
+func RecordTimerResult(ctx context.Context, endTS int64) error {
+	start, _, err := GetActiveTimerStart(ctx)
 	if err != nil {
 		log.Error().Err(err).Send()
 		return err
 	}
 
-	return InsertPartialResult(ctx, db, endTS-start)
+	return InsertPartialResult(ctx, endTS-start)
 }
 
 func RecordFinisherResult(ctx context.Context, db *sqlx.DB, bib string) error {
@@ -101,13 +112,4 @@ func RecordFinisherResult(ctx context.Context, db *sqlx.DB, bib string) error {
 	}
 
 	return err
-}
-
-type ParticipantEventResult struct {
-	FirstName string `json:"first_name,omitempty"`
-	LastName  string `json:"last_name,omitempty"`
-	BibNumber string `json:"bib_number"`
-	BirthYear int    `json:"birth_year,omitempty"`
-	Gender    string `json:"gender,omitempty"`
-	Result    int    `json:"result_ms"`
 }

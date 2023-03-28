@@ -65,7 +65,7 @@ func ImportFromSheet(ctx context.Context, db *sqlx.DB, sheetId string) {
 						break
 					}
 					birthYear, _ := strconv.Atoi(row[3].(string))
-					AddParticipant(ctx, db, Participant{
+					AddParticipant(ctx, db, ParticipantRow{
 						RaceID: sheetId,
 						// EventID:   events[heatID],
 						FirstName: strings.Split(row[1].(string), " ")[0],

@@ -34,10 +34,7 @@ func InsertResults(ctx context.Context, db *sqlx.DB, raceID, eventID, bibNumber,
 	return err
 }
 
-// select p.first_name, p.last_name, p.bib_number, r.result from participants as p join results as r on p.race_id = r.race_id and p.event_id = r.event_id and p.bib_number = r.bib_number
-// select p.first_name, p.last_name, p.bib_number, p.birth_year, r.result from participants as p join results as r on p.race_id = r.race_id and p.event_id = r.event_id and p.bib_number = r.bib_number group by p.birth_year order by r.result;
-
-func InsertPartialResult(ctx context.Context, db *sqlx.DB, result int64) error {
-	_, err := db.Exec(insertPartialQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), result)
+func InsertPartialResult(ctx context.Context, result int64) error {
+	_, err := util.GetDB(ctx).Exec(insertPartialQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), result)
 	return err
 }
