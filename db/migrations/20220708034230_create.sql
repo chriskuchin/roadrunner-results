@@ -35,6 +35,7 @@ CREATE TABLE event_participation (
 CREATE TABLE results (
     race_id varchar(255),
     event_id varchar(255),
+    timer_id varchar(255) DEFAULT NULL,
     bib_number varchar(255),
     result integer,
     UNIQUE(race_id, event_id, bib_number)

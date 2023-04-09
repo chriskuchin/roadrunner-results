@@ -2,7 +2,7 @@
   <div class="container">
     <div id="scanner-wrapper" ref="scanner-wrapper" :class="{
       'camera-active': cameraActive,
-      'camera-inactive': !cameraActive
+        'camera-inactive': !cameraActive
     }">
       <h1>{{ stopwatch }}</h1>
       <video ref="finish-line-camera" id="finish-line-camera" @loadedmetadata="resizeVideo" />

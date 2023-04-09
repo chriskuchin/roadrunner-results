@@ -15,7 +15,6 @@ import (
 func EventsRoutes(handler *Handler) chi.Router {
 	r := chi.NewRouter()
 
-	r.Options("/", Cors)
 	r.Get("/", handler.listEvents)
 	r.Post("/", handler.addEvent)
 

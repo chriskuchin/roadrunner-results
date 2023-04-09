@@ -16,7 +16,6 @@ import (
 func RacesRoutes(handler *Handler) chi.Router {
 	r := chi.NewRouter()
 
-	r.Options("/", Cors)
 	r.Get("/", handler.listRaces)
 	r.Post("/", handler.createRace)
 	r.Route("/import", func(r chi.Router) {
@@ -26,7 +25,6 @@ func RacesRoutes(handler *Handler) chi.Router {
 
 	r.Route("/{raceID}", func(r chi.Router) {
 		r.Use(raceCtx)
-		r.Options("/", Cors)
 		r.Delete("/", handler.deleteRace)
 		r.Get("/", handler.getRace)
 
@@ -35,13 +33,6 @@ func RacesRoutes(handler *Handler) chi.Router {
 	})
 
 	return r
-}
-
-func Cors(w http.ResponseWriter, r *http.Request) {
-	w.Header().Add("Access-Control-Allow-Methods", "*")
-	w.Header().Add("Access-Control-Allow-Headers", "*")
-	w.WriteHeader(http.StatusNoContent)
-	w.Write(nil)
 }
 
 func (api *Handler) importRaceAndResults(w http.ResponseWriter, r *http.Request) {

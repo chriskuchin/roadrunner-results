@@ -1,15 +1,31 @@
 <template>
   <div class="section">
+    <div class="box" v-for="race in racesStore.getRaces" :key="race.id">
+      <div class="title is-4">{{ race.name }}</div>
+      <router-link :to="'/races/' + race.id + '/results'" class="button">Results</router-link>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapStores } from 'pinia'
+import { useRacesStore, mapState } from "../store/races";
 
 export default {
-  components: {},
+  components: {
+  },
+  data: function () {
+    return {}
+  },
+  computed: {
+    ...mapStores(useRacesStore),
+    raceLink: function (id) {
+      console.log(id + " raceLINK")
+      return "/races/" + id + "/results"
+    }
+  },
   mounted: function () {
-    // var scanner = new Html5QrcodeScanner("scanner", {})
-    // scanner.render()
+    this.racesStore.loadRaces()
   }
 };
 </script>

@@ -22,10 +22,11 @@ const (
 		insert into results (
 			race_id,
 			event_id,
+			timer_id,
 			bib_number,
 			result
 		)
-		VALUES(?, ?, NULL, ?)
+		VALUES(?, ?, ?, NULL, ?)
 	`
 )
 
@@ -34,7 +35,7 @@ func InsertResults(ctx context.Context, db *sqlx.DB, raceID, eventID, bibNumber,
 	return err
 }
 
-func InsertPartialResult(ctx context.Context, result int64) error {
-	_, err := util.GetDB(ctx).Exec(insertPartialQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), result)
+func InsertPartialResult(ctx context.Context, result int64, timerID string) error {
+	_, err := util.GetDB(ctx).Exec(insertPartialQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), timerID, result)
 	return err
 }

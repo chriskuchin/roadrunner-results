@@ -91,13 +91,13 @@ func GetEventResults(ctx context.Context, db *sqlx.DB) ([]ParticipantEventResult
 }
 
 func RecordTimerResult(ctx context.Context, endTS int64) error {
-	start, _, err := GetActiveTimerStart(ctx)
+	start, timerID, err := GetActiveTimerStart(ctx)
 	if err != nil {
 		log.Error().Err(err).Send()
 		return err
 	}
 
-	return InsertPartialResult(ctx, endTS-start)
+	return InsertPartialResult(ctx, endTS-start, timerID)
 }
 
 func RecordFinisherResult(ctx context.Context, db *sqlx.DB, bib string) error {

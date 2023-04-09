@@ -2,6 +2,7 @@ package v1
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -27,9 +28,12 @@ func TimerRoutes(handler *Handler) chi.Router {
 }
 
 func (api *Handler) startTimer(w http.ResponseWriter, r *http.Request) {
-	services.StartTimer(r.Context(), api.db, time.Now().UnixMilli())
+	start := time.Now().UnixMilli()
+	services.StartTimer(r.Context(), api.db, start)
 
-	w.WriteHeader(http.StatusAccepted)
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(fmt.Sprintf("%d", start)))
 }
 
 func (api *Handler) listTimers(w http.ResponseWriter, r *http.Request) {

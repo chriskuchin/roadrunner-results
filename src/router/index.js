@@ -12,6 +12,7 @@ const RaceBasePage = () => import('../views/RaceBasePage.vue')
 const RaceEventsPage = () => import('../views/RaceEventsPage.vue')
 const RaceParticipantsPage = () => import('../views/RaceParticipantsPage.vue')
 const RaceResultsPage = () => import('../views/RaceResultsPage.vue')
+const RaceEventsResultsPage = () => import('../views/RaceEventsResultsPage.vue')
 
 const routes = [
   { path: "/", component: HomePage },
@@ -19,12 +20,13 @@ const routes = [
   {
     path: "/races/:raceId", component: RaceBasePage, children: [
       { path: "", component: RacePage, name: "race" },
-      { path: "timer", component: RaceTimer, name: "timer" },
       { path: "record", component: RecordResults, name: "record" },
       { path: "register", component: RegisterParticipant, name: "register" },
       { path: "participants", component: RaceParticipantsPage },
       { path: "results", component: RaceResultsPage },
-      { path: "events/:eventId", component: RaceEventsPage }
+      { path: "events/:eventId", component: RaceEventsPage },
+      { path: "events/:eventId/results", component: RaceEventsResultsPage },
+      { path: "events/:eventId/timer", component: RaceTimer, name: "timer" }
     ]
   },
   { path: "/login", component: LoginPage },

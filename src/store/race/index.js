@@ -20,6 +20,7 @@ export const useRaceStore = defineStore("race", {
         yearLabels: state => [...new Set(state.participantStats.birthYearDistro.map(row => row.year))],
         totalParticipants: state => state.participantStats.total,
         eventTotal: state => state.eventCount,
+        eventList: state => state.events,
         eventName: state => {
             return function (eventID) {
                 let event = state.events.filter(val => val.eventId == eventID)[0]
