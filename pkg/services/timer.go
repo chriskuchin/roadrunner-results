@@ -39,7 +39,8 @@ const (
 	`
 
 	listEventTimersQuery string = `
-		select * from timers
+	select t.*, count(r.rowId) from timers as t
+		left outer join results r using(timer_id, event_id, race_id)
 		where
 			race_id = ?
 			AND
@@ -92,6 +93,8 @@ const (
 	)
 	VALUES(?, ?, ?)	`
 )
+
+// select r.race_id, count(r.bib_number) from timers join results as r  USING(timer_id) where timer_id = "4c915e57-b052-4ab4-9374-ac11f8cd4d1b";
 
 func CreateTimer(ctx context.Context, db *sqlx.DB) (string, error) {
 	timerID := uuid.New().String()
