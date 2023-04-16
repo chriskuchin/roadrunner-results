@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
@@ -13,13 +12,20 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+type (
+	TimerRequest struct {
+		Start int64 `json:"start_ts,omitempty"`
+	}
+)
+
 func TimerRoutes(handler *Handler) chi.Router {
 	r := chi.NewRouter()
-	r.Post("/", handler.startTimer)
+	r.Post("/", handler.createTimer)
 	r.Get("/", handler.listTimers)
 
 	r.Route("/{timerID}", func(r chi.Router) {
 		r.Use(timerCtx)
+		r.Put("/", handler.startTimer)
 		r.Get("/", handler.getTimer)
 		r.Delete("/", handler.deleteTimer)
 	})
@@ -27,13 +33,67 @@ func TimerRoutes(handler *Handler) chi.Router {
 	return r
 }
 
-func (api *Handler) startTimer(w http.ResponseWriter, r *http.Request) {
-	start := time.Now().UnixMilli()
-	services.StartTimer(r.Context(), api.db, start)
+func (api *Handler) createTimer(w http.ResponseWriter, r *http.Request) {
+	// create and then start
+	timerID, err := services.CreateTimer(r.Context(), api.db)
+	if err != nil {
+		render.Status(r, http.StatusInternalServerError)
+		render.JSON(w, r, map[string]string{
+			"error": fmt.Sprintf("%s", err),
+		})
+		return
+	}
 
-	w.Header().Add("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(fmt.Sprintf("%d", start)))
+	timerR := TimerRequest{}
+	err = render.DecodeJSON(r.Body, timerR)
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, map[string]string{
+			"error": fmt.Sprintf("%s", err),
+		})
+		return
+	}
+
+	if timerR.Start != 0 {
+		err = services.StartTimer(context.WithValue(r.Context(), util.TimerID, timerID), api.db, timerR.Start)
+		if err != nil {
+			render.Status(r, http.StatusBadRequest)
+			render.JSON(w, r, map[string]string{
+				"error": fmt.Sprintf("%s", err),
+			})
+			return
+		}
+		render.Status(r, http.StatusAccepted)
+		render.JSON(w, r, fmt.Sprintf("%d", timerR.Start))
+		return
+	}
+
+	render.Status(r, http.StatusNoContent)
+}
+
+func (api *Handler) startTimer(w http.ResponseWriter, r *http.Request) {
+	timerR := TimerRequest{}
+	err := render.DecodeJSON(r.Body, timerR)
+	if err != nil {
+		render.Status(r, http.StatusBadRequest)
+		render.JSON(w, r, map[string]string{
+			"error": fmt.Sprintf("%s", err),
+		})
+		return
+
+	}
+
+	err = services.StartTimer(r.Context(), api.db, timerR.Start)
+	if err != nil {
+		render.Status(r, http.StatusInternalServerError)
+		render.JSON(w, r, map[string]string{
+			"error": fmt.Sprintf("%s", err),
+		})
+		return
+	}
+
+	render.Status(r, http.StatusAccepted)
+	render.JSON(w, r, fmt.Sprintf("%d", timerR.Start))
 }
 
 func (api *Handler) listTimers(w http.ResponseWriter, r *http.Request) {

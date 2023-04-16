@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"errors"
+	"fmt"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/google/uuid"
@@ -27,14 +28,14 @@ type (
 )
 
 const (
-	startTimer string = `
-		insert into timers (
-			timer_id,
-			race_id,
-			event_id,
-			start_ts
-		)
-		VALUES(?, ?, ?, ?)
+	startTimerQuery string = `
+		update timers set start_ts = ?
+		WHERE
+			timer_id = ?
+				AND
+			event_id = ?
+				AND
+			race_id = ?
 	`
 
 	listEventTimersQuery string = `
@@ -82,11 +83,37 @@ const (
 		result
 	) VALUES (?, ?, ?, ?)
 	`
+
+	createTimerQuery string = `
+	insert into timers (
+		timer_id,
+		event_id
+		race_id,
+	)
+	VALUES(?, ?, ?)	`
 )
 
-func StartTimer(ctx context.Context, db *sqlx.DB, start int64) {
+func CreateTimer(ctx context.Context, db *sqlx.DB) (string, error) {
 	timerID := uuid.New().String()
-	db.Exec(startTimer, timerID, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), start)
+	db.Exec(createTimerQuery, timerID, util.GetEventIDFromContext(ctx), util.GetRaceIDFromContext(ctx))
+	return timerID, nil
+}
+
+func StartTimer(ctx context.Context, db *sqlx.DB, start int64) error {
+	res, err := db.Exec(startTimerQuery, start, util.GetTimerIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetRaceIDFromContext(ctx))
+	if err != nil {
+		return err
+	}
+
+	rows, err := res.RowsAffected()
+	if err != nil {
+		return err
+	}
+	if rows != 0 {
+		return fmt.Errorf("failed to start timer")
+	}
+
+	return nil
 }
 
 func ListTimers(ctx context.Context, db *sqlx.DB, limit, offset int) ([]TimerResult, error) {
