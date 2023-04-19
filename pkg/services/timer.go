@@ -13,6 +13,7 @@ import (
 
 type (
 	TimerRow struct {
+		Results int    `db:"count"`
 		TimerID string `db:"timer_id"`
 		RaceID  string `db:"race_id"`
 		EventID string `db:"event_id"`
@@ -20,6 +21,7 @@ type (
 	}
 
 	TimerResult struct {
+		Results int    `json:"count"`
 		TimerID string `json:"id"`
 		RaceID  string `json:"race_id"`
 		EventID string `json:"event_id"`
@@ -39,13 +41,16 @@ const (
 	`
 
 	listEventTimersQuery string = `
-	select t.*, count(r.rowId) from timers as t
-		left outer join results r using(timer_id, event_id, race_id)
+		select
+			t.*, count(distinct r.result) as count from timers as t
+		left outer join results r
+			using(timer_id, event_id, race_id)
 		where
-			race_id = ?
+			t.race_id = ?
 			AND
-			event_id = ?
-		limit ? offset ?
+			t.event_id = ?
+		group by t.timer_id, t.event_id, t.race_id
+		order by t.start_ts ASC
 	`
 
 	getEventTimerQuery string = `
@@ -59,11 +64,13 @@ const (
 	`
 
 	getActiveEventTimerQuery string = `
-		select timer_id, max(start_ts) from timers
+		select timer_id, start_ts from timers
 		Where
 			race_id = ?
 			AND
 			event_id = ?
+		ORDER BY start_ts DESC
+		Limit 1
 	`
 
 	deleteEventTimerQuery string = `
@@ -88,18 +95,16 @@ const (
 	createTimerQuery string = `
 	insert into timers (
 		timer_id,
-		event_id
+		event_id,
 		race_id,
-	)
-	VALUES(?, ?, ?)	`
+		start_ts
+	) VALUES(?, ?, ?, 0)`
 )
-
-// select r.race_id, count(r.bib_number) from timers join results as r  USING(timer_id) where timer_id = "4c915e57-b052-4ab4-9374-ac11f8cd4d1b";
 
 func CreateTimer(ctx context.Context, db *sqlx.DB) (string, error) {
 	timerID := uuid.New().String()
-	db.Exec(createTimerQuery, timerID, util.GetEventIDFromContext(ctx), util.GetRaceIDFromContext(ctx))
-	return timerID, nil
+	_, err := db.Exec(createTimerQuery, timerID, util.GetEventIDFromContext(ctx), util.GetRaceIDFromContext(ctx))
+	return timerID, err
 }
 
 func StartTimer(ctx context.Context, db *sqlx.DB, start int64) error {
@@ -112,7 +117,7 @@ func StartTimer(ctx context.Context, db *sqlx.DB, start int64) error {
 	if err != nil {
 		return err
 	}
-	if rows != 0 {
+	if rows != 1 {
 		return fmt.Errorf("failed to start timer")
 	}
 

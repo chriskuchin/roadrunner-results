@@ -13,8 +13,9 @@ import (
 )
 
 type RecordResultRequestPayload struct {
-	End int64  `json:"end_ts"`
-	Bib string `json:"bib_number"`
+	Timer string `json:"timer_id"`
+	End   int64  `json:"end_ts"`
+	Bib   string `json:"bib_number"`
 }
 
 func EventResultsRoutes(handler *Handler) chi.Router {
@@ -38,7 +39,7 @@ func (api *Handler) handleEventResults(w http.ResponseWriter, r *http.Request) {
 func (api *Handler) recordResult(w http.ResponseWriter, r *http.Request) {
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
-		log.Debug().Err(err).Send()
+		log.Error().Err(err).Send()
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -46,7 +47,7 @@ func (api *Handler) recordResult(w http.ResponseWriter, r *http.Request) {
 	var payload RecordResultRequestPayload
 	err = json.Unmarshal(body, &payload)
 	if err != nil {
-		log.Debug().Err(err).Send()
+		log.Error().Err(err).Send()
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
@@ -59,4 +60,6 @@ func (api *Handler) recordResult(w http.ResponseWriter, r *http.Request) {
 	if payload.Bib != "" {
 		services.RecordFinisherResult(ctx, api.db, payload.Bib)
 	}
+
+	render.Status(r, http.StatusAccepted)
 }

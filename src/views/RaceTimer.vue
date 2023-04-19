@@ -1,41 +1,59 @@
 <template>
   <div>
-    Test
-    {{ this.$route.params.raceId }}
-    {{ this.$route.params.eventId }}
     <div>{{ stopwatch }}</div>
-    <div class="button" @click="this.startTimer">Start</div>
-    <div class="button" @click="this.stopTimer">Stop</div>
-    <div class="button" @click="this.recordFinish">Record</div>
+    <div class="field has-addons">
+      <p class="control">
+      <div class="button is-primary" @click="this.startTimer">Start</div>
+      </p>
+      <p class="control">
+      <div class="button is-danger" @click="this.stopTimer">Stop</div>
+      </p>
+      <p class="control">
+      <div class="button is-warning" @click="this.recordFinish">Record</div>
+      </p>
+    </div>
+    {{ timers }}
   </div>
 </template>
 
 <script>
-import { formatStopwatch, formatMilliseconds } from "../utilities";
+import { formatMilliseconds } from "../utilities";
 
 export default {
   components: {
   },
+  mounted: function () {
+    this.listTimers()
+  },
   data: function () {
     return {
+      timers: [],
       start: 0,
       duration: 0,
       timer: null
     };
   },
   methods: {
+    async listTimers() {
+      let res = await fetch("/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/timers")
+
+      this.timers = await res.json()
+    },
     async startTimer() {
-      console.log("StartTimer", this.raceID, this.eventID)
+      let start = Date.now()
       let res = await fetch(
         "/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/timers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
+        body: JSON.stringify({
+          start_ts: start
+        })
       })
 
       if (res.ok) {
-        this.start = await res.json()
+        this.start = start
         this.timer = setTimeout(this.tickTimer, 10)
       }
       // POST api/v1/races/:raceId/events/:eventId/timer

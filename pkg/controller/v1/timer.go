@@ -37,6 +37,7 @@ func (api *Handler) createTimer(w http.ResponseWriter, r *http.Request) {
 	// create and then start
 	timerID, err := services.CreateTimer(r.Context(), api.db)
 	if err != nil {
+		log.Error().Err(err).Send()
 		render.Status(r, http.StatusInternalServerError)
 		render.JSON(w, r, map[string]string{
 			"error": fmt.Sprintf("%s", err),
@@ -45,8 +46,9 @@ func (api *Handler) createTimer(w http.ResponseWriter, r *http.Request) {
 	}
 
 	timerR := TimerRequest{}
-	err = render.DecodeJSON(r.Body, timerR)
+	err = render.DecodeJSON(r.Body, &timerR)
 	if err != nil {
+		log.Error().Err(err).Send()
 		render.Status(r, http.StatusBadRequest)
 		render.JSON(w, r, map[string]string{
 			"error": fmt.Sprintf("%s", err),
@@ -57,14 +59,18 @@ func (api *Handler) createTimer(w http.ResponseWriter, r *http.Request) {
 	if timerR.Start != 0 {
 		err = services.StartTimer(context.WithValue(r.Context(), util.TimerID, timerID), api.db, timerR.Start)
 		if err != nil {
+			log.Error().Err(err).Send()
 			render.Status(r, http.StatusBadRequest)
 			render.JSON(w, r, map[string]string{
 				"error": fmt.Sprintf("%s", err),
 			})
 			return
 		}
+		result := map[string]string{
+			"id": timerID,
+		}
 		render.Status(r, http.StatusAccepted)
-		render.JSON(w, r, fmt.Sprintf("%d", timerR.Start))
+		render.JSON(w, r, result)
 		return
 	}
 
