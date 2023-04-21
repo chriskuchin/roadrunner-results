@@ -62,7 +62,7 @@ func (api *Handler) getParticipant(w http.ResponseWriter, r *http.Request) {
 
 func participantCtx(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		ParticipantID := chi.URLParam(r, "ParticipantID")
+		ParticipantID := chi.URLParam(r, "participantID")
 		if ParticipantID == "" {
 			log.Error().Msg("Unable to locate ParticipantID")
 		}

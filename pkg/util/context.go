@@ -17,6 +17,7 @@ const (
 	ParticipantID key = 4
 	TimerID       key = 5
 	DB            key = 6
+	HeatID        key = 7
 )
 
 func getValueFromContext(ctx context.Context, k key) string {
