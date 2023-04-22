@@ -1,44 +1,63 @@
 <template>
   <div>
     <div class="section">
+      <div class="select is-small">
+        <select @change="this.getHeatResults" v-model="timerId">
+          <option value="" selected>Latest</option>
+          <option v-for="(timer, index) in timers" :key="timer.id" :value="timer.id">Heat {{ index + 1 }} ({{ timer.count
+          }})
+          </option>
+        </select>
+      </div>
       <div class="tabs">
         <ul>
           <li @click="tabSelect('manual')" :class="{ 'is-active': isActiveTab('manual') }">
             <a>Manual</a>
           </li>
-          <li @click="tabSelect('scanner')" :class="{ 'is-active': isActiveTab('scanner') }">
-            <a>Scanner</a>
-          </li>
         </ul>
       </div>
       <div class="container">
-        <result-scanner v-if="isActiveTab('scanner')" />
-        <result-input v-else-if="isActiveTab('manual')" />
+        <result-input v-if="isActiveTab('manual')" :race-id="this.$route.params.raceId"
+          :event-id="this.$route.params.eventId" :timer-id="this.timerId" />
       </div>
-      <results-table />
     </div>
+    {{ this.results }}
   </div>
 </template>
 
 <script>
-import Scanner from "../components/Scanner.vue";
 import RacerInput from "../components/ResultsInput.vue";
 import ResultsTable from "../components/ResultsTable.vue";
-import Breadcrumb from "../components/Breadcrumb.vue";
 
 export default {
   components: {
-    "result-scanner": Scanner,
     "result-input": RacerInput,
     "results-table": ResultsTable,
-    breadcrumb: Breadcrumb,
+  },
+  mounted: function () {
+    this.listTimers()
   },
   data: function () {
     return {
       activeTab: "manual",
+      timers: [],
+      timerId: "",
+      results: []
     };
   },
   methods: {
+    async getHeatResults() {
+      console.log("getHeatResults")
+      let url = "/api/v1/races/" + this.$route.params.raceId + "/events/" + this.$route.params.eventId + "/results?timerId=" + this.timerId
+
+      this.results = await (await fetch(url)).json()
+      console.log(this.results)
+    },
+    async listTimers() {
+      let res = await fetch("/api/v1/races/" + this.$route.params.raceId + "/events/" + this.$route.params.eventId + "/timers")
+
+      this.timers = await res.json()
+    },
     isActiveTab: function (tab) {
       return this.activeTab == tab;
     },
@@ -47,22 +66,6 @@ export default {
     },
   },
   computed: {
-    paths: function () {
-      return [
-        {
-          path: "/races",
-          display: "Races",
-        },
-        {
-          path: "/" + this.$route.params.raceId,
-          display: "Race 123",
-        },
-        {
-          path: "/" + this.$route.params.raceId + "/results",
-          display: "Results",
-        },
-      ];
-    },
   },
 };
 </script>

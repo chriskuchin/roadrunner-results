@@ -1,11 +1,10 @@
 <template>
   <div>
-    <input
-      class="input is-large"
-      type="number"
-      placeholder="Bib Number Input"
-      v-on:keyup.enter="recordRunner"
-    />
+    <input class="input is-large" :type="getInputType" placeholder="Bib Number Input" v-on:keyup.enter="recordRunner" />
+    <label class="checkbox">
+      <input type="checkbox" v-model="letterToggle">
+      Allow Letters
+    </label>
   </div>
 </template>
 
@@ -14,8 +13,11 @@ import { mapActions } from "pinia";
 import { useResultsStore } from "../store/results";
 
 export default {
+  props: ['raceId', 'eventId', 'timerId'],
   data: function () {
-    return {};
+    return {
+      letterToggle: false,
+    };
   },
   methods: {
     ...mapActions(useResultsStore, ["recordRunnerResult"]),
@@ -26,9 +28,16 @@ export default {
 
       this.recordRunnerResult({
         bib: bibNumber,
-        timestamp: Date.now(),
+        raceId: this.raceId,
+        eventId: this.eventId,
+        timerId: this.timerId,
       });
     },
   },
+  computed: {
+    getInputType() {
+      return this.letterToggle ? "text" : "number"
+    }
+  }
 };
 </script>

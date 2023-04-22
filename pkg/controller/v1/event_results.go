@@ -23,16 +23,32 @@ func EventResultsRoutes(handler *Handler) chi.Router {
 
 	r.Get("/", handler.handleEventResults)
 	r.Post("/", handler.recordResult)
+	r.Put("/", handler.recordResult)
 
 	return r
 }
 
 func (api *Handler) handleEventResults(w http.ResponseWriter, r *http.Request) {
-	results, err := services.GetEventResults(r.Context(), api.db)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		return
+	var results []services.ParticipantEventResult
+	var err error
+
+	timerID := r.URL.Query().Get("timerId")
+
+	if timerID != "" {
+		log.Info().Msgf("%+s", timerID)
+		results, err = services.GetEventHeatResults(r.Context(), api.db, timerID)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+	} else {
+		results, err = services.GetEventResults(r.Context(), api.db)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 	}
+
 	render.JSON(w, r, results)
 }
 

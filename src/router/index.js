@@ -20,11 +20,11 @@ const routes = [
   {
     path: "/races/:raceId", component: RaceBasePage, children: [
       { path: "", component: RacePage, name: "race" },
-      { path: "record", component: RecordResults, name: "record" },
       { path: "register", component: RegisterParticipant, name: "register" },
       { path: "participants", component: RaceParticipantsPage },
       { path: "results", component: RaceResultsPage },
       { path: "events/:eventId", component: RaceEventsPage },
+      { path: "events/:eventId/record", component: RecordResults, name: "record" },
       { path: "events/:eventId/results", component: RaceEventsResultsPage },
       { path: "events/:eventId/timer", component: RaceTimer, name: "timer" }
     ]

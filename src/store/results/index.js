@@ -13,22 +13,31 @@ export const useResultsStore = defineStore("results", {
   },
   actions: {
     recordFinishTime: function (finishTime) {
-      this.finishers++
-
-      this.results[this.finishers] = {}
-      this.results[this.finishers].finishTimestamp = finishTime.timestamp
-      this.results[this.finishers].finishMinutes = finishTime.minutes
-      this.results[this.finishers].finishSeconds = finishTime.seconds
-      this.results[this.finishers].finishMilliseconds = finishTime.milliseconds
-
     },
-    recordRunnerResult: function (runner) {
-      if (!this.results[++this.runners]) {
-        this.results[++this.finishers] = {}
+    recordRunnerResult: async function (runner) {
+      console.log(runner)
+      let payload = {
+        bib_number: runner.bib
       }
 
-      this.results[this.runners].runnerTimestamp = runner.timestamp
-      this.results[this.runners].runnerBib = runner.bib
+      if (runner.timerId != "") {
+        payload.timer_id = runner.timerId
+      }
+
+      let url = "/api/v1/races/" + runner.raceId + "/events/" + runner.eventId + "/results"
+
+      let res = await fetch(url, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      })
+
+      // if (!res.ok)
+      //   return []
+
+      // console.log(payload)
     }
   }
 })

@@ -14,7 +14,7 @@ type (
 	EventResultsRow struct {
 		FirstName sql.NullString `db:"first_name"`
 		LastName  sql.NullString `db:"last_name"`
-		BibNumber string         `db:"bib_number"`
+		BibNumber sql.NullString `db:"bib_number"`
 		BirthYear sql.NullInt32  `db:"birth_year"`
 		Gender    sql.NullString `db:"gender"`
 		Result    int            `db:"result"`
@@ -31,7 +31,7 @@ type (
 )
 
 const (
-	getEventResults string = `
+	getEventResultsQuery string = `
 		SELECT
 			p.first_name,
 			p.last_name,
@@ -49,6 +49,26 @@ const (
 		ORDER by p.birth_year, p.gender, r.result;
 	`
 
+	getEventHeatResultsQuery string = `
+	SELECT
+		p.first_name,
+		p.last_name,
+		r.bib_number,
+		p.birth_year,
+		p.gender,
+		r.result
+	FROM results as r
+	LEFT JOIN participants as p
+		USING(bib_number, race_id)
+	WHERE
+		r.race_id = ?
+		AND
+		r.event_id = ?
+		AND
+		r.timer_id = ?
+	ORDER by p.birth_year, p.gender, r.result;
+`
+
 	recordFinisherQuery string = `
 		UPDATE results SET bib_number = ?
 		WHERE rowid in (
@@ -64,21 +84,26 @@ const (
 	`
 )
 
+func GetEventHeatResults(ctx context.Context, db *sqlx.DB, timerID string) ([]ParticipantEventResult, error) {
+	return runEventResultsQuery(db, getEventHeatResultsQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), timerID)
+}
+
 func GetEventResults(ctx context.Context, db *sqlx.DB) ([]ParticipantEventResult, error) {
+	return runEventResultsQuery(db, getEventResultsQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), "")
+}
+
+func runEventResultsQuery(db *sqlx.DB, query string, args ...interface{}) ([]ParticipantEventResult, error) {
 	var results []EventResultsRow
-	err := db.Select(&results, getEventResults, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))
+	err := db.Select(&results, query, args...)
 	if err != nil {
-		return nil, err
-	}
-	if err != nil {
-		log.Error().Err(err).Send()
+		log.Error().Err(err).Msg("Query Failed")
 		return nil, err
 	}
 
 	var participantResults []ParticipantEventResult = []ParticipantEventResult{}
 	for _, result := range results {
 		participantResults = append(participantResults, ParticipantEventResult{
-			BibNumber: result.BibNumber,
+			BibNumber: result.BibNumber.String,
 			Result:    result.Result,
 			FirstName: result.FirstName.String,
 			LastName:  result.LastName.String,
@@ -103,6 +128,7 @@ func RecordTimerResult(ctx context.Context, endTS int64) error {
 func RecordFinisherResult(ctx context.Context, db *sqlx.DB, bib string) error {
 	result, err := db.Exec(recordFinisherQuery, bib, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))
 	if err != nil {
+		log.Error().Err(err).Send()
 		return err
 	}
 
