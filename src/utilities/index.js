@@ -18,19 +18,11 @@ function formatStopwatch(min, sec, ms) {
 }
 
 function formatMilliseconds(ms) {
-    let min = 0
-    let sec = 0
-    while (ms > 60000) {
-        min += 1
-        ms -= 60000
-    }
-
-    while (ms > 1000) {
-        sec += 1
-        ms -= 1000
-    }
-
-    return min + ":" + addLeadingZeros(sec) + ":" + addLeadingZeros(Math.floor(ms / 10))
+    let min = Math.floor(ms / 60000)
+    ms = ms % 60000
+    let sec = Math.floor(ms / 1000)
+    ms = Math.floor((ms % 1000) / 10)
+    return min + ":" + addLeadingZeros(sec) + ":" + addLeadingZeros(ms)
 }
 
 function addLeadingZeros(val) {

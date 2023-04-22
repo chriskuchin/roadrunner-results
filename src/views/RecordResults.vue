@@ -4,8 +4,8 @@
       <div class="select is-small">
         <select @change="this.getHeatResults" v-model="timerId">
           <option value="" selected>Latest</option>
-          <option v-for="(timer, index) in timers" :key="timer.id" :value="timer.id">Heat {{ index + 1 }} ({{ timer.count
-          }})
+          <option v-for="(timer, index) in timers" :key="timer.id" :value="timer.id">
+            Heat {{ index + 1 }} ({{ timer.count }})
           </option>
         </select>
       </div>
@@ -18,14 +18,17 @@
       </div>
       <div class="container">
         <result-input v-if="isActiveTab('manual')" :race-id="this.$route.params.raceId"
-          :event-id="this.$route.params.eventId" :timer-id="this.timerId" />
+          :event-id="this.$route.params.eventId" :timer-id="this.timerId" @recorded-racer="getHeatResults()" />
       </div>
     </div>
-    {{ this.results }}
+    <div v-for="(result, index) in results" :key="result.bib_number">
+      {{ index + 1 }}. {{ result.bib_number }} - {{ formatFinishingTime(result.result_ms) }}
+    </div>
   </div>
 </template>
 
 <script>
+import { formatMilliseconds } from "../utilities";
 import RacerInput from "../components/ResultsInput.vue";
 import ResultsTable from "../components/ResultsTable.vue";
 
@@ -47,16 +50,17 @@ export default {
   },
   methods: {
     async getHeatResults() {
-      console.log("getHeatResults")
       let url = "/api/v1/races/" + this.$route.params.raceId + "/events/" + this.$route.params.eventId + "/results?timerId=" + this.timerId
 
       this.results = await (await fetch(url)).json()
-      console.log(this.results)
     },
     async listTimers() {
       let res = await fetch("/api/v1/races/" + this.$route.params.raceId + "/events/" + this.$route.params.eventId + "/timers")
 
       this.timers = await res.json()
+    },
+    formatFinishingTime(ms) {
+      return formatMilliseconds(ms)
     },
     isActiveTab: function (tab) {
       return this.activeTab == tab;

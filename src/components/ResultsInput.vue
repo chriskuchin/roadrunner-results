@@ -14,6 +14,7 @@ import { useResultsStore } from "../store/results";
 
 export default {
   props: ['raceId', 'eventId', 'timerId'],
+  emits: ['recorded-racer'],
   data: function () {
     return {
       letterToggle: false,
@@ -21,17 +22,19 @@ export default {
   },
   methods: {
     ...mapActions(useResultsStore, ["recordRunnerResult"]),
-    recordRunner: function (e) {
+    recordRunner: async function (e) {
       e.preventDefault();
       var bibNumber = e.currentTarget.value;
       e.currentTarget.value = "";
 
-      this.recordRunnerResult({
+      await this.recordRunnerResult({
         bib: bibNumber,
         raceId: this.raceId,
         eventId: this.eventId,
         timerId: this.timerId,
       });
+
+      this.$emit('recorded-racer')
     },
   },
   computed: {
