@@ -84,9 +84,6 @@ export default {
         this.start = start
         this.timer = setTimeout(this.tickTimer, 10)
       }
-      // POST api/v1/races/:raceId/events/:eventId/timer
-      // POST and send timestamp and receive timestamp back
-      // feed timestamp into stopwatch display
     },
     stopTimer: function () {
       if (this.timer != null) {
