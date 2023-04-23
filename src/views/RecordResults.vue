@@ -21,8 +21,23 @@
           :event-id="this.$route.params.eventId" :timer-id="this.timerId" @recorded-racer="getHeatResults()" />
       </div>
     </div>
-    <div v-for="(result, index) in results" :key="result.bib_number">
-      {{ index + 1 }}. {{ result.bib_number }} - {{ formatFinishingTime(result.result_ms) }}
+    <div v-if="results.length > 0">
+      <table class="table" style="margin: 0px auto;">
+        <thead>
+          <th>Position</th>
+          <th>Time</th>
+          <th>Bib</th>
+        </thead>
+        <tbody>
+          <tr v-for="(result, index) in results" :key="result.bib_number">
+            <td>{{ index + 1 }}</td>
+            <td>
+              {{ formatMilliseconds(result.result_ms) }}
+            </td>
+            <td>{{ result.bib_number }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -59,9 +74,7 @@ export default {
 
       this.timers = await res.json()
     },
-    formatFinishingTime(ms) {
-      return formatMilliseconds(ms)
-    },
+    formatMilliseconds,
     isActiveTab: function (tab) {
       return this.activeTab == tab;
     },
