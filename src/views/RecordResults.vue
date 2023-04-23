@@ -54,6 +54,7 @@ export default {
   },
   mounted: function () {
     this.listTimers()
+    this.getHeatResults()
   },
   data: function () {
     return {
