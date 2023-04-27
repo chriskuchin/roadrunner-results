@@ -18,6 +18,7 @@ type (
 		BirthYear sql.NullInt32  `db:"birth_year"`
 		Gender    sql.NullString `db:"gender"`
 		Result    int            `db:"result"`
+		TimerID   sql.NullString `db:"timer_id"`
 	}
 
 	ParticipantEventResult struct {
@@ -27,6 +28,7 @@ type (
 		BirthYear int    `json:"birth_year,omitempty"`
 		Gender    string `json:"gender,omitempty"`
 		Result    int    `json:"result_ms"`
+		TimerID   string `json:"timer_id"`
 	}
 )
 
@@ -38,7 +40,8 @@ const (
 			r.bib_number,
 			p.birth_year,
 			p.gender,
-			r.result
+			r.result,
+			r.timer_id
 		FROM results as r
 		LEFT JOIN participants as p
 			USING(bib_number, race_id)
@@ -109,6 +112,7 @@ func runEventResultsQuery(db *sqlx.DB, query string, args ...interface{}) ([]Par
 			LastName:  result.LastName.String,
 			BirthYear: int(result.BirthYear.Int32),
 			Gender:    result.Gender.String,
+			TimerID: result.TimerID.String,
 		})
 	}
 
