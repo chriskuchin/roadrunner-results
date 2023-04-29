@@ -17,7 +17,7 @@
         </thead>
         <tbody>
           <tr v-for="(result, place) in filteredResults" :key="place">
-            <td>{{ place }}</td>
+            <td>{{ place + 1 }}</td>
             <td>{{ formatMilliseconds(result.result_ms) }}</td>
             <td>{{ result.bib_number }}</td>
             <td>{{ result }}</td>
@@ -74,7 +74,6 @@ export default {
     filteredResults: function () {
       let results = []
       this.results.forEach((element) => {
-        console.log(element)
         if (this.heatFilter.includes(element.timer_id) || this.heatFilter.length == 0) {
           results.push(element)
         }
