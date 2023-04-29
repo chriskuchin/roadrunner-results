@@ -13,9 +13,10 @@ import (
 )
 
 type RecordResultRequestPayload struct {
-	Timer string `json:"timer_id"`
-	End   int64  `json:"end_ts"`
-	Bib   string `json:"bib_number"`
+	Timer       string `json:"timer_id"`
+	End         int64  `json:"end_ts"`
+	Bib         string `json:"bib_number"`
+	ElapsedTime int64  `json:"elapsed_time"`
 }
 
 func EventResultsRoutes(handler *Handler) chi.Router {
@@ -35,7 +36,6 @@ func (api *Handler) handleEventResults(w http.ResponseWriter, r *http.Request) {
 	timerID := r.URL.Query().Get("timerId")
 
 	if timerID != "" {
-		log.Info().Msgf("%+s", timerID)
 		results, err = services.GetEventHeatResults(r.Context(), api.db, timerID)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
@@ -71,6 +71,8 @@ func (api *Handler) recordResult(w http.ResponseWriter, r *http.Request) {
 	ctx := util.SetDB(r.Context(), api.db)
 	if payload.End > 0 {
 		services.RecordTimerResult(ctx, payload.End)
+	} else if payload.ElapsedTime > 0 {
+		services.RecordElapsedTimeResult(ctx, payload.ElapsedTime)
 	}
 
 	if payload.Bib != "" {

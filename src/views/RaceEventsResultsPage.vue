@@ -7,22 +7,24 @@
         </select>
       </div>
     </div>
-    <table class="table">
-      <thead>
-        <th>Position</th>
-        <th>Time</th>
-        <th>Bib</th>
-        <th></th>
-      </thead>
-      <tbody>
-        <tr v-for="(result, place) in filteredResults" :key="place">
-          <td>{{ place }}</td>
-          <td>{{ formatMilliseconds(result.result_ms) }}</td>
-          <td>{{ result.bib_number }}</td>
-          <td>{{ result }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <th>Position</th>
+          <th>Time</th>
+          <th>Bib</th>
+          <th>Debug</th>
+        </thead>
+        <tbody>
+          <tr v-for="(result, place) in filteredResults" :key="place">
+            <td>{{ place }}</td>
+            <td>{{ formatMilliseconds(result.result_ms) }}</td>
+            <td>{{ result.bib_number }}</td>
+            <td>{{ result }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -71,11 +73,9 @@ export default {
     ...mapStores(useEventStore),
     filteredResults: function () {
       let results = []
-      console.log(this.results)
-      console.log(this.heatFilter)
       this.results.forEach((element) => {
         console.log(element)
-        if (this.heatFilter.includes(element.timer_id)) {
+        if (this.heatFilter.includes(element.timer_id) || this.heatFilter.length == 0) {
           results.push(element)
         }
       })

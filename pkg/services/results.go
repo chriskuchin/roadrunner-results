@@ -36,6 +36,11 @@ func InsertResults(ctx context.Context, db *sqlx.DB, raceID, eventID, bibNumber,
 }
 
 func InsertPartialResult(ctx context.Context, result int64, timerID string) error {
-	_, err := util.GetDB(ctx).Exec(insertPartialQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), timerID, result)
+	var err error
+	if timerID == "" {
+		_, err = util.GetDB(ctx).Exec(insertPartialQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), nil, result)
+	} else {
+		_, err = util.GetDB(ctx).Exec(insertPartialQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), timerID, result)
+	}
 	return err
 }

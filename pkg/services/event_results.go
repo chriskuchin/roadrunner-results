@@ -112,11 +112,15 @@ func runEventResultsQuery(db *sqlx.DB, query string, args ...interface{}) ([]Par
 			LastName:  result.LastName.String,
 			BirthYear: int(result.BirthYear.Int32),
 			Gender:    result.Gender.String,
-			TimerID: result.TimerID.String,
+			TimerID:   result.TimerID.String,
 		})
 	}
 
 	return participantResults, nil
+}
+
+func RecordElapsedTimeResult(ctx context.Context, elapsed int64) error {
+	return InsertPartialResult(ctx, elapsed, "")
 }
 
 func RecordTimerResult(ctx context.Context, endTS int64) error {
