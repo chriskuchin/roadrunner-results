@@ -97,7 +97,7 @@ export default {
       }
     },
     async recordFinish(e) {
-      e.preventDefault()
+      e.stopPropagation()
       let finishTime = Date.now()
       fetch(
         "/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/results", {
