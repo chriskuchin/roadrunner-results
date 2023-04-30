@@ -14,13 +14,13 @@
     <div id="navbarBasicExample" class="navbar-menu" :class="{ 'is-active': activeBurger }">
       <div class="navbar-start">
         <router-link to="/races" class="navbar-item">Races</router-link>
-        <router-link to="/races/123/timer" class="navbar-item">Results</router-link>
+        <router-link to="/" class="navbar-item">Results</router-link>
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link"> Manage </a>
           <div class="navbar-dropdown">
-            <router-link to="/races/123/register" class="navbar-item">Register</router-link>
-            <router-link to="/races/123/record" class="navbar-item">Record</router-link>
-            <router-link to="/races/123/timer" class="navbar-item">Timer</router-link>
+            <router-link to="/" class="navbar-item">Register</router-link>
+            <router-link to="/" class="navbar-item">Record</router-link>
+            <router-link to="/" class="navbar-item">Timer</router-link>
           </div>
         </div>
       </div>

@@ -31,10 +31,12 @@
           timer.count }})</a></li>
       </ul>
     </div>
-    <div>
-      <div v-for="(finisher, index) in finishers" :key="index">
-        {{ index + 1 }}. {{ finisher }}
-      </div>
+    <div class="content">
+      <ol>
+        <li v-for="(finisher, index) in reverseOrderedFinishers" :class="{ unselectable: timerIsRunning }">
+          {{ finisher }}
+        </li>
+      </ol>
     </div>
   </div>
 </template>
@@ -50,6 +52,7 @@ export default {
   },
   data: function () {
     return {
+      reversedFinishers: [],
       results: 0,
       timers: [],
       finishers: [],
@@ -60,7 +63,7 @@ export default {
   },
   methods: {
     clickTab() {
-      alert("test")
+      console.log("test")
     },
     async listTimers() {
       let res = await fetch("/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/timers")
@@ -83,15 +86,18 @@ export default {
       if (res.ok) {
         this.start = start
         this.timer = setTimeout(this.tickTimer, 10)
+        window.addEventListener("click", this.recordFinish)
       }
     },
     stopTimer: function () {
       if (this.timer != null) {
+        window.removeEventListener("click", this.recordFinish)
         clearTimeout(this.timer)
         this.timer = null
       }
     },
-    async recordFinish() {
+    async recordFinish(e) {
+      e.preventDefault()
       let finishTime = Date.now()
       fetch(
         "/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/results", {
@@ -105,7 +111,6 @@ export default {
       })
       this.results++
       this.finishers.push(formatMilliseconds(finishTime - this.start))
-
     },
     tickTimer: function () {
       if (this.start > 0 && this.timer != null) {
@@ -124,6 +129,17 @@ export default {
     stopwatch: function () {
       return formatMilliseconds(this.duration);
     },
+    timerIsRunning: function () {
+      return this.timer != null
+    },
+    reverseOrderedFinishers: function () {
+      let reversed = []
+      for (let i = this.finishers.length; i > 0; i--) {
+        reversed.push(this.finishers[i - 1])
+      }
+
+      return reversed
+    }
   },
 };
 </script>
