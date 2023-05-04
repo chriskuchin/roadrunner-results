@@ -2,7 +2,7 @@
   <div class="section">
     <div class="box" v-for="race in racesStore.getRaces" :key="race.id">
       <div class="title is-4">{{ race.name }}</div>
-      <router-link :to="'/races/' + race.id + '/results'" class="button">Events</router-link>
+      <router-link :to="'/races/' + race.id + '/events'" class="button">Events</router-link>
     </div>
   </div>
 </template>

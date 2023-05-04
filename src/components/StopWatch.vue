@@ -2,7 +2,7 @@
   <div class="container">
     <div id="scanner-wrapper" ref="scanner-wrapper" :class="{
       'camera-active': cameraActive,
-        'camera-inactive': !cameraActive
+      'camera-inactive': !cameraActive
     }">
       <h1>{{ stopwatch }}</h1>
       <video ref="finish-line-camera" id="finish-line-camera" @loadedmetadata="resizeVideo" />
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { formatStopwatch, keyHandler } from "../utilities";
+import { keyHandler } from "../utilities";
 import { useResultsStore } from "../store/results";
 import { mapActions } from "pinia";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -151,7 +151,7 @@ export default {
       ctx.font = "20px sans serif";
       ctx.fillStyle = "white";
       ctx.fillText("Hello world", 50, 90);
-      var img = new Image();
+      var img = new Image(); s
       img.src = logo;
       img.onload = () => {
         ctx.drawImage(img, 0, 250, 50, 50);
@@ -206,7 +206,7 @@ export default {
   },
   computed: {
     stopwatch: function () {
-      return formatStopwatch(this.minutes, this.seconds, this.milliseconds);
+      // return formatStopwatch(this.minutes, this.seconds, this.milliseconds);
     },
   },
 };

@@ -26,7 +26,6 @@
 <script>
 import { mapState } from "pinia";
 import { useResultsStore } from "../store/results";
-import { formatStopwatch } from "../utilities";
 
 export default {
   props: {},
@@ -35,11 +34,6 @@ export default {
   },
   methods: {
     formatFinishTime: function (result) {
-      return formatStopwatch(
-        result.finishMinutes,
-        result.finishSeconds,
-        result.finishMilliseconds
-      );
     },
     recordingDifference: function (result) {
       if (result.runnerTimestamp && result.finishTimestamp)
