@@ -10,11 +10,6 @@
 
 <script>
 export default {
-  props: ["paths"],
-  data: function () {
-    return {};
-  },
-  mounted: function () {
-  },
+  props: ["paths"]
 };
 </script>
