@@ -1,9 +1,9 @@
 {
   "name": "rslts.run",
   "short_name": "rslts",
-  "theme_color": "#fff",
-  "background_color": "#fff",
-  "display": "browser",
+  "theme_color": "#363636",
+  "background_color": "#636363",
+  "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
   "start_url": "/",

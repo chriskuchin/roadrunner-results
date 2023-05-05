@@ -1,9 +1,9 @@
 const { VueLoaderPlugin } = require('vue-loader');
-const FileLoadPlugin = require('file-loader')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const { DefinePlugin } = require('webpack');
+const { GenerateSW } = require('workbox-webpack-plugin');
 
 module.exports = (env, argv) => {
   var mode = "production"
@@ -43,7 +43,7 @@ module.exports = (env, argv) => {
           test: (value => value.includes("icon-")),
           type: 'asset/resource',
           generator: {
-            filename: 'images/icon/[name][ext]'
+            filename: 'images/icons/[name][ext]'
           }
         },
         {
@@ -68,6 +68,9 @@ module.exports = (env, argv) => {
       ]
     },
     plugins: [
+      new GenerateSW({
+        swDest: './sw.js'
+      }),
       new DefinePlugin({
         __VUE_OPTIONS_API__: true,
         __VUE_PROD_DEVTOOLS__: false,
