@@ -2,7 +2,7 @@
   "name": "rslts.run",
   "short_name": "rslts",
   "theme_color": "#363636",
-  "background_color": "#636363",
+  "background_color": "#363636",
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/",
