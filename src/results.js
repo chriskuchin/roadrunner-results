@@ -10,3 +10,5 @@ var pinia = createPinia()
 var app = createApp(App).use(router).use(pinia)
 
 app.mount('#app')
+
+require('./assets/')
