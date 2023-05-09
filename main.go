@@ -16,9 +16,10 @@ import (
 )
 
 var (
-	port   string
-	debug  bool
-	dbPath string
+	port           string
+	debug          bool
+	dbPath         string
+	frontendFolder string
 )
 
 func main() {
@@ -48,6 +49,14 @@ func main() {
 				EnvVars:     []string{"DB_PATH"},
 				Destination: &dbPath,
 				Value:       "./results.db",
+			},
+			&cli.StringFlag{
+				Name:        "frontend-folder",
+				Usage:       "The frontend folder for the web assets",
+				Aliases:     []string{"dist"},
+				EnvVars:     []string{"FRONTEND_FOLDER"},
+				Destination: &frontendFolder,
+				Value:       "./dist",
 			},
 		},
 		Commands: []*cli.Command{
@@ -79,7 +88,7 @@ func main() {
 						r.Mount("/api", controller.Routes(db, debug))
 
 						r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
-							http.FileServer(http.Dir("./dist")).ServeHTTP(w, r)
+							http.FileServer(http.Dir(frontendFolder)).ServeHTTP(w, r)
 						})
 					})
 
