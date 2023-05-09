@@ -27,7 +27,7 @@ USER appuser
 
 COPY --from=webpack /public/dist /home/appuser/app/public/dist
 COPY --from=builder /app/appbin /home/appuser/app/appbin
-# COPY --from=builder /usr/local/bin /home/appuser/go/
+COPY --from=builder /go/bin/dbmate /usr/local/bin/dbmate
 
 WORKDIR /home/appuser/app
 
