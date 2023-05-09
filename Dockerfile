@@ -1,8 +1,8 @@
 FROM node:18-alpine AS webpack
 
-ADD src /public
+ADD . /public
 WORKDIR /public
-RUN npm install && npx webpack
+RUN npm run build
 
 FROM golang:1.20-alpine3.17 AS builder
 
