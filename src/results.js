@@ -6,8 +6,21 @@ import { createPinia } from 'pinia'
 
 import './css/results.scss'
 
+/* import the fontawesome core */
+import { library } from '@fortawesome/fontawesome-svg-core'
+
+/* import font awesome icon component */
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+/* import specific icons */
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faPlus)
+
 var pinia = createPinia()
-var app = createApp(App).use(router).use(pinia)
+var app = createApp(App)
+  .component('icon', FontAwesomeIcon)
+  .use(router).use(pinia)
 
 app.mount('#app')
 

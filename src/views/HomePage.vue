@@ -4,6 +4,11 @@
       <div class="title is-4">{{ race.name }}</div>
       <router-link :to="'/races/' + race.id + '/events'" class="button">Events</router-link>
     </div>
+    <div class="fixed-bottom">
+      <a class="button is-primary is-large fab" href="#">
+        <icon icon="fa-solid fa-plus"></icon>
+      </a>
+    </div>
   </div>
 </template>
 

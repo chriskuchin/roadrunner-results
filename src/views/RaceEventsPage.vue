@@ -14,6 +14,11 @@
         </p>
       </div>
     </div>
+    <div class="fixed-bottom">
+      <a class="button is-primary is-large fab" href="#">
+        <icon icon="fa-solid fa-plus"></icon>
+      </a>
+    </div>
   </div>
 </template>
 
