@@ -89,6 +89,7 @@ func GetRace(ctx context.Context, db *sqlx.DB) (RaceResult, error) {
 		eventResults = append(eventResults, EventObject{
 			Description: event.Description,
 			EventID:     event.EventID,
+			Type:        event.Type,
 			Distance:    event.Distance,
 		})
 	}

@@ -21,10 +21,15 @@ func EventsRoutes(handler *Handler) chi.Router {
 	r.Route("/{eventID}", func(r chi.Router) {
 		r.Use(eventCtx)
 		r.Get("/", handler.getEvent)
+		r.Delete("/", handler.deleteEvent)
 		r.Mount("/results", EventResultsRoutes(handler))
 		r.Mount("/timers", TimerRoutes(handler))
 	})
 	return r
+}
+
+func (api *Handler) deleteEvent(w http.ResponseWriter, r *http.Request) {
+	services.DeleteRaceEvent(r.Context(), api.db)
 }
 
 func (api *Handler) getEvent(w http.ResponseWriter, r *http.Request) {
@@ -33,7 +38,6 @@ func (api *Handler) getEvent(w http.ResponseWriter, r *http.Request) {
 }
 
 func (api *Handler) listEvents(w http.ResponseWriter, r *http.Request) {
-	log.Info().Str("raceID", util.GetRaceIDFromContext(r.Context())).Send()
 	if util.GetRaceIDFromContext(r.Context()) == "" {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte("Missing RaceID"))
@@ -59,7 +63,7 @@ func (api *Handler) addEvent(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	services.AddEvent(r.Context(), api.db, util.GetRaceIDFromContext(r.Context()), eventRequest.Description, eventRequest.Distance)
+	services.AddEvent(r.Context(), api.db, util.GetRaceIDFromContext(r.Context()), eventRequest.Description, eventRequest.Type, eventRequest.Distance)
 
 	render.NoContent(w, r)
 }
@@ -78,5 +82,6 @@ func eventCtx(next http.Handler) http.Handler {
 
 type EventRequest struct {
 	Description string `json:"description"`
+	Type        string `json:"type"`
 	Distance    int    `json:"distance"`
 }

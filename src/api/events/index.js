@@ -10,11 +10,22 @@ async function getRaceEvents(raceID) {
 }
 
 async function deleteRaceEvent(raceID, eventID) {
+    let res = await fetch("/api/v1/races/" + raceID + "/events/" + eventID, {
+        method: "DELETE"
+    })
 
 }
 
-async function createRaceEvent(raceID) {
-
+async function createRaceEvent(raceID, description, eventType, distance) {
+    console.log(raceID, description, distance, eventType)
+    let res = await fetch("/api/v1/races/" + raceID + "/events", {
+        method: "POST",
+        body: JSON.stringify({
+            description: description,
+            distance: distance,
+            type: eventType
+        })
+    })
 }
 
 export {

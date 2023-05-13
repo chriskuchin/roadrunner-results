@@ -3,7 +3,7 @@
     <div class="box" v-for="race in racesStore.getRaces" :key="race.id">
       <div class="title is-4">{{ race.name }}</div>
       <router-link :to="'/races/' + race.id + '/events'" class="button">Events</router-link>
-      <!-- <a class="button" @click="deleteRace(race.id)">Delete</a> -->
+      <!-- <button class="delete" @click="deleteRace(race.id)"></button> -->
     </div>
     <div class="fixed-bottom">
       <a class="button is-primary is-large fab" @click="toggleCreateRaceModal">

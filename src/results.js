@@ -13,9 +13,9 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faStopwatch, faRuler, faRepeat } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faPlus)
+library.add(faPlus, faStopwatch, faRuler, faRepeat)
 
 var pinia = createPinia()
 var app = createApp(App)

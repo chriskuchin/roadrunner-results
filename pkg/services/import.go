@@ -38,7 +38,7 @@ func ImportFromSheet(ctx context.Context, db *sqlx.DB, sheetId string) {
 	for _, sheet := range rslt.Sheets {
 		if isRaceHeatResultsTab(sheet.Properties.Title) {
 			heats = append(heats, sheet.Properties.Title)
-			eventID, err := AddEvent(ctx, db, sheetId, sheet.Properties.Title, getHeatDistanceMeters(sheet.Properties.Title))
+			eventID, err := AddEvent(ctx, db, sheetId, sheet.Properties.Title, "imported", getHeatDistanceMeters(sheet.Properties.Title))
 			if err != nil {
 				log.Error().Err(err).Send()
 			}
