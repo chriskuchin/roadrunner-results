@@ -71,7 +71,9 @@ export default {
       this.timers = await res.json()
     },
     async startTimer() {
-      let start = Date.now()
+      this.start = Date.now()
+      this.timer = setTimeout(this.tickTimer, 10)
+
       let res = await fetch(
         "/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/timers", {
         method: "POST",
@@ -79,13 +81,11 @@ export default {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          start_ts: start
+          start_ts: this.start
         })
       })
 
       if (res.ok) {
-        this.start = start
-        this.timer = setTimeout(this.tickTimer, 10)
         window.addEventListener("click", this.recordFinish)
       }
     },

@@ -13,7 +13,7 @@
     </div>
     <div id="navbarBasicExample" class="navbar-menu" :class="{ 'is-active': activeBurger }">
       <div class="navbar-start">
-        <router-link to="/races" class="navbar-item">Races</router-link>
+        <router-link to="/" class="navbar-item">Races</router-link>
         <router-link to="/" class="navbar-item">Results</router-link>
         <div class="navbar-item has-dropdown is-hoverable">
           <a class="navbar-link"> Manage </a>
