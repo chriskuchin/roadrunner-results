@@ -4,3 +4,4 @@ node_modules
 dist
 credentials.json
 token.json
+*.env
