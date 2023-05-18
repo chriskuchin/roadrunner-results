@@ -71,6 +71,7 @@ func main() {
 						log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 					}
 
+					log.Debug().Str("db", dbPath).Send()
 					db, err := sqlx.Open("sqlite3", dbPath)
 					if err != nil {
 						log.Fatal().Err(err).Send()
