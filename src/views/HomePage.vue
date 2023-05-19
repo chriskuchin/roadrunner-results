@@ -5,38 +5,24 @@
       <router-link :to="'/races/' + race.id + '/events'" class="button">Events</router-link>
       <!-- <button class="delete" @click="deleteRace(race.id)"></button> -->
     </div>
-    <div class="fixed-bottom">
-      <a class="button is-primary is-large fab" @click="toggleCreateRaceModal">
-        <icon icon="fa-solid fa-plus"></icon>
-      </a>
-    </div>
-
-    <div :class="['modal', { 'is-active': raceModal.show }]">
-      <div class="modal-background" @click="toggleCreateRaceModal"></div>
-
-      <div class="modal-content">
-        <div class="box">
-          <p class="title">Create Race</p>
-          <div class="field">
-            <label class="label">Description</label>
-            <div class="control">
-              <input class="input" type="text" placeholder="Race Description" v-model="raceModal.description">
-            </div>
-          </div>
-
-          {{ raceModal.description }}
-          <div class="field is-grouped">
-            <div class="control">
-              <button :class="['button', 'is-link', { 'is-loading': raceModal.creating }]"
-                @click="createRace">Submit</button>
-            </div>
-            <div class="control">
-              <button class="button is-link is-light" @click="toggleCreateRaceModal">Cancel</button>
-            </div>
-          </div>
+    <fab @click="toggleCreateRaceModal"></fab>
+    <modal @close="toggleCreateRaceModal" :show="raceModal.show">
+      <p class="title">Create Race</p>
+      <div class="field">
+        <label class="label">Description</label>
+        <div class="control">
+          <input class="input" type="text" placeholder="Race Description" v-model="raceModal.description">
         </div>
       </div>
-    </div>
+      <div class="field is-grouped">
+        <div class="control">
+          <button :class="['button', 'is-link', { 'is-loading': raceModal.creating }]" @click="createRace">Submit</button>
+        </div>
+        <div class="control">
+          <button class="button is-link is-light" @click="toggleCreateRaceModal">Cancel</button>
+        </div>
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -44,9 +30,13 @@
 import { mapStores } from 'pinia'
 import { useRacesStore } from "../store/races";
 import { createRace, deleteRace } from "../api/races"
+import Modal from '../components/Modal.vue'
+import FAB from '../components/Fab.vue'
 
 export default {
   components: {
+    "modal": Modal,
+    "fab": FAB,
   },
   data: function () {
     return {

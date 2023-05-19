@@ -19,77 +19,65 @@
         </p>
       </div>
     </div>
-    <div class="fixed-bottom">
-      <a class="button is-primary is-large fab" @click="toggleModal">
-        <icon icon="fa-solid fa-plus"></icon>
-      </a>
-    </div>
-
-    <div :class="['modal', { 'is-active': modal.show }]">
-      <div class="modal-background" @click="toggleModal"></div>
-
-      <div class="modal-content">
-        <div class="box">
-          <p class="title">Create Event</p>
-          <div class="field">
-            <label class="label">Description</label>
-            <div class="control">
-              <input class="input" type="text" placeholder="Event Description" v-model="modal.description">
-            </div>
-          </div>
-          <div class="field">
-            <label class="label">Event Type</label>
-            <div class="control">
-              <div class="select">
-                <select v-model="modal.type">
-                  <option value="timer">Timer</option>
-                  <option value="distance">Distance</option>
-                  <option value="relay">Relay</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div class="field" v-if="modal.type == 'timer'">
-            <label class="label">Event Distance</label>
-            <div class="control">
-              <div class="select">
-                <select v-model.number="modal.distance">
-                  <option value="50">50m</option>
-                  <option value="100">100m</option>
-                  <option value="200">200m</option>
-                  <option value="400">400m</option>
-                  <option value="800">800m</option>
-                  <option value="1600">1600m</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div class="field" v-if="modal.type == 'relay'">
-            <label class="label">Event Distance</label>
-            <div class="control">
-              <div class="select">
-                <select v-model.number="modal.distance">
-                  <option value="400">4x100</option>
-                  <option value="1600">4x400</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div class="field is-grouped">
-            <div class="control">
-              <button :class="['button', 'is-link', { 'is-loading': modal.creating }]"
-                @click="modalSubmit">Submit</button>
-            </div>
-            <div class="control">
-              <button class="button is-link is-light" @click="toggleModal">Cancel</button>
-            </div>
+    <fab @click="toggleModal"></fab>
+    <modal @close="toggleModal" :show="modal.show">
+      <p class="title">Create Event</p>
+      <div class="field">
+        <label class="label">Description</label>
+        <div class="control">
+          <input class="input" type="text" placeholder="Event Description" v-model="modal.description">
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Event Type</label>
+        <div class="control">
+          <div class="select">
+            <select v-model="modal.type">
+              <option value="timer">Timer</option>
+              <option value="distance">Distance</option>
+              <option value="relay">Relay</option>
+            </select>
           </div>
         </div>
       </div>
-    </div>
+
+      <div class="field" v-if="modal.type == 'timer'">
+        <label class="label">Event Distance</label>
+        <div class="control">
+          <div class="select">
+            <select v-model.number="modal.distance">
+              <option value="50">50m</option>
+              <option value="100">100m</option>
+              <option value="200">200m</option>
+              <option value="400">400m</option>
+              <option value="800">800m</option>
+              <option value="1600">1600m</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field" v-if="modal.type == 'relay'">
+        <label class="label">Event Distance</label>
+        <div class="control">
+          <div class="select">
+            <select v-model.number="modal.distance">
+              <option value="400">4x100</option>
+              <option value="1600">4x400</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-grouped">
+        <div class="control">
+          <button :class="['button', 'is-link', { 'is-loading': modal.creating }]" @click="modalSubmit">Submit</button>
+        </div>
+        <div class="control">
+          <button class="button is-link is-light" @click="toggleModal">Cancel</button>
+        </div>
+      </div>
+    </modal>
   </div>
 </template>
 
@@ -97,8 +85,14 @@
 import { mapStores } from "pinia";
 import { useRaceStore } from "../store/race";
 import { createRaceEvent, deleteRaceEvent } from "../api/events"
+import Modal from '../components/Modal.vue'
+import FAB from '../components/Fab.vue'
 
 export default {
+  components: {
+    'modal': Modal,
+    'fab': FAB,
+  },
   data: function () {
     return {
       modal: {
