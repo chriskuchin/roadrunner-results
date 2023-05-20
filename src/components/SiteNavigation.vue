@@ -27,6 +27,9 @@
       <div class="navbar-end">
         <div class="navbar-item">
           <div class="buttons">
+            <a @click="toggleApiKeyModal" class="button is-link">
+              <strong>API Key</strong>
+            </a>
             <router-link to="/signup" class="button is-primary">
               <strong>Sign Up</strong>
             </router-link>
@@ -37,23 +40,53 @@
         </div>
       </div>
     </div>
+    <modal :show="apiKeyModal" @close="toggleApiKeyModal">
+      <p class="title">Input API Key</p>
+      <div class="field">
+        <label class="label">API Key</label>
+        <div class="control">
+          <input class="input" type="text" placeholder="API Key" v-model="apiKey">
+        </div>
+      </div>
+      <div class="field is-grouped">
+        <div class="control">
+          <button :class="['button', 'is-link']" @click="saveToken">Save</button>
+        </div>
+        <div class="control">
+          <button class="button is-link is-light" @click="toggleApiKeyModal">Cancel</button>
+        </div>
+      </div>
+    </modal>
   </nav>
 </template>
 
 <script>
 import logo from "../assets/images/logo.png";
+import { saveAPIToken } from '../api/auth'
+import Modal from '../components/Modal.vue'
 
 export default {
+  components: {
+    'modal': Modal,
+  },
   data: function () {
     return {
       activeBurger: false,
+      apiKeyModal: false,
+      apiKey: ""
     };
   },
-  components: {},
   methods: {
+    toggleApiKeyModal: function () {
+      this.apiKeyModal = !this.apiKeyModal
+    },
     toggleBurger: function () {
       this.activeBurger = !this.activeBurger;
     },
+    saveToken: function () {
+      saveAPIToken(this.apiKey)
+      this.toggleApiKeyModal()
+    }
   },
   computed: {
     logo_url: function () {

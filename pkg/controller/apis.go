@@ -8,6 +8,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
 	"github.com/jmoiron/sqlx"
+	"github.com/rs/zerolog/log"
 )
 
 func Routes(db *sqlx.DB, debug bool) chi.Router {
@@ -31,6 +32,7 @@ func auth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet && r.Method != http.MethodOptions {
 			apiKey := r.Header.Get("x-api-token")
+			log.Info().Str("ApiKey", apiKey).Str("token", token).Bool("present", token_present).Send()
 			if token_present && token == apiKey {
 				next.ServeHTTP(w, r)
 			} else {
