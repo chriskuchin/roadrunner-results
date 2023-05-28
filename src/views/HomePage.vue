@@ -2,8 +2,14 @@
   <div class="section">
     <div class="box" v-for="race in racesStore.getRaces" :key="race.id">
       <div class="title is-4">{{ race.name }}</div>
-      <router-link :to="'/races/' + race.id + '/events'" class="button">Events</router-link>
-      <button class="button is-danger" @click="deleteRace(race.id)"></button>
+      <div class="field has-addons">
+        <p class="control">
+          <router-link :to="'/races/' + race.id + '/events'" class="button">Events</router-link>
+        </p>
+        <p class="control">
+          <button class="button is-danger" @click="deleteRace(race.id)">Delete</button>
+        </p>
+      </div>
     </div>
     <fab @click="toggleCreateRaceModal"></fab>
     <modal @close="toggleCreateRaceModal" :show="raceModal.show">

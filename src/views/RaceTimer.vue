@@ -24,6 +24,8 @@
       </div>
     </div>
 
+    <button class="button" @click="generateFile">Download File</button>
+
     <div class="tabs is-boxed">
       <ul>
         <li class="is-active"><a>Current Heat</a></li>
@@ -38,14 +40,23 @@
         </li>
       </ol>
     </div>
+    <fab @click="fabAction">
+      <icon v-if="start == 0" icon="fa-solid fa-play"></icon>
+      <icon v-else icon="fa-solid fa-stopwatch"></icon>
+    </fab>
+    <not :show="error.show" type="is-danger is-light" @close="dismissError">{{ error.msg }}</not>
   </div>
 </template>
 
 <script>
 import { formatMilliseconds } from "../utilities";
+import FAB from '../components/Fab.vue'
+import Notification from '../components/Notification.vue'
 
 export default {
   components: {
+    'fab': FAB,
+    'not': Notification,
   },
   mounted: function () {
     this.listTimers()
@@ -58,10 +69,36 @@ export default {
       finishers: [],
       start: 0,
       duration: 0,
-      timer: null
+      timer: null,
+      error: {
+        show: false,
+        msg: ""
+      }
     };
   },
   methods: {
+    generateFile() {
+      const csvContent = this.finishers.map(row => `${row}\n`).join('');
+      const csvData = new Blob([csvContent], { type: 'text/csv' });
+      const csvUrl = URL.createObjectURL(csvData);
+
+      const link = document.createElement('a');
+      link.href = csvUrl;
+      link.download = 'results.csv';
+
+      link.click();
+      URL.revokeObjectURL(csvUrl);
+    },
+    dismissError() {
+      this.error.show = false
+    },
+    fabAction() {
+      if (this.start == 0) {
+        this.startTimer()
+      } else {
+        this.recordFinish()
+      }
+    },
     clickTab() {
       console.log("test")
     },
@@ -87,6 +124,8 @@ export default {
 
       if (res.ok) {
         window.addEventListener("click", this.recordFinish)
+      } else {
+        this.handleError("Failed to start the timer: ${res.status}")
       }
     },
     stopTimer: function () {
@@ -94,12 +133,23 @@ export default {
         window.removeEventListener("click", this.recordFinish)
         clearTimeout(this.timer)
         this.timer = null
+        this.start = 0
+        this.duration = 0
       }
     },
+    handleError(msg) {
+      this.error.msg = msg
+      this.error.show = true
+    },
     async recordFinish(e) {
-      e.stopPropagation()
+      if (e)
+        e.stopPropagation()
+
       let finishTime = Date.now()
-      fetch(
+      this.results++
+      this.finishers.push(formatMilliseconds(finishTime - this.start))
+
+      let res = await fetch(
         "/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/results", {
         method: "POST",
         headers: {
@@ -109,8 +159,10 @@ export default {
           end_ts: finishTime
         })
       })
-      this.results++
-      this.finishers.push(formatMilliseconds(finishTime - this.start))
+
+      if (!res.ok) {
+        this.handleError("Failed to record finisher: " + res.status)
+      }
     },
     tickTimer: function () {
       if (this.start > 0 && this.timer != null) {
