@@ -1,13 +1,26 @@
 <template>
   <div class="section">
     <div class="box" v-for="race in racesStore.getRaces" :key="race.id">
+      <div class="has-text-right">
+        <div class="dropdown is-hoverable is-right">
+          <div class="dropdown-trigger">
+            <span class="icon is-clickable" aria-haspopup="true"
+              aria-controls="dropdown-menu">
+              <icon icon="fa-solid fa-ellipsis-v"></icon>
+            </span>
+          </div>
+          <div class="dropdown-menu" id="dropdown-menu" role="menu">
+            <div class="dropdown-content">
+              <a href="#" class="dropdown-item" @click="deleteRace(race.id)">Delete Race</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="title is-4">{{ race.name }}</div>
       <div class="field has-addons">
         <p class="control">
           <router-link :to="'/races/' + race.id + '/events'" class="button">Events</router-link>
-        </p>
-        <p class="control">
-          <button class="button is-danger" @click="deleteRace(race.id)">Delete</button>
         </p>
       </div>
     </div>
@@ -29,6 +42,7 @@
         </div>
       </div>
     </modal>
+    <not :show="error.show" type="is-danger is-light" @close="dismissError">{{ error.msg }}</not>
   </div>
 </template>
 
@@ -38,11 +52,13 @@ import { useRacesStore } from "../store/races";
 import { createRace, deleteRace } from "../api/races"
 import Modal from '../components/Modal.vue'
 import FAB from '../components/Fab.vue'
+import Notification from '../components/Notification.vue'
 
 export default {
   components: {
     "modal": Modal,
     "fab": FAB,
+    "not": Notification,
   },
   data: function () {
     return {
@@ -50,10 +66,17 @@ export default {
         show: false,
         creating: false,
         description: "",
+      },
+      error: {
+        show: false,
+        msg: "",
       }
     }
   },
   methods: {
+    dismissError: function () {
+      this.error.show = false
+    },
     createRace: function () {
       var self = this
       self.raceModal.creating = true
@@ -63,7 +86,6 @@ export default {
         self.toggleCreateRaceModal()
         self.racesStore.loadRaces()
       })
-
     },
     cancelCreateRace: function () {
       this.raceModal.description = ""
@@ -72,6 +94,10 @@ export default {
       var self = this
       deleteRace(raceID).then(() => {
         self.racesStore.loadRaces()
+      }).catch((err) => {
+        console.log(err)
+        self.error.show = true
+        self.error.msg = err
       })
     },
     toggleCreateRaceModal: function () {

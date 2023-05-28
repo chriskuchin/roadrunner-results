@@ -24,8 +24,9 @@
       </div>
     </div>
 
-    <button class="button" @click="generateFile">Download File</button>
-
+    <button class="button is-small is-pulled-right" @click="generateFile">
+      <icon icon="fa-solid fa-download"></icon>
+    </button>
     <div class="tabs is-boxed">
       <ul>
         <li class="is-active"><a>Current Heat</a></li>
@@ -125,7 +126,7 @@ export default {
       if (res.ok) {
         window.addEventListener("click", this.recordFinish)
       } else {
-        this.handleError("Failed to start the timer: ${res.status}")
+        this.handleError(`Failed to start the timer: ${res.status}`)
       }
     },
     stopTimer: function () {

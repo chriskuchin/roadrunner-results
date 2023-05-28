@@ -39,6 +39,7 @@
         </tbody>
       </table>
     </div>
+    <not :show="error.show" type="is-danger is-light" @close="dismissError">{{ error.msg }}</not>
   </div>
 </template>
 
@@ -46,11 +47,13 @@
 import { formatMilliseconds } from "../utilities";
 import RacerInput from "../components/ResultsInput.vue";
 import ResultsTable from "../components/ResultsTable.vue";
+import Notification from '../components/Notification.vue';
 
 export default {
   components: {
     "result-input": RacerInput,
     "results-table": ResultsTable,
+    "not": Notification,
   },
   mounted: function () {
     this.listTimers()
@@ -61,7 +64,11 @@ export default {
       activeTab: "manual",
       timers: [],
       timerId: "",
-      results: []
+      results: [],
+      error: {
+        show: false,
+        msg: "",
+      }
     };
   },
   methods: {

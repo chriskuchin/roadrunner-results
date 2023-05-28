@@ -1,21 +1,31 @@
 <template>
   <div class="section">
-    <div class="box" v-for="event in   raceStore.eventList  " :key="event.id">
+    <div class="box" v-for="event in raceStore.eventList" :key="event.id">
+      <div class="has-text-right">
+        <div class="dropdown is-hoverable is-right">
+          <div class="dropdown-trigger">
+            <span class="icon is-clickable" aria-haspopup="true" aria-controls="dropdown-menu">
+              <icon icon="fa-solid fa-ellipsis-v"></icon>
+            </span>
+          </div>
+          <div class="dropdown-menu" role="menu">
+            <div class="dropdown-content">
+              <router-link class="dropdown-item" :to="getTimerLink(event)" v-if="isTimerEvent(event)">Timer</router-link>
+              <router-link class="dropdown-item" :to="getRecordLink(event)"
+                v-if="isTimerEvent(event)">Recorder</router-link>
+              <hr class="dropdown-divider" v-if="isTimerEvent(event)" />
+              <a href="#" class="dropdown-item" @click="deleteEvent(event)">Delete Race</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="title is-4">
         <icon :icon="['fa-solid', eventIcon(event)]"></icon> {{ event.description }}
       </div>
       <div class="field has-addons">
         <p class="control">
           <router-link :to="getResultsLink(event)" class="button is-primary">Results</router-link>
-        </p>
-        <p class="control" v-if="isTimerEvent(event)">
-          <router-link :to="getTimerLink(event)" class="button">Timer</router-link>
-        </p>
-        <p class="control" v-if="isTimerEvent(event)">
-          <router-link :to="getRecordLink(event)" class="button">Record</router-link>
-        </p>
-        <p class="control">
-          <a class="button is-danger" @click="deleteEvent(event)">Delete</a>
         </p>
       </div>
     </div>

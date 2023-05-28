@@ -35,6 +35,8 @@ async function deleteRace(raceID) {
 
     if (res.ok)
         return await getRaces()
+    else
+        throw new Error("failed to delete race: " + res.status)
 
     return []
 }
