@@ -124,15 +124,12 @@ export default {
         })
       })
 
-      if (res.ok) {
-        window.addEventListener("click", this.recordFinish)
-      } else {
+      if (!res.ok) {
         this.handleError(`Failed to start the timer: ${res.status}`)
       }
     },
     stopTimer: function () {
       if (this.timer != null) {
-        window.removeEventListener("click", this.recordFinish)
         clearTimeout(this.timer)
         this.timer = null
         this.start = 0
