@@ -18,7 +18,6 @@ func RacesRoutes(handler *Handler) chi.Router {
 
 	r.Get("/", handler.listRaces)
 	r.Post("/", handler.createRace)
-	r.Put("/", handler.test)
 
 	r.Route("/import", func(r chi.Router) {
 		r.Use(google.HandleOAuth2Creds)
@@ -35,11 +34,6 @@ func RacesRoutes(handler *Handler) chi.Router {
 	})
 
 	return r
-}
-
-func (api *Handler) test(w http.ResponseWriter, r *http.Request) {
-	log.Info().Msg("Test API Auth")
-	w.WriteHeader(http.StatusNoContent)
 }
 
 func (api *Handler) importRaceAndResults(w http.ResponseWriter, r *http.Request) {
@@ -105,7 +99,6 @@ func (api *Handler) createRace(w http.ResponseWriter, r *http.Request) {
 
 // DELETE .races/{raceID}
 func (api Handler) deleteRace(w http.ResponseWriter, r *http.Request) {
-
 	id := chi.URLParam(r, "raceID")
 	ctx := r.Context()
 	err := services.DeleteRace(ctx, api.db, id)

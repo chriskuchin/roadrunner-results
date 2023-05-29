@@ -2,6 +2,8 @@ package services
 
 import (
 	"context"
+	"fmt"
+	"strings"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/google/uuid"
@@ -139,7 +141,29 @@ func ListRaces(ctx context.Context, db *sqlx.DB) ([]RaceResult, error) {
 	return result, nil
 }
 
-func DeleteRace(ctx context.Context, db *sqlx.DB, id string) error {
-	_, err := db.ExecContext(ctx, "delete from races where race_id = ?", id)
+var raceTables []string = []string{
+	"races",
+	"events",
+	"participants",
+	"event_participation",
+	"results",
+	"heats",
+	"timers",
+	"timer_results",
+}
+
+func DeleteRace(ctx context.Context, db *sqlx.DB, id string) (err error) {
+	var failedObjects []string = []string{}
+	for _, table := range raceTables {
+		_, err := db.ExecContext(ctx, "delete from ? where race_id = ?", table, id)
+		if err != nil {
+			failedObjects = append(failedObjects, table)
+		}
+	}
+
+	if len(failedObjects) > 0 {
+		err = fmt.Errorf("failed deleteing race objects: %s", strings.Join(failedObjects, ", "))
+	}
+
 	return err
 }
