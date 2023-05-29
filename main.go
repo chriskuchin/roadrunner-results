@@ -93,10 +93,9 @@ func main() {
 							_, err := os.Stat(filepath.Join(frontendFolder, r.URL.Path))
 							if os.IsNotExist(err) {
 								http.ServeFile(w, r, filepath.Join(frontendFolder, "index.html"))
-								return
+							} else {
+								http.FileServer(http.Dir(frontendFolder)).ServeHTTP(w, r)
 							}
-
-							http.FileServer(http.Dir(frontendFolder)).ServeHTTP(w, r)
 						})
 					})
 
