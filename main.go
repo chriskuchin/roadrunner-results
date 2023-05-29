@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"path/filepath"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/controller"
 	"github.com/go-chi/chi"
@@ -89,6 +90,12 @@ func main() {
 						r.Mount("/api", controller.Routes(db, debug))
 
 						r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
+							_, err := os.Stat(filepath.Join(frontendFolder, r.URL.Path))
+							if os.IsNotExist(err) {
+								http.ServeFile(w, r, filepath.Join(frontendFolder, "index.html"))
+								return
+							}
+
 							http.FileServer(http.Dir(frontendFolder)).ServeHTTP(w, r)
 						})
 					})

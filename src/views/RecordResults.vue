@@ -1,5 +1,6 @@
 <template>
   <div>
+    <router-link :to="'/races/' + this.$route.params.raceId + '/events'">Back to Events</router-link>
     <div class="section">
       <div class="select is-small">
         <select @change="this.getHeatResults" v-model="timerId">
