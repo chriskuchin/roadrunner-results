@@ -79,5 +79,5 @@ func (api *Handler) recordResult(w http.ResponseWriter, r *http.Request) {
 		services.RecordFinisherResult(ctx, api.db, payload.Bib)
 	}
 
-	render.Status(r, http.StatusAccepted)
+	w.WriteHeader(http.StatusAccepted)
 }
