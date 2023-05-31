@@ -103,6 +103,7 @@ func (api Handler) deleteRace(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	err := services.DeleteRace(ctx, api.db, id)
 	if err != nil {
+		log.Error().Err(err).Msg("Failed to delete race")
 		render.Status(r, http.StatusInternalServerError)
 		render.JSON(w, r, map[string]string{
 			"error": fmt.Sprintf("%v", err),

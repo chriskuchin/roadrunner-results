@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { setAuthHeader } from '../../api/auth'
 
 export const useResultsStore = defineStore("results", {
   state: () => ({
@@ -26,13 +27,13 @@ export const useResultsStore = defineStore("results", {
 
       let url = "/api/v1/races/" + runner.raceId + "/events/" + runner.eventId + "/results"
 
-      let res = await fetch(url, {
+      let res = await fetch(url, setAuthHeader({
         method: "PUT",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(payload)
-      })
+      }))
 
       // if (!res.ok)
       //   return []

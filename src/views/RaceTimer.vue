@@ -51,9 +51,10 @@
 </template>
 
 <script>
-import { formatMilliseconds } from "../utilities";
+import { formatMilliseconds } from '../utilities';
 import FAB from '../components/Fab.vue'
 import Notification from '../components/Notification.vue'
+import { setAuthHeader } from '../api/auth'
 
 export default {
   components: {
@@ -114,15 +115,15 @@ export default {
       this.timer = setTimeout(this.tickTimer, 10)
 
       let res = await fetch(
-        "/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/timers", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          start_ts: this.start
-        })
-      })
+        "/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/timers", setAuthHeader({
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            start_ts: this.start
+          })
+        }))
 
       if (!res.ok) {
         this.handleError(`Failed to start the timer: ${res.status}`)
@@ -149,15 +150,15 @@ export default {
       this.finishers.push(formatMilliseconds(finishTime - this.start))
 
       let res = await fetch(
-        "/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/results", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          end_ts: finishTime
-        })
-      })
+        "/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/results", setAuthHeader({
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            end_ts: finishTime
+          })
+        }))
 
       if (!res.ok) {
         this.handleError("Failed to record finisher: " + res.status)

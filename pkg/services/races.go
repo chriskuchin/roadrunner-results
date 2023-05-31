@@ -155,8 +155,9 @@ var raceTables []string = []string{
 func DeleteRace(ctx context.Context, db *sqlx.DB, id string) (err error) {
 	var failedObjects []string = []string{}
 	for _, table := range raceTables {
-		_, err := db.ExecContext(ctx, "delete from ? where race_id = ?", table, id)
+		_, err := db.ExecContext(ctx, fmt.Sprintf("delete from %s where race_id = ?", table), id)
 		if err != nil {
+			log.Error().Err(err).Send()
 			failedObjects = append(failedObjects, table)
 		}
 	}

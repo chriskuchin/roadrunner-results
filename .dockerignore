@@ -1,0 +1,9 @@
+# flyctl launch added from .gitignore
+**/*.db
+**/node_modules
+**/.nuxt
+**/dist
+**/credentials.json
+**/token.json
+**/*.env
+fly.toml
