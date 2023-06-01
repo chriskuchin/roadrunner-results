@@ -19,7 +19,10 @@ func Routes(db *sqlx.DB, debug bool) chi.Router {
 		AllowedHeaders: []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token", "X-Api-Token"},
 		MaxAge:         300, // Maximum value not ignored by any of major browsers
 	}))
-	r.Use(auth)
+
+	if !debug {
+		r.Use(auth)
+	}
 
 	r.Mount("/v1", v1.Routes(db, debug))
 

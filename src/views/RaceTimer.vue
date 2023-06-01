@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <router-link :to="'/races/' + raceID + '/events'">Back to Events</router-link>
+  <div class="section">
     <div class="level mt-3">
       <div class="level-item has-text-centered">
         <div>

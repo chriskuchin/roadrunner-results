@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="field has-addons">
+  <div class="section">
+    <div class="field has-addons" v-if="heats.length > 0">
       <div class="select is-multiple is-small is-rounded">
         <select multiple size="1" v-model="heatFilter">
           <option v-for="heat in heats" :value="heat.id" :key="heat.id">{{ heat.description }}</option>
@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="table-container">
-      <table class="table">
+      <table class="table" style="min-width: 100%;">
         <thead>
           <th>Position</th>
           <th>Time</th>

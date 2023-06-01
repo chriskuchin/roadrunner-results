@@ -13,7 +13,7 @@ const routes = [
   { path: "/", component: HomePage },
   {
     path: "/races/:raceId", component: RaceBasePage, children: [
-      { path: "events", component: RaceEventsPage },
+      { path: "events", name: "events", component: RaceEventsPage },
       { path: "events/:eventId/record", component: RecordResults, name: "record" },
       { path: "events/:eventId/results", component: RaceEventsResultsPage },
       { path: "events/:eventId/timer", component: RaceTimer, name: "timer" }

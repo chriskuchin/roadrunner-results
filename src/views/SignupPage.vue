@@ -1,9 +1,9 @@
 <template>
-    <div></div>
+    <div class="section"></div>
 </template>
 
 <script>
 export default {
-    
+
 }
 </script>
