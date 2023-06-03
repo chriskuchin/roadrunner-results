@@ -4,7 +4,7 @@
       <div class="level-item has-text-centered">
         <div>
           <p class="title is-1">{{ stopwatch }}</p>
-          <p class="heading">Finishers: {{ results }}</p>
+          <p class="heading">Finishers: {{ finisherCount }}</p>
         </div>
       </div>
     </div>
@@ -42,18 +42,18 @@
       </ol>
     </div>
     <fab @click="fabAction">
-      <icon v-if="start == 0" icon="fa-solid fa-play"></icon>
+      <icon v-if="timerStarted()" icon="fa-solid fa-play"></icon>
       <icon v-else icon="fa-solid fa-stopwatch"></icon>
     </fab>
-    <not :show="error.show" type="is-danger is-light" @close="dismissError">{{ error.msg }}</not>
   </div>
 </template>
 
 <script>
 import { formatMilliseconds } from '../utilities';
 import FAB from '../components/Fab.vue'
-import Notification from '../components/Notification.vue'
 import { setAuthHeader } from '../api/auth'
+import { useErrorBus } from '../store/error';
+import { mapActions } from 'pinia';
 
 export default {
   components: {
@@ -65,13 +65,13 @@ export default {
   },
   data: function () {
     return {
-      reversedFinishers: [],
-      results: 0,
       timers: [],
       finishers: [],
-      start: 0,
-      duration: 0,
-      timer: null,
+      timer: {
+        timeout: null,
+        start: 0,
+        elapsed: 0,
+      },
       error: {
         show: false,
         msg: ""
@@ -79,6 +79,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(useErrorBus, { handleError: 'handle' }),
     generateFile() {
       const csvContent = this.finishers.map(row => `${row}\n`).join('');
       const csvData = new Blob([csvContent], { type: 'text/csv' });
@@ -95,7 +96,7 @@ export default {
       this.error.show = false
     },
     fabAction() {
-      if (this.start == 0) {
+      if (this.timerStarted()) {
         this.startTimer()
       } else {
         this.recordFinish()
@@ -104,14 +105,21 @@ export default {
     clickTab() {
       console.log("test")
     },
+    timerStarted() {
+      return this.timer.start == 0
+    },
     async listTimers() {
       let res = await fetch("/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/timers")
 
       this.timers = await res.json()
     },
+    resumeTimer() {
+
+    },
     async startTimer() {
-      this.start = Date.now()
-      this.timer = setTimeout(this.tickTimer, 10)
+      window.navigator.vibrate(50)
+      this.timer.start = Date.now()
+      this.timer.timeout = setTimeout(this.tickTimer, 10)
 
       let res = await fetch(
         "/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/timers", setAuthHeader({
@@ -120,7 +128,7 @@ export default {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            start_ts: this.start
+            start_ts: this.timer.start
           })
         }))
 
@@ -129,24 +137,21 @@ export default {
       }
     },
     stopTimer: function () {
-      if (this.timer != null) {
-        clearTimeout(this.timer)
-        this.timer = null
-        this.start = 0
-        this.duration = 0
+      window.navigator.vibrate(50)
+      if (this.timer.timeout != null) {
+        clearTimeout(this.timer.timeout)
+        this.timer.timeout = null
+        this.timer.start = 0
+        this.timer.elapsed = 0
       }
-    },
-    handleError(msg) {
-      this.error.msg = msg
-      this.error.show = true
     },
     async recordFinish(e) {
       if (e)
         e.stopPropagation()
 
+      window.navigator.vibrate(50)
       let finishTime = Date.now()
-      this.results++
-      this.finishers.push(formatMilliseconds(finishTime - this.start))
+      this.finishers.push(formatMilliseconds(finishTime - this.timer.start))
 
       let res = await fetch(
         "/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/results", setAuthHeader({
@@ -164,9 +169,9 @@ export default {
       }
     },
     tickTimer: function () {
-      if (this.start > 0 && this.timer != null) {
-        this.duration = Date.now() - this.start
-        this.timer = setTimeout(this.tickTimer, 10)
+      if (this.timer.start > 0 && this.timer.timeout != null) {
+        this.timer.elapsed = Date.now() - this.timer.start
+        this.timer.timeout = setTimeout(this.tickTimer, 10)
       }
     }
   },
@@ -178,17 +183,19 @@ export default {
       return this.$route.params.eventId
     },
     stopwatch: function () {
-      return formatMilliseconds(this.duration);
+      return formatMilliseconds(this.timer.elapsed);
     },
     timerIsRunning: function () {
-      return this.timer != null
+      return this.timer.timeout != null
+    },
+    finisherCount: function () {
+      return this.finishers.length
     },
     reverseOrderedFinishers: function () {
       let reversed = []
       for (let i = this.finishers.length; i > 0; i--) {
         reversed.push(this.finishers[i - 1])
       }
-
       return reversed
     }
   },

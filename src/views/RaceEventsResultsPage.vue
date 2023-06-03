@@ -30,8 +30,9 @@
 
 <script>
 import { useEventStore } from "../store/event";
-import { mapStores } from "pinia";
+import { mapStores, mapActions } from "pinia";
 import { formatMilliseconds } from "../utilities";
+import { useErrorBus } from "../store/error";
 
 export default {
   data: function () {
@@ -46,26 +47,35 @@ export default {
     this.getHeats()
   },
   methods: {
+    ...mapActions(useErrorBus, { handleError: 'handle' }),
     getResults: async function () {
       let url = `/api/v1/races/${this.$route.params.raceId}/events/${this.$route.params.eventId}/results`
       let res = await fetch(url)
 
-      this.results = await res.json()
+      if (!res.ok)
+        handlerError("Failed retrieving results")
+      else
+        this.results = await res.json()
     },
     getHeats: async function () {
       let url = `/api/v1/races/${this.$route.params.raceId}/events/${this.$route.params.eventId}/timers`
       let res = await fetch(url)
-      let timers = await res.json()
 
-      timers.forEach((element, index) => {
-        this.heats.push({
-          description: `Heat ${index + 1}`,
-          id: element.id,
-          start: element.timer_start
+      if (!res.ok)
+        handlerError("Failed retrieving heats")
+      else {
+        let timers = await res.json()
+
+        timers.forEach((element, index) => {
+          this.heats.push({
+            description: `Heat ${index + 1}`,
+            id: element.id,
+            start: element.timer_start
+          })
+          // default select all heats
+          this.heatFilter.push(element.id)
         })
-        // default select all heats
-        this.heatFilter.push(element.id)
-      })
+      }
     },
     formatMilliseconds,
   },
