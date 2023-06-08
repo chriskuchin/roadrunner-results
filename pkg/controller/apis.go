@@ -17,7 +17,7 @@ func Routes(db *sqlx.DB, debug bool) chi.Router {
 		AllowedOrigins: []string{"https://*", "http://*"},
 		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"},
 		AllowedHeaders: []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token", "X-Api-Token"},
-		MaxAge:         300, // Maximum value not ignored by any of major browsers
+		MaxAge:         300,
 	}))
 
 	if !debug {

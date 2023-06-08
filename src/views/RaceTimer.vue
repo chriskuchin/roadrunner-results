@@ -12,7 +12,8 @@
       <div class="level-item has-text-centered">
         <div class="field has-addons buttons are-large">
           <p class="control">
-          <div class="button is-primary is-responsive" @click="this.startTimer">Start</div>
+          <div v-if="this.timer.id == null" class="button is-primary is-responsive" @click="this.startTimer">Start</div>
+          <div v-else class="button is-primary is-responsive" @click="this.resumeTimer">Resume</div>
           </p>
           <p class="control">
           <div class="button is-danger is-responsive" @click="this.stopTimer">Stop</div>
@@ -29,9 +30,14 @@
     </button>
     <div class="tabs is-boxed">
       <ul>
-        <li class="is-active"><a>Current Heat</a></li>
-        <li v-for="(timer, index) in timers" :key="timer.id" @click="this.clickTab"><a>Heat {{ index + 1 }} ({{
-          timer.count }})</a></li>
+        <li :class="{ 'is-active': this.timer.id == null }" @click="this.clickTab(null)"><a>New Heat</a></li>
+        <li :class="{ 'is-active': this.timer.id == timer.id }" v-for="(timer, index) in timers" :key="timer.id"
+          @click="this.clickTab(timer)">
+          <a>
+            <icon class="mr-2" v-if="timer.count > 0 && timer.timer_start != 0" icon="fa-solid fa-flag-checkered"></icon>
+            Heat {{ index + 1 }} ({{ timer.count }})
+          </a>
+        </li>
       </ul>
     </div>
     <div class="content">
@@ -58,7 +64,6 @@ import { mapActions } from 'pinia';
 export default {
   components: {
     'fab': FAB,
-    'not': Notification,
   },
   mounted: function () {
     this.listTimers()
@@ -68,6 +73,7 @@ export default {
       timers: [],
       finishers: [],
       timer: {
+        id: null,
         timeout: null,
         start: 0,
         elapsed: 0,
@@ -92,9 +98,6 @@ export default {
       link.click();
       URL.revokeObjectURL(csvUrl);
     },
-    dismissError() {
-      this.error.show = false
-    },
     fabAction() {
       if (this.timerStarted()) {
         this.startTimer()
@@ -102,8 +105,17 @@ export default {
         this.recordFinish()
       }
     },
-    clickTab() {
-      console.log("test")
+    clickTab(timer) {
+      if (timer) {
+        console.log(timer)
+        this.timer.id = timer.id
+        this.timer.start = timer.timer_start
+        this.timer.elapsed = Date.now() - timer.timer_start
+      } else {
+        this.timer.id = null
+        this.timer.start = 0
+        this.timer.elapsed = 0
+      }
     },
     timerStarted() {
       return this.timer.start == 0
@@ -134,6 +146,8 @@ export default {
 
       if (!res.ok) {
         this.handleError(`Failed to start the timer: ${res.status}`)
+      } else {
+        this.timer.id = (await res.json()).id
       }
     },
     stopTimer: function () {
@@ -143,6 +157,8 @@ export default {
         this.timer.timeout = null
         this.timer.start = 0
         this.timer.elapsed = 0
+
+        this.listTimers()
       }
     },
     async recordFinish(e) {

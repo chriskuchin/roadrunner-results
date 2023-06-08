@@ -1,5 +1,3 @@
-
-
 ## Architecture
 
 - Races:
@@ -9,9 +7,6 @@
         - Timers: Every event has timers unless they are field.
         - Heats: Heats allow lane numbers to be associated with bib_numbers for faster result recording during track events
         - Participants:
-
-
-
 
 ## Workflows
 
@@ -29,3 +24,50 @@
     - Record Bib and Lane Numbers
 - Results
     -
+
+## Tables
+- Timers
+    - Fields
+        - `race_id`: Identifier
+        - `event_id`: Identifier
+        - `timer_id`: Object ID
+        - `start_ts`: The timer starting time
+    - Actions
+        - `create` insert row into timers with a null `start_ts`
+        - `start` insert a timestamp to a timer with a null `start_ts`
+        - `list` returns a paginated list of timers
+        - `get` get a particular timer
+    - Questions/Notes
+        - Stop is simply a client construct and isn't needed on these objects as you don't want to adjust start time ever
+        - Naming the Timer/Heat? Should it be a join on the Heat table? Or just add a field on the timer? It could also stay as is with just generating based on the order (heat 1...).
+- Results
+    - Fields
+        - `race_id`: identifier
+        - `event_id`: identifier
+        - `timer_id`: object id
+        - `bib_number`: The bib number of the finisher
+        - `result`: time elapsed from the timer `start_ts`
+    - Actions
+        - `create` needs a `race_id`, `event_id`, `timer_id`, and `result`. We need to handle an option where in some odd cases a bib may come in before the time. May just rely on the client to retry... or something else.
+        - `update` simply includes the `bib_number` and identifiers
+        - `list` get the results for the provided identifiers. Leaving off the `timer_id` can return all results for the event.
+    - Questions/Notes
+        - Should we add a timestamp or change the result to a timestamp?
+        - Server Side filtering/sorting?
+- Heats
+    - Fields
+        - `race_id` identifier
+        - `event_id` identifier
+        - `timer_id` identifier 1:1 with `timer`
+        - `heat` name/description of the heat.
+        - `bib_number` the athlete being assigned to this heat
+        - `lane_number` the lane number for the athelete to aid in finishing
+    - Actions
+        - `create` creates a lane assignment for a given timer and athlete
+        - `get` get the lane assignments for the given timer
+    - Questions/Notes
+        - Do we actually need a heat description?
+        - Unique ID is 1:1 with timer it should also include bib_number. Probably doesn't need lane_number included.
+        - Need some sort of validation that lane numbers can't repeat in a timer. could/should i enforce that in the DB?
+        - Creating a heat will need a pre existing timer or to create one in the client. as part of the first call. Could allow creating lane assignment with a null timer_id and then retrieve it from the response for subsequent lane assignments.
+        - UI will be a form with a timer select and a lane number and bib number. the lane number is probably just a drop down select.
