@@ -126,7 +126,7 @@ export default {
       this.timers = await res.json()
     },
     resumeTimer() {
-
+      this.timer.timeout = setTimeout(this.tickTimer, 10)
     },
     async startTimer() {
       window.navigator.vibrate(50)
