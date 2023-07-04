@@ -9,7 +9,8 @@ CREATE TABLE events (
     race_id varchar(255),
     event_id varchar(255),
     event_description varchar(255),
-    distance varchar(255),
+    event_type varchar(255),
+    distance varchar(255) DEFAULT NULL,
     UNIQUE(race_id, event_id, event_description)
 );
 CREATE TABLE participants (

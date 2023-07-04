@@ -13,19 +13,18 @@ import (
 func Routes(db *sqlx.DB, debug bool) chi.Router {
 	r := chi.NewRouter()
 
-	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins: []string{"https://*", "http://*"},
-		AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"},
-		AllowedHeaders: []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token", "X-Api-Token"},
-		MaxAge:         300,
-	}))
-
 	if !debug {
 		r.Use(auth)
+	} else {
+		r.Use(cors.Handler(cors.Options{
+			AllowedOrigins: []string{"https://*", "http://*"},
+			AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"},
+			AllowedHeaders: []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token", "X-Api-Token"},
+			MaxAge:         300,
+		}))
 	}
 
 	r.Mount("/v1", v1.Routes(db, debug))
-
 	return r
 }
 

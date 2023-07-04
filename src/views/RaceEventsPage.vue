@@ -21,7 +21,7 @@
       </div>
 
       <div class="title is-4">
-        <icon :icon="['fa-solid', eventIcon(event)]"></icon> {{ event.description }}
+        <icon :icon="['fa-solid', eventIcon(event)]"></icon> {{ raceDescription(event) }}
       </div>
       <div class="field has-addons">
         <p class="control">
@@ -174,6 +174,14 @@ export default {
         default:
           return 'fa-stopwatch'
       }
+    },
+    raceDescription: function (event) {
+      if (event.description == "") {
+        return event.distance + "m"
+      }
+
+      return event.description
+
     },
   },
   computed: {

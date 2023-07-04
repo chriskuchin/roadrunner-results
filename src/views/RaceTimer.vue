@@ -1,6 +1,7 @@
 <template>
   <div class="section">
     <div class="level mt-3">
+      <video ref="finish-line-camera" id="finish-line-camera" :class="{ active: enableCamera }"></video>
       <div class="level-item has-text-centered">
         <div>
           <p class="title is-1">{{ stopwatch }}</p>
@@ -8,7 +9,7 @@
         </div>
       </div>
     </div>
-    <div class="level mt-1">
+    <div class="level mt-1 mb-1">
       <div class="level-item has-text-centered">
         <div class="field has-addons buttons are-large">
           <p class="control">
@@ -22,6 +23,14 @@
           <div class="button is-warning is-responsive" @click.passive="this.recordFinish">Record</div>
           </p>
         </div>
+      </div>
+    </div>
+    <div class="level-item">
+      <div class="field">
+        <label class="checkbox">
+          <input type="checkbox" v-model="enableCamera" @click="manageCamera">
+          Finish Line Photos
+        </label>
       </div>
     </div>
 
@@ -40,6 +49,7 @@
         </li>
       </ul>
     </div>
+    <!-- on load of id existing heat load the times for the heat -->
     <div class="content">
       <ol>
         <li v-for="(finisher, index) in reverseOrderedFinishers" :class="{ unselectable: timerIsRunning }">
@@ -59,6 +69,7 @@ import { formatMilliseconds } from '../utilities';
 import FAB from '../components/Fab.vue'
 import { setAuthHeader } from '../api/auth'
 import { useErrorBus } from '../store/error';
+import { useMediaStore } from '../store/media';
 import { mapActions } from 'pinia';
 
 export default {
@@ -67,11 +78,13 @@ export default {
   },
   mounted: function () {
     this.listTimers()
+    this.loadMedia()
   },
   data: function () {
     return {
       timers: [],
       finishers: [],
+      enableCamera: false,
       timer: {
         id: null,
         timeout: null,
@@ -85,7 +98,17 @@ export default {
     };
   },
   methods: {
+    ...mapActions(useMediaStore, { loadMedia: 'load', startCamera: 'startCamera', stopCamera: 'stopCamera', takePicture: 'takePicture' }),
     ...mapActions(useErrorBus, { handleError: 'handle' }),
+    manageCamera() {
+      var video = this.$refs['finish-line-camera']
+
+      if (!this.enableCamera) {
+        this.startCamera(video)
+      } else {
+        this.stopCamera(video)
+      }
+    },
     generateFile() {
       const csvContent = this.finishers.map(row => `${row}\n`).join('');
       const csvData = new Blob([csvContent], { type: 'text/csv' });
@@ -167,7 +190,9 @@ export default {
 
       window.navigator.vibrate(50)
       let finishTime = Date.now()
-      this.finishers.push(formatMilliseconds(finishTime - this.timer.start))
+      var elapsedTime = formatMilliseconds(finishTime - this.timer.start)
+      this.finishers.push(elapsedTime)
+      this.takePicture(this.raceID, this.eventID, finishTime, elapsedTime)
 
       let res = await fetch(
         "/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/results", setAuthHeader({

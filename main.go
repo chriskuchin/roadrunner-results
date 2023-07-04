@@ -68,7 +68,7 @@ func main() {
 					zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 					zerolog.SetGlobalLevel(zerolog.InfoLevel)
 					if debug {
-						zerolog.SetGlobalLevel(zerolog.InfoLevel)
+						zerolog.SetGlobalLevel(zerolog.DebugLevel)
 						log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 					}
 
@@ -100,9 +100,12 @@ func main() {
 					})
 
 					log.Debug().Msgf("Launching server listening on: %s", port)
-					http.ListenAndServe(fmt.Sprintf(":%s", port), r)
+					err = http.ListenAndServe(fmt.Sprintf(":%s", port), r)
+					if err != nil {
+						log.Error().Err(err).Send()
+					}
 
-					return nil
+					return err
 				},
 			},
 		},
