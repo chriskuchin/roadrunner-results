@@ -20,23 +20,23 @@ export const useMediaStore = defineStore("media", {
         height: 540,
       },
     ],
-
+    settings: {
+      audio: false,
+      video: {
+        width: 1920,
+        height: 1080,
+        facingMode: {
+          ideal: "environment"
+        }
+      }
+    }
   }),
   getters: {
   },
   actions: {
     async startCamera(video) {
       this.videoElement = video
-      this.videoStream = await navigator.mediaDevices.getUserMedia({
-        audio: false,
-        video: {
-          width: 1920,
-          height: 1080,
-          facingMode: {
-            ideal: "environment"
-          }
-        }
-      });
+      this.videoStream = await navigator.mediaDevices.getUserMedia(this.settings);
       video.srcObject = this.videoStream;
       video.play();
     },
@@ -67,14 +67,6 @@ export const useMediaStore = defineStore("media", {
           console.log("upload image")
           that.uploadFinishPhoto(imageBlob, raceID, eventID, finishTime, elapsedTime)
         }, 'image/png')
-
-        // const imageDataURL = canvas.toDataURL('image/png');
-
-        // const link = document.createElement('a');
-        // link.href = imageDataURL;
-        // link.download = "finish_x.png";
-
-        // link.click();
       }
     },
     async uploadFinishPhoto(imgBlob, raceID, eventID, finishTime, elapsedTime) {
