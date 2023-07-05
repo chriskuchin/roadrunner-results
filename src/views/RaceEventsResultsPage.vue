@@ -14,6 +14,7 @@
           <th>Time</th>
           <th>Bib</th>
           <th>Debug</th>
+          <th>Image</th>
         </thead>
         <tbody>
           <tr v-for="(result, place) in filteredResults" :key="place">
@@ -21,6 +22,7 @@
             <td>{{ formatMilliseconds(result.result_ms) }}</td>
             <td>{{ result.bib_number }}</td>
             <td>{{ result }}</td>
+            <td><img :src="getImageSrc(place)" width="100" /></td>
           </tr>
         </tbody>
       </table>
@@ -40,9 +42,11 @@ export default {
       results: [],
       heats: [],
       heatFilter: [],
+      photos: []
     };
   },
   mounted: function () {
+    this.getImageKeys()
     this.getResults()
     this.getHeats()
   },
@@ -56,6 +60,25 @@ export default {
         handlerError("Failed retrieving results")
       else
         this.results = await res.json()
+    },
+    getImageKeys: async function () {
+      let url = `/api/v1/races/${this.$route.params.raceId}/events/${this.$route.params.eventId}/results/photos`
+      let res = await fetch(url)
+
+      if (!res.ok) {
+        handlerError("Failed Retrieving Photo Finishes")
+      } else {
+        this.photos = await res.json()
+      }
+
+      console.log(this.photos)
+    },
+    getImageSrc(place) {
+      if (this.photos[place]) {
+        return `/api/v1/races/${this.$route.params.raceId}/events/${this.$route.params.eventId}/results/photos/${this.photos[place]}`
+      }
+
+      return ""
     },
     getHeats: async function () {
       let url = `/api/v1/races/${this.$route.params.raceId}/events/${this.$route.params.eventId}/timers`

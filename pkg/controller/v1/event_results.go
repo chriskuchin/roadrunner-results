@@ -6,12 +6,10 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
+	"net/url"
 	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
-	"github.com/aws/aws-sdk-go-v2/config"
-	"github.com/aws/aws-sdk-go-v2/credentials"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
@@ -35,7 +33,43 @@ func EventResultsRoutes(handler *Handler) chi.Router {
 	r.Post("/", handler.recordResult)
 	r.Put("/", handler.recordResult)
 
+	r.Get("/photos", handler.listPhotoFinishFiles)
+	r.Get("/photos/{photoKey}", handler.renderPhotoFinishFile)
+
 	return r
+}
+
+func (api *Handler) listPhotoFinishFiles(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
+	output, err := api.s3.ListObjects(ctx, &s3.ListObjectsInput{
+		Bucket: aws.String(api.bucket),
+		Prefix: aws.String(fmt.Sprintf("/races/%s/events/%s/finish/", util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))),
+	})
+
+	if err != nil {
+		w.WriteHeader(http.StatusBadGateway)
+		return
+	}
+
+	photos := []string{}
+	for _, v := range output.Contents {
+		photos = append(photos, url.QueryEscape(*v.Key))
+		log.Info().Interface("obj", v).Send()
+	}
+	render.JSON(w, r, photos)
+}
+
+func (api *Handler) renderPhotoFinishFile(w http.ResponseWriter, r *http.Request) {
+	key, _ := url.QueryUnescape(chi.URLParam(r, "photoKey"))
+	res, _ := api.s3.GetObject(r.Context(), &s3.GetObjectInput{
+		Bucket: aws.String(api.bucket),
+		Key:    aws.String(key),
+	})
+
+	img, _ := io.ReadAll(res.Body)
+	r.Header.Add("Content-Type", "image/png")
+	w.WriteHeader(http.StatusOK)
+	w.Write(img)
 }
 
 func (api *Handler) handleEventResults(w http.ResponseWriter, r *http.Request) {
@@ -86,25 +120,8 @@ func (api *Handler) recordResult(w http.ResponseWriter, r *http.Request) {
 			}
 
 			var filename = part.FileName()
-			var bucketName = "photo-finish"
-			var accountId = os.Getenv("R2_ACCOUNT_ID")
-			var accessKeyId = os.Getenv("R2_ACCESS_KEY_ID")
-			var accessKeySecret = os.Getenv("R2_SECRET_ACCESS_KEY")
-
-			r2Resolver := aws.EndpointResolverWithOptionsFunc(func(service, region string, options ...interface{}) (aws.Endpoint, error) {
-				return aws.Endpoint{
-					URL: fmt.Sprintf("https://%s.r2.cloudflarestorage.com", accountId),
-				}, nil
-			})
-
-			cfg, _ := config.LoadDefaultConfig(ctx,
-				config.WithEndpointResolverWithOptions(r2Resolver),
-				config.WithCredentialsProvider(credentials.NewStaticCredentialsProvider(accessKeyId, accessKeySecret, "")),
-			)
-
-			client := s3.NewFromConfig(cfg)
-			_, err = client.PutObject(ctx, &s3.PutObjectInput{
-				Bucket: aws.String(bucketName),
+			_, err = api.s3.PutObject(ctx, &s3.PutObjectInput{
+				Bucket: aws.String(api.bucket),
 				Key:    aws.String(fmt.Sprintf("/races/%s/events/%s/finish/%s", util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), filename)),
 				Body:   bytes.NewReader(b),
 			})
