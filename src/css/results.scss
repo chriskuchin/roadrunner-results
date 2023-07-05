@@ -2,13 +2,16 @@
 @import "~bulma/bulma";
 
 #finish-line-camera {
-    max-width: 10%;
+    max-width: 30%;
     margin: 0 auto;
     display: none;
 }
 
 #finish-line-camera.active {
     display: block;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
 }
 
 input[type=number]::-webkit-inner-spin-button,
