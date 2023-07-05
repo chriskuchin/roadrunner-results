@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { setAuthHeader } from '../../api/auth'
 
 export const useMediaStore = defineStore("media", {
   state: () => ({
@@ -81,10 +82,10 @@ export const useMediaStore = defineStore("media", {
       var formData = new FormData()
       formData.append('photo-finish', imgBlob, `finisher_${finishTime}_${elapsedTime}.png`)
 
-      var res = await fetch(url, {
+      var res = await fetch(url, setAuthHeader({
         method: 'POST',
         body: formData
-      })
+      }))
 
       if (res.ok) {
         console.log("Success!!!")

@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"strings"
@@ -79,7 +78,7 @@ func (api *Handler) recordResult(w http.ResponseWriter, r *http.Request) {
 				break
 			}
 
-			b, err := ioutil.ReadAll(part)
+			b, err := io.ReadAll(part)
 			if err != nil {
 				log.Error().Err(err).Send()
 				w.WriteHeader(http.StatusBadRequest)
