@@ -98,7 +98,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useMediaStore, { loadMedia: 'load', startCamera: 'startCamera', stopCamera: 'stopCamera', takePicture: 'takePicture' }),
+    ...mapActions(useMediaStore, { loadMedia: 'load', startCamera: 'startCamera', stopCamera: 'stopCamera', takePicture: 'takePicture', recordVideo: 'recordVideo', saveVideo: 'saveVideo' }),
     ...mapActions(useErrorBus, { handleError: 'handle' }),
     manageCamera() {
       var video = this.$refs['finish-line-camera']
@@ -155,6 +155,7 @@ export default {
       window.navigator.vibrate(50)
       this.timer.start = Date.now()
       this.timer.timeout = setTimeout(this.tickTimer, 10)
+      this.recordVideo()
 
       let res = await fetch(
         "/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/timers", setAuthHeader({
@@ -176,6 +177,7 @@ export default {
     stopTimer: function () {
       window.navigator.vibrate(50)
       if (this.timer.timeout != null) {
+        this.saveVideo()
         clearTimeout(this.timer.timeout)
         this.timer.timeout = null
         this.timer.start = 0

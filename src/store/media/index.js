@@ -6,6 +6,8 @@ export const useMediaStore = defineStore("media", {
     videoStream: null,
     videoElement: null,
     recordVideo: false,
+    recorder: null,
+    chunks: [],
     videoQuality: [
       {
         width: 1920,
@@ -25,6 +27,7 @@ export const useMediaStore = defineStore("media", {
       video: {
         width: 1920,
         height: 1080,
+        frameRate: 60,
         facingMode: {
           ideal: "environment"
         }
@@ -39,6 +42,37 @@ export const useMediaStore = defineStore("media", {
       this.videoStream = await navigator.mediaDevices.getUserMedia(this.settings);
       video.srcObject = this.videoStream;
       video.play();
+    },
+    async recordVideo() {
+      if (this.videoStream) {
+        const options = {
+          videoBitsPerSecond: 2500000000,
+          mimeType: "video/webm;codecs=vp8",
+        };
+        this.recorder = new MediaRecorder(this.videoStream, options)
+
+        var that = this
+        this.recorder.ondataavailable = function (e) {
+          that.chunks.push(e.data)
+        }
+
+        this.recorder.onstop = function () {
+          const blob = new Blob(that.chunks, { type: 'video/webm;codecs=vp8' })
+          var download = document.createElement("a")
+          download.href = URL.createObjectURL(blob)
+          download.download = "raceVideo.webm"
+
+          download.click()
+          that.chunks = []
+          that.recorder = null
+        }
+        this.recorder.start()
+      }
+    },
+    async saveVideo() {
+      if (this.recorder) {
+        this.recorder.stop()
+      }
     },
     async stopCamera(video) {
       const tracks = this.videoStream.getTracks();
