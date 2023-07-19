@@ -8,11 +8,15 @@ const SignupPage = () => import('../views/SignupPage.vue')
 const RaceBasePage = () => import('../views/RaceBasePage.vue')
 const RaceEventsPage = () => import('../views/RaceEventsPage.vue')
 const RaceEventsResultsPage = () => import('../views/RaceEventsResultsPage.vue')
+const RaceRegistration = () => import('../views/RaceRegistration.vue')
+const RaceParticipants = () => import('../views/RaceParticipants.vue')
 
 const routes = [
   { path: "/", component: HomePage },
   {
     path: "/races/:raceId", component: RaceBasePage, children: [
+      { path: "participants", name: "participants", component: RaceParticipants },
+      { path: "registration", name: "registration", component: RaceRegistration },
       { path: "events", name: "events", component: RaceEventsPage },
       { path: "events/:eventId/record", component: RecordResults, name: "record" },
       { path: "events/:eventId/results", component: RaceEventsResultsPage },

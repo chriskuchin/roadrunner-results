@@ -4,8 +4,7 @@
       <div class="has-text-right">
         <div class="dropdown is-hoverable is-right">
           <div class="dropdown-trigger">
-            <span class="icon is-clickable" aria-haspopup="true"
-              aria-controls="dropdown-menu">
+            <span class="icon is-clickable" aria-haspopup="true" aria-controls="dropdown-menu">
               <icon icon="fa-solid fa-ellipsis-v"></icon>
             </span>
           </div>
@@ -18,10 +17,13 @@
       </div>
 
       <div class="title is-4">{{ race.name }}</div>
-      <div class="field has-addons">
-        <p class="control">
-          <router-link :to="'/races/' + race.id + '/events'" class="button">Events</router-link>
-        </p>
+      <div class="buttons">
+        <router-link :to="'/races/' + race.id + '/events'"
+          class="button is-info is-light is-outlined">Events</router-link>
+        <router-link :to="'/races/' + race.id + '/participants'"
+          class="button is-info is-light is-outlined">Participants</router-link>
+        <router-link :to="'/races/' + race.id + '/registration'"
+          class="button is-warning is-light is-outlined">Registration</router-link>
       </div>
     </div>
     <fab @click="toggleCreateRaceModal"></fab>
@@ -95,7 +97,6 @@ export default {
       deleteRace(raceID).then(() => {
         self.racesStore.loadRaces()
       }).catch((err) => {
-        console.log(err)
         self.error.show = true
         self.error.msg = err
       })
