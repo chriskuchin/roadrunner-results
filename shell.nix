@@ -16,5 +16,9 @@
       gcc
       nodejs_18
       sqlite
+      rsync
+      nomad
     ];
+
+    NOMAD_ADDR=https://n.home.cksuperman.com;
 }
