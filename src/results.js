@@ -12,6 +12,17 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js').then(registration => {
+      console.log('SW registered: ', registration);
+    }).catch(registrationError => {
+      console.log('SW registration failed: ', registrationError);
+    });
+  });
+}
+
 /* import specific icons */
 import { faPlus, faStopwatch, faRuler, faRepeat, faPlay, faDownload, faFileCsv, faEllipsisV, faArrowLeftLong, faFlagCheckered } from '@fortawesome/free-solid-svg-icons'
 library.add(faPlus, faStopwatch, faRuler, faRepeat, faPlay, faDownload, faFileCsv, faEllipsisV, faArrowLeftLong, faFlagCheckered)

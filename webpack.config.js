@@ -3,7 +3,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const { DefinePlugin } = require('webpack');
-const { GenerateSW } = require('workbox-webpack-plugin');
+const { InjectManifest } = require('workbox-webpack-plugin');
 
 module.exports = (env, argv) => {
   var mode = "production"
@@ -69,8 +69,8 @@ module.exports = (env, argv) => {
       ]
     },
     plugins: [
-      new GenerateSW({
-        swDest: './sw.js'
+      new InjectManifest({
+        swSrc: './service-worker.js',
       }),
       new DefinePlugin({
         __VUE_OPTIONS_API__: true,
