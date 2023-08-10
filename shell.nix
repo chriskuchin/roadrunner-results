@@ -19,6 +19,7 @@
       rsync
       nomad
       dig
+      vegeta
     ];
 
     NOMAD_ADDR=https://n.home.cksuperman.com;

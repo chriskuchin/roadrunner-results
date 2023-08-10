@@ -130,7 +130,6 @@ export default {
     },
     clickTab(timer) {
       if (timer) {
-        console.log(timer)
         this.timer.id = timer.id
         this.timer.start = timer.timer_start
         this.timer.elapsed = Date.now() - timer.timer_start

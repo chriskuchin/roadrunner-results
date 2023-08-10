@@ -145,7 +145,6 @@ export default {
       var vid = this.$refs["finish-line-camera"];
       var cnvs = this.$refs["finish-line-pics"];
       var ctx = cnvs.getContext("2d");
-      console.log(vid.videoHeight, vid.videoWidth);
 
       ctx.drawImage(vid, 0, 0, 300, 300);
       ctx.font = "20px sans serif";
@@ -176,7 +175,6 @@ export default {
     resizeVideo: function (e) {
       // this.$refs["scanner-wrapper"].style.height = e.target.videoHeight + "px";
       // this.$refs["scanner-wrapper"].style.width = e.target.videoWidth + "px";
-      // console.log(e.target.videoHeight, e.target.videoWidth);
     },
     record: function (e) {
       if (this.running) {

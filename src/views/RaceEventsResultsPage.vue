@@ -70,8 +70,6 @@ export default {
       } else {
         this.photos = await res.json()
       }
-
-      console.log(this.photos)
     },
     getImageSrc(place) {
       if (this.photos[place]) {

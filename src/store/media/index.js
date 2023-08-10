@@ -96,10 +96,8 @@ export const useMediaStore = defineStore("media", {
         canvas.height = track.getSettings().height;
 
         context.drawImage(this.videoElement, 0, 0, canvas.width, canvas.height);
-        console.log("convert image")
         var that = this
         canvas.toBlob(function (imageBlob) {
-          console.log("upload image")
           that.uploadFinishPhoto(imageBlob, raceID, eventID, finishTime, elapsedTime)
         }, 'image/png')
       }

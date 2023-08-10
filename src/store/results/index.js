@@ -16,7 +16,6 @@ export const useResultsStore = defineStore("results", {
     recordFinishTime: function (finishTime) {
     },
     recordRunnerResult: async function (runner) {
-      console.log(runner)
       let payload = {
         bib_number: runner.bib
       }
@@ -37,8 +36,6 @@ export const useResultsStore = defineStore("results", {
 
       // if (!res.ok)
       //   return []
-
-      // console.log(payload)
     }
   }
 })
