@@ -57,7 +57,7 @@ export default {
       let res = await fetch(url)
 
       if (!res.ok)
-        handlerError("Failed retrieving results")
+        this.handleError("Failed retrieving results")
       else
         this.results = await res.json()
     },
@@ -66,7 +66,7 @@ export default {
       let res = await fetch(url)
 
       if (!res.ok) {
-        handlerError("Failed Retrieving Photo Finishes")
+        this.handleError("Failed Retrieving Photo Finishes")
       } else {
         this.photos = await res.json()
       }
@@ -85,7 +85,7 @@ export default {
       let res = await fetch(url)
 
       if (!res.ok)
-        handlerError("Failed retrieving heats")
+        this.handleError("Failed retrieving heats")
       else {
         let timers = await res.json()
 

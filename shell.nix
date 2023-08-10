@@ -18,6 +18,7 @@
       sqlite
       rsync
       nomad
+      dig
     ];
 
     NOMAD_ADDR=https://n.home.cksuperman.com;

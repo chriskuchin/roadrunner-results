@@ -27,6 +27,7 @@ export const useMediaStore = defineStore("media", {
       video: {
         width: 1920,
         height: 1080,
+        focusMode: 'continuous',
         frameRate: 60,
         facingMode: {
           ideal: "environment"

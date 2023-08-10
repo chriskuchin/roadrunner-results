@@ -1,11 +1,11 @@
 import { precacheAndRoute } from 'workbox-precaching/precacheAndRoute';
 import { BackgroundSyncPlugin } from 'workbox-background-sync';
 import { registerRoute } from 'workbox-routing';
-import { NetworkOnly } from 'workbox-strategies';
+import { NetworkOnly, NetworkFirst } from 'workbox-strategies';
 
 precacheAndRoute(self.__WB_MANIFEST);
 
-const bgSyncPlugin = new BackgroundSyncPlugin('myQueueName', {
+const bgSyncPlugin = new BackgroundSyncPlugin('failedWrites', {
   maxRetentionTime: 24 * 60, // Retry for max of 24 Hours (specified in minutes)
 });
 
@@ -20,8 +20,10 @@ const statusPlugin = {
   },
 };
 
+registerRoute(new RegExp(/\/api\/.*/), new NetworkFirst({}), 'GET')
+
 registerRoute(
-  /\/api\/.*/,
+  new RegExp(/\/api\/.*/),
   new NetworkOnly({
     plugins: [statusPlugin, bgSyncPlugin],
   }),

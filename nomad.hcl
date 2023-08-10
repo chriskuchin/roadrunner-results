@@ -52,8 +52,10 @@ job "rslts" {
         port = "http"
         tags = [
           "traefik.enable=true",
-          "traefik.http.routers.cksuperman.entrypoints=public_https,http",
-          "traefik.http.routers.cksuperman.rule=Host(`rslts.cksuperman.com`) || Host(`rslts.run`)",
+          "traefik.http.routers.rslts.entrypoints=public_https",
+          "traefik.http.routers.rslts.rule=Host(`rslts.run`)",
+          "traefik.http.routers.rslts.tls.certresolver=http",
+          "traefik.http.routers.rslts.tls.domains[0].main=rslts.run",
           "wayfinder.domain=rslts.cksuperman.com",
           "wayfinder.public=true",
         ]
