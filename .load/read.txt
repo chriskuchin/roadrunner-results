@@ -1,0 +1,4 @@
+GET https://rslts.run
+GET https://rslts.run/api/v1/races
+GET https://rslts.run/api/v1/races/042e6c24-0eb8-48da-a3ac-5d94af5e4199/events/
+GET https://rslts.run/api/v1/races/042e6c24-0eb8-48da-a3ac-5d94af5e4199/events/70fff286-c929-4494-8d43-48ab2cf39804/results
