@@ -28,23 +28,41 @@ job "rslts" {
       }
 
       vault {
-        policies    = ["cloudflare-r2"]
+        policies    = ["rslts"]
         change_mode = "restart"
       }
 
       template {
         data        = <<-EOH
-        {{with secret "kv/rslts/api" }}
-        API_TOKEN={{.Data.data.token}}
-        {{end}}
-        {{with secret "kv/cloudflare/r2/rslts"}}
-        R2_ACCOUNT_ID= {{.Data.data.account}}
-	      R2_ACCESS_KEY_ID={{.Data.data.access_key}}
-	      R2_SECRET_ACCESS_KEY={{.Data.data.secret_key}}
-        {{end}}
+{{with secret "kv/rslts/api" }}
+API_TOKEN={{.Data.data.token}}
+{{end}}
         EOH
-        destination = "local/api.env"
+        destination = "secrets/api.env"
         env         = true
+      }
+
+      template {
+        data = <<-EOH
+{{with secret "kv/cloudflare/r2/rslts"}}
+R2_ACCOUNT_ID={{.Data.data.account}}
+R2_ACCESS_KEY_ID={{.Data.data.access_key}}
+R2_SECRET_ACCESS_KEY={{.Data.data.secret_key}}
+{{end}}
+        EOH
+
+        destination = "secrets/cloudflare.env"
+        env = true
+      }
+
+      template {
+        data        = <<-EOH
+{{with secret "kv/rslts/auth" }}
+{{.Data.data | toJSON }}
+{{end}}
+        EOH
+        destination = "secrets/auth.json"
+        env         = false
       }
 
       service {

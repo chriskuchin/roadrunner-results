@@ -18,9 +18,8 @@
       sqlite
       rsync
       nomad
+      vault
       dig
       vegeta
     ];
-
-    NOMAD_ADDR=https://n.home.cksuperman.com;
 }
