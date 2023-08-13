@@ -1,4 +1,3 @@
-# flyctl launch added from .gitignore
 **/*.db
 **/node_modules
 **/.nuxt
@@ -6,4 +5,3 @@
 **/credentials.json
 **/token.json
 **/*.env
-fly.toml
