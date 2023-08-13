@@ -26,10 +26,7 @@
       </div>
       <div class="navbar-end">
         <div class="navbar-item">
-          <div class="buttons">
-            <a @click="toggleApiKeyModal" class="button is-link">
-              <strong>API Key</strong>
-            </a>
+          <div class="buttons" v-if="!isLoggedIn">
             <router-link to="/signup" class="button is-primary">
               <strong>Sign Up</strong>
             </router-link>
@@ -64,6 +61,8 @@
 import logo from "../assets/images/logo.png";
 import { saveAPIToken } from '../api/auth'
 import Modal from '../components/Modal.vue'
+import { mapState } from "pinia";
+import { useUserStore } from "../store/user";
 
 export default {
   components: {
@@ -89,6 +88,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(useUserStore, ['isLoggedIn']),
     logo_url: function () {
       return logo;
     },

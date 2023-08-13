@@ -4,7 +4,7 @@ ADD . /public
 WORKDIR /public
 RUN npm install && npm run build
 
-FROM golang:1.20-alpine3.17 AS builder
+FROM golang:1.20-alpine3.18 AS builder
 
 COPY ${PWD} /app
 WORKDIR /app
@@ -16,7 +16,7 @@ RUN apk add curl && \
     curl -fsSL -o /go/bin/dbmate https://github.com/amacneil/dbmate/releases/latest/download/dbmate-linux-amd64 && \
     chmod +x /go/bin/dbmate
 
-FROM alpine:3.17
+FROM alpine:3.18
 LABEL MAINTAINER Chris Kuchin <github@kchn.dev>
 
 ENV FRONTEND_FOLDER /home/appuser/app/public/dist

@@ -12,6 +12,18 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+import { onAuthStateChanged } from 'firebase/auth'
+import { auth } from './firebase'
+
+import { useUserStore } from './store/user'
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    useUserStore().loadUser(user)
+  } else {
+    console.log("no user")
+  }
+})
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
