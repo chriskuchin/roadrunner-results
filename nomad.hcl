@@ -20,6 +20,14 @@ job "rslts" {
         force_pull = true
         ports = ["http"]
 
+        logging {
+          type = "loki"
+
+          config {
+            loki-external-labels = "service=rslts"
+          }
+        }
+
         entrypoint = []
         volumes = [
           "/etc/localtime:/etc/localtime:ro",
