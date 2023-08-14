@@ -34,7 +34,6 @@ export default {
   },
   methods: {
     ...mapActions(useUserStore, ['login']),
-    // <!-- ThisIsATestPlease -->
     submit: async function () {
       await this.login(this.form.email, this.form.password)
     }

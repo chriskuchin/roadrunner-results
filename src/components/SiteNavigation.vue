@@ -41,7 +41,7 @@
             <router-link to="/" class="navbar-item">Profile</router-link>
             <router-link to="/" class="navbar-item">Settings</router-link>
             <hr class="dropdown-divider" />
-            <router-link to="/" class="navbar-item">Sign Out</router-link>
+            <a @click="logout" class="navbar-item">Sign Out</a>
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@
 import logo from "../assets/images/logo.png";
 import { saveAPIToken } from '../api/auth'
 import Modal from '../components/Modal.vue'
-import { mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import { useUserStore } from "../store/user";
 
 export default {
@@ -94,7 +94,8 @@ export default {
     saveToken: function () {
       saveAPIToken(this.apiKey)
       this.toggleApiKeyModal()
-    }
+    },
+    ...mapActions(useUserStore, ['logout'])
   },
   computed: {
     ...mapState(useUserStore, ['isLoggedIn', 'userDisplayName']),
