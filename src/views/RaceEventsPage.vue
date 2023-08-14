@@ -2,7 +2,7 @@
   <div class="section">
     <div class="box" v-for="event in raceStore.eventList" :key="event.id">
       <div class="has-text-right">
-        <div class="dropdown is-hoverable is-right">
+        <div class="dropdown is-hoverable is-right" v-if="isLoggedIn">
           <div class="dropdown-trigger">
             <span class="icon is-clickable" aria-haspopup="true" aria-controls="dropdown-menu">
               <icon icon="fa-solid fa-ellipsis-v"></icon>
@@ -29,7 +29,7 @@
         </p>
       </div>
     </div>
-    <fab @click="toggleModal"></fab>
+    <fab v-if="isLoggedIn" @click="toggleModal"></fab>
     <modal @close="toggleModal" :show="modal.show">
       <p class="title">Create Event</p>
       <div class="field">
@@ -92,8 +92,9 @@
 </template>
 
 <script>
-import { mapStores } from "pinia";
+import { mapStores, mapState } from "pinia";
 import { useRaceStore } from "../store/race";
+import { useUserStore } from "../store/user"
 import { createRaceEvent, deleteRaceEvent } from "../api/events"
 import Modal from '../components/Modal.vue'
 import FAB from '../components/Fab.vue'
@@ -185,6 +186,7 @@ export default {
     },
   },
   computed: {
+    ...mapState(useUserStore, ['isLoggedIn']),
     raceID: () => this.$route.params.raceId,
     ...mapStores(useRaceStore),
   }
