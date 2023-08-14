@@ -10,7 +10,7 @@ export const useUserStore = defineStore('user', {
   }),
   getters: {
     isLoggedIn: (state) => state.uid != "",
-    userDisplayName: (state) => {
+    userDisplayName: function(state) {
       if (this.isLoggedIn) {
         return state.email
       }

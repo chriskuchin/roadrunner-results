@@ -25,14 +25,23 @@
         </div>
       </div>
       <div class="navbar-end">
-        <div class="navbar-item">
-          <div class="buttons" v-if="!isLoggedIn">
+        <div class="navbar-item" v-if="!isLoggedIn">
+          <div class="buttons">
             <router-link to="/signup" class="button is-primary">
               <strong>Sign Up</strong>
             </router-link>
             <router-link to="/login" class="button is-light">
               Log in
             </router-link>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable" v-else>
+          <a class="navbar-link"> {{ userDisplayName }} </a>
+          <div class="navbar-dropdown">
+            <router-link to="/" class="navbar-item">Profile</router-link>
+            <router-link to="/" class="navbar-item">Settings</router-link>
+            <hr class="dropdown-divider" />
+            <router-link to="/" class="navbar-item">Sign Out</router-link>
           </div>
         </div>
       </div>
@@ -88,7 +97,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(useUserStore, ['isLoggedIn']),
+    ...mapState(useUserStore, ['isLoggedIn', 'userDisplayName']),
     logo_url: function () {
       return logo;
     },
