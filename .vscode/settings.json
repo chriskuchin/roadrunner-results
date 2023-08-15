@@ -1,3 +1,5 @@
 {
+  "nixEnvSelector.suggestion": false,
+  "nixEnvSelector.nixShellPath": "/home/coder/.nix-profile/bin/nix-shell",
   "nixEnvSelector.nixFile": "${workspaceRoot}/shell.nix"
 }

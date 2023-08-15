@@ -1,11 +1,13 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
 
+	firebase "firebase.google.com/go/v4"
 	"github.com/chriskuchin/roadrunner-results/pkg/controller"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -78,6 +80,11 @@ func main() {
 						log.Fatal().Err(err).Send()
 					}
 
+					app, err := firebase.NewApp(context.Background(), nil)
+					if err != nil {
+						log.Fatal().Msgf("error initializing app: %v\n", err)
+					}
+
 					r := chi.NewRouter()
 					// A good base middleware stack
 					r.Use(middleware.RequestID)
@@ -87,7 +94,7 @@ func main() {
 
 					r.Route("/", func(r chi.Router) {
 						r.Mount("/healthcheck", controller.HealthcheckResources{}.Routes())
-						r.Mount("/api", controller.Routes(db, debug))
+						r.Mount("/api", controller.Routes(app, db, debug))
 
 						r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
 							_, err := os.Stat(filepath.Join(frontendFolder, r.URL.Path))

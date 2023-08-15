@@ -3,14 +3,18 @@ package controller
 import (
 	"net/http"
 	"os"
+	"context"
 
+	firebase "firebase.google.com/go/v4"
 	v1 "github.com/chriskuchin/roadrunner-results/pkg/controller/v1"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
 	"github.com/jmoiron/sqlx"
 )
 
-func Routes(db *sqlx.DB, debug bool) chi.Router {
+func Routes(app *firebase.App, db *sqlx.DB, debug bool) chi.Router {
+	app.Auth(context.Background())
+
 	r := chi.NewRouter()
 
 	if !debug {
