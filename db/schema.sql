@@ -1,5 +1,4 @@
-CREATE TABLE IF NOT EXISTS "schema_migrations" (version varchar(255) primary key);
-CREATE TABLE sqlite_sequence(name,seq);
+CREATE TABLE IF NOT EXISTS "schema_migrations" (version varchar(128) primary key);
 CREATE TABLE races (
     race_id varchar(255) UNIQUE,
     owner_id varchar(255),
@@ -57,7 +56,15 @@ CREATE TABLE timer_results (
     timer_id varchar(255),
     result integer
 );
+CREATE TABLE users (
+    user_id varchar(255),
+    email varchar(255),
+    display_name TEXT,
+    creation_date TEXT DEFAULT CURRENT_TIMESTAMP,
+    last_login_date TEXT
+);
 -- Dbmate schema migrations
 INSERT INTO "schema_migrations" (version) VALUES
   ('20220708034230'),
-  ('20230321020148');
+  ('20230321020148'),
+  ('20230813205300');

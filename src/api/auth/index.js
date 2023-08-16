@@ -1,11 +1,22 @@
+import { auth } from '../../firebase'
+
 const storageKey = "api-token"
 
 function saveAPIToken(token) {
   localStorage.setItem(storageKey, token)
 }
 
-function setAuthHeader(fetchObject) {
-  var token = localStorage.getItem(storageKey)
+function getAPIToken() {
+  return localStorage.getItem(storageKey)
+}
+
+async function setAuthHeader(fetchObject) {
+  var token
+  if (auth.currentUser) {
+    token = await auth.currentUser.getIdToken(true)
+  } else {
+    token = getAPIToken()
+  }
 
   if (!fetchObject.headers)
     fetchObject.headers = {}

@@ -2,7 +2,7 @@
   <div class="section">
     <div class="box" v-for="race in racesStore.getRaces" :key="race.id">
       <div class="has-text-right">
-        <div class="dropdown is-hoverable is-right">
+        <div class="dropdown is-hoverable is-right" v-if="isLoggedIn">
           <div class="dropdown-trigger">
             <span class="icon is-clickable" aria-haspopup="true" aria-controls="dropdown-menu">
               <icon icon="fa-solid fa-ellipsis-v"></icon>
@@ -26,7 +26,7 @@
           class="button is-warning is-light is-outlined">Registration</router-link>
       </div>
     </div>
-    <fab @click="toggleCreateRaceModal"></fab>
+    <fab v-if="isLoggedIn" @click="toggleCreateRaceModal"></fab>
     <modal @close="toggleCreateRaceModal" :show="raceModal.show">
       <p class="title">Create Race</p>
       <div class="field">
@@ -49,8 +49,9 @@
 </template>
 
 <script>
-import { mapStores } from 'pinia'
+import { mapStores, mapState } from 'pinia'
 import { useRacesStore } from "../store/races";
+import { useUserStore } from '../store/user';
 import { createRace, deleteRace } from "../api/races"
 import Modal from '../components/Modal.vue'
 import FAB from '../components/Fab.vue'
@@ -103,11 +104,11 @@ export default {
     },
     toggleCreateRaceModal: function () {
       this.raceModal.show = !this.raceModal.show
-
     }
   },
   computed: {
     ...mapStores(useRacesStore),
+    ...mapState(useUserStore, ['isLoggedIn']),
     raceLink: function (id) {
       return "/races/" + id + "/results"
     }

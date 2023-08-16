@@ -1,7 +1,7 @@
 import { setAuthHeader } from '../auth'
 
 async function getRaces() {
-    let res = await fetch("/api/v1/races", setAuthHeader({
+    let res = await fetch("/api/v1/races", await setAuthHeader({
         method: "GET",
     }))
 
@@ -12,7 +12,7 @@ async function getRaces() {
 }
 
 async function createRace(description) {
-    let res = await fetch("/api/v1/races", setAuthHeader({
+    let res = await fetch("/api/v1/races", await setAuthHeader({
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -29,7 +29,7 @@ async function createRace(description) {
 }
 
 async function deleteRace(raceID) {
-    let res = await fetch("/api/v1/races/" + raceID, setAuthHeader({
+    let res = await fetch("/api/v1/races/" + raceID, await setAuthHeader({
         method: "DELETE"
     }))
 

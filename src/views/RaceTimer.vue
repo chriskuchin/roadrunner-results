@@ -157,7 +157,7 @@ export default {
       this.recordVideo()
 
       let res = await fetch(
-        "/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/timers", setAuthHeader({
+        "/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/timers", await setAuthHeader({
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -196,7 +196,7 @@ export default {
       this.takePicture(this.raceID, this.eventID, finishTime, elapsedTime)
 
       let res = await fetch(
-        "/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/results", setAuthHeader({
+        "/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/results", await setAuthHeader({
           method: "POST",
           headers: {
             "Content-Type": "application/json"

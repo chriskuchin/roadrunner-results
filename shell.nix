@@ -21,4 +21,6 @@
       dig
       vegeta
     ];
+
+    LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
 }

@@ -25,11 +25,8 @@
         </div>
       </div>
       <div class="navbar-end">
-        <div class="navbar-item">
+        <div class="navbar-item" v-if="!isLoggedIn">
           <div class="buttons">
-            <a @click="toggleApiKeyModal" class="button is-link">
-              <strong>API Key</strong>
-            </a>
             <router-link to="/signup" class="button is-primary">
               <strong>Sign Up</strong>
             </router-link>
@@ -38,36 +35,27 @@
             </router-link>
           </div>
         </div>
+        <div class="navbar-item has-dropdown is-hoverable" v-else>
+          <a class="navbar-link"> {{ userDisplayName }} </a>
+          <div class="navbar-dropdown">
+            <router-link to="/" class="navbar-item">Profile</router-link>
+            <router-link to="/" class="navbar-item">Settings</router-link>
+            <hr class="dropdown-divider" />
+            <a @click="logout" class="navbar-item">Sign Out</a>
+          </div>
+        </div>
       </div>
     </div>
-    <modal :show="apiKeyModal" @close="toggleApiKeyModal">
-      <p class="title">Input API Key</p>
-      <div class="field">
-        <label class="label">API Key</label>
-        <div class="control">
-          <input class="input" type="text" placeholder="API Key" v-model="apiKey">
-        </div>
-      </div>
-      <div class="field is-grouped">
-        <div class="control">
-          <button :class="['button', 'is-link']" @click="saveToken">Save</button>
-        </div>
-        <div class="control">
-          <button class="button is-link is-light" @click="toggleApiKeyModal">Cancel</button>
-        </div>
-      </div>
-    </modal>
   </nav>
 </template>
 
 <script>
 import logo from "../assets/images/logo.png";
-import { saveAPIToken } from '../api/auth'
-import Modal from '../components/Modal.vue'
+import { mapState, mapActions } from "pinia";
+import { useUserStore } from "../store/user";
 
 export default {
   components: {
-    'modal': Modal,
   },
   data: function () {
     return {
@@ -86,9 +74,11 @@ export default {
     saveToken: function () {
       saveAPIToken(this.apiKey)
       this.toggleApiKeyModal()
-    }
+    },
+    ...mapActions(useUserStore, ['logout'])
   },
   computed: {
+    ...mapState(useUserStore, ['isLoggedIn', 'userDisplayName']),
     logo_url: function () {
       return logo;
     },

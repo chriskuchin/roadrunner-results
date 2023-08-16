@@ -19,6 +19,7 @@ const (
 	DB            key = 6
 	HeatID        key = 7
 	PhotoKey      key = 8
+	UserToken     key = 9
 )
 
 func getValueFromContext(ctx context.Context, k key) string {
