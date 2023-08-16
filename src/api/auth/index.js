@@ -6,12 +6,16 @@ function saveAPIToken(token) {
   localStorage.setItem(storageKey, token)
 }
 
+function getAPIToken() {
+  return localStorage.getItem(storageKey)
+}
+
 async function setAuthHeader(fetchObject) {
   var token
   if (auth.currentUser) {
     token = await auth.currentUser.getIdToken(true)
   } else {
-    token = localStorage.getItem(storageKey)
+    token = getAPIToken()
   }
 
   if (!fetchObject.headers)
