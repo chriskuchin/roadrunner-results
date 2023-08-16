@@ -3,6 +3,7 @@ package util
 import (
 	"context"
 
+	"firebase.google.com/go/v4/auth"
 	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 )
@@ -21,6 +22,18 @@ const (
 	PhotoKey      key = 8
 	UserToken     key = 9
 )
+
+func GetCurrentUserToken(ctx context.Context) auth.Token {
+	rawToken := ctx.Value(UserToken)
+	if rawToken != nil {
+		token, ok := rawToken.(auth.Token)
+		if ok {
+			return token
+		}
+	}
+
+	return auth.Token{}
+}
 
 func getValueFromContext(ctx context.Context, k key) string {
 	val := ctx.Value(k)

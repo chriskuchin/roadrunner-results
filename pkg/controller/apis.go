@@ -21,14 +21,13 @@ func Routes(app *firebase.App, db *sqlx.DB, debug bool) chi.Router {
 	var err error
 	authClient, err = app.Auth(context.Background())
 	if err != nil {
-		log.Fatal().Msg("auth client failure")
+		log.Fatal().Err(err).Msg("auth client failure")
 	}
 
 	r := chi.NewRouter()
 
-	if !debug {
-		r.Use(authMiddleware)
-	} else {
+	r.Use(authMiddleware)
+	if debug {
 		r.Use(cors.Handler(cors.Options{
 			AllowedOrigins: []string{"https://*", "http://*"},
 			AllowedMethods: []string{"GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"},
@@ -46,9 +45,11 @@ func authMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet && r.Method != http.MethodOptions {
 			apiKey := r.Header.Get("x-api-token")
-			tokResult, err := authClient.VerifyIDToken(r.Context(), token)
-			if token_present && (token == apiKey || err != nil) {
-				next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), util.UserToken, tokResult)))
+			tokResult, err := authClient.VerifyIDToken(r.Context(), apiKey)
+			log.Info().Err(err).Interface("token", tokResult).Send()
+			if (token_present && token == apiKey) || (err == nil) {
+				log.Info().Str("uid", tokResult.UID).Send()
+				next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), util.UserToken, *tokResult)))
 			} else {
 				w.WriteHeader(http.StatusForbidden)
 				return
