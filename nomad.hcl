@@ -51,6 +51,14 @@ API_TOKEN={{.Data.data.token}}
       }
 
       template {
+        data        = <<-EOH
+GOOGLE_APPLICATION_CREDENTIALS="/secrets/credentials.json"
+        EOH
+        destination = "secrets/google.env"
+        env         = true
+      }
+
+      template {
         data = <<-EOH
 {{with secret "kv/cloudflare/r2/rslts"}}
 R2_ACCOUNT_ID={{.Data.data.account}}
@@ -69,7 +77,7 @@ R2_SECRET_ACCESS_KEY={{.Data.data.secret_key}}
 {{.Data.data | toJSON }}
 {{end}}
         EOH
-        destination = "secrets/auth.json"
+        destination = "secrets/credentials.json"
         env         = false
       }
 
@@ -93,5 +101,4 @@ R2_SECRET_ACCESS_KEY={{.Data.data.secret_key}}
       }
     }
   }
-
 }
