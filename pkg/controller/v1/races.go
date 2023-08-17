@@ -26,6 +26,7 @@ func RacesRoutes(handler *Handler) chi.Router {
 
 	r.Route("/{raceID}", func(r chi.Router) {
 		r.Use(raceCtx)
+		r.Use(handler.userIsAuthorized)
 		r.Delete("/", handler.deleteRace)
 		r.Get("/", handler.getRace)
 
@@ -98,7 +99,7 @@ func (api *Handler) createRace(w http.ResponseWriter, r *http.Request) {
 }
 
 // DELETE .races/{raceID}
-func (api Handler) deleteRace(w http.ResponseWriter, r *http.Request) {
+func (api *Handler) deleteRace(w http.ResponseWriter, r *http.Request) {
 	id := chi.URLParam(r, "raceID")
 	ctx := r.Context()
 	err := services.DeleteRace(ctx, api.db, id)
@@ -112,6 +113,25 @@ func (api Handler) deleteRace(w http.ResponseWriter, r *http.Request) {
 	}
 
 	render.NoContent(w, r)
+}
+
+func (api *Handler) userIsAuthorized(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		raceID := util.GetRaceIDFromContext(r.Context())
+		uid := util.GetCurrentUserID(r.Context())
+		ownerID, err := services.GetRaceOwnerID(r.Context(), api.db, raceID)
+		if err != nil {
+			log.Error().Err(err).Send()
+			w.WriteHeader(http.StatusServiceUnavailable)
+			return
+		}
+
+		if uid == ownerID {
+			next.ServeHTTP(w, r)
+		}
+
+		w.WriteHeader(http.StatusUnauthorized)
+	})
 }
 
 func raceCtx(next http.Handler) http.Handler {

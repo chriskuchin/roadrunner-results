@@ -31,8 +31,11 @@ func GetCurrentUserToken(ctx context.Context) auth.Token {
 			return token
 		}
 	}
-
 	return auth.Token{}
+}
+
+func GetCurrentUserID(ctx context.Context) string {
+	return GetCurrentUserToken(ctx).UID
 }
 
 func getValueFromContext(ctx context.Context, k key) string {

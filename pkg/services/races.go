@@ -12,6 +12,11 @@ import (
 )
 
 const (
+	getRaceOwnerQuery string = `
+		select owner_id from races
+			where race_id = ?
+	`
+
 	createRaceQuery string = `
 		insert into races (
 			race_id,
@@ -47,6 +52,20 @@ type ParticipantStats struct {
 	FemaleCount        int                      `json:"female,omitempty"`
 	Total              int                      `json:"total,omitempty"`
 	BirthYearHistogram []map[string]interface{} `json:"birth_year_distribution,omitempty"`
+}
+
+func GetRaceOwnerID(ctx context.Context, db *sqlx.DB, id string) (string, error) {
+	var ownerID []string
+	err := db.Select(&ownerID, getRaceOwnerQuery, id)
+	if err != nil {
+		return "", err
+	}
+
+	if len(ownerID) != 1 {
+		return "", fmt.Errorf("unexpected number of ownerIDs returned")
+	}
+
+	return ownerID[0], nil
 }
 
 func GetRace(ctx context.Context, db *sqlx.DB) (RaceResult, error) {
@@ -118,7 +137,7 @@ func CreateRace(ctx context.Context, db *sqlx.DB, name string) (string, error) {
 }
 
 func CreateRaceWithID(ctx context.Context, db *sqlx.DB, id, name string) error {
-	_, err := db.Exec(createRaceQuery, id, name, "123")
+	_, err := db.Exec(createRaceQuery, id, name, util.GetCurrentUserID(ctx))
 	return err
 }
 
@@ -155,7 +174,7 @@ var raceTables []string = []string{
 func DeleteRace(ctx context.Context, db *sqlx.DB, id string) (err error) {
 	var failedObjects []string = []string{}
 	for _, table := range raceTables {
-		_, err := db.ExecContext(ctx, fmt.Sprintf("delete from %s where race_id = ?", table), id)
+		_, err := db.ExecContext(ctx, fmt.Sprintf("DELETE FROM %s WHERE race_id = ?", table), id)
 		if err != nil {
 			log.Error().Err(err).Send()
 			failedObjects = append(failedObjects, table)
@@ -163,7 +182,7 @@ func DeleteRace(ctx context.Context, db *sqlx.DB, id string) (err error) {
 	}
 
 	if len(failedObjects) > 0 {
-		err = fmt.Errorf("failed deleteing race objects: %s", strings.Join(failedObjects, ", "))
+		err = fmt.Errorf("failed deleting race objects: %s", strings.Join(failedObjects, ", "))
 	}
 
 	return err

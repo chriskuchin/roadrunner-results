@@ -26,7 +26,7 @@ func Routes(app *firebase.App, db *sqlx.DB, debug bool) chi.Router {
 
 	r := chi.NewRouter()
 
-	r.Use(authMiddleware)
+	r.Use(authenticationMiddleware)
 	if debug {
 		r.Use(cors.Handler(cors.Options{
 			AllowedOrigins: []string{"https://*", "http://*"},
@@ -40,18 +40,17 @@ func Routes(app *firebase.App, db *sqlx.DB, debug bool) chi.Router {
 	return r
 }
 
-func authMiddleware(next http.Handler) http.Handler {
+func authenticationMiddleware(next http.Handler) http.Handler {
 	token, token_present := os.LookupEnv("API_TOKEN")
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet && r.Method != http.MethodOptions {
 			apiKey := r.Header.Get("x-api-token")
 			tokResult, err := authClient.VerifyIDToken(r.Context(), apiKey)
-			log.Info().Err(err).Interface("token", tokResult).Send()
+
 			if (token_present && token == apiKey) || (err == nil) {
-				log.Info().Str("uid", tokResult.UID).Send()
 				next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), util.UserToken, *tokResult)))
 			} else {
-				w.WriteHeader(http.StatusForbidden)
+				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
 		}
