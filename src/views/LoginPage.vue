@@ -35,7 +35,11 @@ export default {
   methods: {
     ...mapActions(useUserStore, ['login']),
     submit: async function () {
-      await this.login(this.form.email, this.form.password)
+      let success = await this.login(this.form.email, this.form.password)
+
+      if (success) {
+        this.$router.push("/")
+      }
     }
   }
 };

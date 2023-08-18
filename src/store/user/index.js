@@ -10,7 +10,7 @@ export const useUserStore = defineStore('user', {
   }),
   getters: {
     isLoggedIn: (state) => state.uid != "",
-    userDisplayName: function(state) {
+    userDisplayName: function (state) {
       if (this.isLoggedIn) {
         return state.email
       }
@@ -33,14 +33,14 @@ export const useUserStore = defineStore('user', {
       try {
         await setPersistence(auth, browserLocalPersistence)
         const { user } = await signInWithEmailAndPassword(auth, username, password)
+        await user.getIdTokenResult(true)
 
-        const token = await user.getIdTokenResult(true)
-
-        console.log(token)
+        return true
       } catch (error) {
         this.handle("Failed to login. Please verify Username and Password and try again.")
-      }
 
+        return false
+      }
     },
     async logout() {
       await auth.signOut()
