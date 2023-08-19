@@ -87,7 +87,7 @@ export const useMediaStore = defineStore("media", {
       this.videoStream = null;
     },
     async takePicture(raceID, eventID, finishTime, elapsedTime) {
-      if (this.videoStream != null) {
+      if (this.videoStream) {
         const track = this.videoStream.getVideoTracks()[0];
         const canvas = document.createElement("canvas");
         const context = canvas.getContext('2d');
@@ -107,7 +107,7 @@ export const useMediaStore = defineStore("media", {
       var formData = new FormData()
       formData.append('photo-finish', imgBlob, `finisher_${finishTime}_${elapsedTime}.png`)
 
-      var res = await fetch(url, setAuthHeader({
+      var res = await fetch(url, await setAuthHeader({
         method: 'POST',
         body: formData
       }))

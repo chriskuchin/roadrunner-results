@@ -49,6 +49,7 @@ func authenticationMiddleware(next http.Handler) http.Handler {
 
 			if (token_present && token == apiKey) || (err == nil) {
 				next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), util.UserToken, *tokResult)))
+				return
 			} else {
 				w.WriteHeader(http.StatusUnauthorized)
 				return

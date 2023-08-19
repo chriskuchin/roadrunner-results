@@ -117,6 +117,11 @@ func (api *Handler) deleteRace(w http.ResponseWriter, r *http.Request) {
 
 func (api *Handler) userIsAuthorized(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodGet || r.Method == http.MethodOptions {
+			next.ServeHTTP(w, r)
+			return
+		}
+
 		raceID := util.GetRaceIDFromContext(r.Context())
 		uid := util.GetCurrentUserID(r.Context())
 		ownerID, err := services.GetRaceOwnerID(r.Context(), api.db, raceID)
@@ -128,6 +133,7 @@ func (api *Handler) userIsAuthorized(next http.Handler) http.Handler {
 
 		if uid == ownerID {
 			next.ServeHTTP(w, r)
+			return
 		}
 
 		w.WriteHeader(http.StatusUnauthorized)

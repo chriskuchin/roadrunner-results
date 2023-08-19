@@ -154,19 +154,18 @@ export default {
       window.navigator.vibrate(50)
       this.timer.start = Date.now()
       this.timer.timeout = setTimeout(this.tickTimer, 10)
-      this.recordVideo()
 
-      let res = await fetch(
-        "/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/timers", await setAuthHeader({
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            start_ts: this.timer.start
-          })
-        }))
+      let config = await setAuthHeader({
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          start_ts: this.timer.start
+        })
+      })
 
+      let res = await fetch("/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/timers", config)
       if (!res.ok) {
         this.handleError(`Failed to start the timer: ${res.status}`)
       } else {
