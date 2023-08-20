@@ -22,8 +22,6 @@
           class="button is-info is-light is-outlined">Events</router-link>
         <router-link :to="'/races/' + race.id + '/participants'"
           class="button is-info is-light is-outlined">Participants</router-link>
-        <router-link :to="'/races/' + race.id + '/registration'"
-          class="button is-warning is-light is-outlined">Registration</router-link>
       </div>
     </div>
     <fab v-if="isLoggedIn" @click="toggleCreateRaceModal"></fab>

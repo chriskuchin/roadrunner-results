@@ -28,12 +28,22 @@ func ParticipantsRoutes(handler *Handler) chi.Router {
 
 	r.Get("/", handler.listParticipants)
 	r.Post("/", handler.createParticipant)
+	r.Get("/next_bib", handler.getNextBibNumber)
+	r.Post("/csv", handler.importParticipantsCSV)
 	r.Route("/{participantID}", func(r chi.Router) {
 		r.Use(participantCtx)
 		r.Get("/", handler.getParticipant)
 	})
 
 	return r
+}
+
+func (api *Handler) importParticipantsCSV(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
+}
+
+func (api *Handler) getNextBibNumber(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
 }
 
 func (api *Handler) listParticipants(w http.ResponseWriter, r *http.Request) {
