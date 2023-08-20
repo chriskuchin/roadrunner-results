@@ -17,14 +17,6 @@ import { auth } from './firebase'
 
 import { useUserStore } from './store/user'
 
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    useUserStore().loadUser(user)
-  } else {
-    console.log("no user")
-  }
-})
-
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/service-worker.js').then(registration => {
@@ -39,11 +31,22 @@ if ('serviceWorker' in navigator) {
 import { faPlus, faStopwatch, faRuler, faRepeat, faPlay, faDownload, faFileCsv, faEllipsisV, faArrowLeftLong, faFlagCheckered } from '@fortawesome/free-solid-svg-icons'
 library.add(faPlus, faStopwatch, faRuler, faRepeat, faPlay, faDownload, faFileCsv, faEllipsisV, faArrowLeftLong, faFlagCheckered)
 
+
+require('./assets/')
+
+var initialized = false
 var pinia = createPinia()
 var app = createApp(App)
   .component('icon', FontAwesomeIcon)
   .use(router).use(pinia)
 
-app.mount('#app')
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    useUserStore().loadUser(user)
+  }
 
-require('./assets/')
+  if (!initialized) {
+    initialized = true
+    app.mount("#app")
+  }
+})
