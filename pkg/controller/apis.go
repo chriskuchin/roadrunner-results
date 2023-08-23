@@ -26,7 +26,7 @@ func Routes(app *firebase.App, db *sqlx.DB, debug bool) chi.Router {
 
 	r := chi.NewRouter()
 
-	// r.Use(authenticationMiddleware)
+	r.Use(authenticationMiddleware)
 	if debug {
 		r.Use(cors.Handler(cors.Options{
 			AllowedOrigins: []string{"https://*", "http://*"},

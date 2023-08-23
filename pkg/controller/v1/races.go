@@ -26,7 +26,7 @@ func RacesRoutes(handler *Handler) chi.Router {
 
 	r.Route("/{raceID}", func(r chi.Router) {
 		r.Use(raceCtx)
-		// r.Use(handler.userIsAuthorized)
+		r.Use(handler.userIsAuthorized)
 
 		r.Put("/volunteer", handler.addVolunteer)
 		r.Delete("/", handler.deleteRace)
