@@ -1,15 +1,20 @@
 package v1
 
 import (
+	"bytes"
 	"context"
+	"encoding/csv"
 	"fmt"
+	"io"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
+	"github.com/rs/zerolog/log"
 )
 
 type (
@@ -39,7 +44,89 @@ func ParticipantsRoutes(handler *Handler) chi.Router {
 }
 
 func (api *Handler) importParticipantsCSV(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusNotImplemented)
+	contentType := r.Header.Get("Content-Type")
+
+	if strings.HasPrefix(contentType, "multipart/form-data") {
+		reader, err := r.MultipartReader()
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		for {
+			part, err := reader.NextPart()
+			if err == io.EOF {
+				break
+			}
+
+			b, err := io.ReadAll(part)
+			if err != nil {
+				log.Error().Err(err).Send()
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
+
+			var filename = part.FileName()
+
+			log.Info().Msgf("%s - %d", filename, len(b))
+
+			reader := csv.NewReader(bytes.NewReader(b))
+
+			// Iterate over the rows in the CSV file
+			var raceID string = util.GetRaceIDFromContext(r.Context())
+			var skipHeader bool = false
+			for {
+				// Read the next row
+				row, err := reader.Read()
+				if err == io.EOF {
+					break
+				}
+				if !skipHeader {
+					skipHeader = true
+					continue
+				}
+				if row[1] == "" || len(row) != 5 {
+					continue
+				}
+
+				// TODO Handle Names with more than 2 pieces
+				log.Info().Str("raceID", raceID).Str("row", strings.Join(row, " - ")).Send()
+				nameSplit := strings.Split(row[1], " ")
+				log.Info().Int("split", len(nameSplit)).Interface("name", nameSplit).Send()
+				firstName := nameSplit[0]
+				lastName := ""
+				if len(nameSplit) == 2 {
+					lastName = nameSplit[1]
+				}
+				log.Info().Str("firstName", firstName).Str("lastName", lastName).Send()
+				birthYear, _ := strconv.Atoi(row[3])
+				gender := "Unknown"
+				if row[4] == "M" {
+					gender = "Male"
+				} else if row[4] == "F" {
+					gender = "Female"
+				} else {
+					log.Error().Msg("Skipping Row bad Gender")
+					continue
+				}
+				pRow := services.ParticipantRow{
+					RaceID:    raceID,
+					BibNumber: row[0],
+					FirstName: firstName,
+					LastName:  lastName,
+					Team:      row[2],
+					BirthYear: birthYear,
+					Gender:    gender,
+				}
+
+				err = services.AddParticipant(r.Context(), api.db, pRow)
+				if err != nil {
+					log.Error().Err(err).Str("value", strings.Join(row, ",")).Send()
+				}
+			}
+		}
+		w.WriteHeader(http.StatusNotImplemented)
+	}
 }
 
 func (api *Handler) getNextBibNumber(w http.ResponseWriter, r *http.Request) {
@@ -70,6 +157,7 @@ func (api *Handler) listParticipants(w http.ResponseWriter, r *http.Request) {
 
 	results, err := services.ListParticipants(r.Context(), api.db, limit, offset)
 	if err != nil {
+		log.Error().Err(err).Send()
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("failed request"))
 		return

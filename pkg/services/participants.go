@@ -84,7 +84,7 @@ func AddParticipant(ctx context.Context, db *sqlx.DB, participant ParticipantRow
 
 func ListParticipants(ctx context.Context, db *sqlx.DB, limit, offset int) ([]ParticipantObject, error) {
 	var dbResults []ParticipantRow
-	err := db.Select(&dbResults, listParticipantsQuery, raceID, limit, offset)
+	err := db.Select(&dbResults, listParticipantsQuery, util.GetRaceIDFromContext(ctx), limit, offset)
 	if err != nil {
 		return nil, err
 	}
