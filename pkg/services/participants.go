@@ -2,9 +2,11 @@ package services
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/jmoiron/sqlx"
+	"github.com/rs/zerolog/log"
 )
 
 const (
@@ -28,14 +30,6 @@ const (
 			:birth_year
 		)
 	`
-
-	listParticipantsQuery = `
-		select * from participants
-			where
-				race_id = ?
-			limit ? offset ?
-	`
-
 	selectRaceParticipantCountQuery = `
 		select count(1) from participants
 			where
@@ -82,9 +76,42 @@ func AddParticipant(ctx context.Context, db *sqlx.DB, participant ParticipantRow
 	return err
 }
 
-func ListParticipants(ctx context.Context, db *sqlx.DB, limit, offset int) ([]ParticipantObject, error) {
+const listParticipantsQuery = `
+select * from participants
+	where
+		race_id = ?
+`
+
+func ListParticipants(ctx context.Context, db *sqlx.DB, limit, offset int, filters map[string]string) ([]ParticipantObject, error) {
+	var query string = listParticipantsQuery
+
+	var values []interface{} = []interface{}{}
+	values = append(values, util.GetRaceIDFromContext(ctx))
+	for k, v := range filters {
+		if k == "team" || k == "gender" {
+			query = fmt.Sprintf("%s AND %s = ?", query, k)
+			values = append(values, v)
+		} else if k == "year" {
+			query = fmt.Sprintf("%s AND birth_year = ?", query)
+			values = append(values, v)
+		} else if k == "bib" {
+			query = fmt.Sprintf("%s AND bib_number = ?", query)
+			values = append(values, v)
+		} else if k == "name" {
+			query = fmt.Sprintf("%s AND (first_name LIKE ? OR last_name LIKE ?)", query)
+			values = append(values, fmt.Sprintf("%%%s", v))
+			values = append(values, fmt.Sprintf("%%%s", v))
+		}
+	}
+
+	query = fmt.Sprintf("%s limit ? offset ?", query)
+	values = append(values, limit)
+	values = append(values, offset)
+
+	log.Info().Str("query", query).Interface("filters", filters).Send()
+
 	var dbResults []ParticipantRow
-	err := db.Select(&dbResults, listParticipantsQuery, raceID, limit, offset)
+	err := db.Select(&dbResults, query, values...)
 	if err != nil {
 		return nil, err
 	}

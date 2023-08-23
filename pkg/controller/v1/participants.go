@@ -1,15 +1,20 @@
 package v1
 
 import (
+	"bytes"
 	"context"
+	"encoding/csv"
 	"fmt"
+	"io"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
+	"github.com/rs/zerolog/log"
 )
 
 type (
@@ -33,13 +38,93 @@ func ParticipantsRoutes(handler *Handler) chi.Router {
 	r.Route("/{participantID}", func(r chi.Router) {
 		r.Use(participantCtx)
 		r.Get("/", handler.getParticipant)
+		r.Put("/", handler.updateParticipant)
 	})
 
 	return r
 }
 
 func (api *Handler) importParticipantsCSV(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusNotImplemented)
+	contentType := r.Header.Get("Content-Type")
+
+	if strings.HasPrefix(contentType, "multipart/form-data") {
+		reader, err := r.MultipartReader()
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+
+		var rowsInserted int
+		var failedRows int
+		for {
+			part, err := reader.NextPart()
+			if err == io.EOF {
+				break
+			}
+
+			b, err := io.ReadAll(part)
+			if err != nil {
+				log.Error().Err(err).Send()
+				w.WriteHeader(http.StatusBadRequest)
+				return
+			}
+			reader := csv.NewReader(bytes.NewReader(b))
+
+			// Iterate over the rows in the CSV file
+			var raceID string = util.GetRaceIDFromContext(r.Context())
+			var skipHeader bool = false
+			for {
+				// Read the next row
+				row, err := reader.Read()
+				if err == io.EOF {
+					break
+				}
+				if !skipHeader {
+					skipHeader = true
+					continue
+				}
+				if row[1] == "" || len(row) != 5 {
+					continue
+				}
+
+				// TODO Handle Names with more than 2 pieces
+				firstName, lastName := util.SplitName(row[1])
+				birthYear, _ := strconv.Atoi(row[3])
+				gender := "Unknown"
+				if row[4] == "M" {
+					gender = "Male"
+				} else if row[4] == "F" {
+					gender = "Female"
+				} else {
+					log.Error().Msg("Skipping Row bad Gender")
+					continue
+				}
+				pRow := services.ParticipantRow{
+					RaceID:    raceID,
+					BibNumber: row[0],
+					FirstName: firstName,
+					LastName:  lastName,
+					Team:      row[2],
+					BirthYear: birthYear,
+					Gender:    gender,
+				}
+
+				err = services.AddParticipant(r.Context(), api.db, pRow)
+				if err != nil {
+					failedRows++
+					log.Error().Err(err).Str("value", strings.Join(row, ",")).Int("failed", failedRows).Int("success", rowsInserted).Send()
+				} else {
+					rowsInserted++
+				}
+			}
+		}
+
+		w.WriteHeader(http.StatusAccepted)
+		render.JSON(w, r, map[string]int{
+			"rows":   rowsInserted,
+			"failed": failedRows,
+		})
+	}
 }
 
 func (api *Handler) getNextBibNumber(w http.ResponseWriter, r *http.Request) {
@@ -68,8 +153,26 @@ func (api *Handler) listParticipants(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	results, err := services.ListParticipants(r.Context(), api.db, limit, offset)
+	var filters map[string]string = map[string]string{}
+	if r.URL.Query().Get("gender") != "" {
+		filters["gender"] = r.URL.Query().Get("gender")
+	}
+
+	if r.URL.Query().Get("team") != "" {
+		filters["team"] = r.URL.Query().Get("team")
+	}
+
+	if r.URL.Query().Get("year") != "" {
+		filters["year"] = r.URL.Query().Get("year")
+	}
+
+	if r.URL.Query().Get("name") != "" {
+		filters["name"] = r.URL.Query().Get("name")
+	}
+
+	results, err := services.ListParticipants(r.Context(), api.db, limit, offset, filters)
 	if err != nil {
+		log.Error().Err(err).Send()
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("failed request"))
 		return
@@ -79,6 +182,10 @@ func (api *Handler) listParticipants(w http.ResponseWriter, r *http.Request) {
 }
 
 func (api *Handler) getParticipant(w http.ResponseWriter, r *http.Request) {
+}
+
+func (api *Handler) updateParticipant(w http.ResponseWriter, r *http.Request) {
+
 }
 
 func (api *Handler) createParticipant(w http.ResponseWriter, r *http.Request) {

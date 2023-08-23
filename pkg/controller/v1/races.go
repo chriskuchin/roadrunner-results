@@ -26,7 +26,9 @@ func RacesRoutes(handler *Handler) chi.Router {
 
 	r.Route("/{raceID}", func(r chi.Router) {
 		r.Use(raceCtx)
-		r.Use(handler.userIsAuthorized)
+		// r.Use(handler.userIsAuthorized)
+
+		r.Put("/volunteer", handler.addVolunteer)
 		r.Delete("/", handler.deleteRace)
 		r.Get("/", handler.getRace)
 
@@ -47,6 +49,10 @@ func (api *Handler) importRaceAndResults(w http.ResponseWriter, r *http.Request)
 	services.ImportFromSheet(r.Context(), api.db, sheetId)
 
 	w.Write([]byte("test import, " + sheetId))
+}
+
+func (api *Handler) addVolunteer(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
 }
 
 func (api *Handler) getRace(w http.ResponseWriter, r *http.Request) {
@@ -136,6 +142,7 @@ func (api *Handler) userIsAuthorized(next http.Handler) http.Handler {
 			return
 		}
 
+		log.Debug().Str("uid", uid).Str("owner", ownerID).Send()
 		w.WriteHeader(http.StatusUnauthorized)
 	})
 }
