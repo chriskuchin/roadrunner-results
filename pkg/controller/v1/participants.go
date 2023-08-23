@@ -87,7 +87,6 @@ func (api *Handler) importParticipantsCSV(w http.ResponseWriter, r *http.Request
 					continue
 				}
 
-				// TODO Handle Names with more than 2 pieces
 				firstName, lastName := util.SplitName(row[1])
 				birthYear, _ := strconv.Atoi(row[3])
 				gender := "Unknown"

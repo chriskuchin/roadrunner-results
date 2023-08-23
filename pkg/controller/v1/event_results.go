@@ -42,8 +42,9 @@ func EventResultsRoutes(handler *Handler) chi.Router {
 func (api *Handler) listPhotoFinishFiles(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	output, err := api.s3.ListObjects(ctx, &s3.ListObjectsInput{
-		Bucket: aws.String(api.bucket),
-		Prefix: aws.String(fmt.Sprintf("/races/%s/events/%s/finish/", util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))),
+		Bucket:  aws.String(api.bucket),
+		Prefix:  aws.String(fmt.Sprintf("/races/%s/events/%s/finish/", util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))),
+		MaxKeys: 500,
 	})
 
 	if err != nil {
