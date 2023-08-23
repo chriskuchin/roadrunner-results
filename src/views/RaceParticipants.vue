@@ -1,7 +1,7 @@
 <template>
   <div class="section">
     <h1 class="title">Participants</h1>
-    {{ raceID }}
+    {{ currentParticipants }}
     <fab @click="fabAction" v-if="isLoggedIn" />
 
     <modal :show="registerModal.show" @close="toggleRegisterModal">
@@ -103,8 +103,9 @@
 import FAB from '../components/Fab.vue'
 import Modal from '../components/Modal.vue'
 
+import { mapActions, mapState } from 'pinia'
 import { useUserStore } from '../store/user'
-import { mapActions } from 'pinia'
+import { useParticipantsStore } from '../store/participants'
 
 export default {
   components: {
@@ -113,6 +114,14 @@ export default {
   },
   data: function () {
     return {
+      filters: {
+        offset: 0,
+        limit: 10,
+        name: "",
+        team: "",
+        gender: "",
+        year: "",
+      },
       registerModal: {
         show: false,
       },
@@ -126,7 +135,11 @@ export default {
       },
     }
   },
+  mounted: function () {
+    this.loadParticipants(this.$route.params.raceId, this.filters.gender, this.filters.team, this.filters.team, this.filters.name, this.filters.limit, this.filters.offset)
+  },
   methods: {
+    ...mapActions(useParticipantsStore, ['loadParticipants']),
     ...mapActions(useUserStore, ['isLoggedIn']),
     fabAction: function () {
       this.toggleRegisterModal()
@@ -144,6 +157,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(useParticipantsStore, ['currentParticipants']),
     year: () => new Date().getFullYear(),
     raceID: function () {
       return this.$route.params.raceId

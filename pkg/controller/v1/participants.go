@@ -38,6 +38,7 @@ func ParticipantsRoutes(handler *Handler) chi.Router {
 	r.Route("/{participantID}", func(r chi.Router) {
 		r.Use(participantCtx)
 		r.Get("/", handler.getParticipant)
+		r.Put("/", handler.updateParticipant)
 	})
 
 	return r
@@ -53,6 +54,8 @@ func (api *Handler) importParticipantsCSV(w http.ResponseWriter, r *http.Request
 			return
 		}
 
+		var rowsInserted int
+		var failedRows int
 		for {
 			part, err := reader.NextPart()
 			if err == io.EOF {
@@ -65,11 +68,6 @@ func (api *Handler) importParticipantsCSV(w http.ResponseWriter, r *http.Request
 				w.WriteHeader(http.StatusBadRequest)
 				return
 			}
-
-			var filename = part.FileName()
-
-			log.Info().Msgf("%s - %d", filename, len(b))
-
 			reader := csv.NewReader(bytes.NewReader(b))
 
 			// Iterate over the rows in the CSV file
@@ -90,15 +88,7 @@ func (api *Handler) importParticipantsCSV(w http.ResponseWriter, r *http.Request
 				}
 
 				// TODO Handle Names with more than 2 pieces
-				log.Info().Str("raceID", raceID).Str("row", strings.Join(row, " - ")).Send()
-				nameSplit := strings.Split(row[1], " ")
-				log.Info().Int("split", len(nameSplit)).Interface("name", nameSplit).Send()
-				firstName := nameSplit[0]
-				lastName := ""
-				if len(nameSplit) == 2 {
-					lastName = nameSplit[1]
-				}
-				log.Info().Str("firstName", firstName).Str("lastName", lastName).Send()
+				firstName, lastName := util.SplitName(row[1])
 				birthYear, _ := strconv.Atoi(row[3])
 				gender := "Unknown"
 				if row[4] == "M" {
@@ -121,11 +111,19 @@ func (api *Handler) importParticipantsCSV(w http.ResponseWriter, r *http.Request
 
 				err = services.AddParticipant(r.Context(), api.db, pRow)
 				if err != nil {
-					log.Error().Err(err).Str("value", strings.Join(row, ",")).Send()
+					failedRows++
+					log.Error().Err(err).Str("value", strings.Join(row, ",")).Int("failed", failedRows).Int("success", rowsInserted).Send()
+				} else {
+					rowsInserted++
 				}
 			}
 		}
-		w.WriteHeader(http.StatusNotImplemented)
+
+		w.WriteHeader(http.StatusAccepted)
+		render.JSON(w, r, map[string]int{
+			"rows":   rowsInserted,
+			"failed": failedRows,
+		})
 	}
 }
 
@@ -155,7 +153,24 @@ func (api *Handler) listParticipants(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	results, err := services.ListParticipants(r.Context(), api.db, limit, offset)
+	var filters map[string]string = map[string]string{}
+	if r.URL.Query().Get("gender") != "" {
+		filters["gender"] = r.URL.Query().Get("gender")
+	}
+
+	if r.URL.Query().Get("team") != "" {
+		filters["team"] = r.URL.Query().Get("team")
+	}
+
+	if r.URL.Query().Get("year") != "" {
+		filters["year"] = r.URL.Query().Get("year")
+	}
+
+	if r.URL.Query().Get("name") != "" {
+		filters["name"] = r.URL.Query().Get("name")
+	}
+
+	results, err := services.ListParticipants(r.Context(), api.db, limit, offset, filters)
 	if err != nil {
 		log.Error().Err(err).Send()
 		w.WriteHeader(http.StatusInternalServerError)
@@ -167,6 +182,10 @@ func (api *Handler) listParticipants(w http.ResponseWriter, r *http.Request) {
 }
 
 func (api *Handler) getParticipant(w http.ResponseWriter, r *http.Request) {
+}
+
+func (api *Handler) updateParticipant(w http.ResponseWriter, r *http.Request) {
+
 }
 
 func (api *Handler) createParticipant(w http.ResponseWriter, r *http.Request) {
