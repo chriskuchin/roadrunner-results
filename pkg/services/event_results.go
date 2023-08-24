@@ -49,7 +49,7 @@ const (
 			race_id = ?
 			AND
 			event_id = ?
-		ORDER by p.birth_year, p.gender, r.result;
+		ORDER by r.result;
 	`
 
 	getEventHeatResultsQuery string = `
@@ -69,7 +69,7 @@ const (
 		r.event_id = ?
 		AND
 		r.timer_id = ?
-	ORDER by p.birth_year, p.gender, r.result;
+	ORDER by r.result;
 `
 
 	recordFinisherQuery string = `

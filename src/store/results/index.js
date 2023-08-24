@@ -26,7 +26,7 @@ export const useResultsStore = defineStore("results", {
 
       let url = "/api/v1/races/" + runner.raceId + "/events/" + runner.eventId + "/results"
 
-      let res = await fetch(url, setAuthHeader({
+      let res = await fetch(url, await setAuthHeader({
         method: "PUT",
         headers: {
           "Content-Type": "application/json"
