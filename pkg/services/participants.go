@@ -108,7 +108,7 @@ func ListParticipants(ctx context.Context, db *sqlx.DB, limit, offset int, filte
 	values = append(values, limit)
 	values = append(values, offset)
 
-	log.Info().Str("query", query).Interface("filters", filters).Send()
+	log.Debug().Str("query", query).Interface("filters", filters).Send()
 
 	var dbResults []ParticipantRow
 	err := db.Select(&dbResults, query, values...)

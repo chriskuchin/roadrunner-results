@@ -113,11 +113,13 @@ export const useMediaStore = defineStore("media", {
       }))
 
       if (res.ok) {
+        // need error handling added to this method
         console.log("Success!!!")
       }
     },
     async load() {
       navigator.mediaDevices.enumerateDevices().then(devices => {
+        // Better Devince handling
         console.log(devices)
       })
     }

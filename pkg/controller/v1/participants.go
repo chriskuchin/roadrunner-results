@@ -209,6 +209,7 @@ func (api *Handler) createParticipant(w http.ResponseWriter, r *http.Request) {
 		BirthYear: birthYear,
 		Gender:    request.Gender,
 		Team:      request.Team,
+		RaceID:    util.GetRaceIDFromContext(r.Context()),
 	}
 
 	err = services.AddParticipant(ctx, api.db, row)
