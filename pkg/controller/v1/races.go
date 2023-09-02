@@ -28,10 +28,10 @@ func RacesRoutes(handler *Handler) chi.Router {
 		r.Use(raceCtx)
 		r.Use(handler.userIsAuthorized)
 
-		r.Put("/volunteer", handler.addVolunteer)
 		r.Delete("/", handler.deleteRace)
 		r.Get("/", handler.getRace)
 
+		r.Mount("/volunteers", VolunteerRoutes(handler))
 		r.Mount("/participants", ParticipantsRoutes(handler))
 		r.Mount("/events", EventsRoutes(handler))
 	})
@@ -49,10 +49,6 @@ func (api *Handler) importRaceAndResults(w http.ResponseWriter, r *http.Request)
 	services.ImportFromSheet(r.Context(), api.db, sheetId)
 
 	w.Write([]byte("test import, " + sheetId))
-}
-
-func (api *Handler) addVolunteer(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusNotImplemented)
 }
 
 func (api *Handler) getRace(w http.ResponseWriter, r *http.Request) {
