@@ -35,6 +35,7 @@ func ParticipantsRoutes(handler *Handler) chi.Router {
 	r.Get("/", handler.listParticipants)
 	r.Post("/", handler.createParticipant)
 	r.Get("/next_bib", handler.getNextBibNumber)
+	r.Get("/teams", handler.getDistinctTeams)
 	r.Post("/csv", handler.importParticipantsCSV)
 	r.Route("/{participantID}", func(r chi.Router) {
 		r.Use(participantCtx)
@@ -43,6 +44,10 @@ func ParticipantsRoutes(handler *Handler) chi.Router {
 	})
 
 	return r
+}
+
+func (api *Handler) getDistinctTeams(w http.ResponseWriter, r *http.Request) {
+
 }
 
 func (api *Handler) importParticipantsCSV(w http.ResponseWriter, r *http.Request) {

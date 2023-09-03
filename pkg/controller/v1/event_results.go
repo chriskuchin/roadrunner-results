@@ -73,24 +73,38 @@ func (api *Handler) renderPhotoFinishFile(w http.ResponseWriter, r *http.Request
 	w.Write(img)
 }
 
+// gender, team, timer, name
 func (api *Handler) handleEventResults(w http.ResponseWriter, r *http.Request) {
 	var results []services.ParticipantEventResult
-	var err error
+	var filters map[string][]string = map[string][]string{}
 
-	timerID := r.URL.Query().Get("timerId")
+	filters["race"] = []string{util.GetRaceIDFromContext(r.Context())}
+	filters["event"] = []string{util.GetEventIDFromContext(r.Context())}
+	log.Info().Interface("url", r.URL.Query()).Send()
+	if r.URL.Query().Has("timerId") {
+		filters["timer"] = r.URL.Query()["timerId"]
+	}
 
-	if timerID != "" {
-		results, err = services.GetEventHeatResults(r.Context(), api.db, timerID)
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
-	} else {
-		results, err = services.GetEventResults(r.Context(), api.db)
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
-		}
+	if r.URL.Query().Has("gender") {
+		filters["gender"] = r.URL.Query()["gender"]
+	}
+
+	if r.URL.Query().Has("name") {
+		filters["name"] = r.URL.Query()["name"]
+	}
+
+	if r.URL.Query().Has("team") {
+		filters["team"] = r.URL.Query()["team"]
+	}
+
+	if r.URL.Query().Has("year") {
+		filters["year"] = r.URL.Query()["year"]
+	}
+
+	results, err := services.GetEventResults(r.Context(), api.db, filters)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 
 	render.JSON(w, r, results)
