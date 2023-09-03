@@ -20,7 +20,7 @@
             <td>{{ participant.birthYear }}</td>
             <td>{{ participant.gender }}</td>
             <td>{{ participant.team }}</td>
-            <td><button class="button is-small" @click="editParticipant(participant)">Edit</button>{{ participant }}</td>
+            <td><button class="button is-small" @click="editParticipant(participant)">Edit</button></td>
           </tr>
         </tbody>
       </table>
