@@ -138,7 +138,18 @@ func (api *Handler) userIsAuthorized(next http.Handler) http.Handler {
 			return
 		}
 
-		log.Debug().Str("uid", uid).Str("owner", ownerID).Send()
+		authorizedUsers, err := services.GetRaceAuthorizedUsers(r.Context(), api.db, raceID)
+		if err != nil {
+			log.Error().Err(err).Send()
+			w.WriteHeader(http.StatusServiceUnavailable)
+			return
+		}
+
+		if authorizedUsers[uid] {
+			next.ServeHTTP(w, r)
+			return
+		}
+
 		w.WriteHeader(http.StatusUnauthorized)
 	})
 }

@@ -24,6 +24,7 @@ module.exports = (env, argv) => {
   }
 
   var config = {
+    watch: true,
     entry: {
       results: {
         import: './src/results.js',

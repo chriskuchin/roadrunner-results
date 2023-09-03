@@ -10,7 +10,9 @@
           </div>
           <div class="dropdown-menu" id="dropdown-menu" role="menu">
             <div class="dropdown-content">
-              <a href="#" class="dropdown-item" @click="deleteRace(race.id)">Delete Race</a>
+              <a class="dropdown-item" @click="toggleShareModal(race.id)">Add Volunteer</a>
+              <hr class="dropdown-divider" />
+              <a class="dropdown-item" @click="deleteRace(race.id)">Delete Race</a>
             </div>
           </div>
         </div>
@@ -25,6 +27,31 @@
       </div>
     </div>
     <fab v-if="isLoggedIn" @click="toggleCreateRaceModal"></fab>
+    <modal @close="toggleShareModal" :show="volunteerModal.show">
+      <div class="title">Add Volunteers</div>
+      <div class="field">
+        <label class="label">Label</label>
+        <div class="control">
+          <input class="input" type="text" placeholder="Text input" v-model="volunteerModal.emailInput"
+            v-on:keyup.enter="appendEmailForShare">
+        </div>
+        <p class="help">Volunteers must have a user account. Enter the users email address above.</p>
+      </div>
+      <div class="field is-grouped is-grouped-multiline">
+        <div class="tags has-addons" v-for="email in volunteerModal.emails" style="margin: 0 5px;">
+          <span class="tag is-link">{{ email.email }}</span>
+          <span class="tag is-delete" @click="removeVolunteerEmail(email.email)"></span>
+        </div>
+      </div>
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-link" @click="addVolunteers">Share</button>
+        </div>
+        <div class="control">
+          <button class="button is-link is-light" @click="toggleShareModal">Cancel</button>
+        </div>
+      </div>
+    </modal>
     <modal @close="toggleCreateRaceModal" :show="raceModal.show">
       <p class="title">Create Race</p>
       <div class="field">
@@ -47,8 +74,9 @@
 </template>
 
 <script>
-import { mapStores, mapState } from 'pinia'
+import { mapStores, mapState, mapActions } from 'pinia'
 import { useRacesStore } from "../store/races";
+import { useRaceStore } from '../store/race';
 import { useUserStore } from '../store/user';
 import { createRace, deleteRace } from "../api/races"
 import Modal from '../components/Modal.vue'
@@ -63,6 +91,12 @@ export default {
   },
   data: function () {
     return {
+      volunteerModal: {
+        show: false,
+        emailInput: "",
+        raceID: "",
+        emails: [],
+      },
       raceModal: {
         show: false,
         creating: false,
@@ -102,7 +136,42 @@ export default {
     },
     toggleCreateRaceModal: function () {
       this.raceModal.show = !this.raceModal.show
-    }
+    },
+    toggleShareModal: function (raceID) {
+      this.volunteerModal.show = !this.volunteerModal.show
+
+      if (raceID && (typeof raceID === 'string' || raceID instanceof String)) {
+        this.volunteerModal.raceID = raceID
+      }
+
+      if (!this.volunteerModal.show) {
+        this.volunteerModal.emails = []
+        this.volunteerModal.emailInput = ""
+        this.volunteerModal.raceID = ""
+      }
+    },
+    appendEmailForShare: function () {
+      let email = this.volunteerModal.emailInput
+      this.volunteerModal.emailInput = ""
+      this.volunteerModal.emails.push({
+        email: email
+      })
+    },
+    removeVolunteerEmail: function (email) {
+      let loc = this.volunteerModal.emails.indexOf(email)
+      if (loc > -1) {
+        this.volunteerModal.emails.splice(loc, 1)
+      }
+    },
+    addVolunteers: async function () {
+      console.log(this.volunteerModal.raceID)
+      console.log(this.volunteerModal.emails)
+
+      await this.shareRace(this.volunteerModal.raceID, this.volunteerModal.emails)
+
+      this.toggleShareModal()
+    },
+    ...mapActions(useRaceStore, ['shareRace'])
   },
   computed: {
     ...mapStores(useRacesStore),

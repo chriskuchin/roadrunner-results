@@ -45,3 +45,40 @@ func CreateRaceAuthorization(ctx context.Context, db *sqlx.DB, raceID, userID st
 	log.Info().Interface("result", result).Send()
 	return nil
 }
+
+const LOOKUP_RACE_AUTHORIZATION = `SELECT user_id FROM race_authorization WHERE race_id = ?`
+
+func GetRaceAuthorizedUsers(ctx context.Context, db *sqlx.DB, raceID string) (map[string]bool, error) {
+	rows, err := db.Query(LOOKUP_RACE_AUTHORIZATION, raceID)
+	if err != nil {
+		return nil, err
+	}
+
+	var authorizedUser map[string]bool = map[string]bool{}
+	for rows.Next() {
+		var user_id string
+		rows.Scan(&user_id)
+
+		authorizedUser[user_id] = true
+	}
+
+	return authorizedUser, nil
+}
+
+const LOOKUP_EVENT_RACE_AUTHORIZATION = `SELECT user_id FROM race_authorization as ra JOIN json_each(race_authorization.permissions, "$.events") as events WHERE ra.race_id = ? AND (events.value = "all" OR events.value = ?);`
+
+func GetEventAuthorizedUsers(ctx context.Context, db *sqlx.DB, raceID, eventID string) (map[string]bool, error) {
+	rows, err := db.Query(LOOKUP_EVENT_RACE_AUTHORIZATION, raceID, eventID)
+	if err != nil {
+		return nil, err
+	}
+
+	var authorizedUsers map[string]bool = map[string]bool{}
+	for rows.Next() {
+		var user_id string
+		rows.Scan(&user_id)
+
+		authorizedUsers[user_id] = true
+	}
+	return authorizedUsers, nil
+}

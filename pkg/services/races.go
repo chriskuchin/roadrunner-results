@@ -143,7 +143,7 @@ func CreateRaceWithID(ctx context.Context, db *sqlx.DB, id, name string) error {
 
 func ListRaces(ctx context.Context, db *sqlx.DB) ([]RaceResult, error) {
 	races := []RaceRow{}
-	err := db.Select(&races, "select * from races LIMIT ?", 20)
+	err := db.Select(&races, "select * from races ORDER BY rowid DESC LIMIT ?", 20)
 	if err != nil {
 		log.Error().Err(err).Send()
 		return nil, err
