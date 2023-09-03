@@ -6,4 +6,4 @@ CREATE TABLE race_authorization (
 );
 
 -- migrate:down
-DROP TABLE race_authz;
+DROP TABLE race_authorization;

@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/csv"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -19,10 +20,10 @@ import (
 
 type (
 	ParticipantRequest struct {
-		BibNumber string `json:"bib_number"`
+		BibNumber int    `json:"bib_number"`
 		FirstName string `json:"first_name"`
 		LastName  string `json:"last_name"`
-		BirthYear string `json:"birth_year"`
+		BirthYear int    `json:"birth_year"`
 		Team      string `json:"team"`
 		Gender    string `json:"gender"`
 	}
@@ -184,7 +185,36 @@ func (api *Handler) getParticipant(w http.ResponseWriter, r *http.Request) {
 }
 
 func (api *Handler) updateParticipant(w http.ResponseWriter, r *http.Request) {
+	ctx := r.Context()
 
+	body, err := io.ReadAll(r.Body)
+	if err != nil {
+		handleBadRequest(err, w, r)
+		return
+	}
+
+	var payload ParticipantRequest
+	err = json.Unmarshal(body, &payload)
+	if err != nil {
+		handleBadRequest(err, w, r)
+		return
+	}
+
+	err = services.UpdateParticipant(ctx, api.db, util.GetRaceIDFromContext(ctx), util.GetParticipantIDFromContext(ctx), services.ParticipantRow{
+		FirstName: payload.FirstName,
+		LastName:  payload.LastName,
+		BibNumber: fmt.Sprint(payload.BibNumber),
+		Team:      payload.Team,
+		Gender:    payload.Gender,
+		BirthYear: payload.BirthYear,
+	})
+
+	if err != nil {
+		handleBadRequest(err, w, r)
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func (api *Handler) createParticipant(w http.ResponseWriter, r *http.Request) {
@@ -196,17 +226,11 @@ func (api *Handler) createParticipant(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	birthYear, err := strconv.Atoi(request.BirthYear)
-	if err != nil {
-		handleBadRequest(err, w, r)
-		return
-	}
-
 	row := services.ParticipantRow{
-		BibNumber: request.BibNumber,
+		BibNumber: fmt.Sprint(request.BibNumber),
 		FirstName: request.FirstName,
 		LastName:  request.LastName,
-		BirthYear: birthYear,
+		BirthYear: request.BirthYear,
 		Gender:    request.Gender,
 		Team:      request.Team,
 		RaceID:    util.GetRaceIDFromContext(r.Context()),
