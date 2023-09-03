@@ -24,13 +24,13 @@ module.exports = (env, argv) => {
   }
 
   var config = {
-    watch: true,
+    watch: mode == "development",
     entry: {
       results: {
         import: './src/results.js',
       },
     },
-    mode: mode == "development",
+    mode: mode,
     output: {
       filename: '[name].[contenthash].js',
       path: path.resolve(__dirname, './dist'),
