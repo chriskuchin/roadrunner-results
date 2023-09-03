@@ -52,6 +52,7 @@ const (
 
 type (
 	ParticipantRow struct {
+		ID        int    `db:"rowid"`
 		RaceID    string `db:"race_id"`
 		BibNumber string `db:"bib_number"`
 		FirstName string `db:"first_name"`
@@ -62,6 +63,7 @@ type (
 	}
 
 	ParticipantObject struct {
+		ID        int    `json:"id"`
 		BibNumber string `json:"bibNumber"`
 		FirstName string `json:"firstName"`
 		LastName  string `json:"lastName"`
@@ -77,7 +79,7 @@ func AddParticipant(ctx context.Context, db *sqlx.DB, participant ParticipantRow
 }
 
 const listParticipantsQuery = `
-select * from participants
+select rowid, * from participants
 	where
 		race_id = ?
 `
@@ -104,7 +106,7 @@ func ListParticipants(ctx context.Context, db *sqlx.DB, limit, offset int, filte
 		}
 	}
 
-	query = fmt.Sprintf("%s limit ? offset ?", query)
+	query = fmt.Sprintf("%s order by bib_number*1 asc limit ? offset ?", query)
 	values = append(values, limit)
 	values = append(values, offset)
 
@@ -119,6 +121,7 @@ func ListParticipants(ctx context.Context, db *sqlx.DB, limit, offset int, filte
 	results := []ParticipantObject{}
 	for _, participant := range dbResults {
 		results = append(results, ParticipantObject{
+			ID:        participant.ID,
 			BibNumber: participant.BibNumber,
 			FirstName: participant.FirstName,
 			LastName:  participant.LastName,
@@ -182,4 +185,15 @@ func GetRaceParticipantsBirthYearCount(ctx context.Context, db *sqlx.DB) ([]map[
 	}
 
 	return results, nil
+}
+
+func GetRaceLastBibNumber(ctx context.Context, db *sqlx.DB) (int, error) {
+
+	return 0, nil
+}
+
+func UpdateParticipant(ctx context.Context, db *sqlx.DB, raceID, participantID string, participant ParticipantRow) error {
+	query := "UPDATE participants SET first_name = ?, last_name = ?, birth_year = ?, team = ?, gender = ? WHERE race_id = ? AND rowid = ?"
+	_, err := db.ExecContext(ctx, query, participant.FirstName, participant.LastName, participant.BirthYear, participant.Team, participant.Gender, raceID, participantID)
+	return err
 }

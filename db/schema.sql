@@ -63,8 +63,14 @@ CREATE TABLE users (
     creation_date TEXT DEFAULT CURRENT_TIMESTAMP,
     last_login_date TEXT
 );
+CREATE TABLE race_authorization (
+  user_id VARCHAR(255),
+  race_id VARCHAR(255),
+  permissions TEXT
+);
 -- Dbmate schema migrations
 INSERT INTO "schema_migrations" (version) VALUES
   ('20220708034230'),
   ('20230321020148'),
-  ('20230813205300');
+  ('20230813205300'),
+  ('20230829005108');

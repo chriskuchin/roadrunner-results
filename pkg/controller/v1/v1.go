@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	firebase "firebase.google.com/go/v4"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/credentials"
@@ -16,11 +17,12 @@ import (
 type Handler struct {
 	s3     *s3.Client
 	db     *sqlx.DB
+	app    *firebase.App
 	debug  bool
 	bucket string
 }
 
-func Routes(db *sqlx.DB, debug bool) chi.Router {
+func Routes(db *sqlx.DB, app *firebase.App, debug bool) chi.Router {
 	r := chi.NewRouter()
 
 	var accountId = os.Getenv("R2_ACCOUNT_ID")
@@ -41,6 +43,7 @@ func Routes(db *sqlx.DB, debug bool) chi.Router {
 	handler := &Handler{
 		db:     db,
 		debug:  debug,
+		app:    app,
 		s3:     s3.NewFromConfig(cfg),
 		bucket: "photo-finish",
 	}

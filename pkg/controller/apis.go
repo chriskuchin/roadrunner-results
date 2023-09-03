@@ -36,7 +36,7 @@ func Routes(app *firebase.App, db *sqlx.DB, debug bool) chi.Router {
 		}))
 	}
 
-	r.Mount("/v1", v1.Routes(db, debug))
+	r.Mount("/v1", v1.Routes(db, app, debug))
 	return r
 }
 

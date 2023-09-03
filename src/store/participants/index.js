@@ -10,6 +10,44 @@ export const useParticipantsStore = defineStore("participants", {
         currentParticipants: (state) => state.participants
     },
     actions: {
+        async updateParticipant(raceID, participantID, participant) {
+            let url = `/api/v1/races/${raceID}/participants/${participantID}`
+
+            let res = await fetch(url, await setAuthHeader({
+                method: 'PUT',
+                body: JSON.stringify({
+                    first_name: participant.first_name,
+                    last_name: participant.last_name,
+                    bib_number: Number(participant.bib_number),
+                    gender: participant.gender,
+                    team: participant.team,
+                    birth_year: Number(participant.birth_year)
+
+                })
+            }))
+
+            if (res.ok) {
+                return true
+            } else {
+                return false
+            }
+        },
+        async uploadParticipantCSV(raceID, file) {
+            let url = `/api/v1/races/${raceID}/participants/csv`
+            const formData = new FormData()
+            formData.append('csv', file, file.name)
+
+            let res = await fetch(url, await setAuthHeader({
+                method: 'POST',
+                body: formData
+            }))
+
+            if (res.ok) {
+                return true
+            } else {
+                return false
+            }
+        },
         async registerParticipant(raceID, firstName, lastName, bibNumber, gender, birthYear, team) {
             // requires first_name, last_name, bib_number, gender, birth_year, team
             let url = `/api/v1/races/${raceID}/participants`
@@ -22,10 +60,10 @@ export const useParticipantsStore = defineStore("participants", {
                 body: JSON.stringify({
                     first_name: firstName,
                     last_name: lastName,
-                    bib_number: bibNumber,
+                    bib_number: Number(bibNumber),
                     gender: gender,
                     team, team,
-                    birth_year: birthYear
+                    birth_year: Number(birthYear)
                 })
             }))
 
