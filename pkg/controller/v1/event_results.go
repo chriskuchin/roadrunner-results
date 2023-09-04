@@ -80,7 +80,6 @@ func (api *Handler) handleEventResults(w http.ResponseWriter, r *http.Request) {
 
 	filters["race"] = []string{util.GetRaceIDFromContext(r.Context())}
 	filters["event"] = []string{util.GetEventIDFromContext(r.Context())}
-	log.Info().Interface("url", r.URL.Query()).Send()
 	if r.URL.Query().Has("timerId") {
 		filters["timer"] = r.URL.Query()["timerId"]
 	}

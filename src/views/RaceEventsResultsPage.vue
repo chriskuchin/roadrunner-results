@@ -1,50 +1,58 @@
 <template>
   <div class="section">
     <div class="field is-horizontal">
-      <div class="field-label">
-        <label class="label">Filters:</label>
-      </div>
       <div class="field-body">
-        <div class="field has-addons" v-if="heats.length > 0">
-          <div class="select is-multiple is-small">
-            <select multiple v-model="heatFilter">
-              <option v-for="heat in heats" :value="heat.id" :key="heat.id">{{ heat.description }}</option>
-            </select>
-          </div>
-        </div>
         <div class="field has-addons">
           <div class="control">
             <input class="input" type="text" placeholder="Find by name" v-model="filters.name">
           </div>
           <div class="control">
-            <a class="button is-info" @click="getResults">
+            <a class="button is-info" @click="calculateResults">
               Search
             </a>
           </div>
         </div>
         <div class="field is-narrow">
           <div class="control">
-            <div class="select is-multiple is-small">
-              <select v-model="filters.gender" @change="getResults" multiple>
-                <option v-for="gender in options.genders" :key="gender" :value="gender">{{ gender }}</option>
+            <div class="select">
+              <select @change="selectDivision">
+                <option selected value="0">Select a Division</option>
+                <option v-for="(division, key) in getDivisions()" :key="key" :value="division">{{ key }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field is-narrow" v-if="heats.length > 0">
+          <div class="select is-multiple">
+            <select multiple v-model="heatFilter">
+              <option v-for="heat in heats" :value="heat.id" :key="heat.id">{{ heat.description }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="field is-narrow">
+          <div class="control">
+            <div class="select is-multiple">
+              <select v-model="filters.gender" multiple>
+                <option v-for="gender in genders" :key="gender" :value="gender">{{ gender }}</option>
               </select>
             </div>
           </div>
         </div>
         <div class="field is-narrow">
           <div class="control">
-            <div class="select is-multiple is-small">
-              <select v-model="filters.team" @change="getResults" multiple>
-                <option v-for="team in options.teams" :key="team" :value="team">{{ team }}</option>
+            <div class="select is-multiple">
+              <select v-model="filters.team" multiple>
+                <option v-for="team in teams" :key="team" :value="team">{{ team }}</option>
               </select>
             </div>
           </div>
         </div>
         <div class="field is-narrow">
           <div class="control">
-            <div class="select is-multiple is-small">
-              <select v-model="filters.year" @change="getResults" multiple>
-                <option v-for="year in [...options.years].sort()" :key="year" :value="year">{{ year }}</option>
+            <div class="select is-multiple">
+              <select v-model="filters.year" multiple>
+                <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
               </select>
             </div>
           </div>
@@ -62,9 +70,10 @@
           <th>Gender</th>
           <th>Birth Year</th>
           <th>Team</th>
+          <th>Division</th>
         </thead>
         <tbody>
-          <tr v-for="(result, place) in filteredResults" :key="place">
+          <tr v-for="(result, place) in calculatedResults" :key="place">
             <td>{{ place + 1 }}</td>
             <td>{{ formatMilliseconds(result.result_ms) }}</td>
             <td>{{ result.bib_number }}</td>
@@ -73,6 +82,7 @@
             <td>{{ result.gender }}</td>
             <td>{{ result.birth_year }}</td>
             <td>{{ result.team }}</td>
+            <td>{{ getParticipantDivision(result.birth_year) }}</td>
           </tr>
         </tbody>
       </table>
@@ -82,14 +92,15 @@
 
 <script>
 import { useEventStore } from "../store/event";
-import { mapStores, mapActions } from "pinia";
+import { useResultsStore } from "../store/results"
+import { mapStores, mapActions, mapState } from "pinia";
 import { formatMilliseconds } from "../utilities";
 import { useErrorBus } from "../store/error";
 
 export default {
   data: function () {
     return {
-      results: [],
+      calculatedResults: [],
       heats: [],
       heatFilter: [],
       photos: [],
@@ -107,62 +118,50 @@ export default {
     };
   },
   mounted: function () {
-    this.getResults()
+    this.calculateResults()
     this.getHeats()
   },
   methods: {
     ...mapActions(useErrorBus, { handleError: 'handle' }),
-    getResults: async function () {
-      let url = `/api/v1/races/${this.$route.params.raceId}/events/${this.$route.params.eventId}/results`
-      let filters = new URLSearchParams()
+    ...mapActions(useResultsStore, ['getResults']),
+    getDivisions: function () {
+      let year = new Date().getFullYear()
+      let firstDivision = `${year - 7}+`
+      let yougestDivisionFilter = []
+      for (var i = year - 7; i < year; i++) {
+        yougestDivisionFilter.push(i)
+      }
+      let divisions = {}
+      divisions[firstDivision] = yougestDivisionFilter
 
-      if (this.filters.name !== "") {
-        filters.append("name", this.filters.name)
+      for (var i = 1; i <= 10; i = i + 2) {
+        var high = year - (7 + i)
+        var low = year - (7 + i + 1)
+        var currentDivision = `${low}-${high}`
+
+        divisions[currentDivision] = [low, high]
       }
 
-      if (this.filters.gender.length > 0) {
-        this.filters.gender.forEach((gender) => filters.append("gender", gender))
-      }
-
-      if (this.filters.team.length > 0) {
-        this.filters.team.forEach((team) => filters.append("team", team))
-      }
-
-      if (this.filters.year.length > 0) {
-        this.filters.year.forEach((year) => filters.append("year", year))
-      }
-
-      let res = await fetch(url + "?" + filters.toString())
-
-      if (!res.ok)
-        this.handleError("Failed retrieving results")
-      else {
-        this.results = await res.json()
-        var that = this
-        this.results.forEach((element) => {
-          that.options.years.add(element.birth_year)
-          that.options.teams.add(element.team)
-          that.options.genders.add(element.gender)
-        })
-
-      }
+      return divisions
     },
-    getImageKeys: async function () {
-      let url = `/api/v1/races/${this.$route.params.raceId}/events/${this.$route.params.eventId}/results/photos`
-      let res = await fetch(url)
+    getParticipantDivision: function (birthYear) {
+      let divisions = this.getDivisions()
+      let participantDivision = "Unknown"
 
-      if (!res.ok) {
-        this.handleError("Failed Retrieving Photo Finishes")
-      } else {
-        this.photos = await res.json()
-      }
+      Object.keys(divisions).forEach((key) => {
+        if (divisions[key].includes(birthYear)) {
+          participantDivision = key
+          return
+        }
+      })
+
+      return participantDivision
     },
-    getImageSrc(place) {
-      if (this.photos[place]) {
-        return `/api/v1/races/${this.$route.params.raceId}/events/${this.$route.params.eventId}/results/photos/${this.photos[place]}`
-      }
-
-      return ""
+    selectDivision: function (evt) {
+      let years = evt.target.value.split(",")
+      this.filters.year = []
+      years.forEach(year => this.filters.year.push(year))
+      evt.target.value = "0"
     },
     getHeats: async function () {
       let url = `/api/v1/races/${this.$route.params.raceId}/events/${this.$route.params.eventId}/timers`
@@ -185,18 +184,21 @@ export default {
       }
     },
     formatMilliseconds,
+    calculateResults: async function () {
+      this.calculatedResults = await this.getResults(this.$route.params.raceId, this.$route.params.eventId, this.filters.name, this.filters.gender, this.filters.team, this.filters.year)
+    },
+  },
+  watch: {
+    filters: {
+      deep: true,
+      handler() {
+        this.calculateResults()
+      },
+    },
   },
   computed: {
+    ...mapState(useResultsStore, ['years', 'genders', 'teams']),
     ...mapStores(useEventStore),
-    filteredResults: function () {
-      let results = []
-      this.results.forEach((element) => {
-        if (this.heatFilter.includes(element.timer_id) || this.heatFilter.length == 0) {
-          results.push(element)
-        }
-      })
-      return results
-    }
   },
 };
 </script>
