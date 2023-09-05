@@ -25,14 +25,14 @@
         </div>
       </div>
     </div>
-    <div class="level-item">
+    <!-- <div class="level-item">
       <div class="field">
         <label class="checkbox">
           <input type="checkbox" v-model="enableCamera" @click="manageCamera">
           Finish Line Photos
         </label>
       </div>
-    </div>
+    </div> -->
 
     <button class="button is-small is-pulled-right" @click="generateFile">
       <icon icon="fa-solid fa-download"></icon>
