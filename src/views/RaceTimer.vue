@@ -19,9 +19,9 @@
           <p class="control">
           <div class="button is-danger is-responsive" @click="this.stopTimer">Stop</div>
           </p>
-          <p class="control">
+          <!-- <p class="control">
           <div class="button is-warning is-responsive" @click.passive="this.recordFinish">Record</div>
-          </p>
+          </p> -->
         </div>
       </div>
     </div>
