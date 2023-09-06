@@ -5,7 +5,6 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 )
@@ -36,20 +35,6 @@ type (
 
 const (
 	getEventResultsQuery string = "SELECT p.first_name, p.last_name, r.bib_number, p.birth_year, p.gender, r.result, r.timer_id, p.team FROM results as r LEFT JOIN participants as p USING(bib_number, race_id) WHERE"
-
-	recordFinisherQuery string = `
-		UPDATE results SET bib_number = ?
-		WHERE rowid in (
-			SELECT rowid from results
-			WHERE
-				bib_number is NULL
-				AND
-				race_id = ?
-				AND
-				event_id = ?
-			ORDER by rowid LIMIT 1
-		)
-	`
 )
 
 func GetEventResults(ctx context.Context, db *sqlx.DB, filters map[string][]string) ([]ParticipantEventResult, error) {
@@ -138,8 +123,24 @@ func RecordTimerResult(ctx context.Context, endTS int64) error {
 	return InsertPartialResult(ctx, endTS-start, timerID)
 }
 
-func RecordFinisherResult(ctx context.Context, db *sqlx.DB, bib string) error {
-	result, err := db.Exec(recordFinisherQuery, bib, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))
+const recordFinisherQuery string = `
+UPDATE results SET bib_number = ?
+WHERE rowid in (
+	SELECT rowid from results
+	WHERE
+		bib_number is NULL
+		AND
+		race_id = ?
+		AND
+		event_id = ?
+		AND
+		timer_id = ?
+	ORDER by result ASC LIMIT 1
+)
+`
+
+func RecordFinisherResult(ctx context.Context, db *sqlx.DB, race_id, event_id, timer_id, bib string) error {
+	result, err := db.Exec(recordFinisherQuery, bib, race_id, event_id, timer_id)
 	if err != nil {
 		log.Error().Err(err).Send()
 		return err

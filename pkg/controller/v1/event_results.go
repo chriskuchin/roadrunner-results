@@ -173,7 +173,14 @@ func (api *Handler) recordResult(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if payload.Bib != "" {
-			services.RecordFinisherResult(ctx, api.db, payload.Bib)
+			timerID := payload.Timer
+			if timerID == "" {
+				_, timerID, err = services.GetActiveTimerStart(ctx)
+				if err != nil {
+					handleBadRequest(err, w, r)
+				}
+			}
+			services.RecordFinisherResult(ctx, api.db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), timerID, payload.Bib)
 		}
 
 		w.WriteHeader(http.StatusAccepted)
