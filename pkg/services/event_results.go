@@ -94,6 +94,7 @@ func GetEventResults(ctx context.Context, db *sqlx.DB, filters map[string][]stri
 		query = fmt.Sprintf("%s )", query)
 	}
 
+	query = fmt.Sprintf("%s ORDER BY r.result ASC", query)
 	log.Debug().Str("query", query).Interface("filter", filterValues).Send()
 	return runEventResultsQuery(db, query, filterValues...)
 }
