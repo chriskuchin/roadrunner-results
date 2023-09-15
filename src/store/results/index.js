@@ -73,8 +73,7 @@ export const useResultsStore = defineStore("results", {
         body: JSON.stringify(payload)
       }))
 
-      // if (!res.ok)
-      //   return []
+      return res.ok
     }
   }
 })

@@ -1,6 +1,8 @@
 <template>
   <div>
-    <input class="input is-large" :type="getInputType" placeholder="Bib Number Input" v-on:keyup.enter="recordRunner" />
+    <input class="input is-large is-danger" :type="getInputType" placeholder="Bib Number Input"
+      v-on:keyup.enter="recordRunner" />
+    <p class="help is-danger">Failed to record runner bib</p>
     <label class="checkbox">
       <input type="checkbox" v-model="letterToggle">
       Allow Letters
@@ -22,6 +24,16 @@ export default {
   },
   methods: {
     ...mapActions(useResultsStore, ["recordRunnerResult"]),
+    inputError: function() {
+      // set error state and error message
+      // double buzz?
+      // set time out function to clear message
+    },
+    inputSuccess: function() {
+      // set success state and success message maybe the time it's associated with
+      // single buzz
+      // set timeout function to clear
+    },
     recordRunner: async function (e) {
       e.preventDefault();
       var bibNumber = e.currentTarget.value;
