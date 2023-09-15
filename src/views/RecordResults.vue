@@ -37,7 +37,7 @@
         </tr>
       </tbody>
     </table>
-    <not :show="error.show" type="is-danger is-light" @close="dismissError">{{ error.msg }}</not>
+    <!-- <not :show="error.show" type="is-danger is-light" @close="dismissError">{{ error.msg }}</not> -->
   </div>
 </template>
 

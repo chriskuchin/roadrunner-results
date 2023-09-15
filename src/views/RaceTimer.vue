@@ -77,8 +77,15 @@ export default {
     'fab': FAB,
   },
   mounted: function () {
+    console.log('test')
+    window.addEventListener('keypress', this.handleKeyboardEvent)
+    console.log('test')
+
     this.listTimers()
     this.loadMedia()
+  },
+  unmounted: function () {
+    window.removeEventListener('keypress', this.handleKeyboardEvent)
   },
   data: function () {
     return {
@@ -151,12 +158,11 @@ export default {
       this.timer.timeout = setTimeout(this.tickTimer, 10)
     },
     handleKeyboardEvent(e) {
-      if (e.keyCode == 32) {
+      if (this.timer.timeout != null && e.keyCode == 32) {
         this.recordFinish()
       }
     },
     async startTimer() {
-      window.addEventListener('keypress', this.handleKeyboardEvent)
       window.navigator.vibrate(50)
       this.timer.start = Date.now()
       this.timer.timeout = setTimeout(this.tickTimer, 10)
@@ -179,7 +185,6 @@ export default {
       }
     },
     stopTimer: function () {
-      window.removeEventListener('keypress', this.handleKeyboardEvent)
       window.navigator.vibrate(50)
       if (this.timer.timeout != null) {
         this.saveVideo()

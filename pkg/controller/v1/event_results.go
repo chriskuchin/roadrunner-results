@@ -167,9 +167,17 @@ func (api *Handler) recordResult(w http.ResponseWriter, r *http.Request) {
 
 		ctx := util.SetDB(r.Context(), api.db)
 		if payload.End > 0 {
-			services.RecordTimerResult(ctx, payload.End)
+			err = services.RecordTimerResult(ctx, payload.End)
+			if err != nil {
+				handleBadRequest(err, w, r)
+				return
+			}
 		} else if payload.ElapsedTime > 0 {
-			services.RecordElapsedTimeResult(ctx, payload.ElapsedTime)
+			err = services.RecordElapsedTimeResult(ctx, payload.ElapsedTime)
+			if err != nil {
+				handleBadRequest(err, w, r)
+				return
+			}
 		}
 
 		if payload.Bib != "" {
@@ -178,9 +186,14 @@ func (api *Handler) recordResult(w http.ResponseWriter, r *http.Request) {
 				_, timerID, err = services.GetActiveTimerStart(ctx)
 				if err != nil {
 					handleBadRequest(err, w, r)
+					return
 				}
 			}
-			services.RecordFinisherResult(ctx, api.db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), timerID, payload.Bib)
+			err = services.RecordFinisherResult(ctx, api.db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), timerID, payload.Bib)
+			if err != nil {
+				handleBadRequest(err, w, r)
+				return
+			}
 		}
 
 		w.WriteHeader(http.StatusAccepted)
