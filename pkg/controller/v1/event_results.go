@@ -81,7 +81,17 @@ func (api *Handler) handleEventResults(w http.ResponseWriter, r *http.Request) {
 	filters["race"] = []string{util.GetRaceIDFromContext(r.Context())}
 	filters["event"] = []string{util.GetEventIDFromContext(r.Context())}
 	if r.URL.Query().Has("timerId") {
-		filters["timer"] = r.URL.Query()["timerId"]
+		if r.URL.Query()["timerId"][0] == "latest" {
+			_, timerId, err := services.GetActiveTimerStart(r.Context(), api.db)
+			if err != nil {
+				handleBadRequest(err, w, r)
+				return
+			}
+
+			filters["timer"] = []string{timerId}
+		} else {
+			filters["timer"] = r.URL.Query()["timerId"]
+		}
 	}
 
 	if r.URL.Query().Has("gender") {
@@ -183,7 +193,7 @@ func (api *Handler) recordResult(w http.ResponseWriter, r *http.Request) {
 		if payload.Bib != "" {
 			timerID := payload.Timer
 			if timerID == "" {
-				_, timerID, err = services.GetActiveTimerStart(ctx)
+				_, timerID, err = services.GetActiveTimerStart(ctx, api.db)
 				if err != nil {
 					handleBadRequest(err, w, r)
 					return

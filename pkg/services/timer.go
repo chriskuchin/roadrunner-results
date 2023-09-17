@@ -164,8 +164,8 @@ func GetTimer(ctx context.Context, db *sqlx.DB) (*TimerResult, error) {
 	}, nil
 }
 
-func GetActiveTimerStart(ctx context.Context) (int64, string, error) {
-	row := util.GetDB(ctx).QueryRow(getActiveEventTimerQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))
+func GetActiveTimerStart(ctx context.Context, db *sqlx.DB) (int64, string, error) {
+	row := db.QueryRow(getActiveEventTimerQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))
 	if row.Err() != nil {
 		return 0, "", row.Err()
 	}

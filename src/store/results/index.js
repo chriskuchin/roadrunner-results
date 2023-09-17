@@ -59,7 +59,7 @@ export const useResultsStore = defineStore("results", {
         bib_number: runner.bib
       }
 
-      if (runner.timerId != "") {
+      if (runner.timerId != "" && runner.timerId != "latest") {
         payload.timer_id = runner.timerId
       }
 

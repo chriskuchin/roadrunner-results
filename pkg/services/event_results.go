@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 )
@@ -114,7 +115,7 @@ func RecordElapsedTimeResult(ctx context.Context, elapsed int64) error {
 }
 
 func RecordTimerResult(ctx context.Context, endTS int64) error {
-	start, timerID, err := GetActiveTimerStart(ctx)
+	start, timerID, err := GetActiveTimerStart(ctx, util.GetDB(ctx))
 	if err != nil {
 		log.Error().Err(err).Send()
 		return err

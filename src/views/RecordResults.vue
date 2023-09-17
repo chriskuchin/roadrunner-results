@@ -1,8 +1,8 @@
 <template>
   <div class="section">
     <div class="select is-small">
-      <select @change="this.getHeatResults" v-model="timerId">
-        <option value="" selected>Latest</option>
+      <select @change="refreshData()" v-model="timerId">
+        <option value="latest" selected>Latest ({{ results.length }})</option>
         <option v-for="(timer, index) in timers" :key="timer.id" :value="timer.id">
           Heat {{ index + 1 }} ({{ timer.count }})
         </option>
@@ -16,11 +16,12 @@
       </ul>
     </div>
     <div class="container">
-      <result-input v-if="isActiveTab('manual')" :race-id="this.$route.params.raceId"
-        :event-id="this.$route.params.eventId" :timer-id="this.timerId" @recorded-racer="getHeatResults()" />
+      <result-input v-if="isActiveTab('manual')" :time="getFirstUnmatchedTime" :finisher="getFirstUnmatchedPlace"
+        :total-results="getHeatTotalResults" :race-id="this.$route.params.raceId" :event-id="this.$route.params.eventId"
+        :timer-id="this.timerId" @recorded-racer="refreshData()" />
     </div>
   </div>
-  <div v-if="results.length > 0">
+  <div v-if="results.length > 0 && showResults">
     <table class="table" style="margin: 0px auto;">
       <thead>
         <th>Position</th>
@@ -54,14 +55,18 @@ export default {
     "not": Notification,
   },
   mounted: function () {
-    this.listTimers()
-    this.getHeatResults()
+    this.refreshData()
+  },
+  unmounted: function () {
+    clearTimeout(this.resultsRefresh)
   },
   data: function () {
     return {
+      showResults: false,
+      resultsRefresh: null,
       activeTab: "manual",
       timers: [],
-      timerId: "",
+      timerId: "latest",
       results: [],
       error: {
         show: false,
@@ -70,6 +75,14 @@ export default {
     };
   },
   methods: {
+    refreshData: function () {
+      clearTimeout(this.resultsRefresh)
+
+      this.listTimers()
+      this.getHeatResults()
+
+      this.resultsRefresh = setTimeout(this.refreshData, 2500)
+    },
     async getHeatResults() {
       let url = "/api/v1/races/" + this.$route.params.raceId + "/events/" + this.$route.params.eventId + "/results?timerId=" + this.timerId
 
@@ -89,6 +102,29 @@ export default {
     },
   },
   computed: {
+    getFirstUnmatchedPlace: function () {
+      for (let i = 0; i < this.results.length; i++) {
+        let result = this.results[i]
+        if (result.bib_number == "") {
+          return i + 1
+        }
+      }
+      return "Complete"
+    },
+    getFirstUnmatchedTime: function () {
+      console.log(this.results)
+      for (let i = 0; i < this.results.length; i++) {
+        let result = this.results[i]
+        if (result.bib_number == "") {
+          return formatMilliseconds(result.result_ms)
+        }
+      }
+
+      return "None"
+    },
+    getHeatTotalResults: function () {
+      return this.results.length
+    }
   },
 };
 </script>

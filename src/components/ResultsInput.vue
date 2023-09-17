@@ -1,8 +1,22 @@
 <template>
   <div>
-    <input :class="['input', 'is-large', result.class]" ref="input" :type="getInputType" placeholder="Bib Number Input"
-      v-on:keyup.enter="recordRunner" />
-    <p :class="['help', result.class]" v-if="result.show">{{ result.msg }}</p>
+    <div class="field has-addons">
+      <p class="control">
+        <a :class="['button', 'is-static', 'is-large', result.class]">
+          {{ finisher }}/{{ totalResults }}
+        </a>
+      </p>
+      <p class="control is-expanded">
+        <input :class="['input', 'is-large', result.class]" ref="input" :type="getInputType"
+          placeholder="Bib Number Input" v-on:keyup.enter="recordRunner" />
+      <p :class="['help', result.class]" v-if="result.show">{{ result.msg }}</p>
+      </p>
+      <p class="control">
+        <a :class="['button', 'is-static', 'is-large', result.class]">
+          {{ time }}
+        </a>
+      </p>
+    </div>
     <label class="checkbox">
       <input type="checkbox" v-model="letterToggle">
       Allow Letters
@@ -15,7 +29,7 @@ import { mapActions } from "pinia";
 import { useResultsStore } from "../store/results";
 
 export default {
-  props: ['raceId', 'eventId', 'timerId'],
+  props: ['raceId', 'eventId', 'timerId', 'totalResults', 'finisher', 'time'],
   emits: ['recorded-racer'],
   data: function () {
     return {
@@ -67,10 +81,8 @@ export default {
       if (ok) {
         this.$refs.input.value = ""
         this.$emit('recorded-racer')
-        console.log("success")
         this.inputSuccess()
       } else {
-        console.log("error")
         this.inputError()
       }
     },
