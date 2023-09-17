@@ -16,12 +16,16 @@ export const useResultsStore = defineStore("results", {
     years: (state) => [...state.yearOptions].sort(),
   },
   actions: {
-    getResults: async function (raceID, eventID, name, gender, team, year) {
+    getResults: async function (raceID, eventID, name, gender, team, year, timers) {
       let url = `/api/v1/races/${raceID}/events/${eventID}/results`
       let filters = new URLSearchParams()
 
       if (name !== "") {
         filters.append("name", name)
+      }
+
+      if (timers.length > 0) {
+        timers.forEach((timer) => filters.append("timerId", timer))
       }
 
       if (gender.length > 0) {

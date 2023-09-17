@@ -23,10 +23,11 @@
             </div>
           </div>
         </div>
-        <div class="field is-narrow" v-if="heats.length > 0">
+        <div class="field is-narrow">
           <div class="select is-multiple">
-            <select multiple v-model="heatFilter">
-              <option v-for="heat in heats" :value="heat.id" :key="heat.id">{{ heat.description }}</option>
+            <select multiple v-model="filters.timers">
+              <option v-for="heat in options.heats" :value="heat.id" :key="heat.id">{{ heat.description }}
+              </option>
             </select>
           </div>
         </div>
@@ -101,19 +102,16 @@ export default {
   data: function () {
     return {
       calculatedResults: [],
-      heats: [],
-      heatFilter: [],
       photos: [],
       options: {
-        years: new Set(),
-        teams: new Set(),
-        genders: new Set(),
+        heats: [],
       },
       filters: {
         name: "",
         gender: [],
         team: [],
         year: [],
+        timers: [],
       }
     };
   },
@@ -164,8 +162,7 @@ export default {
       evt.target.value = "0"
     },
     getHeats: async function () {
-      let url = `/api/v1/races/${this.$route.params.raceId}/events/${this.$route.params.eventId}/timers`
-      let res = await fetch(url)
+      let res = await fetch(`/api/v1/races/${this.$route.params.raceId}/events/${this.$route.params.eventId}/timers`)
 
       if (!res.ok)
         this.handleError("Failed retrieving heats")
@@ -173,19 +170,19 @@ export default {
         let timers = await res.json()
 
         timers.forEach((element, index) => {
-          this.heats.push({
+          this.options.heats.push({
             description: `Heat ${index + 1}`,
             id: element.id,
             start: element.timer_start
           })
           // default select all heats
-          this.heatFilter.push(element.id)
+          this.filters.timers.push(element.id)
         })
       }
     },
     formatMilliseconds,
     calculateResults: async function () {
-      this.calculatedResults = await this.getResults(this.$route.params.raceId, this.$route.params.eventId, this.filters.name, this.filters.gender, this.filters.team, this.filters.year)
+      this.calculatedResults = await this.getResults(this.$route.params.raceId, this.$route.params.eventId, this.filters.name, this.filters.gender, this.filters.team, this.filters.year, this.filters.timers)
     },
   },
   watch: {
