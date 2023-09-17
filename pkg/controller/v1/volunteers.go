@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"strings"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
@@ -60,7 +61,7 @@ func (api *Handler) authorizeVolunteer(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for _, email := range body.Emails {
-		user, err := client.GetUserByEmail(ctx, email.Email)
+		user, err := client.GetUserByEmail(ctx, strings.TrimSpace(email.Email))
 		if err != nil {
 			log.Error().Err(err).Send()
 			failure = append(failure, email.Email)
