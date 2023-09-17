@@ -82,3 +82,21 @@ func GetEventAuthorizedUsers(ctx context.Context, db *sqlx.DB, raceID, eventID s
 	}
 	return authorizedUsers, nil
 }
+
+const LIST_VOLUNTEER_USER_IDS = `SELECT user_id FROM race_authorization WHERE race_id = ?`
+
+func ListRaceVolunteersUserIDs(ctx context.Context, db *sqlx.DB, raceID string) ([]string, error) {
+	rows, err := db.Query(LIST_VOLUNTEER_USER_IDS, raceID)
+	if err != nil {
+		return nil, err
+	}
+
+	volunteers := []string{}
+	for rows.Next() {
+		var user_id string
+		rows.Scan(&user_id)
+
+		volunteers = append(volunteers, user_id)
+	}
+	return volunteers, nil
+}

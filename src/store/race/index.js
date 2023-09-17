@@ -61,6 +61,17 @@ export const useRaceStore = defineStore("race", {
     yearValues: state => state.participantStats.birthYearDistro.map(row => row.count),
   },
   actions: {
+    async listVolunteers(id) {
+      let url = `/api/v1/races/${id}/volunteers`
+
+      let res = await fetch(url, await setAuthHeader({}))
+
+      if (res.ok) {
+        return await res.json()
+      }
+
+      return []
+    },
     async shareRace(id, emails) {
       let url = `/api/v1/races/${id}/volunteers`
       let payload = {

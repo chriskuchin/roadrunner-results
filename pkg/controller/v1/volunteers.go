@@ -19,6 +19,11 @@ type VolunteerEmail struct {
 	Email string `json:"email"`
 }
 
+type Volunteer struct {
+	Email  string `json:"email"`
+	UserID string `json:"userId"`
+}
+
 func VolunteerRoutes(handler *Handler) chi.Router {
 	r := chi.NewRouter()
 
@@ -74,5 +79,31 @@ func (api *Handler) authorizeVolunteer(w http.ResponseWriter, r *http.Request) {
 }
 
 func (api *Handler) listVolunteers(w http.ResponseWriter, r *http.Request) {
-	w.WriteHeader(http.StatusNotImplemented)
+	userIds, err := services.ListRaceVolunteersUserIDs(r.Context(), api.db, util.GetRaceIDFromContext(r.Context()))
+	if err != nil {
+		handleBadRequest(err, w, r)
+		return
+	}
+
+	client, err := api.app.Auth(r.Context())
+	if err != nil {
+		// Need a server error
+		handleBadRequest(err, w, r)
+		return
+	}
+
+	response := []Volunteer{}
+	for _, userId := range userIds {
+		ur, err := client.GetUser(r.Context(), userId)
+		if err != nil {
+			continue
+		}
+
+		response = append(response, Volunteer{
+			Email:  ur.Email,
+			UserID: ur.UserInfo.UID,
+		})
+	}
+
+	render.JSON(w, r, response)
 }
