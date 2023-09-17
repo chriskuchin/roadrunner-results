@@ -9,6 +9,7 @@ import (
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/render"
+	"github.com/rs/zerolog/log"
 )
 
 type VolunteerAuthPayload struct {
@@ -51,16 +52,23 @@ func (api *Handler) authorizeVolunteer(w http.ResponseWriter, r *http.Request) {
 
 	var success []string = []string{}
 	var failure []string = []string{}
+	client, err := api.app.Auth(ctx)
+	if err != nil {
+		log.Error().Err(err).Send()
+		handleBadRequest(err, w, r)
+		return
+	}
+
 	for _, email := range body.Emails {
-		client, _ := api.app.Auth(ctx)
 		user, err := client.GetUserByEmail(ctx, email.Email)
 		if err != nil {
-			failure = append(failure, user.Email)
+			log.Error().Err(err).Send()
+			failure = append(failure, email.Email)
 			continue
 		}
 
 		if user.UID == util.GetCurrentUserID(ctx) {
-			failure = append(failure, user.Email)
+			failure = append(failure, email.Email)
 			continue
 		}
 
