@@ -1,16 +1,10 @@
 <template>
-  <div id="scanner"></div>
-  <div class="select">
-    <select>
-      <option>Select dropdown</option>
-      <option>With options</option>
-    </select>
+  <div>
+    <div id="scanner"></div>
+    <button @click="toggleScanner" class="button">
+      {{ scannerToggleDescription }}
+    </button>
   </div>
-  <button @click="toggleScanner" class="button">
-    {{ scannerToggleDescription }}
-  </button>
-  active: {{ scannerActive }} inactive: {{ scannerInactive }} unknown:
-  {{ scannerStateUnknown }}
 </template>
 
 <script>
@@ -20,7 +14,7 @@ export default {
   props: {
     qrbox: {
       type: Number,
-      default: 100,
+      default: 250,
     },
     fps: {
       type: Number,
@@ -32,7 +26,7 @@ export default {
       html5QRCode: null,
       qrCodeConfig: {
         fps: this.fps,
-        qrbox: { height: this.qrbox, width: this.qrbox },
+        qrbox: this.qrbox,
       },
     };
   },
@@ -43,13 +37,24 @@ export default {
     if (this.scannerActive) {
       this.html5QRCode
         .stop()
-        .then((ignore) => {})
-        .catch((err) => {});
+        .then((ignore) => { })
+        .catch((err) => { });
     }
   },
   methods: {
     onScanSuccess: function (decodedText, decodedResult) {
       console.log(decodedText, decodedResult);
+      let val = decodedText.split("-")
+      console.log(val)
+      if (val.length == 2) {
+        this.$emit("bib", {
+          bib: val[0]
+        })
+      } else {
+        this.$emit("bib", {
+          bib: val
+        })
+      }
     },
     toggleScanner: function () {
       if (this.scannerInactive) {

@@ -13,12 +13,16 @@
         <li @click="tabSelect('manual')" :class="{ 'is-active': isActiveTab('manual') }">
           <a>Manual</a>
         </li>
+        <li @click="tabSelect('scan')" :class="{ 'is-active': isActiveTab('scan') }">
+          <a>Scanner</a>
+        </li>
       </ul>
     </div>
     <div class="container">
       <result-input v-if="isActiveTab('manual')" :time="getFirstUnmatchedTime" :finisher="getFirstUnmatchedPlace"
         :total-results="getHeatTotalResults" :race-id="this.$route.params.raceId" :event-id="this.$route.params.eventId"
-        :timer-id="this.timerId" @recorded-racer="refreshData()" />
+        :timer-id="this.timerId" @bib="bibInput" />
+      <scan v-else-if="isActiveTab('scan')" @bib="bibInput" />
     </div>
   </div>
   <div v-if="results.length > 0 && showResults">
@@ -44,15 +48,19 @@
 
 <script>
 import { formatMilliseconds } from "../utilities";
+import { useResultsStore } from "../store/results";
+import { mapActions } from "pinia";
 import RacerInput from "../components/ResultsInput.vue";
 import ResultsTable from "../components/ResultsTable.vue";
 import Notification from '../components/Notification.vue';
+import Scanner from '../components/Scanner.vue'
 
 export default {
   components: {
     "result-input": RacerInput,
     "results-table": ResultsTable,
     "not": Notification,
+    "scan": Scanner,
   },
   mounted: function () {
     this.refreshData()
@@ -75,6 +83,27 @@ export default {
     };
   },
   methods: {
+    ...mapActions(useResultsStore, ["recordRunnerResult"]),
+    bibInput: async function (e) {
+      console.log(e.bib, "bib")
+
+      let ok = await this.recordRunnerResult({
+        bib: e.bib,
+        raceId: this.$route.params.raceId,
+        eventId: this.$route.params.eventId,
+        timerId: this.timerId,
+      });
+
+      if (ok) {
+        if (e.success) {
+          e.success()
+        }
+      } else {
+        if (e.error) {
+          e.error()
+        }
+      }
+    },
     refreshData: function () {
       clearTimeout(this.resultsRefresh)
 
@@ -109,10 +138,10 @@ export default {
           return i + 1
         }
       }
-      return "Complete"
+
+      return "✅"
     },
     getFirstUnmatchedTime: function () {
-      console.log(this.results)
       for (let i = 0; i < this.results.length; i++) {
         let result = this.results[i]
         if (result.bib_number == "") {

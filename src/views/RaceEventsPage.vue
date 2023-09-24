@@ -14,7 +14,7 @@
               <router-link class="dropdown-item" :to="getRecordLink(event)"
                 v-if="isTimerEvent(event)">Recorder</router-link>
               <hr class="dropdown-divider" v-if="isTimerEvent(event)" />
-              <a href="#" class="dropdown-item" @click="deleteEvent(event)">Delete Race</a>
+              <a href="#" class="dropdown-item" @click="deleteEvent(event)">Delete Event</a>
             </div>
           </div>
         </div>

@@ -11,7 +11,7 @@
           placeholder="Bib Number Input" v-on:keyup.enter="recordRunner" />
       <p :class="['help', result.class]" v-if="result.show">{{ result.msg }}</p>
       </p>
-      <p class="control">
+      <p class="control" v-if="false">
         <a :class="['button', 'is-static', 'is-large', result.class]">
           {{ time }}
         </a>
@@ -57,6 +57,8 @@ export default {
       window.navigator.vibrate([50, 10, 50])
     },
     inputSuccess: function () {
+      this.$refs.input.value = ""
+
       // set success state and success message maybe the time it's associated with
       this.result.class = "is-success"
       this.result.msg = "Success"
@@ -71,20 +73,11 @@ export default {
       e.preventDefault();
       var bibNumber = this.$refs.input.value
 
-      let ok = await this.recordRunnerResult({
+      this.$emit("bib", {
         bib: bibNumber,
-        raceId: this.raceId,
-        eventId: this.eventId,
-        timerId: this.timerId,
-      });
-
-      if (ok) {
-        this.$refs.input.value = ""
-        this.$emit('recorded-racer')
-        this.inputSuccess()
-      } else {
-        this.inputError()
-      }
+        success: this.inputSuccess,
+        error: this.inputError,
+      })
     },
   },
   computed: {

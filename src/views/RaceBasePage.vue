@@ -1,16 +1,25 @@
 <template>
   <div class="container">
-    <div class="section mt-1 mb-0 py-0" v-if="this.$route.name != 'events'">
-      <router-link :to="'/races/' + this.$route.params.raceId + '/events'">
-        <icon icon="fa-solid fa-arrow-left-long"></icon> Back to Events
-      </router-link>
-    </div>
-    <router-view></router-view>
+    <nav class="breadcrumb mt-3 is-centered mb-0" aria-label="breadcrumbs">
+      <ul>
+        <li :class="{ 'is-active': !isEventPage }">
+          <router-link :to="'/races/' + this.$route.params.raceId + '/events'">
+            {{ getName }}
+          </router-link>
+        </li>
+        <li :class="{ 'is-active': isEventPage }" v-if="isEventPage" class="is-active">
+          <a href="#" aria-current="page">
+            {{ eventName($route.params.eventId) }}
+          </a>
+        </li>
+      </ul>
+    </nav> <router-view></router-view>
   </div>
 </template>
 
 <script>
 import { useRaceStore } from "../store/race";
+import { mapState } from "pinia";
 
 const store = useRaceStore()
 export default {
@@ -24,9 +33,14 @@ export default {
   },
   methods: {},
   computed: {
+    ...mapState(useRaceStore, ["getName", "eventName"]),
     backPath: function () {
       return this.$route.path.slice(0, this.$route.path.lastIndexOf('/'))
     },
+    isEventPage: function () {
+      console.log(this.$route.params.eventId)
+      return this.$route.params.eventId && this.$route.params.eventId != ""
+    }
   },
 };
 </script>

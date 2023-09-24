@@ -2,11 +2,11 @@ package v1
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
-	"net/url"
 	"strings"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -33,44 +33,44 @@ func EventResultsRoutes(handler *Handler) chi.Router {
 	r.Post("/", handler.recordResult)
 	r.Put("/", handler.recordResult)
 
-	r.Get("/photos", handler.listPhotoFinishFiles)
-	r.Get("/photos/{photoKey}", handler.renderPhotoFinishFile)
+	r.Route("/{resultID}", func(r chi.Router) {
+		r.Use(resultCtx)
+		r.Patch("/", handler.updateResult)
+	})
 
 	return r
 }
 
-func (api *Handler) listPhotoFinishFiles(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-	output, err := api.s3.ListObjects(ctx, &s3.ListObjectsInput{
-		Bucket:  aws.String(api.bucket),
-		Prefix:  aws.String(fmt.Sprintf("/races/%s/events/%s/finish/", util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))),
-		MaxKeys: 500,
-	})
+type PatchResultPayload struct {
+	Time int    `json:"result"`
+	Bib  string `json:"bib_number"`
+}
 
+// allow updating time and bib number
+func (api *Handler) updateResult(w http.ResponseWriter, r *http.Request) {
+	// ctx := r.Context()
+
+	body, err := io.ReadAll(r.Body)
 	if err != nil {
-		w.WriteHeader(http.StatusBadGateway)
+		handleBadRequest(err, w, r)
 		return
 	}
 
-	photos := []string{}
-	for _, v := range output.Contents {
-		photos = append(photos, url.QueryEscape(*v.Key))
-		log.Info().Interface("obj", v).Send()
+	var payload PatchResultPayload
+	err = json.Unmarshal(body, &payload)
+	if err != nil {
+		handleBadRequest(err, w, r)
+		return
 	}
-	render.JSON(w, r, photos)
-}
 
-func (api *Handler) renderPhotoFinishFile(w http.ResponseWriter, r *http.Request) {
-	key, _ := url.QueryUnescape(chi.URLParam(r, "photoKey"))
-	res, _ := api.s3.GetObject(r.Context(), &s3.GetObjectInput{
-		Bucket: aws.String(api.bucket),
-		Key:    aws.String(key),
-	})
+	if payload.Bib != "" {
+		log.Info().Msg("Bib Update")
+	}
 
-	img, _ := io.ReadAll(res.Body)
-	r.Header.Add("Content-Type", "image/png")
-	w.WriteHeader(http.StatusOK)
-	w.Write(img)
+	if payload.Time != 0 {
+		log.Info().Msg("Time Update")
+	}
+
 }
 
 // gender, team, timer, name
@@ -210,4 +210,17 @@ func (api *Handler) recordResult(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusUnsupportedMediaType)
+}
+
+func resultCtx(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		resultID := chi.URLParam(r, "resultID")
+		if resultID == "" {
+			handleBadRequest(fmt.Errorf("unable to locate resultID"), w, r)
+			return
+		}
+
+		ctx := context.WithValue(r.Context(), util.ResultID, resultID)
+		next.ServeHTTP(w, r.WithContext(ctx))
+	})
 }

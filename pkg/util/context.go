@@ -21,6 +21,7 @@ const (
 	HeatID        key = 7
 	PhotoKey      key = 8
 	UserToken     key = 9
+	ResultID      key = 10
 )
 
 func GetCurrentUserToken(ctx context.Context) auth.Token {
@@ -46,6 +47,10 @@ func getValueFromContext(ctx context.Context, k key) string {
 	}
 
 	return result
+}
+
+func GetResultIDFromContext(ctx context.Context) string {
+	return getValueFromContext(ctx, ResultID)
 }
 
 func GetEventIDFromContext(ctx context.Context) string {
