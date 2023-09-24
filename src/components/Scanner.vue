@@ -43,9 +43,7 @@ export default {
   },
   methods: {
     onScanSuccess: function (decodedText, decodedResult) {
-      console.log(decodedText, decodedResult);
       let val = decodedText.split("-")
-      console.log(val)
       if (val.length == 2) {
         this.$emit("bib", {
           bib: val[0]

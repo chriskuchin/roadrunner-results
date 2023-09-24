@@ -25,12 +25,9 @@
 </template>
 
 <script>
-import { mapActions } from "pinia";
-import { useResultsStore } from "../store/results";
-
 export default {
   props: ['raceId', 'eventId', 'timerId', 'totalResults', 'finisher', 'time'],
-  emits: ['recorded-racer'],
+  emits: ['bib'],
   data: function () {
     return {
       letterToggle: false,
@@ -42,7 +39,6 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useResultsStore, ["recordRunnerResult"]),
     clearStatus: function () {
       this.result.show = false
       this.result.class = ""
