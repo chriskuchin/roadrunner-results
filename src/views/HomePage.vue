@@ -11,6 +11,7 @@
           <div class="dropdown-menu" id="dropdown-menu" role="menu">
             <div class="dropdown-content">
               <a class="dropdown-item" @click="toggleShareModal(race.id)">Add Volunteer</a>
+              <a class="dropdown-item" @click="generateDivisions(race.id)">Generate Divisions</a>
               <hr class="dropdown-divider" />
               <a class="dropdown-item" @click="deleteRace(race.id)">Delete Race</a>
             </div>
@@ -75,9 +76,10 @@
 
 <script>
 import { mapStores, mapState, mapActions } from 'pinia'
-import { useRacesStore } from "../store/races";
-import { useRaceStore } from '../store/race';
-import { useUserStore } from '../store/user';
+import { useRacesStore } from "../store/races"
+import { useRaceStore } from '../store/race'
+import { useUserStore } from '../store/user'
+import { useDivisionsStore } from '../store/divisions'
 import { createRace, deleteRace } from "../api/races"
 import Modal from '../components/Modal.vue'
 import FAB from '../components/Fab.vue'
@@ -171,6 +173,33 @@ export default {
 
       this.toggleShareModal()
     },
+    generateDivisions: async function (raceID) {
+      let year = new Date().getFullYear()
+      let firstDivision = `${year - 6}+`
+      let yougestDivisionFilter = []
+      for (var i = year - 6; i < year; i++) {
+        yougestDivisionFilter.push(`${i}`)
+      }
+      let divisions = {}
+      divisions[firstDivision] = yougestDivisionFilter
+
+      for (var i = 1; i <= 10; i = i + 2) {
+        var high = year - (6 + i)
+        var low = year - (6 + i + 1)
+        var currentDivision = `${low}-${high}`
+
+        divisions[currentDivision] = [`${low}`, `${high}`]
+      }
+      let genders = ["Male", "Female"]
+      Object.keys(divisions).forEach((desc) => {
+        genders.forEach((gender) => {
+          // console.log(desc, divisions[desc], gender)
+          this.createDivision(raceID, `${desc} ${gender}`, [gender], divisions[desc])
+        })
+      })
+      // console.log(divisions)
+    },
+    ...mapActions(useDivisionsStore, ['createDivision']),
     ...mapActions(useRaceStore, ['shareRace'])
   },
   computed: {

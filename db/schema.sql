@@ -68,9 +68,15 @@ CREATE TABLE race_authorization (
   race_id VARCHAR(255),
   permissions TEXT
 );
+CREATE TABLE race_divisions (
+  race_id VARCHAR(255),
+  display VARCHAR(255),
+  filters TEXT
+);
 -- Dbmate schema migrations
 INSERT INTO "schema_migrations" (version) VALUES
   ('20220708034230'),
   ('20230321020148'),
   ('20230813205300'),
-  ('20230829005108');
+  ('20230829005108'),
+  ('20231002012233');

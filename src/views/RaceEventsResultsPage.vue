@@ -126,7 +126,7 @@ export default {
       let year = new Date().getFullYear()
       let firstDivision = `${year - 7}+`
       let yougestDivisionFilter = []
-      for (var i = year - 7; i < year; i++) {
+      for (var i = year - 6; i < year; i++) {
         yougestDivisionFilter.push(i)
       }
       let divisions = {}
@@ -168,6 +168,10 @@ export default {
         this.handleError("Failed retrieving heats")
       else {
         let timers = await res.json()
+
+        if (timers == null) {
+          timers = []
+        }
 
         timers.forEach((element, index) => {
           this.options.heats.push({

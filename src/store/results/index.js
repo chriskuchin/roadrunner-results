@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { setAuthHeader } from '../../api/auth'
+import { getEventResults } from "../../api/events";
 
 export const useResultsStore = defineStore("results", {
   state: () => {
@@ -17,46 +18,14 @@ export const useResultsStore = defineStore("results", {
   },
   actions: {
     getResults: async function (raceID, eventID, name, gender, team, year, timers) {
-      let url = `/api/v1/races/${raceID}/events/${eventID}/results`
-      let filters = new URLSearchParams()
-
-      if (name !== "") {
-        filters.append("name", name)
-      }
-
-      if (timers.length > 0) {
-        timers.forEach((timer) => filters.append("timerId", timer))
-      }
-
-      if (gender.length > 0) {
-        gender.forEach((gender) => filters.append("gender", gender))
-      }
-
-      if (team.length > 0) {
-        team.forEach((team) => filters.append("team", team))
-      }
-
-      if (year.length > 0) {
-        year.forEach((year) => filters.append("year", year))
-      }
-
-      let res = await fetch(url + "?" + filters.toString())
-
-      if (!res.ok) {
-        // this.handleError("Failed retrieving results")
-        console.log("error")
-        return []
-      }
-      else {
-        var results = await res.json()
-        results.forEach((element) => {
-          this.yearOptions.add(element.birth_year)
-          this.teamOptions.add(element.team)
-          this.genderOptions.add(element.gender)
-          this.timerOptions.add(element.timer_id)
-        })
-        return results
-      }
+      var results = await getEventResults(raceID, eventID, name, gender, team, year, timers)
+      results.forEach((element) => {
+        this.yearOptions.add(element.birth_year)
+        this.teamOptions.add(element.team)
+        this.genderOptions.add(element.gender)
+        this.timerOptions.add(element.timer_id)
+      })
+      return results
     },
     recordRunnerResult: async function (runner) {
       let payload = {

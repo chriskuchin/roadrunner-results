@@ -34,6 +34,7 @@ func RacesRoutes(handler *Handler) chi.Router {
 		r.Mount("/volunteers", VolunteerRoutes(handler))
 		r.Mount("/participants", ParticipantsRoutes(handler))
 		r.Mount("/events", EventsRoutes(handler))
+		r.Mount("/divisions", RaceDivisionsRoutes(handler))
 	})
 
 	return r

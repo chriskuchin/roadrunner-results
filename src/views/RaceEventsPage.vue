@@ -1,6 +1,6 @@
 <template>
   <div class="section">
-    <div class="box" v-for="event in raceStore.eventList" :key="event.id">
+    <div class="box" v-for="event in  raceStore.eventList " :key="event.id">
       <div class="has-text-right">
         <div class="dropdown is-hoverable is-right" v-if="isLoggedIn">
           <div class="dropdown-trigger">
@@ -25,7 +25,10 @@
       </div>
       <div class="field has-addons">
         <p class="control">
-          <router-link :to="getResultsLink(event)" class="button is-primary">Results</router-link>
+          <router-link :to="getResultsLink('results', event)" class="button is-primary">Results</router-link>
+        </p>
+        <p class="control">
+          <router-link :to="getResultsLink('divisions', event)" class="button is-link">Division Results</router-link>
         </p>
       </div>
     </div>
@@ -149,8 +152,8 @@ export default {
       this.resetModal()
       this.toggleModal()
     },
-    getResultsLink: function (event) {
-      return this.getBaseEventLink(event) + '/results'
+    getResultsLink: function (page, event) {
+      return this.getBaseEventLink(event) + `/${page}`
     },
     getTimerLink: function (event) {
       return this.getBaseEventLink(event) + "/timer"
