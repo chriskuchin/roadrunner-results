@@ -1,7 +1,7 @@
 <template>
   <div class="section">
-    <div class="box" v-for="division in divisions">
-      <h1 class="title">{{ division.display }}</h1>
+    <div class="box" v-for="(rslts, display) in results">
+      <h1 class="title">{{ display }}</h1>
       <div class="table-container">
         <table class="table" style="min-width: 100%;">
           <thead>
@@ -15,7 +15,7 @@
             <th>Team</th>
           </thead>
           <tbody>
-            <tr v-for="(result, place) in results[division.display]" :key="place">
+            <tr v-for="(result, place) in rslts" :key="place">
               <td>{{ place + 1 }}</td>
               <td>{{ formatMilliseconds(result.result_ms) }}</td>
               <td>{{ result.bib_number }}</td>
@@ -59,7 +59,9 @@ export default {
         }
       })
       getEventResults(this.$route.params.raceId, this.$route.params.eventId, "", genders, [], birthYears, []).then((results) => {
-        this.results[division.display] = results
+        console.log(results.length)
+        if (results.length > 0)
+          this.results[division.display] = results
       })
     })
   },
