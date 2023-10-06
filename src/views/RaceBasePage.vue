@@ -38,7 +38,6 @@ export default {
       return this.$route.path.slice(0, this.$route.path.lastIndexOf('/'))
     },
     isEventPage: function () {
-      console.log(this.$route.params.eventId)
       return this.$route.params.eventId && this.$route.params.eventId != ""
     }
   },

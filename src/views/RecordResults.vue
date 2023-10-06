@@ -85,8 +85,6 @@ export default {
   methods: {
     ...mapActions(useResultsStore, ["recordRunnerResult"]),
     bibInput: async function (e) {
-      console.log(e.bib, "bib")
-
       let ok = await this.recordRunnerResult({
         bib: e.bib,
         raceId: this.$route.params.raceId,

@@ -77,9 +77,7 @@ export default {
     'fab': FAB,
   },
   mounted: function () {
-    console.log('test')
     window.addEventListener('keypress', this.handleKeyboardEvent)
-    console.log('test')
 
     this.listTimers()
     this.loadMedia()

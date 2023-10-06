@@ -166,9 +166,6 @@ export default {
       }
     },
     addVolunteers: async function () {
-      console.log(this.volunteerModal.raceID)
-      console.log(this.volunteerModal.emails)
-
       await this.shareRace(this.volunteerModal.raceID, this.volunteerModal.emails)
 
       this.toggleShareModal()
