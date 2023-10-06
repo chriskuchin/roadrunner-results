@@ -59,7 +59,6 @@ export default {
         }
       })
       getEventResults(this.$route.params.raceId, this.$route.params.eventId, "", genders, [], birthYears, []).then((results) => {
-        console.log(results.length)
         if (results.length > 0)
           this.results[division.display] = results
       })
