@@ -1,7 +1,7 @@
 <template>
   <div class="section">
-    <div class="box" v-for="(rslts, display) in results">
-      <h1 class="title">{{ display }}</h1>
+    <div class="box" v-for="(division) in divisionTables">
+      <h1 class="title">{{ division.display }}</h1>
       <div class="table-container">
         <table class="table" style="min-width: 100%;">
           <thead>
@@ -15,7 +15,7 @@
             <th>Team</th>
           </thead>
           <tbody>
-            <tr v-for="(result, place) in rslts" :key="place">
+            <tr v-for="(result, place) in division.results" :key="place">
               <td>{{ place + 1 }}</td>
               <td>{{ formatMilliseconds(result.result_ms) }}</td>
               <td>{{ result.bib_number }}</td>
@@ -69,7 +69,20 @@ export default {
     formatMilliseconds,
   },
   computed: {
-    ...mapState(useDivisionsStore, ['divisions'])
+    ...mapState(useDivisionsStore, ['divisions']),
+    divisionTables: function () {
+      let tables = []
+      this.divisions.forEach((division) => {
+        if (this.results[division.display] && this.results[division.display].length > 0) {
+          tables.push({
+            display: division.display,
+            results: this.results[division.display],
+          })
+          console.log(division, this.results[division.display])
+        }
+      })
+      return tables
+    }
   }
 }
 </script>
