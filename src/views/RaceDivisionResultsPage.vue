@@ -78,7 +78,6 @@ export default {
             display: division.display,
             results: this.results[division.display],
           })
-          console.log(division, this.results[division.display])
         }
       })
       return tables
