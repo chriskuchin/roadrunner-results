@@ -41,8 +41,21 @@ async function deleteRace(raceID) {
     return []
 }
 
+async function getRaceVolunteers(raceID) {
+    let url = `/api/v1/races/${raceID}/volunteers`
+
+    let res = await fetch(url, await setAuthHeader({}))
+
+    if (res.ok) {
+        return await res.json()
+    }
+
+    return []
+}
+
 export {
     getRaces,
     createRace,
     deleteRace,
+    getRaceVolunteers,
 }

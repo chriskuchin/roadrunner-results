@@ -13,3 +13,10 @@ func handleBadRequest(err error, w http.ResponseWriter, r *http.Request) {
 		"error": fmt.Sprintf("%v", err),
 	})
 }
+
+func handleServerError(err error, w http.ResponseWriter, r *http.Request) {
+	render.Status(r, http.StatusInternalServerError)
+	render.JSON(w, r, map[string]string{
+		"error": fmt.Sprintf("%v", err),
+	})
+}

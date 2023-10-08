@@ -56,7 +56,7 @@ func (api *Handler) authorizeVolunteer(w http.ResponseWriter, r *http.Request) {
 	client, err := api.app.Auth(ctx)
 	if err != nil {
 		log.Error().Err(err).Send()
-		handleBadRequest(err, w, r)
+		handleServerError(err, w, r)
 		return
 	}
 
@@ -88,6 +88,18 @@ func (api *Handler) authorizeVolunteer(w http.ResponseWriter, r *http.Request) {
 }
 
 func (api *Handler) listVolunteers(w http.ResponseWriter, r *http.Request) {
+	ownerID, err := services.GetRaceOwnerID(r.Context(), api.db, util.GetRaceIDFromContext(r.Context()))
+	if err != nil {
+		log.Error().Err(err).Send()
+		handleBadRequest(err, w, r)
+		return
+	}
+
+	if ownerID != util.GetCurrentUserID(r.Context()) {
+		w.WriteHeader(http.StatusForbidden)
+		return
+	}
+
 	userIds, err := services.ListRaceVolunteersUserIDs(r.Context(), api.db, util.GetRaceIDFromContext(r.Context()))
 	if err != nil {
 		handleBadRequest(err, w, r)

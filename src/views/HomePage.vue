@@ -153,7 +153,10 @@ export default {
       }
     },
     appendEmailForShare: function () {
-      let email = this.volunteerModal.emailInput
+      let email = this.volunteerModal.emailInput.trim()
+      if (email == "")
+        return
+
       this.volunteerModal.emailInput = ""
       this.volunteerModal.emails.push({
         email: email
@@ -190,11 +193,9 @@ export default {
       let genders = ["Male", "Female"]
       Object.keys(divisions).forEach((desc) => {
         genders.forEach((gender) => {
-          // console.log(desc, divisions[desc], gender)
           this.createDivision(raceID, `${desc} ${gender}`, [gender], divisions[desc])
         })
       })
-      // console.log(divisions)
     },
     ...mapActions(useDivisionsStore, ['createDivision']),
     ...mapActions(useRaceStore, ['shareRace'])
