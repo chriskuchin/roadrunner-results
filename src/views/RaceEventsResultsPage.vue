@@ -13,17 +13,6 @@
           </div>
         </div>
         <div class="field is-narrow">
-          <div class="control">
-            <div class="select">
-              <select @change="selectDivision">
-                <option selected value="0">Select a Division</option>
-                <option v-for="(division, key) in getDivisions()" :key="key" :value="division">{{ key }}
-                </option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="field is-narrow">
           <div class="select is-multiple">
             <select multiple v-model="filters.timers">
               <option v-for="heat in options.heats" :value="heat.id" :key="heat.id">{{ heat.description }}
@@ -124,7 +113,7 @@ export default {
     ...mapActions(useResultsStore, ['getResults']),
     getDivisions: function () {
       let year = new Date().getFullYear()
-      let firstDivision = `${year - 7}+`
+      let firstDivision = `${year - 6}+`
       let yougestDivisionFilter = []
       for (var i = year - 6; i < year; i++) {
         yougestDivisionFilter.push(i)
@@ -133,8 +122,8 @@ export default {
       divisions[firstDivision] = yougestDivisionFilter
 
       for (var i = 1; i <= 10; i = i + 2) {
-        var high = year - (7 + i)
-        var low = year - (7 + i + 1)
+        var high = year - (6 + i)
+        var low = year - (6 + i + 1)
         var currentDivision = `${low}-${high}`
 
         divisions[currentDivision] = [low, high]
