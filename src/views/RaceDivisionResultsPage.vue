@@ -1,6 +1,6 @@
 <template>
   <div class="section">
-    <div class="box" v-for="(division) in divisionTables">
+    <div class="box" v-for="(division) in  divisionTables ">
       <h1 class="title">{{ division.display }}</h1>
       <div class="table-container">
         <table class="table" style="min-width: 100%;">
@@ -15,10 +15,11 @@
             <th>Team</th>
           </thead>
           <tbody>
-            <tr v-for="(result, place) in division.results" :key="place">
+            <tr v-for="(result, place) in  division.results " :key="place">
               <td>{{ place + 1 }}</td>
               <td>{{ formatMilliseconds(result.result_ms) }}</td>
-              <td>{{ result.bib_number }}</td>
+              <td><a :href="'https://alphapeak.io/events/2023_10_RegionXC/images/photos/' + result.bib_number + '.mp4'">{{
+                result.bib_number }}</a></td>
               <td>{{ result.first_name }}</td>
               <td>{{ result.last_name }}</td>
               <td>{{ result.gender }}</td>
@@ -28,8 +29,6 @@
           </tbody>
         </table>
       </div>
-
-      {{ }}
     </div>
   </div>
 </template>
