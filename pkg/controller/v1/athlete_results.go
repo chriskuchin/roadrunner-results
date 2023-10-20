@@ -1,0 +1,64 @@
+package v1
+
+import (
+	"fmt"
+	"net/http"
+
+	"github.com/chriskuchin/roadrunner-results/pkg/services"
+	"github.com/go-chi/chi"
+	"github.com/go-chi/render"
+)
+
+func AthleteResultsRoutes(handler *Handler) chi.Router {
+	r := chi.NewRouter()
+
+	r.Get("/search", handler.searchResults)
+	// r.Get("/", handler.listEvents)
+	// r.Post("/", handler.addEvent)
+
+	// r.Route("/{eventID}", func(r chi.Router) {
+	// 	r.Use(eventCtx)
+	// 	r.Get("/", handler.getEvent)
+	// 	r.Delete("/", handler.deleteEvent)
+	// 	r.Mount("/results", EventResultsRoutes(handler))
+	// 	r.Mount("/timers", TimerRoutes(handler))
+	// })
+	return r
+}
+
+func (api *Handler) searchResults(w http.ResponseWriter, r *http.Request) {
+	var filter map[string]string = map[string]string{}
+
+	if r.URL.Query().Has("gender") {
+		filter["gender"] = r.URL.Query().Get("gender")
+	}
+
+	if r.URL.Query().Has("first_name") {
+		filter["first_name"] = r.URL.Query().Get("first_name")
+	}
+
+	if r.URL.Query().Has("last_name") {
+		filter["last_name"] = r.URL.Query().Get("last_name")
+	}
+
+	if r.URL.Query().Has("birth_year") {
+		filter["birth_year"] = r.URL.Query().Get("birth_year")
+	}
+
+	if r.URL.Query().Has("type") {
+		filter["type"] = r.URL.Query().Get("type")
+	}
+
+	if len(filter) < 2 {
+		handleBadRequest(fmt.Errorf("not enough filters"), w, r)
+		return
+	}
+
+	results, err := services.FindAthleteResults(r.Context(), api.db, filter)
+	if err != nil {
+		handleServerError(err, w, r)
+		return
+	}
+
+	render.JSON(w, r, results)
+}

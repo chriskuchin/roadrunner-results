@@ -44,6 +44,14 @@ const (
 				race_id = ?
 	`
 
+	selectEventQuery string = `
+		select * from events
+			where
+				race_id = ?
+				and
+				event_id = ?
+	`
+
 	deleteEventQuery string = `
 		delete from events
 			where
@@ -80,8 +88,20 @@ func GetRaceEvents(ctx context.Context, db *sqlx.DB) ([]EventObject, error) {
 	return results, nil
 }
 
-func GetRaceEvent(ctx context.Context) {
+func GetRaceEvent(ctx context.Context, db *sqlx.DB, raceID, eventID string) (EventObject, error) {
+	var event EventRow
 
+	err := db.Get(&event, selectEventQuery, raceID, eventID)
+	if err != nil {
+		return EventObject{}, err
+	}
+
+	return EventObject{
+		EventID:     eventID,
+		Description: event.Description,
+		Type:        event.Type,
+		Distance:    event.Distance,
+	}, nil
 }
 
 func DeleteRaceEvent(ctx context.Context, db *sqlx.DB) error {

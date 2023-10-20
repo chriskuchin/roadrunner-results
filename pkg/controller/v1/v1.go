@@ -50,5 +50,7 @@ func Routes(db *sqlx.DB, app *firebase.App, debug bool) chi.Router {
 
 	r.Mount("/races", RacesRoutes(handler))
 	r.Mount("/google", GoogleRoutes(handler))
+	r.Mount("/athletes/results", AthleteResultsRoutes(handler))
+
 	return r
 }
