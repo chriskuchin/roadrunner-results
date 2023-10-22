@@ -18,8 +18,8 @@ const routes = [
     path: "/races/:raceId", component: RaceBasePage, children: [
       { path: "volunteers", name: "volunteers", component: RaceVolunteersPage },
       { path: "participants", name: "participants", component: RaceParticipants },
+      { path: "divisions", name: "divisions", component: RaceDivisionResultsPage },
       { path: "events", name: "events", component: RaceEventsPage },
-      { path: "events/:eventId/divisions", component: RaceDivisionResultsPage },
       { path: "events/:eventId/record", component: RecordResults, name: "record" },
       { path: "events/:eventId/results", component: RaceEventsResultsPage },
       { path: "events/:eventId/timer", component: RaceTimer, name: "timer" }
