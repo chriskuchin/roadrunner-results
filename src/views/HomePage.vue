@@ -2,7 +2,9 @@
   <div class="section">
     <div class="box" v-for="race in racesStore.getRaces" :key="race.id">
       <div class="has-text-right">
-        <div class="dropdown is-hoverable is-right" v-if="isLoggedIn">
+        <!-- <div :class="['dropdown', 'is-right', { 'is-active': eventContextMenu.active[race.id] }]" v-if="isLoggedIn"
+          @click="contextMenuClick(race.id)"> -->
+        <div :class="['dropdown', 'is-right', 'is-hoverable']" v-if="isLoggedIn">
           <div class="dropdown-trigger">
             <span class="icon is-clickable" aria-haspopup="true" aria-controls="dropdown-menu">
               <icon icon="fa-solid fa-ellipsis-v"></icon>
@@ -11,6 +13,7 @@
           <div class="dropdown-menu" id="dropdown-menu" role="menu">
             <div class="dropdown-content">
               <a class="dropdown-item" @click="toggleShareModal(race.id)">Add Volunteer</a>
+              <!-- <a class="dropdown-item" @click="toggleDivisionModal(race.id)">Manage Divisions</a> -->
               <a class="dropdown-item" @click="generateDivisions(race.id)">Generate Divisions</a>
               <hr class="dropdown-divider" />
               <a class="dropdown-item" @click="deleteRace(race.id)">Delete Race</a>
@@ -30,6 +33,9 @@
     <fab v-if="isLoggedIn" @click="toggleCreateRaceModal"></fab>
     <modal @close="toggleShareModal" :show="volunteerModal.show">
       <div class="title">Add Volunteers</div>
+      <span class="tag is-black mr-2" v-for="volunteer in volunteerModal.volunteers" :key="volunteer.userId">
+        {{ volunteer.email }}
+      </span>
       <div class="field">
         <label class="label">Label</label>
         <div class="control">
@@ -70,6 +76,9 @@
         </div>
       </div>
     </modal>
+    <modal @close="toggleDivisionModal" :show="divisionModal.show">
+      <div v-for="division in divisions">{{ division.display }} - {{ division.filters }}</div>
+    </modal>
     <not :show="error.show" type="is-danger is-light" @close="dismissError">{{ error.msg }}</not>
   </div>
 </template>
@@ -93,11 +102,16 @@ export default {
   },
   data: function () {
     return {
+      divisionModal: {
+        show: false,
+        raceId: "",
+      },
       volunteerModal: {
         show: false,
         emailInput: "",
         raceID: "",
         emails: [],
+        volunteers: [],
       },
       raceModal: {
         show: false,
@@ -107,10 +121,19 @@ export default {
       error: {
         show: false,
         msg: "",
+      },
+      eventContextMenu: {
+        active: {}
       }
     }
   },
   methods: {
+    contextMenuClick: function (raceId) {
+      if (this.eventContextMenu.active[raceId] === undefined)
+        this.eventContextMenu.active[raceId] = false
+
+      this.eventContextMenu.active[raceId] = !this.eventContextMenu.active[raceId]
+    },
     dismissError: function () {
       this.error.show = false
     },
@@ -136,6 +159,12 @@ export default {
         self.error.msg = err
       })
     },
+    toggleDivisionModal: function (raceID) {
+      this.divisionModal.show = !this.divisionModal.show
+      this.load(raceID).then(() => {
+        console.log("Loaded Divisions")
+      })
+    },
     toggleCreateRaceModal: function () {
       this.raceModal.show = !this.raceModal.show
     },
@@ -150,6 +179,10 @@ export default {
         this.volunteerModal.emails = []
         this.volunteerModal.emailInput = ""
         this.volunteerModal.raceID = ""
+      } else {
+        this.listVolunteers(raceID).then((volunteers) => {
+          this.volunteerModal.volunteers = volunteers
+        })
       }
     },
     appendEmailForShare: function () {
@@ -197,12 +230,13 @@ export default {
         })
       })
     },
-    ...mapActions(useDivisionsStore, ['createDivision']),
-    ...mapActions(useRaceStore, ['shareRace'])
+    ...mapActions(useDivisionsStore, ['createDivision', 'load']),
+    ...mapActions(useRaceStore, ['shareRace', 'listVolunteers'])
   },
   computed: {
     ...mapStores(useRacesStore),
     ...mapState(useUserStore, ['isLoggedIn']),
+    ...mapState(useDivisionsStore, ['divisions']),
     raceLink: function (id) {
       return "/races/" + id + "/results"
     }
