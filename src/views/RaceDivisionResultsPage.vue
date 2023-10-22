@@ -1,5 +1,6 @@
 <template>
   <div class="section">
+    {{ events }}
     <div class="box" v-for="(division) in  divisionTables ">
       <h1 class="title">{{ division.display }}</h1>
       <div class="table-container">
@@ -18,8 +19,11 @@
             <tr v-for="(result, place) in  division.results " :key="place">
               <td>{{ place + 1 }}</td>
               <td>{{ formatMilliseconds(result.result_ms) }}</td>
-              <td><a :href="'https://alphapeak.io/events/2023_10_RegionXC/images/photos/' + result.bib_number + '.mp4'">{{
-                result.bib_number }}</a></td>
+              <td>
+                <a :href="'https://alphapeak.io/events/2023_10_RegionXC/images/photos/' + result.bib_number + '.mp4'">
+                  {{ result.bib_number }}
+                </a>
+              </td>
               <td>{{ result.first_name }}</td>
               <td>{{ result.last_name }}</td>
               <td>{{ result.gender }}</td>
@@ -38,34 +42,51 @@ import { mapActions, mapState } from 'pinia';
 import { useDivisionsStore } from '../store/divisions';
 import { getEventResults } from '../api/events';
 import { formatMilliseconds } from "../utilities";
+import { getRaceEvents } from '../api/events';
 
 export default {
   data: function () {
     return {
-      results: {}
+      results: {},
+      events: [],
+      eventId: "",
     }
   },
   mounted: async function () {
-    await this.load(this.$route.params.raceId)
-    this.divisions.forEach((division) => {
-      var genders = []
-      var birthYears = []
-      division.filters.forEach((filter) => {
-        if (filter.key == "gender") {
-          genders = filter.values
-        } else if (filter.key == "birth_year") {
-          birthYears = filter.values
-        }
+    this.events = await getRaceEvents(this.getRaceID())
+    if (this.$route.query.eventId && this.$route.query.eventId != "")
+      this.eventId = this.$route.query.eventId
+    else if (this.events.length > 0)
+      this.eventId = this.events[0].eventId
+
+    await this.load(this.getRaceID())
+  },
+  watch: {
+    eventId(eventId) {
+      this.$router.push({ path: this.$route.path, query: { eventId: eventId } })
+      this.divisions.forEach((division) => {
+        var genders = []
+        var birthYears = []
+        division.filters.forEach((filter) => {
+          if (filter.key == "gender") {
+            genders = filter.values
+          } else if (filter.key == "birth_year") {
+            birthYears = filter.values
+          }
+        })
+        getEventResults(this.getRaceID(), newEventId, "", genders, [], birthYears, []).then((results) => {
+          if (results.length > 0)
+            this.results[division.display] = results
+        })
       })
-      getEventResults(this.$route.params.raceId, this.$route.params.eventId, "", genders, [], birthYears, []).then((results) => {
-        if (results.length > 0)
-          this.results[division.display] = results
-      })
-    })
+    },
   },
   methods: {
     ...mapActions(useDivisionsStore, ['load']),
     formatMilliseconds,
+    getRaceID: function () {
+      return this.$route.params.raceId
+    },
   },
   computed: {
     ...mapState(useDivisionsStore, ['divisions']),
