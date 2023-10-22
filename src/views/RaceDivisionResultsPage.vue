@@ -1,7 +1,26 @@
 <template>
   <div class="section">
-    {{ events }}
-    <div class="box" v-for="(division) in  divisionTables ">
+    <div class="field">
+      <div class="control">
+        <label class="label is-large">Event</label>
+        <div class="select is-large">
+          <select v-model="eventId">
+            <option v-for="event in events" :id="event.eventId" :value="event.eventId">{{ event.description }}</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- <div class="control">
+        <label class="label is-large">Division</label>
+        <div class="select is-large">
+          <select v-model="activeDivisions">
+            <option v-for="division in divisions" :id="division" :value="division">{{ division.display }}</option>
+          </select>
+        </div>
+      </div> -->
+    </div>
+
+    <div class="box" v-for="(division) in  divisionTables" :key="division">
       <h1 class="title">{{ division.display }}</h1>
       <div class="table-container">
         <table class="table" style="min-width: 100%;">
@@ -50,19 +69,21 @@ export default {
       results: {},
       events: [],
       eventId: "",
+      activeDivisions: {}
     }
   },
   mounted: async function () {
+    await this.load(this.getRaceID())
+
     this.events = await getRaceEvents(this.getRaceID())
     if (this.$route.query.eventId && this.$route.query.eventId != "")
       this.eventId = this.$route.query.eventId
     else if (this.events.length > 0)
       this.eventId = this.events[0].eventId
-
-    await this.load(this.getRaceID())
   },
   watch: {
     eventId(eventId) {
+      this.results = {}
       this.$router.push({ path: this.$route.path, query: { eventId: eventId } })
       this.divisions.forEach((division) => {
         var genders = []
@@ -74,7 +95,7 @@ export default {
             birthYears = filter.values
           }
         })
-        getEventResults(this.getRaceID(), newEventId, "", genders, [], birthYears, []).then((results) => {
+        getEventResults(this.getRaceID(), eventId, "", genders, [], birthYears, []).then((results) => {
           if (results.length > 0)
             this.results[division.display] = results
         })

@@ -28,7 +28,7 @@
           <router-link :to="getResultsLink('results', event)" class="button is-primary">Results</router-link>
         </p>
         <p class="control">
-          <router-link :to="getResultsLink('divisions', event)" class="button is-link">Division Results</router-link>
+          <router-link :to="getDivisionsLink(event)" class="button is-link">Division Results</router-link>
         </p>
       </div>
     </div>
@@ -151,6 +151,9 @@ export default {
     modalCancel: function () {
       this.resetModal()
       this.toggleModal()
+    },
+    getDivisionsLink: function (event) {
+      return `/races/${this.$route.params.raceId}/divisions?eventId=${event.eventId}`
     },
     getResultsLink: function (page, event) {
       return this.getBaseEventLink(event) + `/${page}`
