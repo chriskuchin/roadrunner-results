@@ -13,16 +13,6 @@ func AthleteResultsRoutes(handler *Handler) chi.Router {
 	r := chi.NewRouter()
 
 	r.Get("/search", handler.searchResults)
-	// r.Get("/", handler.listEvents)
-	// r.Post("/", handler.addEvent)
-
-	// r.Route("/{eventID}", func(r chi.Router) {
-	// 	r.Use(eventCtx)
-	// 	r.Get("/", handler.getEvent)
-	// 	r.Delete("/", handler.deleteEvent)
-	// 	r.Mount("/results", EventResultsRoutes(handler))
-	// 	r.Mount("/timers", TimerRoutes(handler))
-	// })
 	return r
 }
 
