@@ -36,6 +36,20 @@ const (
 				race_id = ?
 	`
 
+	selectRaceFinisherCountQuery = `
+		select count(1) from results
+			where
+				race_id = ?
+	`
+
+	selectEventFinisherCountQuery = `
+	select count(1) from results
+		where
+			race_id = ?
+			and
+			event_id = ?
+`
+
 	selectRaceParticipantGenderCountQuery = `
 		select gender, count(1) from participants
 			where race_id = ?
@@ -134,6 +148,36 @@ func ListParticipants(ctx context.Context, db *sqlx.DB, limit, offset int, filte
 	return results, nil
 }
 
+func GetEventFinisherCount(ctx context.Context, db *sqlx.DB, raceID, eventID string) (int, error) {
+	rows, err := db.Query(selectEventFinisherCountQuery, raceID, eventID)
+	if err != nil {
+		return 0, err
+	}
+
+	for rows.Next() {
+		var count int
+		rows.Scan(&count)
+
+		return count, nil
+	}
+	return 0, nil
+}
+
+func GetRaceFinisherCount(ctx context.Context, db *sqlx.DB) (int, error) {
+	rows, err := db.Query(selectRaceFinisherCountQuery, util.GetRaceIDFromContext(ctx))
+	if err != nil {
+		return 0, err
+	}
+
+	for rows.Next() {
+		var count int
+		rows.Scan(&count)
+
+		return count, err
+	}
+	return 0, err
+}
+
 func GetRaceGenderCount(ctx context.Context, db *sqlx.DB) (female int, male int, err error) {
 	rows, err := db.Query(selectRaceParticipantGenderCountQuery, util.GetRaceIDFromContext(ctx))
 	if err != nil {
@@ -144,9 +188,9 @@ func GetRaceGenderCount(ctx context.Context, db *sqlx.DB) (female int, male int,
 		var gender string
 		var count int
 		rows.Scan(&gender, &count)
-		if gender == "F" {
+		if gender == "Female" {
 			female = count
-		} else if gender == "M" {
+		} else if gender == "Male" {
 			male = count
 		}
 	}

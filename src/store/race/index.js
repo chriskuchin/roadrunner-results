@@ -10,9 +10,10 @@ export const useRaceStore = defineStore("race", {
     events: [],
     participantStats: {
       total: 0,
+      finishers: 0,
       male: 0,
       female: 0,
-      birthYearDistro: []
+      birthYearDistro: [],
     }
   }),
   getters: {
@@ -20,6 +21,7 @@ export const useRaceStore = defineStore("race", {
     getName: state => state.name,
     yearLabels: state => [...new Set(state.participantStats.birthYearDistro.map(row => row.year))],
     totalParticipants: state => state.participantStats.total,
+    totalFinishers: state => state.participantStats.finishers,
     eventTotal: state => state.eventCount,
     eventList: state => state.events,
     eventName: state => {
@@ -35,7 +37,7 @@ export const useRaceStore = defineStore("race", {
     maleValues() {
       let values = []
       this.yearLabels.forEach(year => {
-        let val = this.participantStats.birthYearDistro.filter(val => val.gender == "M" && val.year == year).map(val => val.count)
+        let val = this.participantStats.birthYearDistro.filter(val => val.gender == "Male" && val.year == year).map(val => val.count)
 
         if (val.length > 0)
           values.push(val[0])
@@ -48,7 +50,7 @@ export const useRaceStore = defineStore("race", {
     femaleValues() {
       let values = []
       this.yearLabels.forEach(year => {
-        let val = this.participantStats.birthYearDistro.filter(val => val.gender == "F" && val.year == year).map(val => val.count)
+        let val = this.participantStats.birthYearDistro.filter(val => val.gender == "Female" && val.year == year).map(val => val.count)
 
         if (val.length > 0)
           values.push(val[0])
@@ -99,6 +101,7 @@ export const useRaceStore = defineStore("race", {
       this.participantStats.male = race.participant_stats.male
       this.participantStats.female = race.participant_stats.female
       this.participantStats.total = race.participant_stats.total
+      this.participantStats.finishers = race.participant_stats.finishers
       this.eventCount = race.eventCount
       this.events = race.events
     }

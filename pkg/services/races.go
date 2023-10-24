@@ -43,14 +43,23 @@ type RaceResult struct {
 	ID               string            `json:"id"`
 	OwnerID          string            `json:"owner_id"`
 	EventCount       int               `json:"event_count,omitempty"`
-	Events           []EventObject     `json:"events,omitempty"`
+	Events           []EventStats      `json:"events,omitempty"`
 	ParticipantStats *ParticipantStats `json:"participant_stats,omitempty"`
+}
+
+type EventStats struct {
+	EventID     string `json:"eventId"`
+	Description string `json:"description"`
+	Type        string `json:"type"`
+	Distance    int    `json:"distance"`
+	Finishers   int    `json:"finishers"`
 }
 
 type ParticipantStats struct {
 	MaleCount          int                      `json:"male,omitempty"`
 	FemaleCount        int                      `json:"female,omitempty"`
 	Total              int                      `json:"total,omitempty"`
+	Finishers          int                      `json:"finishers,omitempty"`
 	BirthYearHistogram []map[string]interface{} `json:"birth_year_distribution,omitempty"`
 }
 
@@ -90,6 +99,11 @@ func GetRace(ctx context.Context, db *sqlx.DB) (RaceResult, error) {
 		log.Error().Err(err).Send()
 	}
 
+	finisherCount, err := GetRaceFinisherCount(ctx, db)
+	if err != nil {
+		log.Error().Err(err).Send()
+	}
+
 	femaleCount, maleCount, err := GetRaceGenderCount(ctx, db)
 	if err != nil {
 		log.Error().Err(err).Send()
@@ -105,13 +119,18 @@ func GetRace(ctx context.Context, db *sqlx.DB) (RaceResult, error) {
 		log.Error().Err(err).Send()
 	}
 
-	eventResults := []EventObject{}
+	eventResults := []EventStats{}
 	for _, event := range events {
-		eventResults = append(eventResults, EventObject{
+		finisherCount, err := GetEventFinisherCount(ctx, db, util.GetRaceIDFromContext(ctx), event.EventID)
+		if err != nil {
+			log.Error().Err(err).Send()
+		}
+		eventResults = append(eventResults, EventStats{
 			Description: event.Description,
 			EventID:     event.EventID,
 			Type:        event.Type,
 			Distance:    event.Distance,
+			Finishers:   finisherCount,
 		})
 	}
 
@@ -123,6 +142,7 @@ func GetRace(ctx context.Context, db *sqlx.DB) (RaceResult, error) {
 		Events:     eventResults,
 		ParticipantStats: &ParticipantStats{
 			Total:              participantCount,
+			Finishers:          finisherCount,
 			FemaleCount:        femaleCount,
 			MaleCount:          maleCount,
 			BirthYearHistogram: birthYearDistro,

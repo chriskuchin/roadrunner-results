@@ -11,11 +11,13 @@ const RaceEventsResultsPage = () => import('../views/RaceEventsResultsPage.vue')
 const RaceParticipants = () => import('../views/RaceParticipants.vue')
 const RaceDivisionResultsPage = () => import('../views/RaceDivisionResultsPage.vue')
 const RaceVolunteersPage = () => import('../views/RaceVolunteers.vue')
+const RaceInfoPage = () => import('../views/RacePage.vue')
 
 const routes = [
   { path: "/", component: HomePage },
   {
     path: "/races/:raceId", component: RaceBasePage, children: [
+      { path: "", name: "info", component: RaceInfoPage },
       { path: "volunteers", name: "volunteers", component: RaceVolunteersPage },
       { path: "participants", name: "participants", component: RaceParticipants },
       { path: "divisions", name: "divisions", component: RaceDivisionResultsPage },

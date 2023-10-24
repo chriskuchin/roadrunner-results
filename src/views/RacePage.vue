@@ -10,15 +10,21 @@
       <div class="level-item has-text-centered">
         <div>
           <p class="heading">Finishers</p>
-          <p class="title">{{ eventTotal }}</p>
+          <p class="title">{{ totalFinishers }}</p>
         </div>
       </div>
       <div class="level-item has-text-centered">
         <div>
+          <p class="heading">Finish Rate</p>
+          <p class="title">{{ (totalFinishers / totalParticipants * 100).toFixed(2) }}%</p>
+        </div>
+      </div>
+      <!-- <div class="level-item has-text-centered">
+        <div>
           <p class="heading">Events</p>
           <p class="title">{{ events.length }}</p>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="tile is-ancestor">
       <div class="tile is-parent">
@@ -30,8 +36,8 @@
           <p class="title">Events</p>
           <ul class="has-text-centered">
             <li v-for="event in events" :key="event.eventId">
-              <router-link :to="'/races/' + this.$route.params.raceId + '/events/' + event.eventId">
-                {{ event.description }}
+              <router-link :to="'/races/' + this.$route.params.raceId + '/divisions?eventsId=' + event.eventId">
+                {{ event.description }} ({{ event.finishers }})
               </router-link>
             </li>
           </ul>
@@ -105,7 +111,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(useRaceStore, ['yearLabels', 'maleValues', 'femaleValues', 'totalParticipants', 'eventTotal', 'events'])
+    ...mapState(useRaceStore, ['yearLabels', 'maleValues', 'femaleValues', 'totalParticipants', 'totalFinishers', 'eventTotal', 'events'])
   }
 };
 </script>
