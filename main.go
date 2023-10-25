@@ -9,8 +9,8 @@ import (
 
 	firebase "firebase.google.com/go/v4"
 	"github.com/chriskuchin/roadrunner-results/pkg/controller"
-	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/rs/zerolog"

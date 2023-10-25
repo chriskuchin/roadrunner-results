@@ -9,7 +9,7 @@ import (
 	"firebase.google.com/go/v4/auth"
 	v1 "github.com/chriskuchin/roadrunner-results/pkg/controller/v1"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
 	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"

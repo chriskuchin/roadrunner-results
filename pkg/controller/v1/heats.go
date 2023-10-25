@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 	"github.com/rs/zerolog/log"
 )
 

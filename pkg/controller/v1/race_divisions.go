@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
-	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/render"
 )
 
