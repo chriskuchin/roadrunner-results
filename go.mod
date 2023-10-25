@@ -8,7 +8,7 @@ require (
 	github.com/aws/aws-sdk-go-v2/config v1.19.1
 	github.com/aws/aws-sdk-go-v2/credentials v1.13.43
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.40.2
-	github.com/go-chi/chi v1.5.5
+	github.com/go-chi/chi v4.1.2+incompatible
 	github.com/go-chi/cors v1.2.1
 	github.com/go-chi/render v1.0.3
 	github.com/google/uuid v1.3.1
