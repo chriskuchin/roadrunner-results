@@ -5,27 +5,28 @@
     {{ athlete.birth_year }}
     {{ athlete.gender }}
 
-    <table class="table" style="min-width: 100%;">
-      <thead>
-        <th><abbr title="Event">evt</abbr></th>
-        <th><abbr title="Distance (miles)">miles</abbr></th>
-        <th><abbr title="Distance (kilometers)">kms</abbr></th>
-        <th><abbr title="Pace (min/mile)">min/mile</abbr></th>
-        <th><abbr title="Pace (min/km)">min/km</abbr></th>
-        <th><abbr title="Time">time</abbr></th>
-      </thead>
-      <tbody>
-        <tr v-for="result in results">
-          <td>{{ result.event.description }}</td>
-          <td>{{ calculateMiles(result.event.distance) }}</td>
-          <td>{{ calculateKilometers(result.event.distance) }}</td>
-          <td>{{ formatMilliseconds(calculatePerMilePace(result.result, result.event.distance)) }} per mile</td>
-          <td>{{ formatMilliseconds(calculatePerKPace(result.result, result.event.distance)) }} per kilometer</td>
-          <td>{{ formatMilliseconds(result.result) }}</td>
-        </tr>
-      </tbody>
-    </table>
-
+    <div class="table-container">
+      <table class="table" style="min-width: 100%;">
+        <thead>
+          <th><abbr title="Event">evt</abbr></th>
+          <th><abbr title="Distance (miles)">miles</abbr></th>
+          <th><abbr title="Distance (kilometers)">kms</abbr></th>
+          <th><abbr title="Pace (min/mile)">min/mile</abbr></th>
+          <th><abbr title="Pace (min/km)">min/km</abbr></th>
+          <th><abbr title="Time">time</abbr></th>
+        </thead>
+        <tbody>
+          <tr v-for="result in results">
+            <td>{{ result.event.description }}</td>
+            <td>{{ calculateMiles(result.event.distance).toFixed(2) }}</td>
+            <td>{{ calculateKilometers(result.event.distance).toFixed(2) }}</td>
+            <td>{{ formatMilliseconds(calculatePerMilePace(result.result, result.event.distance)) }} min/mile</td>
+            <td>{{ formatMilliseconds(calculatePerKPace(result.result, result.event.distance)) }} min/km</td>
+            <td>{{ formatMilliseconds(result.result) }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
   </div>
 </template>
