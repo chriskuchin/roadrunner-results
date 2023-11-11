@@ -33,6 +33,7 @@
             <th>Gender</th>
             <th>Birth Year</th>
             <th>Team</th>
+            <th>Other</th>
           </thead>
           <tbody>
             <tr v-for="(result, place) in  division.results " :key="place">
@@ -48,6 +49,11 @@
               <td>{{ result.gender }}</td>
               <td>{{ result.birth_year }}</td>
               <td>{{ result.team }}</td>
+              <td>
+                <router-link :to="getResultsLink(result.first_name, result.last_name, result.birth_year, result.gender)">
+                  results
+                </router-link>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -108,6 +114,18 @@ export default {
     getRaceID: function () {
       return this.$route.params.raceId
     },
+    getResultsLink: function (first_name, last_name, birth_year, gender) {
+      let url = `/athlete`
+      let filters = new URLSearchParams()
+
+      filters.append("first_name", first_name)
+      filters.append("last_name", last_name)
+      filters.append("gender", gender)
+      filters.append("birth_year", birth_year)
+
+      // let res = await fetch(, await setAuthHeader({}))
+      return url + "?" + filters.toString()
+    }
   },
   computed: {
     ...mapState(useDivisionsStore, ['divisions']),
