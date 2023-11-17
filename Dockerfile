@@ -4,7 +4,7 @@ ADD . /public
 WORKDIR /public
 RUN npm install && npm run build
 
-FROM --platform=$BUILDPLATFORM golang:1.21-alpine3.19 AS builder
+FROM --platform=$BUILDPLATFORM golang:1.21-alpine3.18 AS builder
 
 COPY ${PWD} /app
 WORKDIR /app
@@ -18,7 +18,7 @@ RUN GOOS=$TARGETOS GOARCH=$TARGETARCH CGO_ENABLED=1 go build -ldflags '-s -w -ex
 RUN curl -fsSL -o /go/bin/dbmate https://github.com/amacneil/dbmate/releases/latest/download/dbmate-$TARGETOS-${TARGETARCH} && \
     chmod +x /go/bin/dbmate
 
-FROM alpine:3.19
+FROM alpine:3.18
 LABEL MAINTAINER Chris Kuchin <github@kchn.dev>
 
 ENV FRONTEND_FOLDER /home/appuser/app/public/dist
