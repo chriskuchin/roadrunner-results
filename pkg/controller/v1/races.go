@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/google"
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
@@ -83,15 +84,19 @@ func (api *Handler) createRace(w http.ResponseWriter, r *http.Request) {
 		})
 	}
 
-	raceID, err := services.CreateRace(ctx, api.db, raceRequest.Name)
-	if err != nil {
-		log.Error().Err(err).Send()
-		render.Status(r, http.StatusInternalServerError)
-		response := map[string]string{
-			"error": fmt.Sprintf("%v", err),
+	var date time.Time = time.Now()
+	if raceRequest.Date != "" {
+		var err error
+		date, err = time.Parse("2006-01-02", raceRequest.Date)
+		if err != nil {
+			handleBadRequest(err, w, r)
+			return
 		}
-		render.JSON(w, r, response)
+	}
 
+	raceID, err := services.CreateRace(ctx, api.db, raceRequest.Name, date)
+	if err != nil {
+		handleServerError(err, w, r)
 		return
 	}
 
@@ -169,4 +174,5 @@ func raceCtx(next http.Handler) http.Handler {
 
 type RaceRequest struct {
 	Name string `json:"name"`
+	Date string `json:"date"`
 }

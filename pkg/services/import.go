@@ -7,6 +7,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/jmoiron/sqlx"
@@ -28,7 +29,7 @@ func ImportFromSheet(ctx context.Context, db *sqlx.DB, sheetId string) {
 		return
 	}
 
-	err = CreateRaceWithID(ctx, db, sheetId, rslt.Properties.Title)
+	err = CreateRaceWithID(ctx, db, sheetId, rslt.Properties.Title, time.Now())
 	if err != nil {
 		log.Error().Err(err).Send()
 	}

@@ -2,8 +2,11 @@ package services
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
+	"strconv"
 	"strings"
+	"time"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/google/uuid"
@@ -21,9 +24,10 @@ const (
 		insert into races (
 			race_id,
 			race_name,
-			owner_id
+			owner_id,
+			race_date
 		)
-		VALUES(?, ?, ?)
+		VALUES(?, ?, ?, ?)
 	`
 	selectRaceEventCountQuery string = `
 		select count(1) from events
@@ -33,13 +37,15 @@ const (
 )
 
 type RaceRow struct {
-	Name    string `db:"race_name"`
-	ID      string `db:"race_id"`
-	OwnerID string `db:"owner_id"`
+	Name     string        `db:"race_name"`
+	ID       string        `db:"race_id"`
+	OwnerID  string        `db:"owner_id"`
+	RaceDate sql.NullInt64 `db:"race_date"`
 }
 
 type RaceResult struct {
 	Name             string            `json:"name"`
+	Date             *string           `json:"date,omitempty"`
 	ID               string            `json:"id"`
 	OwnerID          string            `json:"owner_id"`
 	EventCount       int               `json:"event_count,omitempty"`
@@ -150,14 +156,20 @@ func GetRace(ctx context.Context, db *sqlx.DB) (RaceResult, error) {
 	}, nil
 }
 
-func CreateRace(ctx context.Context, db *sqlx.DB, name string) (string, error) {
+func CreateRace(ctx context.Context, db *sqlx.DB, name string, date time.Time) (string, error) {
 	id := uuid.NewString()
-	err := CreateRaceWithID(ctx, db, id, name)
+	err := CreateRaceWithID(ctx, db, id, name, date)
 	return id, err
 }
 
-func CreateRaceWithID(ctx context.Context, db *sqlx.DB, id, name string) error {
-	_, err := db.Exec(createRaceQuery, id, name, util.GetCurrentUserID(ctx))
+func CreateRaceWithID(ctx context.Context, db *sqlx.DB, id, name string, date time.Time) error {
+	dateNum, err := strconv.Atoi(date.Format("20060102"))
+	if err != nil {
+		log.Error().Err(err).Send()
+		return err
+	}
+	_, err = db.Exec(createRaceQuery, id, name, util.GetCurrentUserID(ctx), dateNum)
+	log.Error().Err(err).Int("date", dateNum).Send()
 	return err
 }
 
@@ -171,11 +183,19 @@ func ListRaces(ctx context.Context, db *sqlx.DB) ([]RaceResult, error) {
 
 	result := []RaceResult{}
 	for _, race := range races {
-		result = append(result, RaceResult{
+		entry := RaceResult{
 			Name:    race.Name,
 			ID:      race.ID,
 			OwnerID: race.OwnerID,
-		})
+		}
+		if race.RaceDate.Valid {
+			date, err := time.Parse("20060102", fmt.Sprintf("%d", race.RaceDate.Int64))
+			if err == nil {
+				formatted := date.Format("2006-01-02")
+				entry.Date = &formatted
+			}
+		}
+		result = append(result, entry)
 	}
 	return result, nil
 }

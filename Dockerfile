@@ -1,22 +1,24 @@
-FROM node:18-alpine AS webpack
+FROM --platform=$BUILDPLATFORM node:18-alpine AS webpack
 
 ADD . /public
 WORKDIR /public
 RUN npm install && npm run build
 
-FROM golang:1.21-alpine3.18 AS builder
+FROM --platform=$BUILDPLATFORM golang:1.21-alpine3.19 AS builder
 
 COPY ${PWD} /app
 WORKDIR /app
 
-RUN apk update && apk add --no-cache musl-dev gcc build-base
-RUN CGO_ENABLED=1 go build -ldflags '-s -w -extldflags "-static"' -o /app/appbin *.go
+RUN apk update && apk add --no-cache curl musl-dev gcc build-base
 
-RUN apk add curl && \
-    curl -fsSL -o /go/bin/dbmate https://github.com/amacneil/dbmate/releases/latest/download/dbmate-linux-amd64 && \
+ARG TARGETOS
+ARG TARGETARCH
+RUN GOOS=$TARGETOS GOARCH=$TARGETARCH CGO_ENABLED=1 go build -ldflags '-s -w -extldflags "-static"' -o /app/appbin *.go
+
+RUN curl -fsSL -o /go/bin/dbmate https://github.com/amacneil/dbmate/releases/latest/download/dbmate-$TARGETOS-${TARGETARCH} && \
     chmod +x /go/bin/dbmate
 
-FROM alpine:3.18
+FROM alpine:3.19
 LABEL MAINTAINER Chris Kuchin <github@kchn.dev>
 
 ENV FRONTEND_FOLDER /home/appuser/app/public/dist

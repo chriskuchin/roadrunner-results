@@ -68,6 +68,12 @@
           <input class="input" type="text" placeholder="Race Description" v-model="raceModal.description">
         </div>
       </div>
+      <div class="field">
+        <label class="label">Description</label>
+        <div class="control">
+          <input class="input" type="date" placeholder="" v-model="raceModal.date"> {{ raceModal.date }}
+        </div>
+      </div>
       <div class="field is-grouped">
         <div class="control">
           <button :class="['button', 'is-link', { 'is-loading': raceModal.creating }]" @click="createRace">Submit</button>
@@ -118,6 +124,7 @@ export default {
         show: false,
         creating: false,
         description: "",
+        date: "",
       },
       error: {
         show: false,
@@ -141,7 +148,7 @@ export default {
     createRace: function () {
       var self = this
       self.raceModal.creating = true
-      createRace(self.raceModal.description).then(() => {
+      createRace(self.raceModal.description, self.raceModal.date).then(() => {
         self.raceModal.creating = false
         self.raceModal.description = ""
         self.toggleCreateRaceModal()

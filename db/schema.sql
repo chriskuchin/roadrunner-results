@@ -2,7 +2,8 @@ CREATE TABLE IF NOT EXISTS "schema_migrations" (version varchar(128) primary key
 CREATE TABLE races (
     race_id varchar(255) UNIQUE,
     owner_id varchar(255),
-    race_name varchar(255)
+    race_name varchar(255),
+    race_date INTEGER DEFAULT NULL
 );
 CREATE TABLE events (
     race_id varchar(255),
@@ -79,4 +80,5 @@ INSERT INTO "schema_migrations" (version) VALUES
   ('20230321020148'),
   ('20230813205300'),
   ('20230829005108'),
-  ('20231002012233');
+  ('20231002012233'),
+  ('20231114033313');

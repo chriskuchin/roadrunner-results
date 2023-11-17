@@ -11,14 +11,15 @@ async function getRaces() {
     return []
 }
 
-async function createRace(description) {
+async function createRace(description, date) {
     let res = await fetch("/api/v1/races", await setAuthHeader({
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            name: description
+            name: description,
+            date: date
         })
     }))
 
