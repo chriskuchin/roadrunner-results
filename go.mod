@@ -7,7 +7,7 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.23.0
 	github.com/aws/aws-sdk-go-v2/config v1.25.2
 	github.com/aws/aws-sdk-go-v2/credentials v1.16.1
-	github.com/aws/aws-sdk-go-v2/service/s3 v1.42.2
+	github.com/aws/aws-sdk-go-v2/service/s3 v1.43.0
 	github.com/go-chi/chi/v5 v5.0.10
 	github.com/go-chi/cors v1.2.1
 	github.com/go-chi/render v1.0.3
