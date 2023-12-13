@@ -13,13 +13,14 @@
       godef
       golint
       gcc
-      nodejs_18
+      nodejs_21
       sqlite
       rsync
       nomad
       vault
       dig
       vegeta
+      just
     ];
 
     LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";

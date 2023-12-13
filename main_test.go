@@ -17,6 +17,7 @@ import (
 var finishersRE = regexp.MustCompile(`\s?(\d+)\s+([\w-]+)\s([\w-]+)\s+([\w\s-]+)\s+((\d+:)?\d+.\d+)`)
 var nonFinishersRE = regexp.MustCompile(`\s+(--)\s+([\w-]+)\s([\w-]+)\s+([\w\s-]+)\s+(DNS)`)
 var headerRE = regexp.MustCompile(`\s*Athlete\s*Yr\s*Team\s*Time`)
+var headerDistanceRE = regexp.MustCompile(`(\d+)\s(meter|kilometer|mile|km|m)`)
 
 func Test_WebScrapingMileSplit(t *testing.T) {
 	c := colly.NewCollector()
@@ -28,9 +29,9 @@ func Test_WebScrapingMileSplit(t *testing.T) {
 
 		for _, result := range results {
 			if finishersRE.MatchString(result) {
-				fmt.Println("matched", result)
+				// fmt.Println("matched", result)
 			} else if nonFinishersRE.MatchString(result) {
-				fmt.Printf("dns: \"%s\"\n", result)
+				// fmt.Printf("dns: \"%s\"\n", result)
 			} else if !strings.HasPrefix(result, "===") && !headerRE.MatchString(result) && strings.TrimSpace(result) != "" {
 				fmt.Printf("event: \"%s\"\n", result)
 			}
