@@ -1,0 +1,32 @@
+[devshell]
+packages = [
+  "gotools",
+  "gopls",
+  "go-outline",
+  "gocode",
+  "gopkgs",
+  "gocode-gomod",
+  "godef",
+  "golint",
+  "golangci-lint",
+  "gcc",
+  "nodejs_21",
+  "sqlite",
+  "rsync",
+  "nomad",
+  "vault",
+  "dig",
+  "vegeta"
+]
+
+[[commands]]
+package = "git"
+
+[[commands]]
+package = "go"
+
+[[commands]]
+package = "just"
+
+[[commands]]
+package = "biome"

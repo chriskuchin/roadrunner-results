@@ -1,41 +1,57 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from "vue-router";
 
-const HomePage = () => import('../views/HomePage.vue')
-const RaceTimer = () => import('../views/RaceTimer.vue')
-const RecordResults = () => import('../views/RecordResults.vue')
-const LoginPage = () => import('../views/LoginPage.vue')
-const SignupPage = () => import('../views/SignupPage.vue')
-const RaceBasePage = () => import('../views/RaceBasePage.vue')
-const RaceEventsPage = () => import('../views/RaceEventsPage.vue')
-const RaceEventsResultsPage = () => import('../views/RaceEventsResultsPage.vue')
-const RaceParticipants = () => import('../views/RaceParticipants.vue')
-const RaceDivisionResultsPage = () => import('../views/RaceDivisionResultsPage.vue')
-const RaceVolunteersPage = () => import('../views/RaceVolunteers.vue')
-const RaceInfoPage = () => import('../views/RacePage.vue')
-const AthletePage = () => import('../views/AthletePage.vue')
+const HomePage = () => import("../views/HomePage.vue");
+const RaceTimer = () => import("../views/RaceTimer.vue");
+const RecordResults = () => import("../views/RecordResults.vue");
+const LoginPage = () => import("../views/LoginPage.vue");
+const SignupPage = () => import("../views/SignupPage.vue");
+const RaceBasePage = () => import("../views/RaceBasePage.vue");
+const RaceEventsPage = () => import("../views/RaceEventsPage.vue");
+const RaceEventsResultsPage = () =>
+	import("../views/RaceEventsResultsPage.vue");
+const RaceParticipants = () => import("../views/RaceParticipants.vue");
+const RaceDivisionResultsPage = () =>
+	import("../views/RaceDivisionResultsPage.vue");
+const RaceVolunteersPage = () => import("../views/RaceVolunteers.vue");
+const RaceInfoPage = () => import("../views/RacePage.vue");
+const AthletePage = () => import("../views/AthletePage.vue");
 
 const routes = [
-  { path: "/", component: HomePage },
-  { path: "/athlete", component: AthletePage },
-  {
-    path: "/races/:raceId", component: RaceBasePage, children: [
-      { path: "", name: "info", component: RaceInfoPage },
-      { path: "volunteers", name: "volunteers", component: RaceVolunteersPage },
-      { path: "participants", name: "participants", component: RaceParticipants },
-      { path: "divisions", name: "divisions", component: RaceDivisionResultsPage },
-      { path: "events", name: "events", component: RaceEventsPage },
-      { path: "events/:eventId/record", component: RecordResults, name: "record" },
-      { path: "events/:eventId/results", component: RaceEventsResultsPage },
-      { path: "events/:eventId/timer", component: RaceTimer, name: "timer" }
-    ]
-  },
-  { path: "/login", component: LoginPage },
-  { path: "/signup", component: SignupPage }
-]
+	{ path: "/", component: HomePage },
+	{ path: "/athlete", component: AthletePage },
+	{
+		path: "/races/:raceId",
+		component: RaceBasePage,
+		children: [
+			{ path: "", name: "info", component: RaceInfoPage },
+			{ path: "volunteers", name: "volunteers", component: RaceVolunteersPage },
+			{
+				path: "participants",
+				name: "participants",
+				component: RaceParticipants,
+			},
+			{
+				path: "divisions",
+				name: "divisions",
+				component: RaceDivisionResultsPage,
+			},
+			{ path: "events", name: "events", component: RaceEventsPage },
+			{
+				path: "events/:eventId/record",
+				component: RecordResults,
+				name: "record",
+			},
+			{ path: "events/:eventId/results", component: RaceEventsResultsPage },
+			{ path: "events/:eventId/timer", component: RaceTimer, name: "timer" },
+		],
+	},
+	{ path: "/login", component: LoginPage },
+	{ path: "/signup", component: SignupPage },
+];
 
 const router = new createRouter({
-  history: createWebHistory(),
-  routes
-})
+	history: createWebHistory(),
+	routes,
+});
 
-export default router
+export default router;

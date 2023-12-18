@@ -14,3 +14,6 @@ webpack:
 
 webpack-debug:
   npx webpack --mode=development
+
+fmt:
+  biome format . --write

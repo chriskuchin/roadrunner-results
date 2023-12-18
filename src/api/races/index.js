@@ -1,62 +1,61 @@
-import { setAuthHeader } from '../auth'
+import { setAuthHeader } from "../auth";
 
 async function getRaces() {
-    let res = await fetch("/api/v1/races", await setAuthHeader({
-        method: "GET",
-    }))
+	const res = await fetch(
+		"/api/v1/races",
+		await setAuthHeader({
+			method: "GET",
+		}),
+	);
 
-    if (res.ok)
-        return await res.json()
+	if (res.ok) return await res.json();
 
-    return []
+	return [];
 }
 
 async function createRace(description, date) {
-    let res = await fetch("/api/v1/races", await setAuthHeader({
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            name: description,
-            date: date
-        })
-    }))
+	const res = await fetch(
+		"/api/v1/races",
+		await setAuthHeader({
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				name: description,
+				date: date,
+			}),
+		}),
+	);
 
-    if (!res.ok)
-        return []
+	if (!res.ok) return [];
 
-    return await getRaces()
+	return await getRaces();
 }
 
 async function deleteRace(raceID) {
-    let res = await fetch("/api/v1/races/" + raceID, await setAuthHeader({
-        method: "DELETE"
-    }))
+	const res = await fetch(
+		`/api/v1/races/${raceID}`,
+		await setAuthHeader({
+			method: "DELETE",
+		}),
+	);
 
-    if (res.ok)
-        return await getRaces()
-    else
-        throw new Error("failed to delete race: " + res.status)
+	if (res.ok) return await getRaces();
 
-    return []
+	throw new Error(`failed to delete race: ${res.status}`);
 }
 
 async function getRaceVolunteers(raceID) {
-    let url = `/api/v1/races/${raceID}/volunteers`
+	const url = `/api/v1/races/${raceID}/volunteers`;
 
-    let res = await fetch(url, await setAuthHeader({}))
+	const res = await fetch(url, await setAuthHeader({}));
 
-    if (res.ok) {
-        return await res.json()
-    }
+	if (res.ok) {
+		return await res.json();
+	}
 
-    return []
+	return [];
 }
 
-export {
-    getRaces,
-    createRace,
-    deleteRace,
-    getRaceVolunteers,
-}
+export { getRaces, createRace, deleteRace, getRaceVolunteers };

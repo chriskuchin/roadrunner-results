@@ -1,6 +1,9 @@
 package client
 
 import (
+	"fmt"
+	"io"
+	"os"
 	"testing"
 )
 
@@ -95,6 +98,37 @@ func Test_getDistanceInMeters(t *testing.T) {
 			if got := getDistanceInMeters(tt.args.distance, tt.args.unit); got != tt.want {
 				t.Errorf("getDistanceInMeters() = %v, want %v", got, tt.want)
 			}
+		})
+	}
+}
+
+func Test_processRawEventData(t *testing.T) {
+	type args struct {
+		filename string
+	}
+	tests := []struct {
+		name string
+		args args
+	}{
+		{
+			name: "full data",
+			args: args{
+				filename: "mile_split.txt",
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			f, err := os.Open(fmt.Sprintf("testdata/%s", tt.args.filename))
+			if err != nil {
+				t.Errorf("failed to open testdata file: %v", err)
+			}
+
+			data, err := io.ReadAll(f)
+			if err != nil {
+				t.Errorf("failed to read tesdata file: %v", err)
+			}
+			processRawEventData(string(data))
 		})
 	}
 }

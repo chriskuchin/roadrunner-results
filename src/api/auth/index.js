@@ -1,37 +1,32 @@
-import { auth } from '../../firebase'
+import { auth } from "../../firebase";
 
-const storageKey = "api-token"
+const storageKey = "api-token";
 
 function saveAPIToken(token) {
-  localStorage.setItem(storageKey, token)
+	localStorage.setItem(storageKey, token);
 }
 
 function getAPIToken() {
-  return localStorage.getItem(storageKey)
+	return localStorage.getItem(storageKey);
 }
 
 async function setAuthHeader(fetchObject) {
-  var token
-  if (auth.currentUser) {
-    token = await auth.currentUser.getIdToken(true)
-  } else {
-    token = getAPIToken()
-  }
+	let token;
+	if (auth.currentUser) {
+		token = await auth.currentUser.getIdToken(true);
+	} else {
+		token = getAPIToken();
+	}
 
-  if (!fetchObject.headers)
-    fetchObject.headers = {}
+	if (!fetchObject.headers) fetchObject.headers = {};
 
-  fetchObject.headers['X-Api-Token'] = token
+	fetchObject.headers["X-Api-Token"] = token;
 
-  return fetchObject
+	return fetchObject;
 }
 
 function clearAPIToken() {
-  localStorage.removeItem(storageKey)
+	localStorage.removeItem(storageKey);
 }
 
-export {
-  saveAPIToken,
-  setAuthHeader,
-  clearAPIToken
-}
+export { saveAPIToken, setAuthHeader, clearAPIToken };
