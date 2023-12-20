@@ -18,7 +18,7 @@
     "devDependencies": {
         "@peeky/server": "^0.14.0",
         "@peeky/test": "^0.14.1",
-        "@vue/compiler-sfc": "^3.3.11",
+        "@vue/compiler-sfc": "^3.3.13",
         "bulma": "^0.9.4",
         "css-loader": "^6.5.1",
         "html-webpack-plugin": "^5.5.4",
