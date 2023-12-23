@@ -32,7 +32,13 @@ func Test_convertFormatTimeToMilliseconds(t *testing.T) {
 			},
 			want: 60860,
 		},
-		// TODO: Add test cases.
+		{
+			name: "sub_1_minute",
+			args: args{
+				formattedTime: "43.86",
+			},
+			want: 43860,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
