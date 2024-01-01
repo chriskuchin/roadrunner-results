@@ -12,12 +12,11 @@ require (
 	github.com/go-chi/cors v1.2.1
 	github.com/go-chi/render v1.0.3
 	github.com/gocolly/colly v1.2.0
-	github.com/gocolly/colly/v2 v2.1.0
 	github.com/google/uuid v1.5.0
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/mattn/go-sqlite3 v1.14.19
 	github.com/rs/zerolog v1.31.0
-	github.com/urfave/cli/v2 v2.26.0
+	github.com/urfave/cli/v2 v2.27.1
 	golang.org/x/oauth2 v0.15.0
 	google.golang.org/api v0.154.0
 )
