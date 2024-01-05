@@ -2,9 +2,7 @@
   <div class="section">
     <div class="box" v-for="race in racesStore.getRaces" :key="race.id">
       <div class="has-text-right">
-        <!-- <div :class="['dropdown', 'is-right', { 'is-active': eventContextMenu.active[race.id] }]" v-if="isLoggedIn"
-          @click="contextMenuClick(race.id)"> -->
-        <div :class="['dropdown', 'is-right', 'is-hoverable']" v-if="isLoggedIn">
+        <div class="dropdown is-right" @click="getRaceMenu" v-if="isLoggedIn">
           <div class="dropdown-trigger">
             <span class="icon is-clickable" aria-haspopup="true" aria-controls="dropdown-menu">
               <icon icon="fa-solid fa-ellipsis-v"></icon>
@@ -12,8 +10,10 @@
           </div>
           <div class="dropdown-menu" id="dropdown-menu" role="menu">
             <div class="dropdown-content">
+              <a class="dropdown-item">Edit Race</a>
+              <router-link class="dropdown-item" :to="'/races/' + race.id + '/volunteers'">Volunteers</router-link>
               <a class="dropdown-item" @click="toggleShareModal(race.id)">Add Volunteer</a>
-              <!-- <a class="dropdown-item" @click="toggleDivisionModal(race.id)">Manage Divisions</a> -->
+              <a class="dropdown-item" @click="toggleDivisionModal(race.id)">Manage Divisions</a>
               <a class="dropdown-item" @click="generateDivisions(race.id)">Generate Divisions</a>
               <router-link class="dropdown-item" :to="'/races/' + race.id">Race Info</router-link>
               <hr class="dropdown-divider" />
@@ -24,6 +24,7 @@
       </div>
 
       <div class="title is-4">{{ race.name }}</div>
+      <div class="subtitle" v-if="race.date">{{ getRaceDate(race.date) }}</div>
       <div class="buttons">
         <router-link :to="'/races/' + race.id + '/events'"
           class="button is-info is-light is-outlined">Events</router-link>
@@ -33,7 +34,9 @@
     </div>
     <fab v-if="isLoggedIn" @click="toggleCreateRaceModal"></fab>
     <modal @close="toggleShareModal" :show="volunteerModal.show">
-      <div class="title">Add Volunteers</div>
+      <div class="title">Volunteers</div>
+      <hr />
+      <div class="subtitle">Add Volunteers</div>
       <span class="tag is-black mr-2" v-for="volunteer in volunteerModal.volunteers" :key="volunteer.userId">
         {{ volunteer.email }}
       </span>
@@ -61,25 +64,59 @@
       </div>
     </modal>
     <modal @close="toggleCreateRaceModal" :show="raceModal.show">
-      <p class="title">Create Race</p>
-      <div class="field">
-        <label class="label">Description</label>
-        <div class="control">
-          <input class="input" type="text" placeholder="Race Description" v-model="raceModal.description">
+      <div class="tabs">
+        <ul>
+          <li :class="{ 'is-active': raceModal.tabs.activeTab == 'create' }"><a
+              @click="raceModalTabClick('create')">Create Race</a></li>
+          <li :class="{ 'is-active': raceModal.tabs.activeTab == 'import' }"><a
+              @click="raceModalTabClick('import')">Import Race</a></li>
+        </ul>
+      </div>
+      <div v-if="raceModal.tabs.activeTab == 'create'">
+        <p class="title">Create Race</p>
+        <div class="field">
+          <label class="label">Description</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="Race Description" v-model="raceModal.description">
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Date</label>
+          <div class="control">
+            <input class="input" type="date" placeholder="" v-model="raceModal.date"> {{ raceModal.date }}
+          </div>
+        </div>
+        <div class="field is-grouped">
+          <div class="control">
+            <button :class="['button', 'is-link', { 'is-loading': raceModal.creating }]"
+              @click="createRace">Submit</button>
+          </div>
+          <div class="control">
+            <button class="button is-link is-light" @click="toggleCreateRaceModal">Cancel</button>
+          </div>
         </div>
       </div>
-      <div class="field">
-        <label class="label">Description</label>
-        <div class="control">
-          <input class="input" type="date" placeholder="" v-model="raceModal.date"> {{ raceModal.date }}
+      <div v-if="raceModal.tabs.activeTab == 'import'">
+        <p class="title">Import Race</p>
+        <div class="field">
+          <label class="label">Race URL</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="Race URL" v-model="raceModal.importURL">
+          </div>
         </div>
-      </div>
-      <div class="field is-grouped">
-        <div class="control">
-          <button :class="['button', 'is-link', { 'is-loading': raceModal.creating }]" @click="createRace">Submit</button>
+        <div class="field">
+          <label class="label">Date</label>
+          <div class="control">
+            <input class="input" type="date" placeholder="" v-model="raceModal.date"> {{ raceModal.date }}
+          </div>
         </div>
-        <div class="control">
-          <button class="button is-link is-light" @click="toggleCreateRaceModal">Cancel</button>
+        <div class="field is-grouped">
+          <div class="control">
+            <button :class="['button', 'is-link', { 'is-loading': raceModal.creating }]" @click="">Submit</button>
+          </div>
+          <div class="control">
+            <button class="button is-link is-light" @click="toggleCreateRaceModal">Cancel</button>
+          </div>
         </div>
       </div>
     </modal>
@@ -120,22 +157,53 @@ export default {
         emails: [],
         volunteers: [],
       },
+      volunteersModal: {
+        show: false,
+      },
       raceModal: {
         show: false,
         creating: false,
         description: "",
         date: "",
+        importURL: "",
+        tabs: {
+          activeTab: "create",
+        }
       },
       error: {
         show: false,
         msg: "",
       },
-      eventContextMenu: {
-        active: {}
-      }
     }
   },
   methods: {
+    getRaceMenu: function (e) {
+      let target = e.currentTarget
+      if (target.className.includes("is-active")) {
+        target.className = target.className.replace("is-active", "")
+      }
+      else {
+        target.className = e.currentTarget.className + " is-active"
+      }
+    },
+    getRaceDate: function (date) {
+      const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      };
+
+      let dateParts = date.split("-", 3)
+      let raceDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2])
+      return raceDate.toLocaleDateString('us-EN', options)
+    },
+    raceModalImportRace: function () {
+
+    },
+    raceModalTabClick: function (tabID) {
+      this.raceModal.tabs.activeTab = tabID
+    },
     contextMenuClick: function (raceId) {
       if (this.eventContextMenu.active[raceId] === undefined)
         this.eventContextMenu.active[raceId] = false

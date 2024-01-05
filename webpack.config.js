@@ -18,13 +18,13 @@ const statusPlugin = {
 };
 
 module.exports = (env, argv) => {
-	var mode = "production";
+	let mode = "production";
 	if (argv.mode) {
 		mode = "development";
 	}
 
-	var config = {
-		watch: mode == "development",
+	const config = {
+		// watch: mode === "development",
 		entry: {
 			results: {
 				import: "./src/results.js",
