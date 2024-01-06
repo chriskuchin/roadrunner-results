@@ -21,10 +21,10 @@ function formatMilliseconds(ms) {
 	let remainingMS = 0;
 	const min = Math.floor(ms / 60000);
 	remainingMS = ms % 60000;
-	const sec = Math.floor(ms / 1000);
+	const sec = Math.floor(remainingMS / 1000);
 	remainingMS = Math.floor((ms % 1000) / 10);
 
-	return `${min}:${addLeadingZeros(sec)}.${addLeadingZeros(ms)}`;
+	return `${min}:${addLeadingZeros(sec)}.${addLeadingZeros(remainingMS)}`;
 }
 
 function addLeadingZeros(val) {

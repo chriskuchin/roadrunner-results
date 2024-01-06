@@ -59,20 +59,20 @@ async function getEventResults(
 	}
 
 	if (gender != null && gender.length > 0) {
-		for (const gender of gender) {
-			filters.append("gender", gender);
+		for (const gndr of gender) {
+			filters.append("gender", gndr);
 		}
 	}
 
 	if (team != null && team.length > 0) {
-		for (const team of team) {
-			filters.append("team", team);
+		for (const tm of team) {
+			filters.append("tm", team);
 		}
 	}
 
 	if (year != null && year.length > 0) {
-		for (const year of year) {
-			filters.append("year", year);
+		for (const yr of year) {
+			filters.append("year", yr);
 		}
 	}
 

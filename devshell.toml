@@ -30,3 +30,6 @@ package = "just"
 
 [[commands]]
 package = "biome"
+
+[[commands]]
+package = "usql"

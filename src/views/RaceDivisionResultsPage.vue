@@ -131,14 +131,14 @@ export default {
     ...mapState(useDivisionsStore, ['divisions']),
     divisionTables: function () {
       let tables = []
-      this.divisions.forEach((division) => {
+      for (const division of this.divisions) {
         if (this.results[division.display] && this.results[division.display].length > 0) {
           tables.push({
             display: division.display,
             results: this.results[division.display],
           })
         }
-      })
+      }
       return tables
     }
   }
