@@ -3,7 +3,7 @@ package model
 type Event struct {
 	Name     string   `json:"name"`
 	Results  []Result `json:"results"`
-	Distance int      `json:"distance"`
+	Distance float64  `json:"distance"`
 }
 
 type Result struct {
@@ -13,5 +13,6 @@ type Result struct {
 	Place     int    `json:"place"`
 	Team      string `json:"team"`
 	Year      string `json:"year"`
+	Grade     string `json:"grade"`
 	Time      int    `json:"time"`
 }

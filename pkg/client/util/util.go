@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
@@ -14,7 +15,7 @@ var maleGenderRE = regexp.MustCompile(`(?i)(boys|men|male)`)
 
 // var femaleGenderRE = regexp.MustCompile(`(?i)(girls|women|female)`)
 
-func GetEventDistanceFromHeader(header string) int {
+func GetEventDistanceFromHeader(header string) float64 {
 	matches := headerDistanceRE.FindStringSubmatch(header)
 	if len(matches) != 3 {
 		return 0
@@ -25,9 +26,7 @@ func GetEventDistanceFromHeader(header string) int {
 		return 0
 	}
 
-	// return int(getDistanceToMetersConversionFactor(matches[2]) * raceDistance)
-
-	return int(raceDistance)
+	return GetDistanceInMeters(fmt.Sprintf("%d", raceDistance), strings.ToLower(matches[2]))
 }
 
 func GetDistanceInMeters(distance string, unit string) float64 {
@@ -44,7 +43,7 @@ func GetDistanceInMeters(distance string, unit string) float64 {
 	} else if unit == "mile" || unit == "miles" {
 		return distanceNum * 1609.344
 	} else if unit == "m" {
-		if distanceNum >= 100 {
+		if distanceNum >= 50 {
 			// meters
 			return distanceNum
 		} else {

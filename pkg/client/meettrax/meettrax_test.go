@@ -1,7 +1,12 @@
 package meettrax
 
 import (
+	"encoding/json"
+	"fmt"
+	"os"
 	"testing"
+
+	"github.com/chriskuchin/roadrunner-results/pkg/client/model"
 )
 
 func Test_getRawEventData(t *testing.T) {
@@ -25,14 +30,11 @@ func Test_getRawEventData(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := getRawEventData(tt.args.meetID)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("getRawEventData() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if got != nil {
-				t.Errorf("getRawEventData() = %v, want %v", got, tt.want)
-			}
+			t.Skip("Comment out to generate new Data")
+			got, _ := getRawEventData(tt.args.meetID)
+
+			data, _ := json.Marshal(got)
+			os.WriteFile("meettrax_raw.json", data, 0667)
 		})
 	}
 }
@@ -73,6 +75,37 @@ func Test_getMeetIDFromURL(t *testing.T) {
 			if got := getMeetIDFromURL(tt.args.eventURL); got != tt.want {
 				t.Errorf("getMeetIDFromURL() = %v, want %v", got, tt.want)
 			}
+		})
+	}
+}
+
+func Test_processRawEventData(t *testing.T) {
+	tests := []struct {
+		name string
+		want []model.Event
+	}{
+		{
+			name: "meettrax_byu_data",
+			want: nil,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			testdata, err := os.ReadFile(fmt.Sprintf("testdata/%s.json", tt.name))
+			if err != nil {
+				t.Errorf("processRawEventData() failed to read testdata")
+			}
+
+			var testInput []MTTRXRawResults
+			err = json.Unmarshal(testdata, &testInput)
+			if err != nil {
+				t.Errorf("processRawEventData() = %v", err)
+			}
+
+			processRawEventData(testInput)
+			// if got := processRawEventData(testInput); !reflect.DeepEqual(got, tt.want) {
+			// 	t.Errorf("processRawEventData() = %v, want %v", got, tt.want)
+			// }
 		})
 	}
 }

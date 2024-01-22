@@ -11,7 +11,7 @@ func Test_getEventDistanceFromHeader(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want int
+		want float64
 	}{
 		{
 			name: "3000_meters",
@@ -47,6 +47,20 @@ func Test_getEventDistanceFromHeader(t *testing.T) {
 				header: "Boys 3200 meter Varsity Timed Finals",
 			},
 			want: 3200,
+		},
+		{
+			name: "60_meter",
+			args: args{
+				header: "Girls 60m Dash",
+			},
+			want: 60,
+		},
+		{
+			name: "2_mile",
+			args: args{
+				header: "Girls 2 Mile Run",
+			},
+			want: 3218.688,
 		},
 	}
 	for _, tt := range tests {

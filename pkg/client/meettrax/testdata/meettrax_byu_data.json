@@ -1,0 +1,7870 @@
+[
+	{
+		"EventID": 732,
+		"Gender": "female",
+		"Name": "Girls 60m Dash",
+		"Result": [
+			{
+				"TeamName": "Chelsea's Unattached Team",
+				"FirstName": "Chelsea",
+				"Lastname": "Amoah",
+				"Grade": 12,
+				"Place": 1,
+				"Time": "7.73"
+			},
+			{
+				"TeamName": "Matejah's Unattached Track Team",
+				"FirstName": "Matejah",
+				"Lastname": "Mangum",
+				"Grade": 12,
+				"Place": 2,
+				"Time": "7.78"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Valerie",
+				"Lastname": "Jirak",
+				"Grade": 12,
+				"Place": 3,
+				"Time": "7.86"
+			},
+			{
+				"TeamName": "GMA",
+				"FirstName": "KINZLEE",
+				"Lastname": "RIDDLE",
+				"Grade": 11,
+				"Place": 4,
+				"Time": "7.90"
+			},
+			{
+				"TeamName": "Susie Harris",
+				"FirstName": "Susie",
+				"Lastname": "Harris",
+				"Grade": 12,
+				"Place": 5,
+				"Time": "7.97"
+			},
+			{
+				"TeamName": "Tambree Bell Unattached",
+				"FirstName": "Tambree",
+				"Lastname": "Bell",
+				"Grade": 12,
+				"Place": 5,
+				"Time": "7.97"
+			},
+			{
+				"TeamName": "Zoe Hein",
+				"FirstName": "Zoe",
+				"Lastname": "Hein",
+				"Grade": 11,
+				"Place": 7,
+				"Time": "7.98"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Kammi",
+				"Lastname": "Merritt",
+				"Grade": 12,
+				"Place": 7,
+				"Time": "7.98"
+			}
+		]
+	},
+	{
+		"EventID": 733,
+		"Gender": "male",
+		"Name": "Boys 60m Dash",
+		"Result": [
+			{
+				"TeamName": "Tyler's Unattached Team",
+				"FirstName": "Tyler",
+				"Lastname": "West",
+				"Grade": 12,
+				"Place": 1,
+				"Time": "6.99"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "Will",
+				"Lastname": "West",
+				"Grade": 12,
+				"Place": 2,
+				"Time": "7.03"
+			},
+			{
+				"TeamName": "Houston Grand Oaks",
+				"FirstName": "Jaeden",
+				"Lastname": "Jorgensen",
+				"Grade": 12,
+				"Place": 3,
+				"Time": "7.06"
+			},
+			{
+				"TeamName": "Mathew Hall",
+				"FirstName": "Mathew",
+				"Lastname": "Hall",
+				"Grade": 12,
+				"Place": 4,
+				"Time": "7.10"
+			},
+			{
+				"TeamName": "Caleb's Unattached Team",
+				"FirstName": "Caleb",
+				"Lastname": "Conver",
+				"Grade": 11,
+				"Place": 5,
+				"Time": "7.12"
+			},
+			{
+				"TeamName": "Mason Hamilton",
+				"FirstName": "Mason",
+				"Lastname": "Hamilton",
+				"Grade": 10,
+				"Place": 6,
+				"Time": "7.13"
+			},
+			{
+				"TeamName": "Luminosity",
+				"FirstName": "Preston",
+				"Lastname": "Haney",
+				"Grade": 11,
+				"Place": 7,
+				"Time": "7.17"
+			},
+			{
+				"TeamName": "Gabe Hutchinson",
+				"FirstName": "Gabe",
+				"Lastname": "Hutchinson",
+				"Grade": 12,
+				"Place": 8,
+				"Time": "7.20"
+			},
+			{
+				"TeamName": "Jaxton's Unattached Track Team",
+				"FirstName": "Jaxton",
+				"Lastname": "Itaaehau",
+				"Grade": 9,
+				"Place": 9,
+				"Time": "7.59"
+			},
+			{
+				"TeamName": "Mason's Unattached Team",
+				"FirstName": "Mason",
+				"Lastname": "Wood",
+				"Grade": 10,
+				"Place": 10,
+				"Time": "7.94"
+			},
+			{
+				"TeamName": "Jason's Unattached Track Team",
+				"FirstName": "Kelen",
+				"Lastname": "Gold",
+				"Grade": 8,
+				"Place": 11,
+				"Time": "8.34"
+			}
+		]
+	},
+	{
+		"EventID": 734,
+		"Gender": "female",
+		"Name": "Girls 60m Hurdles",
+		"Result": [
+			{
+				"TeamName": "Tia's Unattached Team",
+				"FirstName": "Tia",
+				"Lastname": "Brown",
+				"Grade": 11,
+				"Place": 1,
+				"Time": "9.15"
+			},
+			{
+				"TeamName": "Makiah Turner",
+				"FirstName": "Makiah",
+				"Lastname": "Turner",
+				"Grade": 10,
+				"Place": 2,
+				"Time": "9.36"
+			},
+			{
+				"TeamName": "Sariah Gerald",
+				"FirstName": "Sariah",
+				"Lastname": "Gerald",
+				"Grade": 11,
+				"Place": 3,
+				"Time": "9.46"
+			},
+			{
+				"TeamName": "Alexa's Unattached Track Team",
+				"FirstName": "Alexa",
+				"Lastname": "Basile",
+				"Grade": 12,
+				"Place": 4,
+				"Time": "9.48"
+			},
+			{
+				"TeamName": "Mountain View",
+				"FirstName": "Jaylee",
+				"Lastname": "Antonino",
+				"Grade": 12,
+				"Place": 5,
+				"Time": "9.54"
+			},
+			{
+				"TeamName": "Tori's Unattached Team",
+				"FirstName": "Tori",
+				"Lastname": "Conrad",
+				"Grade": 11,
+				"Place": 6,
+				"Time": "9.61"
+			},
+			{
+				"TeamName": "JJA",
+				"FirstName": "Gabby",
+				"Lastname": "Morfin",
+				"Grade": 11,
+				"Place": 7,
+				"Time": "9.71"
+			},
+			{
+				"TeamName": "CHEETAHS UTAH TRACK CLUB",
+				"FirstName": "Faith",
+				"Lastname": "Nuetzel",
+				"Grade": 11,
+				"Place": 7,
+				"Time": "9.71"
+			},
+			{
+				"TeamName": "Whitney's Unattached Team",
+				"FirstName": "Whitney",
+				"Lastname": "Fisher",
+				"Grade": 12,
+				"Place": 9,
+				"Time": "9.80"
+			},
+			{
+				"TeamName": "Herriman",
+				"FirstName": "Kate",
+				"Lastname": "Garner",
+				"Grade": 12,
+				"Place": 10,
+				"Time": "9.90"
+			}
+		]
+	},
+	{
+		"EventID": 735,
+		"Gender": "male",
+		"Name": "Boys 60m Hurdles",
+		"Result": [
+			{
+				"TeamName": "Houston Grand Oaks",
+				"FirstName": "Jaeden",
+				"Lastname": "Jorgensen",
+				"Grade": 12,
+				"Place": 1,
+				"Time": "8.06"
+			},
+			{
+				"TeamName": "Hamblin",
+				"FirstName": "Josh",
+				"Lastname": "Hamblin",
+				"Grade": 10,
+				"Place": 2,
+				"Time": "8.07"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "Matt",
+				"Lastname": "Maclennan",
+				"Grade": 12,
+				"Place": 3,
+				"Time": "8.22"
+			},
+			{
+				"TeamName": "Nathan's Unattached Team",
+				"FirstName": "Nathan",
+				"Lastname": "Howard",
+				"Grade": 12,
+				"Place": 4,
+				"Time": "8.26"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "Semaj",
+				"Lastname": "Thompson",
+				"Grade": 12,
+				"Place": 5,
+				"Time": "8.36"
+			},
+			{
+				"TeamName": "Austin's Unattached Team",
+				"FirstName": "Austin",
+				"Lastname": "Eaton",
+				"Grade": 12,
+				"Place": 6,
+				"Time": "8.43"
+			},
+			{
+				"TeamName": "caleb's Unattached Track Team",
+				"FirstName": "caleb",
+				"Lastname": "miyamoto",
+				"Grade": 10,
+				"Place": 7,
+				"Time": "8.46"
+			},
+			{
+				"TeamName": "Denver's Unattached Track Team",
+				"FirstName": "Denver",
+				"Lastname": "Spanheimer",
+				"Grade": 11,
+				"Place": 8,
+				"Time": "8.75"
+			},
+			{
+				"TeamName": "Kaden's Unattached Team",
+				"FirstName": "Kaden",
+				"Lastname": "Haight",
+				"Grade": 12,
+				"Place": 9,
+				"Time": "9.14"
+			},
+			{
+				"TeamName": "Mason's Unattached Team",
+				"FirstName": "Mason",
+				"Lastname": "Wood",
+				"Grade": 10,
+				"Place": 10,
+				"Time": "10.35"
+			}
+		]
+	},
+	{
+		"EventID": 736,
+		"Gender": "female",
+		"Name": "Girls 200m Dash",
+		"Result": [
+			{
+				"TeamName": "Chelsea's Unattached Team",
+				"FirstName": "Chelsea",
+				"Lastname": "Amoah",
+				"Grade": 12,
+				"Place": 1,
+				"Time": "25.30"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Valerie",
+				"Lastname": "Jirak",
+				"Grade": 12,
+				"Place": 2,
+				"Time": "25.59"
+			},
+			{
+				"TeamName": "Desirae Riehle Unattached Team",
+				"FirstName": "Desirae",
+				"Lastname": "Riehle",
+				"Grade": 11,
+				"Place": 3,
+				"Time": "25.76"
+			},
+			{
+				"TeamName": "GMA",
+				"FirstName": "KINZLEE",
+				"Lastname": "RIDDLE",
+				"Grade": 11,
+				"Place": 4,
+				"Time": "25.77"
+			},
+			{
+				"TeamName": "Matejah's Unattached Track Team",
+				"FirstName": "Matejah",
+				"Lastname": "Mangum",
+				"Grade": 12,
+				"Place": 5,
+				"Time": "26.01"
+			},
+			{
+				"TeamName": "Susie Harris",
+				"FirstName": "Susie",
+				"Lastname": "Harris",
+				"Grade": 12,
+				"Place": 6,
+				"Time": "26.22"
+			},
+			{
+				"TeamName": "Tambree Bell Unattached",
+				"FirstName": "Tambree",
+				"Lastname": "Bell",
+				"Grade": 12,
+				"Place": 7,
+				"Time": "26.27"
+			},
+			{
+				"TeamName": "Tia's Unattached Team",
+				"FirstName": "Tia",
+				"Lastname": "Brown",
+				"Grade": 11,
+				"Place": 8,
+				"Time": "26.54"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Talia",
+				"Lastname": "Conrad",
+				"Grade": 12,
+				"Place": 9,
+				"Time": "26.70"
+			},
+			{
+				"TeamName": "Gold Medal Athletics",
+				"FirstName": "Brooklyn",
+				"Lastname": "Sturdivant",
+				"Grade": 11,
+				"Place": 10,
+				"Time": "26.71"
+			},
+			{
+				"TeamName": "Kaitlyn Durham",
+				"FirstName": "Kaitlyn",
+				"Lastname": "Durham",
+				"Grade": 11,
+				"Place": 11,
+				"Time": "26.84"
+			},
+			{
+				"TeamName": "Sabrina's Unattached Team",
+				"FirstName": "Sabrina",
+				"Lastname": "Wright",
+				"Grade": 12,
+				"Place": 12,
+				"Time": "26.88"
+			},
+			{
+				"TeamName": "Jade's Unattached Team",
+				"FirstName": "Jade",
+				"Lastname": "Reimer",
+				"Grade": 11,
+				"Place": 13,
+				"Time": "26.97"
+			},
+			{
+				"TeamName": "Makiah Turner",
+				"FirstName": "Makiah",
+				"Lastname": "Turner",
+				"Grade": 10,
+				"Place": 14,
+				"Time": "27.00"
+			},
+			{
+				"TeamName": "Breklyn Stout",
+				"FirstName": "Breklyn",
+				"Lastname": "Stout",
+				"Grade": 12,
+				"Place": 15,
+				"Time": "27.03"
+			},
+			{
+				"TeamName": "Zoe Hein",
+				"FirstName": "Zoe",
+				"Lastname": "Hein",
+				"Grade": 11,
+				"Place": 16,
+				"Time": "27.10"
+			},
+			{
+				"TeamName": "Whitney's Unattached Team",
+				"FirstName": "Whitney",
+				"Lastname": "Fisher",
+				"Grade": 12,
+				"Place": 16,
+				"Time": "27.10"
+			},
+			{
+				"TeamName": "CHEETAHS UTAH TRACK CLUB",
+				"FirstName": "Denasja",
+				"Lastname": "Tayler",
+				"Grade": 12,
+				"Place": 18,
+				"Time": "27.22"
+			},
+			{
+				"TeamName": "Amy's Unattached Team",
+				"FirstName": "Macey",
+				"Lastname": "Woolley",
+				"Grade": 9,
+				"Place": 19,
+				"Time": "27.39"
+			},
+			{
+				"TeamName": "Alta",
+				"FirstName": "Macey",
+				"Lastname": "Rockwood",
+				"Grade": 10,
+				"Place": 20,
+				"Time": "27.54"
+			},
+			{
+				"TeamName": "Jessica Rich",
+				"FirstName": "Jessica",
+				"Lastname": "Rich",
+				"Grade": 12,
+				"Place": 21,
+				"Time": "27.55"
+			},
+			{
+				"TeamName": "North summit Unattached Team",
+				"FirstName": "Scarlett",
+				"Lastname": "Brock",
+				"Grade": 11,
+				"Place": 22,
+				"Time": "27.77"
+			},
+			{
+				"TeamName": "Kenley's Unattached Team",
+				"FirstName": "Kenley",
+				"Lastname": "Fuit",
+				"Grade": 10,
+				"Place": 23,
+				"Time": "27.78"
+			},
+			{
+				"TeamName": "Southern Utah Track Club",
+				"FirstName": "Ella",
+				"Lastname": "Cotter",
+				"Grade": 12,
+				"Place": 24,
+				"Time": "27.86"
+			},
+			{
+				"TeamName": "Sariah Gerald",
+				"FirstName": "Sariah",
+				"Lastname": "Gerald",
+				"Grade": 11,
+				"Place": 25,
+				"Time": "27.88"
+			},
+			{
+				"TeamName": "Allie Wilkins",
+				"FirstName": "Allie",
+				"Lastname": "Wilkins",
+				"Grade": 10,
+				"Place": 26,
+				"Time": "28.08"
+			},
+			{
+				"TeamName": "Elise's Unattached Team",
+				"FirstName": "Elise",
+				"Lastname": "Cheney",
+				"Grade": 10,
+				"Place": 27,
+				"Time": "28.09"
+			},
+			{
+				"TeamName": "Haylee's Unattached Team",
+				"FirstName": "Haylee",
+				"Lastname": "John",
+				"Grade": 11,
+				"Place": 27,
+				"Time": "28.09"
+			},
+			{
+				"TeamName": "Kya's Unattached Team",
+				"FirstName": "Kya",
+				"Lastname": "Corrales",
+				"Grade": 12,
+				"Place": 29,
+				"Time": "28.11"
+			},
+			{
+				"TeamName": "Brett's Unattached Team",
+				"FirstName": "Skylee",
+				"Lastname": "Guymon",
+				"Grade": 9,
+				"Place": 30,
+				"Time": "28.12"
+			},
+			{
+				"TeamName": "Claire's Unattached Track Team",
+				"FirstName": "Claire",
+				"Lastname": "Boone",
+				"Grade": 9,
+				"Place": 31,
+				"Time": "28.14"
+			},
+			{
+				"TeamName": "Kate Glazier",
+				"FirstName": "Kate",
+				"Lastname": "Glazier",
+				"Grade": 12,
+				"Place": 32,
+				"Time": "28.18"
+			},
+			{
+				"TeamName": "Aubrey’s Unattached Team",
+				"FirstName": "Aubrey",
+				"Lastname": "Galloway",
+				"Grade": 11,
+				"Place": 33,
+				"Time": "28.25"
+			},
+			{
+				"TeamName": "GMA",
+				"FirstName": "Zoe",
+				"Lastname": "Deucher",
+				"Grade": 11,
+				"Place": 34,
+				"Time": "28.27"
+			},
+			{
+				"TeamName": "Zoe Mould",
+				"FirstName": "Zoe",
+				"Lastname": "Mould",
+				"Grade": 11,
+				"Place": 35,
+				"Time": "28.38"
+			},
+			{
+				"TeamName": "Daymon's Unattached Team",
+				"FirstName": "Emersyn",
+				"Lastname": "Visser",
+				"Grade": 11,
+				"Place": 36,
+				"Time": "28.41"
+			},
+			{
+				"TeamName": "Chelsea's Unattached Team",
+				"FirstName": "Chelsea",
+				"Lastname": "Platt",
+				"Grade": 12,
+				"Place": 37,
+				"Time": "28.53"
+			},
+			{
+				"TeamName": "Challis Idaho",
+				"FirstName": "Lilly",
+				"Lastname": "Stebbins",
+				"Grade": 9,
+				"Place": 37,
+				"Time": "28.53"
+			},
+			{
+				"TeamName": "London's Unattached Track Team",
+				"FirstName": "London",
+				"Lastname": "Garner",
+				"Grade": 11,
+				"Place": 39,
+				"Time": "28.62"
+			},
+			{
+				"TeamName": "LCS Unattached Team",
+				"FirstName": "Lily",
+				"Lastname": "Sampson",
+				"Grade": 12,
+				"Place": 40,
+				"Time": "28.71"
+			},
+			{
+				"TeamName": "Jake's Unattached Team",
+				"FirstName": "Remington",
+				"Lastname": "Bird",
+				"Grade": 10,
+				"Place": 41,
+				"Time": "28.77"
+			},
+			{
+				"TeamName": "Bostyn Carlson",
+				"FirstName": "Bostyn",
+				"Lastname": "Carlson",
+				"Grade": 12,
+				"Place": 42,
+				"Time": "28.82"
+			},
+			{
+				"TeamName": "Alexa's Unattached Track Team",
+				"FirstName": "Alexa",
+				"Lastname": "Basile",
+				"Grade": 12,
+				"Place": 43,
+				"Time": "28.83"
+			},
+			{
+				"TeamName": "LTM Unattached Track Team",
+				"FirstName": "Lili",
+				"Lastname": "Madsen",
+				"Grade": 0,
+				"Place": 44,
+				"Time": "28.86"
+			},
+			{
+				"TeamName": "Hannah's Unattached Team",
+				"FirstName": "Hannah",
+				"Lastname": "Cluff",
+				"Grade": 10,
+				"Place": 45,
+				"Time": "28.88"
+			},
+			{
+				"TeamName": "Kaylan's Unattached Team",
+				"FirstName": "Kaylan",
+				"Lastname": "Anderson",
+				"Grade": 10,
+				"Place": 46,
+				"Time": "28.90"
+			},
+			{
+				"TeamName": "Tiffany's Unattached Team",
+				"FirstName": "Brecke",
+				"Lastname": "Boyer",
+				"Grade": 9,
+				"Place": 47,
+				"Time": "28.92"
+			},
+			{
+				"TeamName": "Tarnue Ali",
+				"FirstName": "Nev",
+				"Lastname": "Dinkel",
+				"Grade": 12,
+				"Place": 48,
+				"Time": "28.94"
+			},
+			{
+				"TeamName": "Ava's Unattached Track Team",
+				"FirstName": "Ava",
+				"Lastname": "Wyatt",
+				"Grade": 10,
+				"Place": 49,
+				"Time": "29.04"
+			},
+			{
+				"TeamName": "Anna's Unattached Team",
+				"FirstName": "Anna",
+				"Lastname": "West",
+				"Grade": 9,
+				"Place": 50,
+				"Time": "29.13"
+			},
+			{
+				"TeamName": "Mack Type IIb Training Systems",
+				"FirstName": "Marlee",
+				"Lastname": "Mack",
+				"Grade": 10,
+				"Place": 51,
+				"Time": "29.19"
+			},
+			{
+				"TeamName": "Ziya Davis",
+				"FirstName": "Ziya",
+				"Lastname": "Davis",
+				"Grade": 11,
+				"Place": 52,
+				"Time": "29.20"
+			},
+			{
+				"TeamName": "NTG Unattached Athletes",
+				"FirstName": "Kirra",
+				"Lastname": "Garfield",
+				"Grade": 9,
+				"Place": 52,
+				"Time": "29.20"
+			},
+			{
+				"TeamName": "STAR VALLEY",
+				"FirstName": "Grace",
+				"Lastname": "Collins",
+				"Grade": 12,
+				"Place": 54,
+				"Time": "29.22"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Coaley",
+				"Lastname": "Clifton",
+				"Grade": 12,
+				"Place": 55,
+				"Time": "29.27"
+			},
+			{
+				"TeamName": "Amber's Unattached",
+				"FirstName": "Aspen",
+				"Lastname": "Hanson",
+				"Grade": 6,
+				"Place": 56,
+				"Time": "29.36"
+			},
+			{
+				"TeamName": "Jones",
+				"FirstName": "Cambelle",
+				"Lastname": "Jones",
+				"Grade": 11,
+				"Place": 57,
+				"Time": "29.54"
+			},
+			{
+				"TeamName": "Arizeth's Unattached Team",
+				"FirstName": "Arizeth",
+				"Lastname": "Reyes",
+				"Grade": 10,
+				"Place": 58,
+				"Time": "29.67"
+			},
+			{
+				"TeamName": "Alta",
+				"FirstName": "Kenadie",
+				"Lastname": "Jackson",
+				"Grade": 12,
+				"Place": 59,
+				"Time": "29.69"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Jordyn",
+				"Lastname": "Roberts",
+				"Grade": 11,
+				"Place": 60,
+				"Time": "29.74"
+			},
+			{
+				"TeamName": "Ava's Unattached Team",
+				"FirstName": "Ava",
+				"Lastname": "Sanchez",
+				"Grade": 11,
+				"Place": 61,
+				"Time": "29.81"
+			},
+			{
+				"TeamName": "Kate's Unattached Track Team",
+				"FirstName": "Kate",
+				"Lastname": "Mecham",
+				"Grade": 12,
+				"Place": 62,
+				"Time": "29.83"
+			},
+			{
+				"TeamName": "Brookelyn's Unattached Track Team",
+				"FirstName": "Brooke",
+				"Lastname": "Athay",
+				"Grade": 12,
+				"Place": 62,
+				"Time": "29.83"
+			},
+			{
+				"TeamName": "Madi's Unattached Team",
+				"FirstName": "Madi",
+				"Lastname": "Bancroft",
+				"Grade": 11,
+				"Place": 64,
+				"Time": "29.93"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Catherine",
+				"Lastname": "Nichols",
+				"Grade": 11,
+				"Place": 65,
+				"Time": "30.01"
+			},
+			{
+				"TeamName": "ANNIE's Unattached Team",
+				"FirstName": "Annie",
+				"Lastname": "Taylor",
+				"Grade": 11,
+				"Place": 66,
+				"Time": "30.08"
+			},
+			{
+				"TeamName": "Eden's Unattached Track Team",
+				"FirstName": "Eden",
+				"Lastname": "Shaffer",
+				"Grade": 9,
+				"Place": 67,
+				"Time": "30.09"
+			},
+			{
+				"TeamName": "CHEETAHS UTAH TRACK CLUB",
+				"FirstName": "Lola",
+				"Lastname": "Shepard",
+				"Grade": 11,
+				"Place": 68,
+				"Time": "30.10"
+			},
+			{
+				"TeamName": "Tylita's team",
+				"FirstName": "Tylita",
+				"Lastname": "Bond",
+				"Grade": 9,
+				"Place": 69,
+				"Time": "30.21"
+			},
+			{
+				"TeamName": "Amy's Unattached Team",
+				"FirstName": "Marissa",
+				"Lastname": "Woolley",
+				"Grade": 12,
+				"Place": 70,
+				"Time": "30.33"
+			},
+			{
+				"TeamName": "Alta",
+				"FirstName": "Chloe",
+				"Lastname": "Chipman",
+				"Grade": 12,
+				"Place": 71,
+				"Time": "30.51"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "Pyper",
+				"Lastname": "Starks",
+				"Grade": 7,
+				"Place": 72,
+				"Time": "30.57"
+			},
+			{
+				"TeamName": "Rice Unattached Team",
+				"FirstName": "Avery",
+				"Lastname": "Rice",
+				"Grade": 9,
+				"Place": 73,
+				"Time": "30.59"
+			},
+			{
+				"TeamName": "Emma leigh Ezernack",
+				"FirstName": "Emma",
+				"Lastname": "Ezernack",
+				"Grade": 11,
+				"Place": 74,
+				"Time": "30.72"
+			},
+			{
+				"TeamName": "Brenna Fackrell",
+				"FirstName": "Brenna",
+				"Lastname": "Fackrell",
+				"Grade": 12,
+				"Place": 75,
+				"Time": "30.76"
+			},
+			{
+				"TeamName": "Katelyn's Unattached Team",
+				"FirstName": "Katelyn",
+				"Lastname": "Fox",
+				"Grade": 10,
+				"Place": 76,
+				"Time": "30.89"
+			},
+			{
+				"TeamName": "Kings Peak",
+				"FirstName": "Destiny",
+				"Lastname": "Bird",
+				"Grade": 10,
+				"Place": 77,
+				"Time": "30.93"
+			},
+			{
+				"TeamName": "Addi",
+				"FirstName": "Addison",
+				"Lastname": "Wright",
+				"Grade": 9,
+				"Place": 78,
+				"Time": "31.20"
+			},
+			{
+				"TeamName": "Anna Lehr",
+				"FirstName": "Anna",
+				"Lastname": "Lehr",
+				"Grade": 12,
+				"Place": 79,
+				"Time": "31.25"
+			},
+			{
+				"TeamName": "Addison M Losik",
+				"FirstName": "Addison",
+				"Lastname": "Losik",
+				"Grade": 11,
+				"Place": 80,
+				"Time": "31.39"
+			},
+			{
+				"TeamName": "Rylee's Unattached Team",
+				"FirstName": "Rylee",
+				"Lastname": "Johnson",
+				"Grade": 0,
+				"Place": 81,
+				"Time": "31.53"
+			},
+			{
+				"TeamName": "Mack Type IIb Training Systems",
+				"FirstName": "Josie",
+				"Lastname": "Mack",
+				"Grade": 9,
+				"Place": 82,
+				"Time": "31.57"
+			},
+			{
+				"TeamName": "ella's Unattached Team",
+				"FirstName": "Ella",
+				"Lastname": "Kissling",
+				"Grade": 10,
+				"Place": 83,
+				"Time": "31.67"
+			},
+			{
+				"TeamName": "Star valley",
+				"FirstName": "Madison",
+				"Lastname": "White",
+				"Grade": 10,
+				"Place": 84,
+				"Time": "31.76"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Mylie",
+				"Lastname": "Kaiser",
+				"Grade": 10,
+				"Place": 84,
+				"Time": "31.76"
+			},
+			{
+				"TeamName": "Olivia’s Unattached Team",
+				"FirstName": "Olivia",
+				"Lastname": "Yarbrough",
+				"Grade": 11,
+				"Place": 86,
+				"Time": "31.86"
+			},
+			{
+				"TeamName": "Sydney's Unattached Team",
+				"FirstName": "Sydney",
+				"Lastname": "Lund",
+				"Grade": 10,
+				"Place": 87,
+				"Time": "32.06"
+			},
+			{
+				"TeamName": "Beatriz's Unattached Team",
+				"FirstName": "Beatriz",
+				"Lastname": "Navarro",
+				"Grade": 9,
+				"Place": 88,
+				"Time": "32.15"
+			},
+			{
+				"TeamName": "Erika's Unattached Team",
+				"FirstName": "Charley",
+				"Lastname": "Lym",
+				"Grade": 10,
+				"Place": 89,
+				"Time": "32.20"
+			},
+			{
+				"TeamName": "Lyra Hutchinson",
+				"FirstName": "Lyra",
+				"Lastname": "Hutchinson",
+				"Grade": 10,
+				"Place": 90,
+				"Time": "32.37"
+			},
+			{
+				"TeamName": "Mikayla's Unattached Track Team",
+				"FirstName": "Mikayla",
+				"Lastname": "Dockter",
+				"Grade": 11,
+				"Place": 91,
+				"Time": "32.42"
+			},
+			{
+				"TeamName": "Brooke Ann Noble",
+				"FirstName": "Brooke",
+				"Lastname": "Noble",
+				"Grade": 12,
+				"Place": 92,
+				"Time": "32.46"
+			},
+			{
+				"TeamName": "Sydney's Unattached Team",
+				"FirstName": "Charlie",
+				"Lastname": "Lund",
+				"Grade": 9,
+				"Place": 93,
+				"Time": "32.54"
+			},
+			{
+				"TeamName": "Adyson's Unattached Team",
+				"FirstName": "Adyson",
+				"Lastname": "Orton",
+				"Grade": 11,
+				"Place": 94,
+				"Time": "32.64"
+			},
+			{
+				"TeamName": "Clairee's Unattached Team",
+				"FirstName": "Clairee",
+				"Lastname": "Bingham",
+				"Grade": 10,
+				"Place": 95,
+				"Time": "32.89"
+			},
+			{
+				"TeamName": "Emma's Unattached Track Team",
+				"FirstName": "Emma",
+				"Lastname": "Rieck",
+				"Grade": 11,
+				"Place": 96,
+				"Time": "32.99"
+			},
+			{
+				"TeamName": "K unattached team",
+				"FirstName": "Sophie",
+				"Lastname": "Lawton",
+				"Grade": 9,
+				"Place": 97,
+				"Time": "33.07"
+			},
+			{
+				"TeamName": "Donna's Unattached Team",
+				"FirstName": "Lena",
+				"Lastname": "Givens",
+				"Grade": 12,
+				"Place": 98,
+				"Time": "33.70"
+			},
+			{
+				"TeamName": "Tarnue Ali",
+				"FirstName": "Malaiyha",
+				"Lastname": "Muya",
+				"Grade": 5,
+				"Place": 99,
+				"Time": "33.88"
+			},
+			{
+				"TeamName": "Danika's Unattached Team",
+				"FirstName": "Danika",
+				"Lastname": "Williams",
+				"Grade": 9,
+				"Place": 100,
+				"Time": "34.14"
+			},
+			{
+				"TeamName": "Samantha's Unattached Team",
+				"FirstName": "Samantha",
+				"Lastname": "Bentley",
+				"Grade": 9,
+				"Place": 101,
+				"Time": "34.85"
+			},
+			{
+				"TeamName": "Jillian's Unattached Track Team",
+				"FirstName": "Jillian",
+				"Lastname": "Peterson",
+				"Grade": 12,
+				"Place": 102,
+				"Time": "34.91"
+			},
+			{
+				"TeamName": "Amy Bullock",
+				"FirstName": "Amy",
+				"Lastname": "Bullock",
+				"Grade": 12,
+				"Place": 103,
+				"Time": "35.24"
+			},
+			{
+				"TeamName": "Tarnue Ali",
+				"FirstName": "Palmer",
+				"Lastname": "Mower",
+				"Grade": 3,
+				"Place": 104,
+				"Time": "36.08"
+			},
+			{
+				"TeamName": "Montezuma Cortez",
+				"FirstName": "Luna",
+				"Lastname": "Moore",
+				"Grade": 11,
+				"Place": 105,
+				"Time": "36.34"
+			}
+		]
+	},
+	{
+		"EventID": 737,
+		"Gender": "male",
+		"Name": "Boys 200m Dash",
+		"Result": [
+			{
+				"TeamName": "Mathew Hall",
+				"FirstName": "Mathew",
+				"Lastname": "Hall",
+				"Grade": 12,
+				"Place": 1,
+				"Time": "23.01"
+			},
+			{
+				"TeamName": "Caleb's Unattached Team",
+				"FirstName": "Caleb",
+				"Lastname": "Conver",
+				"Grade": 11,
+				"Place": 2,
+				"Time": "23.16"
+			},
+			{
+				"TeamName": "Hamblin",
+				"FirstName": "Josh",
+				"Lastname": "Hamblin",
+				"Grade": 10,
+				"Place": 3,
+				"Time": "23.18"
+			},
+			{
+				"TeamName": "Grant's Unattached Team",
+				"FirstName": "Grant",
+				"Lastname": "Nelson",
+				"Grade": 11,
+				"Place": 4,
+				"Time": "23.21"
+			},
+			{
+				"TeamName": "Gabe Hutchinson",
+				"FirstName": "Gabe",
+				"Lastname": "Hutchinson",
+				"Grade": 12,
+				"Place": 5,
+				"Time": "23.22"
+			},
+			{
+				"TeamName": "Tyson Pugmire",
+				"FirstName": "Tyson",
+				"Lastname": "Pugmire",
+				"Grade": 10,
+				"Place": 6,
+				"Time": "23.30"
+			},
+			{
+				"TeamName": "Austin's Unattached Team",
+				"FirstName": "Austin",
+				"Lastname": "Eaton",
+				"Grade": 12,
+				"Place": 7,
+				"Time": "23.47"
+			},
+			{
+				"TeamName": "Unattached Team",
+				"FirstName": "Noah",
+				"Lastname": "Austin",
+				"Grade": 12,
+				"Place": 8,
+				"Time": "23.50"
+			},
+			{
+				"TeamName": "Sharps Unattached Team",
+				"FirstName": "Creek",
+				"Lastname": "Sharp",
+				"Grade": 12,
+				"Place": 9,
+				"Time": "23.54"
+			},
+			{
+				"TeamName": "Unattached Weber",
+				"FirstName": "Nik",
+				"Lastname": "Larsen",
+				"Grade": 12,
+				"Place": 10,
+				"Time": "23.59"
+			},
+			{
+				"TeamName": "Malakai Alofipo",
+				"FirstName": "Malakai",
+				"Lastname": "Alofipo",
+				"Grade": 11,
+				"Place": 11,
+				"Time": "23.60"
+			},
+			{
+				"TeamName": "Logan Sircable",
+				"FirstName": "Logan",
+				"Lastname": "Sircable",
+				"Grade": 12,
+				"Place": 12,
+				"Time": "23.61"
+			},
+			{
+				"TeamName": "Orion Patten",
+				"FirstName": "ORION",
+				"Lastname": "PATTEN",
+				"Grade": 11,
+				"Place": 13,
+				"Time": "23.64"
+			},
+			{
+				"TeamName": "CHEETAHS UTAH TRACK CLUB",
+				"FirstName": "Judah",
+				"Lastname": "Valle",
+				"Grade": 8,
+				"Place": 14,
+				"Time": "23.77"
+			},
+			{
+				"TeamName": "Kaden's Unattached Team",
+				"FirstName": "Kaden",
+				"Lastname": "Haight",
+				"Grade": 12,
+				"Place": 15,
+				"Time": "23.81"
+			},
+			{
+				"TeamName": "Grand County",
+				"FirstName": "Aiden",
+				"Lastname": "Gordon",
+				"Grade": 12,
+				"Place": 16,
+				"Time": "23.91"
+			},
+			{
+				"TeamName": "Daymon Visser",
+				"FirstName": "Josiah",
+				"Lastname": "Gonzales",
+				"Grade": 12,
+				"Place": 17,
+				"Time": "23.98"
+			},
+			{
+				"TeamName": "Robert's Unattached Team",
+				"FirstName": "Daniel",
+				"Lastname": "Campbell",
+				"Grade": 10,
+				"Place": 18,
+				"Time": "24.09"
+			},
+			{
+				"TeamName": "Crew Draney Unattached",
+				"FirstName": "Crew",
+				"Lastname": "Draney",
+				"Grade": 11,
+				"Place": 19,
+				"Time": "24.11"
+			},
+			{
+				"TeamName": "Margie's Unattached Team",
+				"FirstName": "Wade",
+				"Lastname": "Stringam",
+				"Grade": 12,
+				"Place": 20,
+				"Time": "24.12"
+			},
+			{
+				"TeamName": "Unattached",
+				"FirstName": "Peter",
+				"Lastname": "Huntsman",
+				"Grade": 10,
+				"Place": 21,
+				"Time": "24.16"
+			},
+			{
+				"TeamName": "Hyrum's Unattached Team",
+				"FirstName": "Hyrum",
+				"Lastname": "Park",
+				"Grade": 12,
+				"Place": 22,
+				"Time": "24.17"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Ayden",
+				"Lastname": "Hartzell",
+				"Grade": 11,
+				"Place": 23,
+				"Time": "24.24"
+			},
+			{
+				"TeamName": "Pine View",
+				"FirstName": "Spencer",
+				"Lastname": "Blackmore",
+				"Grade": 12,
+				"Place": 24,
+				"Time": "24.26"
+			},
+			{
+				"TeamName": "Peyton Haskell",
+				"FirstName": "Peyton",
+				"Lastname": "Haskell",
+				"Grade": 10,
+				"Place": 24,
+				"Time": "24.26"
+			},
+			{
+				"TeamName": "Manti",
+				"FirstName": "Kye",
+				"Lastname": "Lewis",
+				"Grade": 12,
+				"Place": 26,
+				"Time": "24.27"
+			},
+			{
+				"TeamName": "Herriman",
+				"FirstName": "Zeke",
+				"Lastname": "Kearney",
+				"Grade": 11,
+				"Place": 26,
+				"Time": "24.27"
+			},
+			{
+				"TeamName": "Weber",
+				"FirstName": "Shane",
+				"Lastname": "Farley",
+				"Grade": 11,
+				"Place": 28,
+				"Time": "24.45"
+			},
+			{
+				"TeamName": "Bronco's Unattached Track Team",
+				"FirstName": "Bronco",
+				"Lastname": "Galloway",
+				"Grade": 11,
+				"Place": 29,
+				"Time": "24.52"
+			},
+			{
+				"TeamName": "Cedar Reds",
+				"FirstName": "Ammon",
+				"Lastname": "York",
+				"Grade": 12,
+				"Place": 29,
+				"Time": "24.52"
+			},
+			{
+				"TeamName": "Brakken's Unattached Track Team",
+				"FirstName": "Brakken",
+				"Lastname": "Bell",
+				"Grade": 12,
+				"Place": 29,
+				"Time": "24.52"
+			},
+			{
+				"TeamName": "Cameron Wood",
+				"FirstName": "Cameron",
+				"Lastname": "Wood",
+				"Grade": 11,
+				"Place": 32,
+				"Time": "24.53"
+			},
+			{
+				"TeamName": "Nathan Pugmire",
+				"FirstName": "Nathan",
+				"Lastname": "Pugmire",
+				"Grade": 11,
+				"Place": 33,
+				"Time": "24.59"
+			},
+			{
+				"TeamName": "Brayden Beus",
+				"FirstName": "Brayden",
+				"Lastname": "Beus",
+				"Grade": 12,
+				"Place": 34,
+				"Time": "24.72"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Dez",
+				"Lastname": "Jenkins",
+				"Grade": 12,
+				"Place": 35,
+				"Time": "24.79"
+			},
+			{
+				"TeamName": "Dan Kapelos",
+				"FirstName": "Kadence",
+				"Lastname": "Lovell",
+				"Grade": 12,
+				"Place": 36,
+				"Time": "24.85"
+			},
+			{
+				"TeamName": "Benjamin's Unattached Team",
+				"FirstName": "Benjamin",
+				"Lastname": "Carter",
+				"Grade": 11,
+				"Place": 37,
+				"Time": "24.93"
+			},
+			{
+				"TeamName": "Ammon Simmonds",
+				"FirstName": "Ammon",
+				"Lastname": "Simmonds",
+				"Grade": 12,
+				"Place": 38,
+				"Time": "24.94"
+			},
+			{
+				"TeamName": "Brandon's Unattached Team",
+				"FirstName": "Branson",
+				"Lastname": "Barney",
+				"Grade": 9,
+				"Place": 39,
+				"Time": "25.01"
+			},
+			{
+				"TeamName": "Adam's Unattached Team",
+				"FirstName": "Adam",
+				"Lastname": "Lott",
+				"Grade": 12,
+				"Place": 40,
+				"Time": "25.04"
+			},
+			{
+				"TeamName": "Kayden's Unattached Team",
+				"FirstName": "Kayden",
+				"Lastname": "Lister",
+				"Grade": 12,
+				"Place": 41,
+				"Time": "25.10"
+			},
+			{
+				"TeamName": "Rice Unattached Team",
+				"FirstName": "Spencer",
+				"Lastname": "Rice",
+				"Grade": 11,
+				"Place": 42,
+				"Time": "25.12"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "Benjamin",
+				"Lastname": "Judd",
+				"Grade": 10,
+				"Place": 43,
+				"Time": "25.20"
+			},
+			{
+				"TeamName": "Raab's Unattached Team",
+				"FirstName": "Raab",
+				"Lastname": "Poignee",
+				"Grade": 12,
+				"Place": 44,
+				"Time": "25.22"
+			},
+			{
+				"TeamName": "Nathan's Unattached Team",
+				"FirstName": "Nathan",
+				"Lastname": "Ungerman",
+				"Grade": 12,
+				"Place": 45,
+				"Time": "25.32"
+			},
+			{
+				"TeamName": "Nash's Unattached Team",
+				"FirstName": "Nash",
+				"Lastname": "Price",
+				"Grade": 12,
+				"Place": 46,
+				"Time": "25.33"
+			},
+			{
+				"TeamName": "Rawley's Unattached Team",
+				"FirstName": "Rawley",
+				"Lastname": "Coats",
+				"Grade": 10,
+				"Place": 47,
+				"Time": "25.45"
+			},
+			{
+				"TeamName": "Max Gauger",
+				"FirstName": "Max",
+				"Lastname": "Gauger",
+				"Grade": 10,
+				"Place": 48,
+				"Time": "25.46"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "Carson",
+				"Lastname": "Young",
+				"Grade": 10,
+				"Place": 49,
+				"Time": "25.47"
+			},
+			{
+				"TeamName": "CHEETAHS UTAH TRACK CLUB",
+				"FirstName": "Braxton",
+				"Lastname": "Jones",
+				"Grade": 10,
+				"Place": 49,
+				"Time": "25.47"
+			},
+			{
+				"TeamName": "North Sevier",
+				"FirstName": "Jacob",
+				"Lastname": "Johnson",
+				"Grade": 12,
+				"Place": 51,
+				"Time": "25.48"
+			},
+			{
+				"TeamName": "Kyrik Patch",
+				"FirstName": "Kyrik",
+				"Lastname": "Patch",
+				"Grade": 11,
+				"Place": 51,
+				"Time": "25.48"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "Carter",
+				"Lastname": "Jernagin",
+				"Grade": 11,
+				"Place": 53,
+				"Time": "25.50"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Teagan",
+				"Lastname": "Barclay",
+				"Grade": 11,
+				"Place": 54,
+				"Time": "25.51"
+			},
+			{
+				"TeamName": "Ty's Unattached Team",
+				"FirstName": "Ty",
+				"Lastname": "Gibbons",
+				"Grade": 12,
+				"Place": 55,
+				"Time": "25.54"
+			},
+			{
+				"TeamName": "Chance's Unattached Track Team",
+				"FirstName": "Chance",
+				"Lastname": "Wallace",
+				"Grade": 11,
+				"Place": 56,
+				"Time": "25.55"
+			},
+			{
+				"TeamName": "Benham Unattached Team",
+				"FirstName": "Gavin",
+				"Lastname": "Benham",
+				"Grade": 11,
+				"Place": 57,
+				"Time": "25.61"
+			},
+			{
+				"TeamName": "Flanders Team",
+				"FirstName": "Tyson",
+				"Lastname": "Flanders",
+				"Grade": 11,
+				"Place": 58,
+				"Time": "25.64"
+			},
+			{
+				"TeamName": "Cole's Unattached Team",
+				"FirstName": "Cole",
+				"Lastname": "Christensen",
+				"Grade": 11,
+				"Place": 59,
+				"Time": "25.65"
+			},
+			{
+				"TeamName": "Quinton's Unattached Team",
+				"FirstName": "Quinton",
+				"Lastname": "Hyer",
+				"Grade": 10,
+				"Place": 59,
+				"Time": "25.65"
+			},
+			{
+				"TeamName": "Skyridge Unattached Track Team",
+				"FirstName": "Tavian",
+				"Lastname": "Edwards",
+				"Grade": 11,
+				"Place": 61,
+				"Time": "25.75"
+			},
+			{
+				"TeamName": "Unattached Team",
+				"FirstName": "Ty",
+				"Lastname": "Johnson",
+				"Grade": 10,
+				"Place": 62,
+				"Time": "25.80"
+			},
+			{
+				"TeamName": "Malcolm Felt",
+				"FirstName": "Malcolm",
+				"Lastname": "Felt",
+				"Grade": 10,
+				"Place": 63,
+				"Time": "25.88"
+			},
+			{
+				"TeamName": "Brown’s Unattached Team",
+				"FirstName": "Carter",
+				"Lastname": "Brown",
+				"Grade": 9,
+				"Place": 64,
+				"Time": "25.92"
+			},
+			{
+				"TeamName": "Mountain View High School-Wy",
+				"FirstName": "Paxton",
+				"Lastname": "Walker",
+				"Grade": 12,
+				"Place": 65,
+				"Time": "25.96"
+			},
+			{
+				"TeamName": "CHEETAHS UTAH TRACK CLUB",
+				"FirstName": "Demetrius",
+				"Lastname": "Taylor",
+				"Grade": 9,
+				"Place": 66,
+				"Time": "25.99"
+			},
+			{
+				"TeamName": "Dan Kapelos",
+				"FirstName": "Deegan",
+				"Lastname": "Peterson",
+				"Grade": 10,
+				"Place": 67,
+				"Time": "26.03"
+			},
+			{
+				"TeamName": "Caleb's Unattached Team",
+				"FirstName": "Caleb",
+				"Lastname": "Loveless Delamora",
+				"Grade": 11,
+				"Place": 68,
+				"Time": "26.17"
+			},
+			{
+				"TeamName": "Leland",
+				"FirstName": "Leland",
+				"Lastname": "Evans",
+				"Grade": 12,
+				"Place": 69,
+				"Time": "26.20"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Paxton",
+				"Lastname": "Beebe",
+				"Grade": 11,
+				"Place": 70,
+				"Time": "26.36"
+			},
+			{
+				"TeamName": "Owen's Unattached Team",
+				"FirstName": "Owen",
+				"Lastname": "Farrer",
+				"Grade": 12,
+				"Place": 71,
+				"Time": "26.41"
+			},
+			{
+				"TeamName": "Tarnue Ali",
+				"FirstName": "Ayden",
+				"Lastname": "Ross",
+				"Grade": 11,
+				"Place": 72,
+				"Time": "26.46"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "Ricardo",
+				"Lastname": "Alvarez",
+				"Grade": 10,
+				"Place": 73,
+				"Time": "26.53"
+			},
+			{
+				"TeamName": "Logan's Unattached Team",
+				"FirstName": "Logan",
+				"Lastname": "Lai",
+				"Grade": 11,
+				"Place": 74,
+				"Time": "26.61"
+			},
+			{
+				"TeamName": "Quincy's Unattached Team",
+				"FirstName": "Quincy",
+				"Lastname": "Lofgran",
+				"Grade": 11,
+				"Place": 75,
+				"Time": "26.80"
+			},
+			{
+				"TeamName": "Dan Kapelos",
+				"FirstName": "Joel",
+				"Lastname": "Sosa",
+				"Grade": 12,
+				"Place": 76,
+				"Time": "26.82"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "David",
+				"Lastname": "Elizalde",
+				"Grade": 9,
+				"Place": 77,
+				"Time": "26.83"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "Conner",
+				"Lastname": "Knighton",
+				"Grade": 10,
+				"Place": 78,
+				"Time": "26.92"
+			},
+			{
+				"TeamName": "Reed's Unattached Team",
+				"FirstName": "Reed",
+				"Lastname": "Morningstar",
+				"Grade": 9,
+				"Place": 79,
+				"Time": "26.93"
+			},
+			{
+				"TeamName": "Tarnue Ali",
+				"FirstName": "Tyrese",
+				"Lastname": "Ali",
+				"Grade": 7,
+				"Place": 80,
+				"Time": "27.09"
+			},
+			{
+				"TeamName": "Dalton's Unattached Team",
+				"FirstName": "Dalton",
+				"Lastname": "Fryman",
+				"Grade": 12,
+				"Place": 81,
+				"Time": "27.18"
+			},
+			{
+				"TeamName": "Nate’s Track Team",
+				"FirstName": "Nathan",
+				"Lastname": "Milne",
+				"Grade": 10,
+				"Place": 82,
+				"Time": "27.22"
+			},
+			{
+				"TeamName": "Caleb Lawrence Unattached Team",
+				"FirstName": "Caleb",
+				"Lastname": "Lawrence",
+				"Grade": 10,
+				"Place": 83,
+				"Time": "27.31"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "Joshua",
+				"Lastname": "Bonham",
+				"Grade": 9,
+				"Place": 84,
+				"Time": "27.41"
+			},
+			{
+				"TeamName": "Konner's Unattached Track Team",
+				"FirstName": "Konner",
+				"Lastname": "Sleight",
+				"Grade": 9,
+				"Place": 85,
+				"Time": "27.98"
+			},
+			{
+				"TeamName": "Izaac's Unattached Team",
+				"FirstName": "Izaac",
+				"Lastname": "Ekins",
+				"Grade": 0,
+				"Place": 86,
+				"Time": "28.01"
+			},
+			{
+				"TeamName": "Easton's Unattached Team",
+				"FirstName": "Easton",
+				"Lastname": "Bretzing",
+				"Grade": 12,
+				"Place": 87,
+				"Time": "28.11"
+			},
+			{
+				"TeamName": "Zander Hernandez",
+				"FirstName": "Zander",
+				"Lastname": "Hernandez",
+				"Grade": 10,
+				"Place": 88,
+				"Time": "28.23"
+			},
+			{
+				"TeamName": "Ian's Unattached Team",
+				"FirstName": "Ian",
+				"Lastname": "Rigo",
+				"Grade": 10,
+				"Place": 89,
+				"Time": "28.39"
+			},
+			{
+				"TeamName": "Noah's Unattached Team",
+				"FirstName": "Noah",
+				"Lastname": "Hemphill",
+				"Grade": 9,
+				"Place": 90,
+				"Time": "28.42"
+			},
+			{
+				"TeamName": "star valley",
+				"FirstName": "mykell",
+				"Lastname": "nunez",
+				"Grade": 0,
+				"Place": 90,
+				"Time": "28.42"
+			},
+			{
+				"TeamName": "Tiegan Stirling",
+				"FirstName": "Tiegan",
+				"Lastname": "Stirling",
+				"Grade": 9,
+				"Place": 92,
+				"Time": "29.25"
+			},
+			{
+				"TeamName": "Jace's Unattached Track Team",
+				"FirstName": "Jace",
+				"Lastname": "Gomez",
+				"Grade": 10,
+				"Place": 93,
+				"Time": "29.38"
+			},
+			{
+				"TeamName": "Tarnue Ali",
+				"FirstName": "Crew",
+				"Lastname": "Mower",
+				"Grade": 4,
+				"Place": 94,
+				"Time": "30.44"
+			},
+			{
+				"TeamName": "Unattached Team",
+				"FirstName": "Milo",
+				"Lastname": "Amakasu",
+				"Grade": 0,
+				"Place": 95,
+				"Time": "30.66"
+			},
+			{
+				"TeamName": "Montezuma Cortez",
+				"FirstName": "Nielson",
+				"Lastname": "Hurst",
+				"Grade": 9,
+				"Place": 96,
+				"Time": "31.17"
+			},
+			{
+				"TeamName": "Wyatt Wiseman’s Unattached Track Team",
+				"FirstName": "Wyatt",
+				"Lastname": "Wiseman",
+				"Grade": 0,
+				"Place": 97,
+				"Time": "33.44"
+			},
+			{
+				"TeamName": "JJ Mendoza",
+				"FirstName": "JJ",
+				"Lastname": "Mendoza",
+				"Grade": 4,
+				"Place": 98,
+				"Time": "34.56"
+			}
+		]
+	},
+	{
+		"EventID": 738,
+		"Gender": "female",
+		"Name": "Girls 800m Run",
+		"Result": [
+			{
+				"TeamName": "Bria Anderson",
+				"FirstName": "Bria",
+				"Lastname": "Anderson",
+				"Grade": 12,
+				"Place": 1,
+				"Time": "2:16.89"
+			},
+			{
+				"TeamName": "Aldana's Unattached Team",
+				"FirstName": "Aldana",
+				"Lastname": "Navarrete-Lamas",
+				"Grade": 12,
+				"Place": 2,
+				"Time": "2:23.29"
+			},
+			{
+				"TeamName": "Kanab",
+				"FirstName": "Kenidee",
+				"Lastname": "Glazier",
+				"Grade": 10,
+				"Place": 3,
+				"Time": "2:24.51"
+			},
+			{
+				"TeamName": "Lindey's Unattached Team",
+				"FirstName": "Lindsey",
+				"Lastname": "Gerhart",
+				"Grade": 10,
+				"Place": 4,
+				"Time": "2:25.37"
+			},
+			{
+				"TeamName": "Jessica's Unattached Team",
+				"FirstName": "Jessica",
+				"Lastname": "Wilson",
+				"Grade": 12,
+				"Place": 5,
+				"Time": "2:26.71"
+			},
+			{
+				"TeamName": "Kimbrie's Unattached Team",
+				"FirstName": "Kimbrie",
+				"Lastname": "Knudsen",
+				"Grade": 12,
+				"Place": 6,
+				"Time": "2:28.55"
+			},
+			{
+				"TeamName": "Emery",
+				"FirstName": "Gentry",
+				"Lastname": "Christiansen",
+				"Grade": 9,
+				"Place": 7,
+				"Time": "2:28.70"
+			},
+			{
+				"TeamName": "Mia’s Unattached Track Team",
+				"FirstName": "Mia",
+				"Lastname": "Taylor",
+				"Grade": 10,
+				"Place": 8,
+				"Time": "2:29.43"
+			},
+			{
+				"TeamName": "Madison's Unattached Team",
+				"FirstName": "Madison",
+				"Lastname": "Antonino",
+				"Grade": 11,
+				"Place": 9,
+				"Time": "2:29.72"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Jocelyn",
+				"Lastname": "Capener",
+				"Grade": 12,
+				"Place": 10,
+				"Time": "2:30.90"
+			},
+			{
+				"TeamName": "South Fremont",
+				"FirstName": "Sage",
+				"Lastname": "Lyon",
+				"Grade": 12,
+				"Place": 11,
+				"Time": "2:31.27"
+			},
+			{
+				"TeamName": "Payson",
+				"FirstName": "Reagan",
+				"Lastname": "McKenna",
+				"Grade": 12,
+				"Place": 12,
+				"Time": "2:32.85"
+			},
+			{
+				"TeamName": "Deona's Unattached Team",
+				"FirstName": "Rachel",
+				"Lastname": "Willie",
+				"Grade": 10,
+				"Place": 13,
+				"Time": "2:34.83"
+			},
+			{
+				"TeamName": "Anna's Unattached Team",
+				"FirstName": "Anna",
+				"Lastname": "Bliss",
+				"Grade": 9,
+				"Place": 14,
+				"Time": "2:35.14"
+			},
+			{
+				"TeamName": "Team Saylor",
+				"FirstName": "Saylor",
+				"Lastname": "Warner",
+				"Grade": 10,
+				"Place": 15,
+				"Time": "2:35.35"
+			},
+			{
+				"TeamName": "Falcons",
+				"FirstName": "Eliza",
+				"Lastname": "Bodine",
+				"Grade": 11,
+				"Place": 16,
+				"Time": "2:36.46"
+			},
+			{
+				"TeamName": "Macie's Unattached Team",
+				"FirstName": "Macie",
+				"Lastname": "Wakley",
+				"Grade": 11,
+				"Place": 17,
+				"Time": "2:36.47"
+			},
+			{
+				"TeamName": "Emma R York",
+				"FirstName": "Emma",
+				"Lastname": "York",
+				"Grade": 11,
+				"Place": 18,
+				"Time": "2:38.41"
+			},
+			{
+				"TeamName": "Sophie's Unattached Team",
+				"FirstName": "Sophie",
+				"Lastname": "Starr",
+				"Grade": 11,
+				"Place": 19,
+				"Time": "2:38.78"
+			},
+			{
+				"TeamName": "Brianna's Unattached Track Team",
+				"FirstName": "Brianna",
+				"Lastname": "Cook",
+				"Grade": 10,
+				"Place": 20,
+				"Time": "2:39.37"
+			},
+			{
+				"TeamName": "Jasmine's Unattached Team",
+				"FirstName": "Jasmine",
+				"Lastname": "Tapia",
+				"Grade": 11,
+				"Place": 21,
+				"Time": "2:41.38"
+			},
+			{
+				"TeamName": "Reese’s Unattached Team",
+				"FirstName": "Reese",
+				"Lastname": "Mehr",
+				"Grade": 11,
+				"Place": 22,
+				"Time": "2:42.08"
+			},
+			{
+				"TeamName": "Aralyn's Unattached Team",
+				"FirstName": "Aralyn",
+				"Lastname": "Erickson",
+				"Grade": 12,
+				"Place": 23,
+				"Time": "2:42.75"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "Brooklyn",
+				"Lastname": "Knighton",
+				"Grade": 0,
+				"Place": 24,
+				"Time": "2:42.90"
+			},
+			{
+				"TeamName": "Jessica's Unattached Team",
+				"FirstName": "Kelly",
+				"Lastname": "Wilson",
+				"Grade": 9,
+				"Place": 25,
+				"Time": "2:43.04"
+			},
+			{
+				"TeamName": "Pleasant Grove",
+				"FirstName": "Hallie",
+				"Lastname": "Bendoski",
+				"Grade": 0,
+				"Place": 26,
+				"Time": "2:44.38"
+			},
+			{
+				"TeamName": "Adora's Unattached Team",
+				"FirstName": "Adora",
+				"Lastname": "Powers",
+				"Grade": 11,
+				"Place": 27,
+				"Time": "2:45.25"
+			},
+			{
+				"TeamName": "Alexis's Unattached Team",
+				"FirstName": "Alexis",
+				"Lastname": "Cox",
+				"Grade": 9,
+				"Place": 28,
+				"Time": "2:45.66"
+			},
+			{
+				"TeamName": "Pence Unattached Team",
+				"FirstName": "Brianna",
+				"Lastname": "Pence",
+				"Grade": 10,
+				"Place": 29,
+				"Time": "2:45.70"
+			},
+			{
+				"TeamName": "Adelyn Hart",
+				"FirstName": "Addie",
+				"Lastname": "Hart",
+				"Grade": 10,
+				"Place": 30,
+				"Time": "2:45.73"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "Josie",
+				"Lastname": "Young",
+				"Grade": 12,
+				"Place": 31,
+				"Time": "2:47.07"
+			},
+			{
+				"TeamName": "Jessica's Unattached Team",
+				"FirstName": "Sage",
+				"Lastname": "Johnson",
+				"Grade": 11,
+				"Place": 32,
+				"Time": "2:49.51"
+			},
+			{
+				"TeamName": "Zarah",
+				"FirstName": "Zarah",
+				"Lastname": "Wiet",
+				"Grade": 12,
+				"Place": 33,
+				"Time": "2:51.29"
+			},
+			{
+				"TeamName": "Alli's Unattached Team",
+				"FirstName": "Alli",
+				"Lastname": "Hansen",
+				"Grade": 11,
+				"Place": 34,
+				"Time": "2:52.15"
+			},
+			{
+				"TeamName": "Seidy's Unattached Team",
+				"FirstName": "Seidy",
+				"Lastname": "Hernandez",
+				"Grade": 11,
+				"Place": 35,
+				"Time": "2:54.63"
+			},
+			{
+				"TeamName": "ANNIE's Unattached Team",
+				"FirstName": "Annie",
+				"Lastname": "Taylor",
+				"Grade": 11,
+				"Place": 36,
+				"Time": "2:54.95"
+			},
+			{
+				"TeamName": "Caroline's Unattached Team",
+				"FirstName": "Caroline",
+				"Lastname": "Felix",
+				"Grade": 9,
+				"Place": 37,
+				"Time": "2:55.35"
+			},
+			{
+				"TeamName": "Marley's Unattached Team",
+				"FirstName": "Marley",
+				"Lastname": "Renelle",
+				"Grade": 10,
+				"Place": 38,
+				"Time": "2:56.62"
+			},
+			{
+				"TeamName": "Liesl's Unattached Team",
+				"FirstName": "Liesl",
+				"Lastname": "Burton",
+				"Grade": 10,
+				"Place": 39,
+				"Time": "2:57.07"
+			},
+			{
+				"TeamName": "Dan Kapelos",
+				"FirstName": "Makayla",
+				"Lastname": "Wood",
+				"Grade": 10,
+				"Place": 40,
+				"Time": "2:58.29"
+			},
+			{
+				"TeamName": "Sophie's Unattached Track Team",
+				"FirstName": "Sophie",
+				"Lastname": "Patterson",
+				"Grade": 10,
+				"Place": 41,
+				"Time": "3:01.93"
+			},
+			{
+				"TeamName": "South Fremont",
+				"FirstName": "Violet",
+				"Lastname": "Lyon",
+				"Grade": 9,
+				"Place": 42,
+				"Time": "3:02.44"
+			},
+			{
+				"TeamName": "Gwendalynn's Unattached Team",
+				"FirstName": "Gwendalynn",
+				"Lastname": "Lopez",
+				"Grade": 9,
+				"Place": 43,
+				"Time": "3:06.32"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Brette",
+				"Lastname": "Francis",
+				"Grade": 9,
+				"Place": 44,
+				"Time": "3:15.41"
+			},
+			{
+				"TeamName": "Jasmine Chapman",
+				"FirstName": "Jasmine",
+				"Lastname": "Chapman",
+				"Grade": 10,
+				"Place": 45,
+				"Time": "3:19.27"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Kyla",
+				"Lastname": "Wiley",
+				"Grade": 9,
+				"Place": 46,
+				"Time": "3:20.71"
+			},
+			{
+				"TeamName": "Peggy's Unattached Team",
+				"FirstName": "Peggy",
+				"Lastname": "Hernandez",
+				"Grade": 10,
+				"Place": 47,
+				"Time": "3:59.03"
+			}
+		]
+	},
+	{
+		"EventID": 739,
+		"Gender": "male",
+		"Name": "Boys 800m Run",
+		"Result": [
+			{
+				"TeamName": "Landon's Unattached Team",
+				"FirstName": "Landon",
+				"Lastname": "Martino",
+				"Grade": 12,
+				"Place": 1,
+				"Time": "1:58.13"
+			},
+			{
+				"TeamName": "Zach's Unattached Team",
+				"FirstName": "Zach",
+				"Lastname": "Hillhouse",
+				"Grade": 12,
+				"Place": 2,
+				"Time": "2:00.26"
+			},
+			{
+				"TeamName": "Cameron's Unattached Team",
+				"FirstName": "Cameron",
+				"Lastname": "Archer",
+				"Grade": 12,
+				"Place": 3,
+				"Time": "2:00.46"
+			},
+			{
+				"TeamName": "Wasatch",
+				"FirstName": "Alex",
+				"Lastname": "Spencer",
+				"Grade": 11,
+				"Place": 4,
+				"Time": "2:02.37"
+			},
+			{
+				"TeamName": "Race Morrell Unattached",
+				"FirstName": "Race",
+				"Lastname": "Morrell",
+				"Grade": 10,
+				"Place": 5,
+				"Time": "2:03.06"
+			},
+			{
+				"TeamName": "Bear River",
+				"FirstName": "Braxton",
+				"Lastname": "Craven",
+				"Grade": 0,
+				"Place": 6,
+				"Time": "2:03.46"
+			},
+			{
+				"TeamName": "Cherokee Trail",
+				"FirstName": "McKay",
+				"Lastname": "Larsen",
+				"Grade": 12,
+				"Place": 7,
+				"Time": "2:03.81"
+			},
+			{
+				"TeamName": "Camdon's Unattached Team",
+				"FirstName": "Camdon",
+				"Lastname": "Larsen",
+				"Grade": 12,
+				"Place": 8,
+				"Time": "2:04.61"
+			},
+			{
+				"TeamName": "Bryce's Unattached Team",
+				"FirstName": "Bryce",
+				"Lastname": "Gentry",
+				"Grade": 12,
+				"Place": 9,
+				"Time": "2:04.86"
+			},
+			{
+				"TeamName": "Trevor's Unattached Team",
+				"FirstName": "Trevor",
+				"Lastname": "Schmidt",
+				"Grade": 12,
+				"Place": 10,
+				"Time": "2:05.25"
+			},
+			{
+				"TeamName": "Nash's Unattached Team",
+				"FirstName": "Nash",
+				"Lastname": "Piekkola",
+				"Grade": 11,
+				"Place": 11,
+				"Time": "2:06.18"
+			},
+			{
+				"TeamName": "Julian Thomas",
+				"FirstName": "Julian",
+				"Lastname": "Thomas",
+				"Grade": 12,
+				"Place": 12,
+				"Time": "2:06.21"
+			},
+			{
+				"TeamName": "Kyler Moss Racing",
+				"FirstName": "Kyler",
+				"Lastname": "Moss",
+				"Grade": 11,
+				"Place": 13,
+				"Time": "2:06.76"
+			},
+			{
+				"TeamName": "Bryce R",
+				"FirstName": "Bryce",
+				"Lastname": "Runnells",
+				"Grade": 10,
+				"Place": 14,
+				"Time": "2:07.30"
+			},
+			{
+				"TeamName": "Liamm's Unattached Team",
+				"FirstName": "Liamm",
+				"Lastname": "Passey",
+				"Grade": 12,
+				"Place": 15,
+				"Time": "2:08.61"
+			},
+			{
+				"TeamName": "Herriman High School",
+				"FirstName": "Kenny",
+				"Lastname": "Briggs",
+				"Grade": 9,
+				"Place": 16,
+				"Time": "2:08.71"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Aidan",
+				"Lastname": "Conrad",
+				"Grade": 11,
+				"Place": 17,
+				"Time": "2:09.69"
+			},
+			{
+				"TeamName": "Salem Hills",
+				"FirstName": "Gary",
+				"Lastname": "Taylor",
+				"Grade": 12,
+				"Place": 18,
+				"Time": "2:10.13"
+			},
+			{
+				"TeamName": "Arath's Unattached Team",
+				"FirstName": "Arath",
+				"Lastname": "Corrales",
+				"Grade": 12,
+				"Place": 19,
+				"Time": "2:10.43"
+			},
+			{
+				"TeamName": "Wasatch",
+				"FirstName": "Wyatt",
+				"Lastname": "Cernyar",
+				"Grade": 12,
+				"Place": 20,
+				"Time": "2:10.49"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Jamar",
+				"Lastname": "McDowell",
+				"Grade": 12,
+				"Place": 21,
+				"Time": "2:10.57"
+			},
+			{
+				"TeamName": "Unattached",
+				"FirstName": "Myles",
+				"Lastname": "Jessen",
+				"Grade": 9,
+				"Place": 22,
+				"Time": "2:10.79"
+			},
+			{
+				"TeamName": "Megan's Unattached Track Team",
+				"FirstName": "Erick",
+				"Lastname": "Robinson",
+				"Grade": 11,
+				"Place": 23,
+				"Time": "2:10.85"
+			},
+			{
+				"TeamName": "Hunter Huwe Pleasant Grove",
+				"FirstName": "Hunter",
+				"Lastname": "Huwe",
+				"Grade": 12,
+				"Place": 24,
+				"Time": "2:11.74"
+			},
+			{
+				"TeamName": "Izaac's most epic legendary coolest bestest team",
+				"FirstName": "Izaac",
+				"Lastname": "Crosland",
+				"Grade": 12,
+				"Place": 25,
+				"Time": "2:12.18"
+			},
+			{
+				"TeamName": "GOLD MEDAL ATHLETICS",
+				"FirstName": "Brigham",
+				"Lastname": "Beus",
+				"Grade": 9,
+				"Place": 26,
+				"Time": "2:13.08"
+			},
+			{
+				"TeamName": "Peter Jacobson track and field",
+				"FirstName": "Michael",
+				"Lastname": "Jacobson",
+				"Grade": 11,
+				"Place": 27,
+				"Time": "2:13.56"
+			},
+			{
+				"TeamName": "Kelby Staley",
+				"FirstName": "Kelby",
+				"Lastname": "Staley",
+				"Grade": 11,
+				"Place": 28,
+				"Time": "2:13.89"
+			},
+			{
+				"TeamName": "Dillan's Unattached Track Team",
+				"FirstName": "Dillan",
+				"Lastname": "Larsen",
+				"Grade": 11,
+				"Place": 29,
+				"Time": "2:14.21"
+			},
+			{
+				"TeamName": "Phillip's Unattached Team",
+				"FirstName": "Phillip",
+				"Lastname": "Olsen",
+				"Grade": 12,
+				"Place": 30,
+				"Time": "2:14.64"
+			},
+			{
+				"TeamName": "Tyler's Unattached Team",
+				"FirstName": "Tyler",
+				"Lastname": "Muirbrook",
+				"Grade": 12,
+				"Place": 31,
+				"Time": "2:14.71"
+			},
+			{
+				"TeamName": "Lucas's Unattached Team",
+				"FirstName": "Lucas",
+				"Lastname": "Shepherd",
+				"Grade": 11,
+				"Place": 32,
+				"Time": "2:15.32"
+			},
+			{
+				"TeamName": "Shersti's Unattached Team",
+				"FirstName": "Jacob",
+				"Lastname": "Pearson",
+				"Grade": 10,
+				"Place": 33,
+				"Time": "2:15.77"
+			},
+			{
+				"TeamName": "Cottonwood",
+				"FirstName": "Ethan",
+				"Lastname": "Merryweather",
+				"Grade": 0,
+				"Place": 34,
+				"Time": "2:16.05"
+			},
+			{
+				"TeamName": "Kings Peak Athletics",
+				"FirstName": "Colby",
+				"Lastname": "Hollobaugh",
+				"Grade": 10,
+				"Place": 35,
+				"Time": "2:16.20"
+			},
+			{
+				"TeamName": "Jack's Unattached Track Team",
+				"FirstName": "Jack",
+				"Lastname": "Christiansen",
+				"Grade": 12,
+				"Place": 36,
+				"Time": "2:16.53"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Bryan",
+				"Lastname": "Baxter",
+				"Grade": 9,
+				"Place": 37,
+				"Time": "2:16.69"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Jamison",
+				"Lastname": "Williams",
+				"Grade": 12,
+				"Place": 38,
+				"Time": "2:16.72"
+			},
+			{
+				"TeamName": "Carson's Unattached Team",
+				"FirstName": "Carson",
+				"Lastname": "Gurr",
+				"Grade": 11,
+				"Place": 39,
+				"Time": "2:16.74"
+			},
+			{
+				"TeamName": "Salem Hills",
+				"FirstName": "Henry",
+				"Lastname": "Draper",
+				"Grade": 0,
+				"Place": 40,
+				"Time": "2:17.16"
+			},
+			{
+				"TeamName": "Kevin's Unattached Team",
+				"FirstName": "Kevin",
+				"Lastname": "Law",
+				"Grade": 12,
+				"Place": 40,
+				"Time": "2:17.16"
+			},
+			{
+				"TeamName": "Nelson",
+				"FirstName": "Emmitt",
+				"Lastname": "Nelson",
+				"Grade": 10,
+				"Place": 42,
+				"Time": "2:17.19"
+			},
+			{
+				"TeamName": "Aiden's Unattached Team",
+				"FirstName": "Aiden",
+				"Lastname": "Harmon",
+				"Grade": 10,
+				"Place": 43,
+				"Time": "2:17.67"
+			},
+			{
+				"TeamName": "Fletcher's Unattached Team",
+				"FirstName": "Quinn",
+				"Lastname": "Fletcher",
+				"Grade": 9,
+				"Place": 44,
+				"Time": "2:17.93"
+			},
+			{
+				"TeamName": "Tanner Huwe's Unattached Team",
+				"FirstName": "Tanner",
+				"Lastname": "Huwe",
+				"Grade": 11,
+				"Place": 45,
+				"Time": "2:18.08"
+			},
+			{
+				"TeamName": "Patricia's Unattached Team",
+				"FirstName": "Clifford",
+				"Lastname": "Richardson",
+				"Grade": 11,
+				"Place": 46,
+				"Time": "2:19.28"
+			},
+			{
+				"TeamName": "Henry's Unattached Track Team",
+				"FirstName": "Henry",
+				"Lastname": "Findlay",
+				"Grade": 12,
+				"Place": 47,
+				"Time": "2:20.36"
+			},
+			{
+				"TeamName": "Braxton's Unattached Team",
+				"FirstName": "Braxton",
+				"Lastname": "Simmons",
+				"Grade": 9,
+				"Place": 48,
+				"Time": "2:20.42"
+			},
+			{
+				"TeamName": "Grantsville",
+				"FirstName": "Zachary",
+				"Lastname": "Nordgren",
+				"Grade": 9,
+				"Place": 49,
+				"Time": "2:20.78"
+			},
+			{
+				"TeamName": "Union",
+				"FirstName": "Aften",
+				"Lastname": "Richens",
+				"Grade": 12,
+				"Place": 50,
+				"Time": "2:21.03"
+			},
+			{
+				"TeamName": "Decker's Unattached Team",
+				"FirstName": "Decker",
+				"Lastname": "Normington",
+				"Grade": 10,
+				"Place": 51,
+				"Time": "2:21.26"
+			},
+			{
+				"TeamName": "Joel Min",
+				"FirstName": "Joel",
+				"Lastname": "Min",
+				"Grade": 10,
+				"Place": 52,
+				"Time": "2:21.31"
+			},
+			{
+				"TeamName": "North Sevier",
+				"FirstName": "Kade",
+				"Lastname": "Johnson",
+				"Grade": 10,
+				"Place": 53,
+				"Time": "2:21.37"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Justin",
+				"Lastname": "Moon",
+				"Grade": 11,
+				"Place": 53,
+				"Time": "2:21.37"
+			},
+			{
+				"TeamName": "Unattached Team",
+				"FirstName": "Milo",
+				"Lastname": "Amakasu",
+				"Grade": 0,
+				"Place": 55,
+				"Time": "2:22.35"
+			},
+			{
+				"TeamName": "Dutson",
+				"FirstName": "Nick",
+				"Lastname": "Dutson",
+				"Grade": 9,
+				"Place": 56,
+				"Time": "2:22.58"
+			},
+			{
+				"TeamName": "Maxwell R Hill",
+				"FirstName": "Maxwell",
+				"Lastname": "Hill",
+				"Grade": 10,
+				"Place": 57,
+				"Time": "2:23.27"
+			},
+			{
+				"TeamName": "Johnson",
+				"FirstName": "Cole",
+				"Lastname": "Johnson",
+				"Grade": 0,
+				"Place": 58,
+				"Time": "2:23.38"
+			},
+			{
+				"TeamName": "Soren's Unattached Team",
+				"FirstName": "Soren",
+				"Lastname": "Allen",
+				"Grade": 11,
+				"Place": 59,
+				"Time": "2:23.72"
+			},
+			{
+				"TeamName": "Jared Searle",
+				"FirstName": "Jared",
+				"Lastname": "Searle",
+				"Grade": 11,
+				"Place": 60,
+				"Time": "2:23.80"
+			},
+			{
+				"TeamName": "Josh Yarbough",
+				"FirstName": "Josh",
+				"Lastname": "Yarbrough",
+				"Grade": 10,
+				"Place": 61,
+				"Time": "2:23.97"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Croydon",
+				"Lastname": "Francis",
+				"Grade": 12,
+				"Place": 62,
+				"Time": "2:24.37"
+			},
+			{
+				"TeamName": "Heather Talbot",
+				"FirstName": "Benjamin",
+				"Lastname": "Talbot",
+				"Grade": 0,
+				"Place": 63,
+				"Time": "2:24.38"
+			},
+			{
+				"TeamName": "Connor Orges",
+				"FirstName": "Connor",
+				"Lastname": "Orges",
+				"Grade": 12,
+				"Place": 64,
+				"Time": "2:24.48"
+			},
+			{
+				"TeamName": "Emery",
+				"FirstName": "Jacob",
+				"Lastname": "Erickson",
+				"Grade": 11,
+				"Place": 65,
+				"Time": "2:25.53"
+			},
+			{
+				"TeamName": "Hansen Unattached Team",
+				"FirstName": "Ryan",
+				"Lastname": "Hansen",
+				"Grade": 10,
+				"Place": 66,
+				"Time": "2:26.01"
+			},
+			{
+				"TeamName": "Green River",
+				"FirstName": "Jesse",
+				"Lastname": "Kimble",
+				"Grade": 9,
+				"Place": 67,
+				"Time": "2:26.15"
+			},
+			{
+				"TeamName": "Noah's Unattached Team",
+				"FirstName": "Noah",
+				"Lastname": "Starr",
+				"Grade": 12,
+				"Place": 68,
+				"Time": "2:26.53"
+			},
+			{
+				"TeamName": "Melany's Unattached Team",
+				"FirstName": "Jayson",
+				"Lastname": "Whitehead",
+				"Grade": 8,
+				"Place": 69,
+				"Time": "2:26.92"
+			},
+			{
+				"TeamName": "Matthew Nash",
+				"FirstName": "Matthew",
+				"Lastname": "Nash",
+				"Grade": 9,
+				"Place": 70,
+				"Time": "2:27.34"
+			},
+			{
+				"TeamName": "Stephanie Cole",
+				"FirstName": "Bridger",
+				"Lastname": "Cole",
+				"Grade": 10,
+				"Place": 71,
+				"Time": "2:27.38"
+			},
+			{
+				"TeamName": "Caleb's Unattached Team",
+				"FirstName": "Caleb",
+				"Lastname": "Showgren",
+				"Grade": 11,
+				"Place": 72,
+				"Time": "2:27.55"
+			},
+			{
+				"TeamName": "Natalie's Unattached Track Team",
+				"FirstName": "Isaac",
+				"Lastname": "Harbin",
+				"Grade": 10,
+				"Place": 73,
+				"Time": "2:27.58"
+			},
+			{
+				"TeamName": "Zachery Degraw's Unattached Team",
+				"FirstName": "Zachery",
+				"Lastname": "Degraw",
+				"Grade": 10,
+				"Place": 74,
+				"Time": "2:30.64"
+			},
+			{
+				"TeamName": "Blake's Unattached Team",
+				"FirstName": "William",
+				"Lastname": "Durtschi",
+				"Grade": 10,
+				"Place": 75,
+				"Time": "2:31.39"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Colby",
+				"Lastname": "Farrens",
+				"Grade": 12,
+				"Place": 76,
+				"Time": "2:34.87"
+			},
+			{
+				"TeamName": "Malachi Peterson",
+				"FirstName": "Malachi",
+				"Lastname": "Peterson",
+				"Grade": 9,
+				"Place": 77,
+				"Time": "2:35.23"
+			},
+			{
+				"TeamName": "Reece's Unattached Team",
+				"FirstName": "Reece",
+				"Lastname": "Woolwine",
+				"Grade": 10,
+				"Place": 78,
+				"Time": "2:35.49"
+			},
+			{
+				"TeamName": "Tara's Unattached Team",
+				"FirstName": "Zane",
+				"Lastname": "Nelson",
+				"Grade": 10,
+				"Place": 79,
+				"Time": "2:36.14"
+			},
+			{
+				"TeamName": "Dover Unattached Team",
+				"FirstName": "Andrew",
+				"Lastname": "Dover",
+				"Grade": 10,
+				"Place": 80,
+				"Time": "2:37.00"
+			},
+			{
+				"TeamName": "Michael Casebolt",
+				"FirstName": "Michael",
+				"Lastname": "Casebolt",
+				"Grade": 12,
+				"Place": 81,
+				"Time": "2:37.11"
+			},
+			{
+				"TeamName": "Morgan Phippen",
+				"FirstName": "Morgan",
+				"Lastname": "Phippen",
+				"Grade": 9,
+				"Place": 82,
+				"Time": "2:37.48"
+			},
+			{
+				"TeamName": "Jordan Andrew GRV",
+				"FirstName": "Jordan",
+				"Lastname": "Andrew",
+				"Grade": 11,
+				"Place": 83,
+				"Time": "2:40.27"
+			},
+			{
+				"TeamName": "Gavin Unattached Team",
+				"FirstName": "Gavin",
+				"Lastname": "Watkins",
+				"Grade": 11,
+				"Place": 84,
+				"Time": "2:45.53"
+			},
+			{
+				"TeamName": "Juab",
+				"FirstName": "Braiden",
+				"Lastname": "Taylor",
+				"Grade": 9,
+				"Place": 85,
+				"Time": "2:51.90"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Jaycee",
+				"Lastname": "Kohler",
+				"Grade": 12,
+				"Place": 86,
+				"Time": "3:00.22"
+			},
+			{
+				"TeamName": "Cottonwood",
+				"FirstName": "Peter",
+				"Lastname": "Haws",
+				"Grade": 10,
+				"Place": 87,
+				"Time": "3:45.60"
+			}
+		]
+	},
+	{
+		"EventID": 740,
+		"Gender": "female",
+		"Name": "Girls 1 Mile Run",
+		"Result": [
+			{
+				"TeamName": "Kaspricks",
+				"FirstName": "Cadence",
+				"Lastname": "Kasprick",
+				"Grade": 12,
+				"Place": 1,
+				"Time": "5:08.70"
+			},
+			{
+				"TeamName": "Nelah Roberts",
+				"FirstName": "Nelah",
+				"Lastname": "Roberts",
+				"Grade": 12,
+				"Place": 2,
+				"Time": "5:16.82"
+			},
+			{
+				"TeamName": "Giles Unattached Team",
+				"FirstName": "Kate",
+				"Lastname": "Giles",
+				"Grade": 12,
+				"Place": 3,
+				"Time": "5:19.44"
+			},
+			{
+				"TeamName": "Katie Hansen",
+				"FirstName": "Katie",
+				"Lastname": "Hansen",
+				"Grade": 11,
+				"Place": 4,
+				"Time": "5:22.77"
+			},
+			{
+				"TeamName": "Union",
+				"FirstName": "River",
+				"Lastname": "White",
+				"Grade": 10,
+				"Place": 5,
+				"Time": "5:24.65"
+			},
+			{
+				"TeamName": "Madison's Unattached Team",
+				"FirstName": "Madison",
+				"Lastname": "Antonino",
+				"Grade": 11,
+				"Place": 6,
+				"Time": "5:25.23"
+			},
+			{
+				"TeamName": "Herriman",
+				"FirstName": "Alayna",
+				"Lastname": "Wardle",
+				"Grade": 12,
+				"Place": 7,
+				"Time": "5:27.35"
+			},
+			{
+				"TeamName": "Janeth's Unattached Team",
+				"FirstName": "Angelina",
+				"Lastname": "Alder",
+				"Grade": 5,
+				"Place": 8,
+				"Time": "5:27.74"
+			},
+			{
+				"TeamName": "Millie's Unattached Team",
+				"FirstName": "Millie",
+				"Lastname": "Robinson",
+				"Grade": 11,
+				"Place": 9,
+				"Time": "5:27.87"
+			},
+			{
+				"TeamName": "South Fremont",
+				"FirstName": "Sage",
+				"Lastname": "Lyon",
+				"Grade": 12,
+				"Place": 10,
+				"Time": "5:28.26"
+			},
+			{
+				"TeamName": "Kanab",
+				"FirstName": "Kenidee",
+				"Lastname": "Glazier",
+				"Grade": 10,
+				"Place": 11,
+				"Time": "5:29.88"
+			},
+			{
+				"TeamName": "Katrina's Unattached Team",
+				"FirstName": "Isabelle",
+				"Lastname": "McCullough",
+				"Grade": 11,
+				"Place": 12,
+				"Time": "5:31.14"
+			},
+			{
+				"TeamName": "Maddie's Unattached Team",
+				"FirstName": "Madelyn",
+				"Lastname": "Reeder",
+				"Grade": 9,
+				"Place": 13,
+				"Time": "5:31.86"
+			},
+			{
+				"TeamName": "Savannah's unattached team",
+				"FirstName": "Savannah",
+				"Lastname": "Galbraith",
+				"Grade": 11,
+				"Place": 14,
+				"Time": "5:33.50"
+			},
+			{
+				"TeamName": "Kambrie's Unattached Track Team",
+				"FirstName": "Kambrie",
+				"Lastname": "Wilkinson",
+				"Grade": 12,
+				"Place": 15,
+				"Time": "5:33.75"
+			},
+			{
+				"TeamName": "Addilyn's Unattached Team",
+				"FirstName": "Addilyn",
+				"Lastname": "Orndorff",
+				"Grade": 12,
+				"Place": 16,
+				"Time": "5:34.22"
+			},
+			{
+				"TeamName": "Marci",
+				"FirstName": "Marci",
+				"Lastname": "Havens",
+				"Grade": 10,
+				"Place": 17,
+				"Time": "5:36.32"
+			},
+			{
+				"TeamName": "Isaac R Hawkins",
+				"FirstName": "LUCY",
+				"Lastname": "HAWKINS",
+				"Grade": 10,
+				"Place": 18,
+				"Time": "5:36.48"
+			},
+			{
+				"TeamName": "Emery",
+				"FirstName": "Gentry",
+				"Lastname": "Christiansen",
+				"Grade": 9,
+				"Place": 19,
+				"Time": "5:36.78"
+			},
+			{
+				"TeamName": "Roadrunners",
+				"FirstName": "Susan",
+				"Lastname": "Hedengren",
+				"Grade": 6,
+				"Place": 20,
+				"Time": "5:36.97"
+			},
+			{
+				"TeamName": "Kaspricks",
+				"FirstName": "Ainsleigh",
+				"Lastname": "Kasprick",
+				"Grade": 11,
+				"Place": 21,
+				"Time": "5:37.51"
+			},
+			{
+				"TeamName": "BHS Club",
+				"FirstName": "Sienna",
+				"Lastname": "Barton",
+				"Grade": 12,
+				"Place": 22,
+				"Time": "5:37.81"
+			},
+			{
+				"TeamName": "Ava’s team",
+				"FirstName": "Ava",
+				"Lastname": "Talbot",
+				"Grade": 11,
+				"Place": 23,
+				"Time": "5:39.49"
+			},
+			{
+				"TeamName": "Herriman",
+				"FirstName": "McKensie",
+				"Lastname": "Bowen",
+				"Grade": 12,
+				"Place": 24,
+				"Time": "5:39.92"
+			},
+			{
+				"TeamName": "Maci's Unattached Track Team",
+				"FirstName": "Maci",
+				"Lastname": "Woolf",
+				"Grade": 0,
+				"Place": 25,
+				"Time": "5:39.93"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Jocelyn",
+				"Lastname": "Capener",
+				"Grade": 12,
+				"Place": 26,
+				"Time": "5:40.36"
+			},
+			{
+				"TeamName": "Skyes Team",
+				"FirstName": "Skye",
+				"Lastname": "Siddoway",
+				"Grade": 11,
+				"Place": 27,
+				"Time": "5:41.15"
+			},
+			{
+				"TeamName": "Maple Mountain",
+				"FirstName": "Layla",
+				"Lastname": "Aguero",
+				"Grade": 11,
+				"Place": 28,
+				"Time": "5:41.51"
+			},
+			{
+				"TeamName": "Stansbury",
+				"FirstName": "Ellie",
+				"Lastname": "Dangerfield",
+				"Grade": 11,
+				"Place": 29,
+				"Time": "5:42.20"
+			},
+			{
+				"TeamName": "Boyer's Unattached Team",
+				"FirstName": "Maya",
+				"Lastname": "Boyer",
+				"Grade": 10,
+				"Place": 30,
+				"Time": "5:42.29"
+			},
+			{
+				"TeamName": "Mountain Ridge",
+				"FirstName": "Brooklyn",
+				"Lastname": "Tarr",
+				"Grade": 10,
+				"Place": 31,
+				"Time": "5:43.37"
+			},
+			{
+				"TeamName": "Avery's Unattached Team",
+				"FirstName": "Avery",
+				"Lastname": "Sortor",
+				"Grade": 12,
+				"Place": 32,
+				"Time": "5:45.13"
+			},
+			{
+				"TeamName": "Timpanogos",
+				"FirstName": "Molly",
+				"Lastname": "Walton",
+				"Grade": 12,
+				"Place": 33,
+				"Time": "5:46.61"
+			},
+			{
+				"TeamName": "Kimbrie's Unattached Team",
+				"FirstName": "Kimbrie",
+				"Lastname": "Knudsen",
+				"Grade": 12,
+				"Place": 34,
+				"Time": "5:47.22"
+			},
+			{
+				"TeamName": "Mariah's Unattached Track Team",
+				"FirstName": "Mariah",
+				"Lastname": "George",
+				"Grade": 11,
+				"Place": 35,
+				"Time": "5:47.97"
+			},
+			{
+				"TeamName": "Dan C's Unattached Team",
+				"FirstName": "Katelyn",
+				"Lastname": "Carlile",
+				"Grade": 12,
+				"Place": 36,
+				"Time": "5:49.37"
+			},
+			{
+				"TeamName": "Boyer's Unattached Team",
+				"FirstName": "Analia",
+				"Lastname": "Boyer",
+				"Grade": 11,
+				"Place": 37,
+				"Time": "5:50.53"
+			},
+			{
+				"TeamName": "Kadence's Unattached Track Team",
+				"FirstName": "Kadence",
+				"Lastname": "Gholson",
+				"Grade": 10,
+				"Place": 38,
+				"Time": "5:50.97"
+			},
+			{
+				"TeamName": "2 Fast 1 Furious",
+				"FirstName": "Chelsea",
+				"Lastname": "Shakespear",
+				"Grade": 11,
+				"Place": 39,
+				"Time": "5:51.75"
+			},
+			{
+				"TeamName": "Eliza's Unattached Team",
+				"FirstName": "Eliza",
+				"Lastname": "Gill",
+				"Grade": 12,
+				"Place": 40,
+				"Time": "5:52.48"
+			},
+			{
+				"TeamName": "Anna's Unattached Team",
+				"FirstName": "Anna",
+				"Lastname": "Bliss",
+				"Grade": 9,
+				"Place": 41,
+				"Time": "5:53.97"
+			},
+			{
+				"TeamName": "Jaycees Unattached Team",
+				"FirstName": "Jaycee",
+				"Lastname": "Eggett",
+				"Grade": 10,
+				"Place": 42,
+				"Time": "5:54.46"
+			},
+			{
+				"TeamName": "Grace Laura Waite",
+				"FirstName": "Grace",
+				"Lastname": "Waite",
+				"Grade": 12,
+				"Place": 43,
+				"Time": "5:54.66"
+			},
+			{
+				"TeamName": "Leah's team",
+				"FirstName": "Leah",
+				"Lastname": "Gunderson",
+				"Grade": 12,
+				"Place": 44,
+				"Time": "5:54.69"
+			},
+			{
+				"TeamName": "Whit's Unattached Track Team",
+				"FirstName": "Ava",
+				"Lastname": "Sargent",
+				"Grade": 10,
+				"Place": 45,
+				"Time": "5:56.79"
+			},
+			{
+				"TeamName": "Kara's Unattached Team",
+				"FirstName": "Gwen",
+				"Lastname": "Roper",
+				"Grade": 6,
+				"Place": 46,
+				"Time": "5:57.06"
+			},
+			{
+				"TeamName": "Payson",
+				"FirstName": "Reagan",
+				"Lastname": "McKenna",
+				"Grade": 12,
+				"Place": 47,
+				"Time": "5:58.58"
+			},
+			{
+				"TeamName": "Maren's Unattached Team",
+				"FirstName": "Maren",
+				"Lastname": "Leffler",
+				"Grade": 12,
+				"Place": 48,
+				"Time": "5:58.98"
+			},
+			{
+				"TeamName": "Zina Thomas",
+				"FirstName": "Zina",
+				"Lastname": "Thomas",
+				"Grade": 12,
+				"Place": 49,
+				"Time": "5:59.45"
+			},
+			{
+				"TeamName": "Avery's Unattached Team",
+				"FirstName": "Avery",
+				"Lastname": "Gonzales",
+				"Grade": 12,
+				"Place": 50,
+				"Time": "5:59.63"
+			},
+			{
+				"TeamName": "Willow's Unattached Team",
+				"FirstName": "Brianna",
+				"Lastname": "Young",
+				"Grade": 11,
+				"Place": 51,
+				"Time": "5:59.72"
+			},
+			{
+				"TeamName": "Roadrunners",
+				"FirstName": "Clara",
+				"Lastname": "King",
+				"Grade": 0,
+				"Place": 52,
+				"Time": "6:00.90"
+			},
+			{
+				"TeamName": "Adora's Unattached Team",
+				"FirstName": "Adora",
+				"Lastname": "Powers",
+				"Grade": 11,
+				"Place": 53,
+				"Time": "6:01.40"
+			},
+			{
+				"TeamName": "Jasmine's Unattached Team",
+				"FirstName": "Jasmine",
+				"Lastname": "Tapia",
+				"Grade": 11,
+				"Place": 54,
+				"Time": "6:01.76"
+			},
+			{
+				"TeamName": "JaNae's Unattached Team",
+				"FirstName": "Anna",
+				"Lastname": "Kent",
+				"Grade": 10,
+				"Place": 55,
+				"Time": "6:02.33"
+			},
+			{
+				"TeamName": "Marjie Richards",
+				"FirstName": "Marjie",
+				"Lastname": "Richards",
+				"Grade": 12,
+				"Place": 56,
+				"Time": "6:03.15"
+			},
+			{
+				"TeamName": "Ella's Unattached Team",
+				"FirstName": "Ella",
+				"Lastname": "Becker",
+				"Grade": 11,
+				"Place": 57,
+				"Time": "6:04.19"
+			},
+			{
+				"TeamName": "MMHS-Woolford",
+				"FirstName": "Mackenzie",
+				"Lastname": "Woolford",
+				"Grade": 10,
+				"Place": 58,
+				"Time": "6:04.33"
+			},
+			{
+				"TeamName": "Adelyn Hart",
+				"FirstName": "Addie",
+				"Lastname": "Hart",
+				"Grade": 10,
+				"Place": 59,
+				"Time": "6:05.51"
+			},
+			{
+				"TeamName": "2 Fast 1 Furious",
+				"FirstName": "Ali",
+				"Lastname": "Suhaka",
+				"Grade": 11,
+				"Place": 60,
+				"Time": "6:05.70"
+			},
+			{
+				"TeamName": "Lauren’s Unattached Track Team",
+				"FirstName": "Lauren",
+				"Lastname": "Horsley",
+				"Grade": 12,
+				"Place": 61,
+				"Time": "6:05.75"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Kaitlyn",
+				"Lastname": "Bach",
+				"Grade": 11,
+				"Place": 62,
+				"Time": "6:06.22"
+			},
+			{
+				"TeamName": "Bailey's Unattached Team",
+				"FirstName": "Bailey",
+				"Lastname": "Watson",
+				"Grade": 12,
+				"Place": 63,
+				"Time": "6:06.37"
+			},
+			{
+				"TeamName": "Kadence's Unattached Team",
+				"FirstName": "Kadence",
+				"Lastname": "Smith",
+				"Grade": 12,
+				"Place": 64,
+				"Time": "6:10.45"
+			},
+			{
+				"TeamName": "Laura's Unattached Team",
+				"FirstName": "Hallie",
+				"Lastname": "Prete",
+				"Grade": 9,
+				"Place": 65,
+				"Time": "6:11.25"
+			},
+			{
+				"TeamName": "Abby's Unattached Team",
+				"FirstName": "Abby",
+				"Lastname": "Marx",
+				"Grade": 10,
+				"Place": 66,
+				"Time": "6:11.30"
+			},
+			{
+				"TeamName": "Audrey's Unattached Track Team",
+				"FirstName": "Audrey",
+				"Lastname": "Griffin",
+				"Grade": 12,
+				"Place": 67,
+				"Time": "6:11.90"
+			},
+			{
+				"TeamName": "Mac's Unattached Team",
+				"FirstName": "Ava",
+				"Lastname": "Carter",
+				"Grade": 10,
+				"Place": 68,
+				"Time": "6:13.44"
+			},
+			{
+				"TeamName": "Pence Unattached Team",
+				"FirstName": "Brianna",
+				"Lastname": "Pence",
+				"Grade": 10,
+				"Place": 69,
+				"Time": "6:14.34"
+			},
+			{
+				"TeamName": "Kim's Unattached Team",
+				"FirstName": "Ali",
+				"Lastname": "Ackerson",
+				"Grade": 11,
+				"Place": 70,
+				"Time": "6:16.21"
+			},
+			{
+				"TeamName": "Murdock GRV",
+				"FirstName": "Madison",
+				"Lastname": "Murdock",
+				"Grade": 12,
+				"Place": 71,
+				"Time": "6:20.56"
+			},
+			{
+				"TeamName": "Arianne's Unattached Team",
+				"FirstName": "Arianne",
+				"Lastname": "Dearden",
+				"Grade": 12,
+				"Place": 72,
+				"Time": "6:22.07"
+			},
+			{
+				"TeamName": "Eden Edwards",
+				"FirstName": "Eden",
+				"Lastname": "Edwards",
+				"Grade": 12,
+				"Place": 73,
+				"Time": "6:22.92"
+			},
+			{
+				"TeamName": "Zarah",
+				"FirstName": "Zarah",
+				"Lastname": "Wiet",
+				"Grade": 12,
+				"Place": 74,
+				"Time": "6:24.02"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Gracey",
+				"Lastname": "Visser",
+				"Grade": 10,
+				"Place": 75,
+				"Time": "6:25.18"
+			},
+			{
+				"TeamName": "Tyndale's Unattached Team",
+				"FirstName": "Yllka",
+				"Lastname": "Curtis",
+				"Grade": 9,
+				"Place": 76,
+				"Time": "6:25.76"
+			},
+			{
+				"TeamName": "Woods cross",
+				"FirstName": "Angie",
+				"Lastname": "Payan",
+				"Grade": 10,
+				"Place": 77,
+				"Time": "6:26.16"
+			},
+			{
+				"TeamName": "vianey's Unattached Team",
+				"FirstName": "Vianey",
+				"Lastname": "Toledo",
+				"Grade": 11,
+				"Place": 78,
+				"Time": "6:26.76"
+			},
+			{
+				"TeamName": "Skyridge Unattached Team",
+				"FirstName": "Bryssa",
+				"Lastname": "Harris",
+				"Grade": 11,
+				"Place": 79,
+				"Time": "6:28.73"
+			},
+			{
+				"TeamName": "Avery's Unattached Team",
+				"FirstName": "Cambria",
+				"Lastname": "Sortor",
+				"Grade": 9,
+				"Place": 80,
+				"Time": "6:30.38"
+			},
+			{
+				"TeamName": "Caroline's Unattached Team",
+				"FirstName": "Caroline",
+				"Lastname": "Felix",
+				"Grade": 9,
+				"Place": 81,
+				"Time": "6:30.64"
+			},
+			{
+				"TeamName": "Clara R.",
+				"FirstName": "Clara",
+				"Lastname": "Romig",
+				"Grade": 11,
+				"Place": 82,
+				"Time": "6:31.47"
+			},
+			{
+				"TeamName": "Springville",
+				"FirstName": "Ashley",
+				"Lastname": "Johns",
+				"Grade": 12,
+				"Place": 83,
+				"Time": "6:32.18"
+			},
+			{
+				"TeamName": "Eliza Liberty's Unattached Team",
+				"FirstName": "Eliza",
+				"Lastname": "Day",
+				"Grade": 11,
+				"Place": 84,
+				"Time": "6:32.91"
+			},
+			{
+				"TeamName": "Marley's Unattached Team",
+				"FirstName": "Marley",
+				"Lastname": "Renelle",
+				"Grade": 10,
+				"Place": 85,
+				"Time": "6:33.33"
+			},
+			{
+				"TeamName": "Aralyn's Unattached Team",
+				"FirstName": "Aralyn",
+				"Lastname": "Erickson",
+				"Grade": 12,
+				"Place": 86,
+				"Time": "6:34.35"
+			},
+			{
+				"TeamName": "Annika's Unattached Team",
+				"FirstName": "Alison",
+				"Lastname": "Lovell",
+				"Grade": 10,
+				"Place": 87,
+				"Time": "6:36.32"
+			},
+			{
+				"TeamName": "Anika's unattached team",
+				"FirstName": "Anika",
+				"Lastname": "Cook",
+				"Grade": 12,
+				"Place": 88,
+				"Time": "6:39.57"
+			},
+			{
+				"TeamName": "Roadrunners",
+				"FirstName": "Brooklyn",
+				"Lastname": "Martinsen",
+				"Grade": 7,
+				"Place": 89,
+				"Time": "6:43.14"
+			},
+			{
+				"TeamName": "Makenna Unattached Team",
+				"FirstName": "Makenna",
+				"Lastname": "Barnes",
+				"Grade": 10,
+				"Place": 90,
+				"Time": "6:44.05"
+			},
+			{
+				"TeamName": "Woods Cross",
+				"FirstName": "Camille",
+				"Lastname": "Dunn",
+				"Grade": 12,
+				"Place": 91,
+				"Time": "6:44.71"
+			},
+			{
+				"TeamName": "Kimiya's Unattached Track Team",
+				"FirstName": "Kimiya",
+				"Lastname": "Mavaddat",
+				"Grade": 11,
+				"Place": 92,
+				"Time": "6:47.56"
+			},
+			{
+				"TeamName": "Dustin's Unattached Track Team",
+				"FirstName": "Ella",
+				"Lastname": "McQuay",
+				"Grade": 10,
+				"Place": 93,
+				"Time": "6:48.56"
+			},
+			{
+				"TeamName": "South Fremont",
+				"FirstName": "Violet",
+				"Lastname": "Lyon",
+				"Grade": 9,
+				"Place": 94,
+				"Time": "6:49.21"
+			},
+			{
+				"TeamName": "Richfield",
+				"FirstName": "Laynie",
+				"Lastname": "Jolley",
+				"Grade": 9,
+				"Place": 95,
+				"Time": "6:53.53"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Bree",
+				"Lastname": "Cranney",
+				"Grade": 9,
+				"Place": 96,
+				"Time": "6:54.89"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Kaelle",
+				"Lastname": "Opitz",
+				"Grade": 12,
+				"Place": 97,
+				"Time": "6:57.75"
+			},
+			{
+				"TeamName": "Evangeline's Unattached Track Team",
+				"FirstName": "Evangeline",
+				"Lastname": "Gladden",
+				"Grade": 10,
+				"Place": 98,
+				"Time": "6:58.16"
+			},
+			{
+				"TeamName": "Roadrunners",
+				"FirstName": "Sophia",
+				"Lastname": "Kawa",
+				"Grade": 7,
+				"Place": 99,
+				"Time": "6:58.72"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Brette",
+				"Lastname": "Francis",
+				"Grade": 9,
+				"Place": 100,
+				"Time": "7:01.80"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Clara",
+				"Lastname": "Pieper",
+				"Grade": 10,
+				"Place": 101,
+				"Time": "7:03.13"
+			},
+			{
+				"TeamName": "Sophia Clark",
+				"FirstName": "Sophia",
+				"Lastname": "Clark",
+				"Grade": 10,
+				"Place": 102,
+				"Time": "7:07.11"
+			},
+			{
+				"TeamName": "Gillian Paxton",
+				"FirstName": "Gillian",
+				"Lastname": "Paxton",
+				"Grade": 9,
+				"Place": 103,
+				"Time": "7:11.70"
+			},
+			{
+				"TeamName": "Star Valley Braves Unattached Team",
+				"FirstName": "Madison",
+				"Lastname": "Strgar",
+				"Grade": 11,
+				"Place": 104,
+				"Time": "7:14.28"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Abby",
+				"Lastname": "Sanderson",
+				"Grade": 9,
+				"Place": 105,
+				"Time": "7:16.07"
+			},
+			{
+				"TeamName": "Alexandria's Unattached Team",
+				"FirstName": "Alexandria",
+				"Lastname": "Box",
+				"Grade": 11,
+				"Place": 106,
+				"Time": "7:25.29"
+			},
+			{
+				"TeamName": "Roadrunners",
+				"FirstName": "Amelia",
+				"Lastname": "Dunn",
+				"Grade": 8,
+				"Place": 107,
+				"Time": "7:36.17"
+			},
+			{
+				"TeamName": "Akira's Unattached Track Team",
+				"FirstName": "Akira",
+				"Lastname": "Curfman",
+				"Grade": 12,
+				"Place": 108,
+				"Time": "7:42.69"
+			},
+			{
+				"TeamName": "Hannah's Unattached Track Team",
+				"FirstName": "Hannah",
+				"Lastname": "sugathadasa",
+				"Grade": 10,
+				"Place": 109,
+				"Time": "7:50.91"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Ella",
+				"Lastname": "Cranney",
+				"Grade": 10,
+				"Place": 110,
+				"Time": "7:58.86"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Hanne",
+				"Lastname": "Opitz",
+				"Grade": 9,
+				"Place": 111,
+				"Time": "8:16.06"
+			},
+			{
+				"TeamName": "Kaylee’s Unattached Team",
+				"FirstName": "Kaylee",
+				"Lastname": "Rex",
+				"Grade": 9,
+				"Place": 112,
+				"Time": "8:17.18"
+			},
+			{
+				"TeamName": "Vegas Bolts",
+				"FirstName": "Chanya",
+				"Lastname": "Sangkarat",
+				"Grade": 9,
+				"Place": 113,
+				"Time": "8:47.81"
+			},
+			{
+				"TeamName": "Savannah's Unattached Team",
+				"FirstName": "Savannah",
+				"Lastname": "Downey",
+				"Grade": 11,
+				"Place": 114,
+				"Time": "8:59.87"
+			},
+			{
+				"TeamName": "Katherine Elizabeth Provoncha",
+				"FirstName": "Katherine",
+				"Lastname": "Provoncha",
+				"Grade": 12,
+				"Place": 115,
+				"Time": "9:03.04"
+			}
+		]
+	},
+	{
+		"EventID": 741,
+		"Gender": "male",
+		"Name": "Boys 1 Mile Run",
+		"Result": [
+			{
+				"TeamName": "Star Valley Braves",
+				"FirstName": "Habtamu",
+				"Lastname": "Wetzel",
+				"Grade": 11,
+				"Place": 1,
+				"Time": "4:24.50"
+			},
+			{
+				"TeamName": "Herriman",
+				"FirstName": "Max",
+				"Lastname": "Hofheins",
+				"Grade": 12,
+				"Place": 2,
+				"Time": "4:28.94"
+			},
+			{
+				"TeamName": "Tay's Unattached Team",
+				"FirstName": "Tayshaun",
+				"Lastname": "Ogomo",
+				"Grade": 0,
+				"Place": 3,
+				"Time": "4:29.76"
+			},
+			{
+				"TeamName": "running team 😀",
+				"FirstName": "Jack",
+				"Lastname": "Beckstrom",
+				"Grade": 12,
+				"Place": 4,
+				"Time": "4:30.35"
+			},
+			{
+				"TeamName": "Skyridge",
+				"FirstName": "Devan",
+				"Lastname": "Greene",
+				"Grade": 12,
+				"Place": 5,
+				"Time": "4:31.15"
+			},
+			{
+				"TeamName": "Noah’s Unattached Team",
+				"FirstName": "Noah",
+				"Lastname": "Manwaring",
+				"Grade": 11,
+				"Place": 6,
+				"Time": "4:31.20"
+			},
+			{
+				"TeamName": "Andrew  Marks",
+				"FirstName": "Andrew",
+				"Lastname": "Marks",
+				"Grade": 12,
+				"Place": 7,
+				"Time": "4:32.09"
+			},
+			{
+				"TeamName": "Camdon's Unattached Team",
+				"FirstName": "Camdon",
+				"Lastname": "Larsen",
+				"Grade": 12,
+				"Place": 8,
+				"Time": "4:32.86"
+			},
+			{
+				"TeamName": "Cooper Tripp",
+				"FirstName": "Cooper",
+				"Lastname": "Tripp",
+				"Grade": 11,
+				"Place": 9,
+				"Time": "4:33.38"
+			},
+			{
+				"TeamName": "Cameron's Unattached Team",
+				"FirstName": "Cameron",
+				"Lastname": "Archer",
+				"Grade": 12,
+				"Place": 10,
+				"Time": "4:33.45"
+			},
+			{
+				"TeamName": "Wasatch",
+				"FirstName": "Alex",
+				"Lastname": "Spencer",
+				"Grade": 11,
+				"Place": 11,
+				"Time": "4:34.09"
+			},
+			{
+				"TeamName": "Brady's Unattached Team",
+				"FirstName": "Brady",
+				"Lastname": "Christensen",
+				"Grade": 0,
+				"Place": 12,
+				"Time": "4:34.44"
+			},
+			{
+				"TeamName": "Deiderik's Unattached Team",
+				"FirstName": "Deiderik",
+				"Lastname": "Witt",
+				"Grade": 11,
+				"Place": 13,
+				"Time": "4:34.52"
+			},
+			{
+				"TeamName": "Herriman",
+				"FirstName": "Jonah",
+				"Lastname": "Tang",
+				"Grade": 11,
+				"Place": 14,
+				"Time": "4:34.84"
+			},
+			{
+				"TeamName": "Race Morrell Unattached",
+				"FirstName": "Race",
+				"Lastname": "Morrell",
+				"Grade": 10,
+				"Place": 15,
+				"Time": "4:35.27"
+			},
+			{
+				"TeamName": "Maple Mountain",
+				"FirstName": "Abram",
+				"Lastname": "Sumsion",
+				"Grade": 12,
+				"Place": 16,
+				"Time": "4:36.61"
+			},
+			{
+				"TeamName": "Springville",
+				"FirstName": "Ethan",
+				"Lastname": "McCulloch",
+				"Grade": 12,
+				"Place": 17,
+				"Time": "4:36.91"
+			},
+			{
+				"TeamName": "Herriman",
+				"FirstName": "Isaac",
+				"Lastname": "Moore",
+				"Grade": 12,
+				"Place": 18,
+				"Time": "4:37.17"
+			},
+			{
+				"TeamName": "Bryce's Unattached Team",
+				"FirstName": "Bryce",
+				"Lastname": "Gentry",
+				"Grade": 12,
+				"Place": 19,
+				"Time": "4:38.30"
+			},
+			{
+				"TeamName": "Julian Thomas",
+				"FirstName": "Julian",
+				"Lastname": "Thomas",
+				"Grade": 12,
+				"Place": 20,
+				"Time": "4:38.61"
+			},
+			{
+				"TeamName": "Max's Unattached Team",
+				"FirstName": "Max",
+				"Lastname": "Ulrich",
+				"Grade": 12,
+				"Place": 21,
+				"Time": "4:38.77"
+			},
+			{
+				"TeamName": "Trevor's Unattached Team",
+				"FirstName": "Trevor",
+				"Lastname": "Schmidt",
+				"Grade": 12,
+				"Place": 22,
+				"Time": "4:39.21"
+			},
+			{
+				"TeamName": "Bountiful",
+				"FirstName": "Hayden",
+				"Lastname": "Hooper",
+				"Grade": 11,
+				"Place": 23,
+				"Time": "4:39.47"
+			},
+			{
+				"TeamName": "Mike Nelson",
+				"FirstName": "Ezra",
+				"Lastname": "Nelson",
+				"Grade": 12,
+				"Place": 24,
+				"Time": "4:39.77"
+			},
+			{
+				"TeamName": "Mike Nelson",
+				"FirstName": "Aaron",
+				"Lastname": "Caldwell",
+				"Grade": 12,
+				"Place": 25,
+				"Time": "4:39.88"
+			},
+			{
+				"TeamName": "Unattached (bonneville)",
+				"FirstName": "Anthony",
+				"Lastname": "Gonzalez",
+				"Grade": 12,
+				"Place": 26,
+				"Time": "4:40.47"
+			},
+			{
+				"TeamName": "McGovern Unattached Team",
+				"FirstName": "Kaden",
+				"Lastname": "McGovern",
+				"Grade": 11,
+				"Place": 27,
+				"Time": "4:42.14"
+			},
+			{
+				"TeamName": "Aiden Cope",
+				"FirstName": "Aiden",
+				"Lastname": "Cope",
+				"Grade": 11,
+				"Place": 28,
+				"Time": "4:42.27"
+			},
+			{
+				"TeamName": "Jase's Unattached Track Team",
+				"FirstName": "Jase",
+				"Lastname": "Burton",
+				"Grade": 11,
+				"Place": 29,
+				"Time": "4:43.16"
+			},
+			{
+				"TeamName": "Matthew's Unattached Track Team",
+				"FirstName": "Matthew",
+				"Lastname": "Costello",
+				"Grade": 11,
+				"Place": 30,
+				"Time": "4:43.90"
+			},
+			{
+				"TeamName": "Benson",
+				"FirstName": "Carter",
+				"Lastname": "Benson",
+				"Grade": 12,
+				"Place": 31,
+				"Time": "4:44.20"
+			},
+			{
+				"TeamName": "Micah's Unattached Team",
+				"FirstName": "Micah",
+				"Lastname": "Gillespie",
+				"Grade": 12,
+				"Place": 32,
+				"Time": "4:45.39"
+			},
+			{
+				"TeamName": "Unattached Team",
+				"FirstName": "Joey",
+				"Lastname": "Rees",
+				"Grade": 11,
+				"Place": 33,
+				"Time": "4:45.59"
+			},
+			{
+				"TeamName": "Skyridge",
+				"FirstName": "Ian",
+				"Lastname": "Greene",
+				"Grade": 10,
+				"Place": 34,
+				"Time": "4:45.86"
+			},
+			{
+				"TeamName": "Herriman",
+				"FirstName": "Micah",
+				"Lastname": "Tang",
+				"Grade": 11,
+				"Place": 35,
+				"Time": "4:45.88"
+			},
+			{
+				"TeamName": "FORTNITE XC",
+				"FirstName": "Hyrum",
+				"Lastname": "Wood",
+				"Grade": 12,
+				"Place": 36,
+				"Time": "4:46.25"
+			},
+			{
+				"TeamName": "Stansbury",
+				"FirstName": "Tekehu",
+				"Lastname": "Munanui",
+				"Grade": 12,
+				"Place": 37,
+				"Time": "4:47.23"
+			},
+			{
+				"TeamName": "TREVOR's Unattached Team",
+				"FirstName": "Trevor",
+				"Lastname": "Carlton",
+				"Grade": 12,
+				"Place": 38,
+				"Time": "4:47.68"
+			},
+			{
+				"TeamName": "Wardle's Unattached Team",
+				"FirstName": "Nathan",
+				"Lastname": "Wardle",
+				"Grade": 12,
+				"Place": 39,
+				"Time": "4:48.41"
+			},
+			{
+				"TeamName": "Russell's Unattached Team",
+				"FirstName": "Russell",
+				"Lastname": "Fawcett",
+				"Grade": 11,
+				"Place": 40,
+				"Time": "4:48.44"
+			},
+			{
+				"TeamName": "Ammon's Unattached Track Team",
+				"FirstName": "Ammon",
+				"Lastname": "Barton",
+				"Grade": 12,
+				"Place": 41,
+				"Time": "4:48.99"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "Tyler",
+				"Lastname": "Mullins",
+				"Grade": 12,
+				"Place": 42,
+				"Time": "4:49.55"
+			},
+			{
+				"TeamName": "Peter Lorch",
+				"FirstName": "Peter",
+				"Lastname": "Lorch",
+				"Grade": 12,
+				"Place": 43,
+				"Time": "4:50.13"
+			},
+			{
+				"TeamName": "Stansbury",
+				"FirstName": "Colin",
+				"Lastname": "Ruebush",
+				"Grade": 12,
+				"Place": 44,
+				"Time": "4:51.51"
+			},
+			{
+				"TeamName": "Rex's Unattached Team",
+				"FirstName": "Christopher",
+				"Lastname": "Peterson",
+				"Grade": 10,
+				"Place": 45,
+				"Time": "4:51.62"
+			},
+			{
+				"TeamName": "Conner Mantz",
+				"FirstName": "Eddie",
+				"Lastname": "Fuller",
+				"Grade": 11,
+				"Place": 46,
+				"Time": "4:51.88"
+			},
+			{
+				"TeamName": "Hillcrest",
+				"FirstName": "Joshua",
+				"Lastname": "Martin",
+				"Grade": 11,
+				"Place": 47,
+				"Time": "4:52.27"
+			},
+			{
+				"TeamName": "Ephraim's Unattached Track Team",
+				"FirstName": "Ephraim",
+				"Lastname": "Cieslewicz",
+				"Grade": 12,
+				"Place": 48,
+				"Time": "4:52.37"
+			},
+			{
+				"TeamName": "Skryidge",
+				"FirstName": "Alex",
+				"Lastname": "Daniels",
+				"Grade": 12,
+				"Place": 49,
+				"Time": "4:52.54"
+			},
+			{
+				"TeamName": "Skryidge High School",
+				"FirstName": "Grant",
+				"Lastname": "Welsh",
+				"Grade": 12,
+				"Place": 50,
+				"Time": "4:52.70"
+			},
+			{
+				"TeamName": "Tyndale's Unattached Team",
+				"FirstName": "Tyndale",
+				"Lastname": "Curtis",
+				"Grade": 11,
+				"Place": 51,
+				"Time": "4:52.94"
+			},
+			{
+				"TeamName": "Thomas M Carter",
+				"FirstName": "Thomas",
+				"Lastname": "Carter",
+				"Grade": 12,
+				"Place": 52,
+				"Time": "4:53.57"
+			},
+			{
+				"TeamName": "Cherokee Trail",
+				"FirstName": "McKay",
+				"Lastname": "Larsen",
+				"Grade": 12,
+				"Place": 53,
+				"Time": "4:53.60"
+			},
+			{
+				"TeamName": "Wasatch",
+				"FirstName": "Wyatt",
+				"Lastname": "Cernyar",
+				"Grade": 12,
+				"Place": 54,
+				"Time": "4:53.78"
+			},
+			{
+				"TeamName": "Fremont High School",
+				"FirstName": "Graham",
+				"Lastname": "Judkins",
+				"Grade": 10,
+				"Place": 55,
+				"Time": "4:53.83"
+			},
+			{
+				"TeamName": "Herriman High School",
+				"FirstName": "Kenny",
+				"Lastname": "Briggs",
+				"Grade": 9,
+				"Place": 56,
+				"Time": "4:54.08"
+			},
+			{
+				"TeamName": "Bryce R",
+				"FirstName": "Bryce",
+				"Lastname": "Runnells",
+				"Grade": 10,
+				"Place": 56,
+				"Time": "4:54.08"
+			},
+			{
+				"TeamName": "Big Legged Track",
+				"FirstName": "Owen",
+				"Lastname": "Reading",
+				"Grade": 12,
+				"Place": 58,
+				"Time": "4:54.57"
+			},
+			{
+				"TeamName": "Unattached Team",
+				"FirstName": "Connor",
+				"Lastname": "Allen",
+				"Grade": 12,
+				"Place": 59,
+				"Time": "4:54.63"
+			},
+			{
+				"TeamName": "Jacob's Unattached Team",
+				"FirstName": "Jacob",
+				"Lastname": "Brown",
+				"Grade": 12,
+				"Place": 60,
+				"Time": "4:54.93"
+			},
+			{
+				"TeamName": "Tyler's Unattached Team",
+				"FirstName": "Tyler",
+				"Lastname": "Muirbrook",
+				"Grade": 12,
+				"Place": 61,
+				"Time": "4:55.13"
+			},
+			{
+				"TeamName": "Samuel's Unattached Track Team",
+				"FirstName": "Samuel",
+				"Lastname": "Phippen",
+				"Grade": 10,
+				"Place": 62,
+				"Time": "4:55.29"
+			},
+			{
+				"TeamName": "Joaquin's Unattached Team",
+				"FirstName": "Joaquin",
+				"Lastname": "Cardenas",
+				"Grade": 10,
+				"Place": 63,
+				"Time": "4:56.11"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Jamar",
+				"Lastname": "McDowell",
+				"Grade": 12,
+				"Place": 64,
+				"Time": "4:56.16"
+			},
+			{
+				"TeamName": "Wardle's Unattached Team",
+				"FirstName": "Adam",
+				"Lastname": "Wardle",
+				"Grade": 10,
+				"Place": 65,
+				"Time": "4:56.23"
+			},
+			{
+				"TeamName": "Liamm's Unattached Team",
+				"FirstName": "Liamm",
+				"Lastname": "Passey",
+				"Grade": 12,
+				"Place": 66,
+				"Time": "4:56.43"
+			},
+			{
+				"TeamName": "jeffrey",
+				"FirstName": "jeffrey",
+				"Lastname": "price",
+				"Grade": 11,
+				"Place": 67,
+				"Time": "4:56.84"
+			},
+			{
+				"TeamName": "Timpanogos High School",
+				"FirstName": "Gage",
+				"Lastname": "Hart",
+				"Grade": 10,
+				"Place": 68,
+				"Time": "4:57.14"
+			},
+			{
+				"TeamName": "Star  Valley-Colton",
+				"FirstName": "Colton",
+				"Lastname": "Cranney",
+				"Grade": 10,
+				"Place": 69,
+				"Time": "4:57.41"
+			},
+			{
+				"TeamName": "Spencer's Unattached Team",
+				"FirstName": "Carter",
+				"Lastname": "Balagna",
+				"Grade": 0,
+				"Place": 70,
+				"Time": "4:57.51"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Bryan",
+				"Lastname": "Baxter",
+				"Grade": 9,
+				"Place": 71,
+				"Time": "4:57.79"
+			},
+			{
+				"TeamName": "Cruze's Unattached Team",
+				"FirstName": "Cruze",
+				"Lastname": "Hallows",
+				"Grade": 10,
+				"Place": 72,
+				"Time": "4:57.85"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Matt",
+				"Lastname": "Heywood",
+				"Grade": 11,
+				"Place": 73,
+				"Time": "4:57.93"
+			},
+			{
+				"TeamName": "super soakers",
+				"FirstName": "Taylor",
+				"Lastname": "Kjar",
+				"Grade": 11,
+				"Place": 74,
+				"Time": "4:58.30"
+			},
+			{
+				"TeamName": "Clark Boys",
+				"FirstName": "Cooper",
+				"Lastname": "Clark",
+				"Grade": 9,
+				"Place": 75,
+				"Time": "4:58.59"
+			},
+			{
+				"TeamName": "Romney's Unattached Team",
+				"FirstName": "Romney",
+				"Lastname": "Stewart",
+				"Grade": 12,
+				"Place": 76,
+				"Time": "4:58.60"
+			},
+			{
+				"TeamName": "Hunter's Unattached Team",
+				"FirstName": "Hunter",
+				"Lastname": "Horrocks",
+				"Grade": 10,
+				"Place": 77,
+				"Time": "5:00.91"
+			},
+			{
+				"TeamName": "Riley's Unattached Team",
+				"FirstName": "Riley",
+				"Lastname": "Thorpe",
+				"Grade": 10,
+				"Place": 78,
+				"Time": "5:01.05"
+			},
+			{
+				"TeamName": "Grantsville",
+				"FirstName": "Isaac",
+				"Lastname": "Nordgren",
+				"Grade": 11,
+				"Place": 79,
+				"Time": "5:01.59"
+			},
+			{
+				"TeamName": "Spencer Dastrup's Unattached Team",
+				"FirstName": "Spencer",
+				"Lastname": "Dastrup",
+				"Grade": 11,
+				"Place": 80,
+				"Time": "5:01.72"
+			},
+			{
+				"TeamName": "Maple Mountain",
+				"FirstName": "Clay",
+				"Lastname": "Tischner",
+				"Grade": 12,
+				"Place": 81,
+				"Time": "5:01.92"
+			},
+			{
+				"TeamName": "Henry's Unattached Track Team",
+				"FirstName": "Henry",
+				"Lastname": "Hyde",
+				"Grade": 10,
+				"Place": 82,
+				"Time": "5:01.98"
+			},
+			{
+				"TeamName": "AJ unattached",
+				"FirstName": "AJ",
+				"Lastname": "Stalker",
+				"Grade": 12,
+				"Place": 83,
+				"Time": "5:02.08"
+			},
+			{
+				"TeamName": "Dillan's Unattached Track Team",
+				"FirstName": "Dillan",
+				"Lastname": "Larsen",
+				"Grade": 11,
+				"Place": 84,
+				"Time": "5:02.11"
+			},
+			{
+				"TeamName": "Tanner's Unattached Track Team",
+				"FirstName": "Tanner",
+				"Lastname": "Macias",
+				"Grade": 11,
+				"Place": 85,
+				"Time": "5:02.28"
+			},
+			{
+				"TeamName": "Herriman",
+				"FirstName": "Eli",
+				"Lastname": "Wardle",
+				"Grade": 9,
+				"Place": 86,
+				"Time": "5:02.47"
+			},
+			{
+				"TeamName": "Union",
+				"FirstName": "Aften",
+				"Lastname": "Richens",
+				"Grade": 12,
+				"Place": 87,
+				"Time": "5:02.88"
+			},
+			{
+				"TeamName": "Maple Mountain",
+				"FirstName": "Landon",
+				"Lastname": "Smith",
+				"Grade": 9,
+				"Place": 88,
+				"Time": "5:02.92"
+			},
+			{
+				"TeamName": "Fruitland",
+				"FirstName": "Landon",
+				"Lastname": "Hillam",
+				"Grade": 9,
+				"Place": 89,
+				"Time": "5:03.98"
+			},
+			{
+				"TeamName": "Clark Boys",
+				"FirstName": "Hudson",
+				"Lastname": "Clark",
+				"Grade": 11,
+				"Place": 90,
+				"Time": "5:04.01"
+			},
+			{
+				"TeamName": "Brock's Unattached Team",
+				"FirstName": "Brock",
+				"Lastname": "Donahue",
+				"Grade": 9,
+				"Place": 91,
+				"Time": "5:04.44"
+			},
+			{
+				"TeamName": "Hydra",
+				"FirstName": "Chaseton",
+				"Lastname": "Williams",
+				"Grade": 12,
+				"Place": 92,
+				"Time": "5:05.00"
+			},
+			{
+				"TeamName": "Beau's Unattached Track Team",
+				"FirstName": "Beau",
+				"Lastname": "Thompson",
+				"Grade": 12,
+				"Place": 93,
+				"Time": "5:05.02"
+			},
+			{
+				"TeamName": "Cottonwood",
+				"FirstName": "Ethan",
+				"Lastname": "Merryweather",
+				"Grade": 0,
+				"Place": 94,
+				"Time": "5:05.29"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Jamison",
+				"Lastname": "Williams",
+				"Grade": 12,
+				"Place": 95,
+				"Time": "5:05.95"
+			},
+			{
+				"TeamName": "Ben Meilstrup",
+				"FirstName": "Ben",
+				"Lastname": "Meilstrup",
+				"Grade": 10,
+				"Place": 96,
+				"Time": "5:05.99"
+			},
+			{
+				"TeamName": "Eli's Unattached Team",
+				"FirstName": "Eli",
+				"Lastname": "Jarvis",
+				"Grade": 0,
+				"Place": 97,
+				"Time": "5:06.54"
+			},
+			{
+				"TeamName": "Gavin's Unattached Team",
+				"FirstName": "Gavin",
+				"Lastname": "Gull",
+				"Grade": 10,
+				"Place": 98,
+				"Time": "5:06.73"
+			},
+			{
+				"TeamName": "Zach Rohde",
+				"FirstName": "Zach",
+				"Lastname": "Rohde",
+				"Grade": 11,
+				"Place": 99,
+				"Time": "5:07.36"
+			},
+			{
+				"TeamName": "Aiden's Unattached Team",
+				"FirstName": "Aiden",
+				"Lastname": "Harmon",
+				"Grade": 10,
+				"Place": 100,
+				"Time": "5:07.57"
+			},
+			{
+				"TeamName": "Mike Nelson",
+				"FirstName": "Noah",
+				"Lastname": "Nelson",
+				"Grade": 10,
+				"Place": 101,
+				"Time": "5:08.24"
+			},
+			{
+				"TeamName": "Roman Zito",
+				"FirstName": "Roman",
+				"Lastname": "Zito",
+				"Grade": 11,
+				"Place": 102,
+				"Time": "5:08.64"
+			},
+			{
+				"TeamName": "Rees's Unattached Team",
+				"FirstName": "Rees",
+				"Lastname": "Christensen",
+				"Grade": 12,
+				"Place": 103,
+				"Time": "5:09.39"
+			},
+			{
+				"TeamName": "Tim Glenn",
+				"FirstName": "Tim",
+				"Lastname": "Glenn",
+				"Grade": 12,
+				"Place": 104,
+				"Time": "5:09.41"
+			},
+			{
+				"TeamName": "Unattached",
+				"FirstName": "Daniel",
+				"Lastname": "Romney",
+				"Grade": 12,
+				"Place": 105,
+				"Time": "5:09.42"
+			},
+			{
+				"TeamName": "Wyatt",
+				"FirstName": "Wyatt",
+				"Lastname": "Peacock",
+				"Grade": 11,
+				"Place": 106,
+				"Time": "5:09.63"
+			},
+			{
+				"TeamName": "Brennon's Unattached Team",
+				"FirstName": "Brennon",
+				"Lastname": "Tippets",
+				"Grade": 10,
+				"Place": 107,
+				"Time": "5:09.69"
+			},
+			{
+				"TeamName": "Spanish Fork",
+				"FirstName": "Traeke",
+				"Lastname": "Seitzinger",
+				"Grade": 9,
+				"Place": 108,
+				"Time": "5:09.72"
+			},
+			{
+				"TeamName": "Jaxon Robinson",
+				"FirstName": "Jaxon",
+				"Lastname": "Robinson",
+				"Grade": 10,
+				"Place": 109,
+				"Time": "5:09.79"
+			},
+			{
+				"TeamName": "Woods Cross",
+				"FirstName": "Jameson",
+				"Lastname": "Blanchard",
+				"Grade": 12,
+				"Place": 110,
+				"Time": "5:10.34"
+			},
+			{
+				"TeamName": "Wally",
+				"FirstName": "Wally",
+				"Lastname": "Paulsen",
+				"Grade": 9,
+				"Place": 111,
+				"Time": "5:11.01"
+			},
+			{
+				"TeamName": "Morgan",
+				"FirstName": "Esplan",
+				"Lastname": "McClellan",
+				"Grade": 11,
+				"Place": 112,
+				"Time": "5:11.04"
+			},
+			{
+				"TeamName": "Grantsville",
+				"FirstName": "Zachary",
+				"Lastname": "Nordgren",
+				"Grade": 9,
+				"Place": 113,
+				"Time": "5:11.20"
+			},
+			{
+				"TeamName": "Kolby's Unattached Team",
+				"FirstName": "Kolby",
+				"Lastname": "Bott",
+				"Grade": 10,
+				"Place": 114,
+				"Time": "5:11.24"
+			},
+			{
+				"TeamName": "Nelson",
+				"FirstName": "Emmitt",
+				"Lastname": "Nelson",
+				"Grade": 10,
+				"Place": 115,
+				"Time": "5:11.74"
+			},
+			{
+				"TeamName": "Tyler's Unattached Team",
+				"FirstName": "Tyler",
+				"Lastname": "Noall",
+				"Grade": 11,
+				"Place": 116,
+				"Time": "5:11.77"
+			},
+			{
+				"TeamName": "Dutson",
+				"FirstName": "Zach",
+				"Lastname": "Dutson",
+				"Grade": 11,
+				"Place": 117,
+				"Time": "5:11.91"
+			},
+			{
+				"TeamName": "Bri's Unattached Team",
+				"FirstName": "Bridger",
+				"Lastname": "Phillips",
+				"Grade": 10,
+				"Place": 118,
+				"Time": "5:12.23"
+			},
+			{
+				"TeamName": "West Jordan",
+				"FirstName": "Spencer",
+				"Lastname": "Johns",
+				"Grade": 10,
+				"Place": 119,
+				"Time": "5:12.42"
+			},
+			{
+				"TeamName": "The Pacer",
+				"FirstName": "Skyler",
+				"Lastname": "Pace",
+				"Grade": 11,
+				"Place": 120,
+				"Time": "5:13.00"
+			},
+			{
+				"TeamName": "Tanner Child",
+				"FirstName": "Tanner",
+				"Lastname": "Child",
+				"Grade": 12,
+				"Place": 121,
+				"Time": "5:13.23"
+			},
+			{
+				"TeamName": "North Sevier",
+				"FirstName": "Kade",
+				"Lastname": "Johnson",
+				"Grade": 10,
+				"Place": 122,
+				"Time": "5:13.32"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Aidan",
+				"Lastname": "Conrad",
+				"Grade": 11,
+				"Place": 123,
+				"Time": "5:13.39"
+			},
+			{
+				"TeamName": "Doo doo batter in my pants",
+				"FirstName": "Ari",
+				"Lastname": "Wilson",
+				"Grade": 11,
+				"Place": 124,
+				"Time": "5:13.88"
+			},
+			{
+				"TeamName": "Soren's Unattached Team",
+				"FirstName": "Soren",
+				"Lastname": "Allen",
+				"Grade": 11,
+				"Place": 125,
+				"Time": "5:13.98"
+			},
+			{
+				"TeamName": "Micah Esplin",
+				"FirstName": "Micah",
+				"Lastname": "Esplin",
+				"Grade": 0,
+				"Place": 126,
+				"Time": "5:14.70"
+			},
+			{
+				"TeamName": "Kara's Unattached Team",
+				"FirstName": "Owen",
+				"Lastname": "Roper",
+				"Grade": 8,
+				"Place": 127,
+				"Time": "5:14.82"
+			},
+			{
+				"TeamName": "Benjamin Killebrew",
+				"FirstName": "Benjamin",
+				"Lastname": "Killebrew",
+				"Grade": 10,
+				"Place": 128,
+				"Time": "5:15.67"
+			},
+			{
+				"TeamName": "Dutson",
+				"FirstName": "Nick",
+				"Lastname": "Dutson",
+				"Grade": 9,
+				"Place": 129,
+				"Time": "5:15.79"
+			},
+			{
+				"TeamName": "Preston's Unattached Track Team",
+				"FirstName": "Preston",
+				"Lastname": "Sumsion",
+				"Grade": 11,
+				"Place": 130,
+				"Time": "5:15.97"
+			},
+			{
+				"TeamName": "Patricia's Unattached Team",
+				"FirstName": "Clifford",
+				"Lastname": "Richardson",
+				"Grade": 11,
+				"Place": 131,
+				"Time": "5:16.95"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Justin",
+				"Lastname": "Moon",
+				"Grade": 11,
+				"Place": 132,
+				"Time": "5:17.22"
+			},
+			{
+				"TeamName": "Janeth's Unattached Team",
+				"FirstName": "Michael",
+				"Lastname": "Alder",
+				"Grade": 8,
+				"Place": 133,
+				"Time": "5:17.90"
+			},
+			{
+				"TeamName": "Fletcher's Unattached Team",
+				"FirstName": "Quinn",
+				"Lastname": "Fletcher",
+				"Grade": 9,
+				"Place": 134,
+				"Time": "5:17.98"
+			},
+			{
+				"TeamName": "Jacob's Unattached Team",
+				"FirstName": "Jacob",
+				"Lastname": "Allen",
+				"Grade": 10,
+				"Place": 135,
+				"Time": "5:18.83"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Croydon",
+				"Lastname": "Francis",
+				"Grade": 12,
+				"Place": 136,
+				"Time": "5:19.35"
+			},
+			{
+				"TeamName": "Benson",
+				"FirstName": "Tate",
+				"Lastname": "Benson",
+				"Grade": 10,
+				"Place": 137,
+				"Time": "5:19.99"
+			},
+			{
+				"TeamName": "Haeden Christopher Carter",
+				"FirstName": "Haeden",
+				"Lastname": "Carter",
+				"Grade": 10,
+				"Place": 138,
+				"Time": "5:20.08"
+			},
+			{
+				"TeamName": "Copper Hills",
+				"FirstName": "Liam",
+				"Lastname": "Hanson",
+				"Grade": 11,
+				"Place": 139,
+				"Time": "5:20.37"
+			},
+			{
+				"TeamName": "Izaac's most epic legendary coolest bestest team",
+				"FirstName": "Evan",
+				"Lastname": "Demordaunt",
+				"Grade": 10,
+				"Place": 140,
+				"Time": "5:20.57"
+			},
+			{
+				"TeamName": "Henry's Unattached Track Team",
+				"FirstName": "Henry",
+				"Lastname": "Findlay",
+				"Grade": 12,
+				"Place": 141,
+				"Time": "5:20.74"
+			},
+			{
+				"TeamName": "Richfield",
+				"FirstName": "Elijah",
+				"Lastname": "Thalman",
+				"Grade": 10,
+				"Place": 142,
+				"Time": "5:20.94"
+			},
+			{
+				"TeamName": "Braxton's Unattached Team",
+				"FirstName": "Braxton",
+				"Lastname": "Simmons",
+				"Grade": 9,
+				"Place": 143,
+				"Time": "5:21.06"
+			},
+			{
+				"TeamName": "Kevin's Unattached Team",
+				"FirstName": "Kevin",
+				"Lastname": "Law",
+				"Grade": 12,
+				"Place": 144,
+				"Time": "5:21.12"
+			},
+			{
+				"TeamName": "Jackson's Unattached Team",
+				"FirstName": "Jackson",
+				"Lastname": "Marvin",
+				"Grade": 11,
+				"Place": 145,
+				"Time": "5:21.44"
+			},
+			{
+				"TeamName": "Don’t be dumb",
+				"FirstName": "Zack",
+				"Lastname": "Glover",
+				"Grade": 12,
+				"Place": 146,
+				"Time": "5:22.68"
+			},
+			{
+				"TeamName": "Joel Min",
+				"FirstName": "Joel",
+				"Lastname": "Min",
+				"Grade": 10,
+				"Place": 147,
+				"Time": "5:23.53"
+			},
+			{
+				"TeamName": "Porter Sumsion",
+				"FirstName": "Porter",
+				"Lastname": "Sumsion",
+				"Grade": 11,
+				"Place": 148,
+				"Time": "5:24.83"
+			},
+			{
+				"TeamName": "Benjamin Solomon",
+				"FirstName": "Benjamin",
+				"Lastname": "Solomon",
+				"Grade": 12,
+				"Place": 149,
+				"Time": "5:25.01"
+			},
+			{
+				"TeamName": "Shersti's Unattached Team",
+				"FirstName": "Jacob",
+				"Lastname": "Pearson",
+				"Grade": 10,
+				"Place": 150,
+				"Time": "5:25.52"
+			},
+			{
+				"TeamName": "Roadrunners Unattached Team",
+				"FirstName": "Ian",
+				"Lastname": "Storey",
+				"Grade": 7,
+				"Place": 151,
+				"Time": "5:26.26"
+			},
+			{
+				"TeamName": "Walker's Unattached Track Team",
+				"FirstName": "Walker",
+				"Lastname": "Graves",
+				"Grade": 12,
+				"Place": 152,
+				"Time": "5:27.45"
+			},
+			{
+				"TeamName": "Andrew's Unattached Track Team",
+				"FirstName": "Andrew",
+				"Lastname": "Yosai",
+				"Grade": 11,
+				"Place": 153,
+				"Time": "5:29.47"
+			},
+			{
+				"TeamName": "Greyson’s Unattached Team",
+				"FirstName": "Greyson",
+				"Lastname": "Spencer",
+				"Grade": 10,
+				"Place": 154,
+				"Time": "5:30.03"
+			},
+			{
+				"TeamName": "Provo",
+				"FirstName": "Alexander",
+				"Lastname": "Castro",
+				"Grade": 11,
+				"Place": 155,
+				"Time": "5:30.09"
+			},
+			{
+				"TeamName": "Owen's Unattached Team",
+				"FirstName": "Owen",
+				"Lastname": "Young",
+				"Grade": 9,
+				"Place": 156,
+				"Time": "5:30.56"
+			},
+			{
+				"TeamName": "Leah's team",
+				"FirstName": "Asher",
+				"Lastname": "Gunderson",
+				"Grade": 9,
+				"Place": 157,
+				"Time": "5:30.71"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Colby",
+				"Lastname": "Farrens",
+				"Grade": 12,
+				"Place": 158,
+				"Time": "5:31.00"
+			},
+			{
+				"TeamName": "Roadrunners",
+				"FirstName": "Joshua",
+				"Lastname": "Smith",
+				"Grade": 8,
+				"Place": 159,
+				"Time": "5:31.22"
+			},
+			{
+				"TeamName": "Jaxon's Unattached Team",
+				"FirstName": "Jaxon",
+				"Lastname": "Woolf",
+				"Grade": 0,
+				"Place": 160,
+				"Time": "5:32.57"
+			},
+			{
+				"TeamName": "Ben's Unattached Track Team",
+				"FirstName": "Ben",
+				"Lastname": "Horsley",
+				"Grade": 10,
+				"Place": 161,
+				"Time": "5:32.58"
+			},
+			{
+				"TeamName": "Thomas' Team",
+				"FirstName": "Thomas",
+				"Lastname": "Wilson",
+				"Grade": 0,
+				"Place": 162,
+				"Time": "5:32.92"
+			},
+			{
+				"TeamName": "corbin's Unattached Team",
+				"FirstName": "corbin",
+				"Lastname": "price",
+				"Grade": 0,
+				"Place": 163,
+				"Time": "5:33.15"
+			},
+			{
+				"TeamName": "Caleb's Unattached Team",
+				"FirstName": "Caleb",
+				"Lastname": "Showgren",
+				"Grade": 11,
+				"Place": 164,
+				"Time": "5:33.23"
+			},
+			{
+				"TeamName": "Chet's Unattached Team",
+				"FirstName": "Chet",
+				"Lastname": "Baker",
+				"Grade": 11,
+				"Place": 165,
+				"Time": "5:33.26"
+			},
+			{
+				"TeamName": "Stephanie Cole",
+				"FirstName": "Bridger",
+				"Lastname": "Cole",
+				"Grade": 10,
+				"Place": 166,
+				"Time": "5:34.76"
+			},
+			{
+				"TeamName": "Kevin Arostegui Barajas",
+				"FirstName": "Kevin",
+				"Lastname": "Arostegui Barajas",
+				"Grade": 12,
+				"Place": 167,
+				"Time": "5:36.36"
+			},
+			{
+				"TeamName": "Carson's Unattached Team",
+				"FirstName": "Carson",
+				"Lastname": "Christian",
+				"Grade": 9,
+				"Place": 168,
+				"Time": "5:36.44"
+			},
+			{
+				"TeamName": "Vegas Bolts",
+				"FirstName": "Samuel",
+				"Lastname": "Bennion",
+				"Grade": 10,
+				"Place": 169,
+				"Time": "5:37.41"
+			},
+			{
+				"TeamName": "Peter's Unattached Track Team",
+				"FirstName": "Peter",
+				"Lastname": "Maffey",
+				"Grade": 9,
+				"Place": 170,
+				"Time": "5:37.98"
+			},
+			{
+				"TeamName": "Team Scown",
+				"FirstName": "Brigham",
+				"Lastname": "Scown",
+				"Grade": 9,
+				"Place": 171,
+				"Time": "5:38.84"
+			},
+			{
+				"TeamName": "Ryan's Unattached Track Team",
+				"FirstName": "Ryan",
+				"Lastname": "Rich",
+				"Grade": 11,
+				"Place": 172,
+				"Time": "5:38.92"
+			},
+			{
+				"TeamName": "Jackey's Unattached Team",
+				"FirstName": "Jackey",
+				"Lastname": "Lian",
+				"Grade": 11,
+				"Place": 173,
+				"Time": "5:39.09"
+			},
+			{
+				"TeamName": "Morgan Phippen",
+				"FirstName": "Morgan",
+				"Lastname": "Phippen",
+				"Grade": 9,
+				"Place": 174,
+				"Time": "5:39.29"
+			},
+			{
+				"TeamName": "Braydon Goode",
+				"FirstName": "Braydon",
+				"Lastname": "Goode",
+				"Grade": 10,
+				"Place": 175,
+				"Time": "5:39.79"
+			},
+			{
+				"TeamName": "McKay's Unattached Team",
+				"FirstName": "McKay",
+				"Lastname": "Carter",
+				"Grade": 12,
+				"Place": 176,
+				"Time": "5:39.95"
+			},
+			{
+				"TeamName": "Johnson",
+				"FirstName": "Caden",
+				"Lastname": "Johnson",
+				"Grade": 11,
+				"Place": 177,
+				"Time": "5:40.34"
+			},
+			{
+				"TeamName": "Nolan Nielsen's Team",
+				"FirstName": "Nolan",
+				"Lastname": "Nielsen",
+				"Grade": 10,
+				"Place": 178,
+				"Time": "5:40.87"
+			},
+			{
+				"TeamName": "Emery",
+				"FirstName": "Jacob",
+				"Lastname": "Erickson",
+				"Grade": 11,
+				"Place": 179,
+				"Time": "5:41.43"
+			},
+			{
+				"TeamName": "Jose's Unattached Track Team",
+				"FirstName": "Jose",
+				"Lastname": "Zuniga Garcia",
+				"Grade": 11,
+				"Place": 180,
+				"Time": "5:41.97"
+			},
+			{
+				"TeamName": "Roadrunners",
+				"FirstName": "Charlie",
+				"Lastname": "King",
+				"Grade": 0,
+				"Place": 181,
+				"Time": "5:42.73"
+			},
+			{
+				"TeamName": "theo's Unattached Team",
+				"FirstName": "theo's",
+				"Lastname": "dunn",
+				"Grade": 0,
+				"Place": 182,
+				"Time": "5:46.72"
+			},
+			{
+				"TeamName": "Ben Stubbs",
+				"FirstName": "Ben",
+				"Lastname": "Stubbs",
+				"Grade": 10,
+				"Place": 183,
+				"Time": "5:49.38"
+			},
+			{
+				"TeamName": "Malachi Peterson",
+				"FirstName": "Malachi",
+				"Lastname": "Peterson",
+				"Grade": 9,
+				"Place": 184,
+				"Time": "5:49.94"
+			},
+			{
+				"TeamName": "Brittany's Unattached Team",
+				"FirstName": "Michael",
+				"Lastname": "Cummings",
+				"Grade": 10,
+				"Place": 185,
+				"Time": "5:51.96"
+			},
+			{
+				"TeamName": "Stansbury",
+				"FirstName": "Ian",
+				"Lastname": "Ruebush",
+				"Grade": 9,
+				"Place": 186,
+				"Time": "5:53.33"
+			},
+			{
+				"TeamName": "Vuong Phan",
+				"FirstName": "Vuong",
+				"Lastname": "Phan",
+				"Grade": 11,
+				"Place": 187,
+				"Time": "5:54.34"
+			},
+			{
+				"TeamName": "Summit Academy",
+				"FirstName": "Isaac",
+				"Lastname": "Knight",
+				"Grade": 9,
+				"Place": 188,
+				"Time": "5:54.44"
+			},
+			{
+				"TeamName": "Josh Yarbough",
+				"FirstName": "Josh",
+				"Lastname": "Yarbrough",
+				"Grade": 10,
+				"Place": 189,
+				"Time": "5:55.13"
+			},
+			{
+				"TeamName": "Star Valley Unattached Team",
+				"FirstName": "Ben",
+				"Lastname": "Barkdull",
+				"Grade": 11,
+				"Place": 190,
+				"Time": "5:56.02"
+			},
+			{
+				"TeamName": "Preston's Unattached Team",
+				"FirstName": "Preston",
+				"Lastname": "Ballard",
+				"Grade": 9,
+				"Place": 191,
+				"Time": "5:56.65"
+			},
+			{
+				"TeamName": "Morgan's Unattached Team BYU",
+				"FirstName": "Morgan",
+				"Lastname": "Teggins",
+				"Grade": 9,
+				"Place": 192,
+				"Time": "5:56.92"
+			},
+			{
+				"TeamName": "Blake's Unattached Team",
+				"FirstName": "William",
+				"Lastname": "Durtschi",
+				"Grade": 10,
+				"Place": 193,
+				"Time": "5:58.10"
+			},
+			{
+				"TeamName": "Micah Fallon",
+				"FirstName": "Micah",
+				"Lastname": "Fallon",
+				"Grade": 11,
+				"Place": 194,
+				"Time": "5:58.69"
+			},
+			{
+				"TeamName": "Roadrunners",
+				"FirstName": "Andrew",
+				"Lastname": "Wing",
+				"Grade": 0,
+				"Place": 195,
+				"Time": "5:59.80"
+			},
+			{
+				"TeamName": "Myron Alfonzo Unattached Track Team",
+				"FirstName": "Myron",
+				"Lastname": "Alfonso",
+				"Grade": 10,
+				"Place": 196,
+				"Time": "5:59.99"
+			},
+			{
+				"TeamName": "Albeny Rich",
+				"FirstName": "Jayden",
+				"Lastname": "Rich",
+				"Grade": 9,
+				"Place": 197,
+				"Time": "6:00.14"
+			},
+			{
+				"TeamName": "Liam's Unattached Track Team",
+				"FirstName": "Liam",
+				"Lastname": "Welch",
+				"Grade": 9,
+				"Place": 198,
+				"Time": "6:00.62"
+			},
+			{
+				"TeamName": "running team 😀",
+				"FirstName": "Conner",
+				"Lastname": "Beckstrom",
+				"Grade": 9,
+				"Place": 199,
+				"Time": "6:02.31"
+			},
+			{
+				"TeamName": "Michael Casebolt",
+				"FirstName": "Michael",
+				"Lastname": "Casebolt",
+				"Grade": 12,
+				"Place": 200,
+				"Time": "6:03.58"
+			},
+			{
+				"TeamName": "Jacob's Unattached Team",
+				"FirstName": "Jacob",
+				"Lastname": "Ricks",
+				"Grade": 11,
+				"Place": 201,
+				"Time": "6:03.94"
+			},
+			{
+				"TeamName": "Roadrunner",
+				"FirstName": "Levi",
+				"Lastname": "Payne",
+				"Grade": 6,
+				"Place": 202,
+				"Time": "6:06.07"
+			},
+			{
+				"TeamName": "Springville",
+				"FirstName": "Hudson",
+				"Lastname": "McCulloch",
+				"Grade": 9,
+				"Place": 203,
+				"Time": "6:06.61"
+			},
+			{
+				"TeamName": "Coleten's Unattached Track Team",
+				"FirstName": "Coleten",
+				"Lastname": "Larsen",
+				"Grade": 9,
+				"Place": 204,
+				"Time": "6:06.71"
+			},
+			{
+				"TeamName": "David W Unattached Team",
+				"FirstName": "David",
+				"Lastname": "Weiss",
+				"Grade": 11,
+				"Place": 205,
+				"Time": "6:06.93"
+			},
+			{
+				"TeamName": "Jordan Andrew GRV",
+				"FirstName": "Jordan",
+				"Lastname": "Andrew",
+				"Grade": 11,
+				"Place": 206,
+				"Time": "6:08.56"
+			},
+			{
+				"TeamName": "Dover Unattached Team",
+				"FirstName": "Andrew",
+				"Lastname": "Dover",
+				"Grade": 10,
+				"Place": 207,
+				"Time": "6:08.99"
+			},
+			{
+				"TeamName": "Roadrunners",
+				"FirstName": "Cade",
+				"Lastname": "Gonzalez",
+				"Grade": 4,
+				"Place": 208,
+				"Time": "6:09.16"
+			},
+			{
+				"TeamName": "Spencer's Unattached Team",
+				"FirstName": "Spencer",
+				"Lastname": "Balagna",
+				"Grade": 0,
+				"Place": 209,
+				"Time": "6:09.28"
+			},
+			{
+				"TeamName": "Ryan's Unattached Team",
+				"FirstName": "Ryan",
+				"Lastname": "Kranz",
+				"Grade": 9,
+				"Place": 210,
+				"Time": "6:09.62"
+			},
+			{
+				"TeamName": "Parker's W Team",
+				"FirstName": "Parker",
+				"Lastname": "Rueckert",
+				"Grade": 9,
+				"Place": 211,
+				"Time": "6:10.92"
+			},
+			{
+				"TeamName": "Addison Shea",
+				"FirstName": "Addison",
+				"Lastname": "Shea",
+				"Grade": 9,
+				"Place": 212,
+				"Time": "6:11.61"
+			},
+			{
+				"TeamName": "Jason Parker's Unnatached Team",
+				"FirstName": "Jason",
+				"Lastname": "Parker",
+				"Grade": 12,
+				"Place": 213,
+				"Time": "6:12.28"
+			},
+			{
+				"TeamName": "Jefferson's Unattached Team",
+				"FirstName": "Jefferson",
+				"Lastname": "Packard",
+				"Grade": 10,
+				"Place": 214,
+				"Time": "6:16.46"
+			},
+			{
+				"TeamName": "Cody Pulham",
+				"FirstName": "cody",
+				"Lastname": "pulham",
+				"Grade": 0,
+				"Place": 215,
+				"Time": "6:17.04"
+			},
+			{
+				"TeamName": "Thomas' Team",
+				"FirstName": "Spencer",
+				"Lastname": "Wilson",
+				"Grade": 0,
+				"Place": 216,
+				"Time": "6:17.52"
+			},
+			{
+				"TeamName": "Ben's Unattached Team",
+				"FirstName": "Ben",
+				"Lastname": "Wirthlin",
+				"Grade": 11,
+				"Place": 217,
+				"Time": "6:17.71"
+			},
+			{
+				"TeamName": "Juab",
+				"FirstName": "Braiden",
+				"Lastname": "Taylor",
+				"Grade": 9,
+				"Place": 218,
+				"Time": "6:24.39"
+			},
+			{
+				"TeamName": "Fast 2nd Grader",
+				"FirstName": "Brady",
+				"Lastname": "Bryson",
+				"Grade": 2,
+				"Place": 219,
+				"Time": "6:26.00"
+			},
+			{
+				"TeamName": "Jay's Unattached Team",
+				"FirstName": "Grant",
+				"Lastname": "Shelley",
+				"Grade": 5,
+				"Place": 220,
+				"Time": "6:29.04"
+			},
+			{
+				"TeamName": "Ashur Hamilton",
+				"FirstName": "Ashur",
+				"Lastname": "Hamilton",
+				"Grade": 9,
+				"Place": 221,
+				"Time": "6:29.43"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Jaycee",
+				"Lastname": "Kohler",
+				"Grade": 12,
+				"Place": 222,
+				"Time": "6:46.67"
+			},
+			{
+				"TeamName": "Roadrunners",
+				"FirstName": "Garrett",
+				"Lastname": "McAffee",
+				"Grade": 8,
+				"Place": 223,
+				"Time": "7:07.93"
+			},
+			{
+				"TeamName": "Jackson Yamada’s Unattached Team",
+				"FirstName": "Jackson",
+				"Lastname": "Yamada",
+				"Grade": 10,
+				"Place": 224,
+				"Time": "7:21.30"
+			}
+		]
+	},
+	{
+		"EventID": 742,
+		"Gender": "female",
+		"Name": "Girls Shot Put",
+		"Result": []
+	},
+	{ "EventID": 743, "Gender": "male", "Name": "Boys Shot Put", "Result": [] },
+	{
+		"EventID": 744,
+		"Gender": "female",
+		"Name": "Girls Long Jump",
+		"Result": []
+	},
+	{ "EventID": 745, "Gender": "male", "Name": "Boys Long Jump", "Result": [] },
+	{
+		"EventID": 746,
+		"Gender": "female",
+		"Name": "Girls Pole Vault",
+		"Result": []
+	},
+	{ "EventID": 747, "Gender": "male", "Name": "Boys Pole Vault", "Result": [] },
+	{
+		"EventID": 748,
+		"Gender": "female",
+		"Name": "Girls High Jump",
+		"Result": []
+	},
+	{ "EventID": 749, "Gender": "male", "Name": "Boys High Jump", "Result": [] },
+	{
+		"EventID": 750,
+		"Gender": "female",
+		"Name": "Girls 400m Dash",
+		"Result": [
+			{
+				"TeamName": "Tambree Bell Unattached",
+				"FirstName": "Tambree",
+				"Lastname": "Bell",
+				"Grade": 12,
+				"Place": 1,
+				"Time": "59.75"
+			},
+			{
+				"TeamName": "Desirae Riehle Unattached Team",
+				"FirstName": "Desirae",
+				"Lastname": "Riehle",
+				"Grade": 11,
+				"Place": 2,
+				"Time": "1:00.09"
+			},
+			{
+				"TeamName": "Highland",
+				"FirstName": "Meg",
+				"Lastname": "Murdock",
+				"Grade": 11,
+				"Place": 3,
+				"Time": "1:00.46"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Talia",
+				"Lastname": "Conrad",
+				"Grade": 12,
+				"Place": 4,
+				"Time": "1:02.26"
+			},
+			{
+				"TeamName": "Herriman",
+				"FirstName": "Kate",
+				"Lastname": "Garner",
+				"Grade": 12,
+				"Place": 5,
+				"Time": "1:02.73"
+			},
+			{
+				"TeamName": "Mountain View",
+				"FirstName": "Jaylee",
+				"Lastname": "Antonino",
+				"Grade": 12,
+				"Place": 6,
+				"Time": "1:02.89"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Kammi",
+				"Lastname": "Merritt",
+				"Grade": 12,
+				"Place": 7,
+				"Time": "1:03.54"
+			},
+			{
+				"TeamName": "LTM Unattached Track Team",
+				"FirstName": "Lili",
+				"Lastname": "Madsen",
+				"Grade": 0,
+				"Place": 8,
+				"Time": "1:03.57"
+			},
+			{
+				"TeamName": "Taylorsville",
+				"FirstName": "Sariah",
+				"Lastname": "Johnson",
+				"Grade": 11,
+				"Place": 9,
+				"Time": "1:04.05"
+			},
+			{
+				"TeamName": "Southern Utah Track Club",
+				"FirstName": "Ella",
+				"Lastname": "Cotter",
+				"Grade": 12,
+				"Place": 10,
+				"Time": "1:04.11"
+			},
+			{
+				"TeamName": "Isabella Pickers",
+				"FirstName": "Isabella",
+				"Lastname": "Pickers",
+				"Grade": 12,
+				"Place": 11,
+				"Time": "1:04.59"
+			},
+			{
+				"TeamName": "Mia’s Unattached Track Team",
+				"FirstName": "Mia",
+				"Lastname": "Taylor",
+				"Grade": 10,
+				"Place": 12,
+				"Time": "1:05.07"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Jordyn",
+				"Lastname": "Roberts",
+				"Grade": 11,
+				"Place": 13,
+				"Time": "1:06.25"
+			},
+			{
+				"TeamName": "Ashlyn's Unattached Team",
+				"FirstName": "Ashlyn",
+				"Lastname": "Carlton",
+				"Grade": 11,
+				"Place": 14,
+				"Time": "1:06.73"
+			},
+			{
+				"TeamName": "Kaylan's Unattached Team",
+				"FirstName": "Kaylan",
+				"Lastname": "Anderson",
+				"Grade": 10,
+				"Place": 15,
+				"Time": "1:07.02"
+			},
+			{
+				"TeamName": "Brei’s Unattached Team",
+				"FirstName": "Brei",
+				"Lastname": "Cook",
+				"Grade": 12,
+				"Place": 16,
+				"Time": "1:07.06"
+			},
+			{
+				"TeamName": "Amber's Unattached",
+				"FirstName": "Aspen",
+				"Lastname": "Hanson",
+				"Grade": 6,
+				"Place": 17,
+				"Time": "1:07.46"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "Josie",
+				"Lastname": "Young",
+				"Grade": 12,
+				"Place": 18,
+				"Time": "1:08.32"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "Brooklyn",
+				"Lastname": "Knighton",
+				"Grade": 0,
+				"Place": 19,
+				"Time": "1:09.09"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "Pyper",
+				"Lastname": "Starks",
+				"Grade": 7,
+				"Place": 20,
+				"Time": "1:10.24"
+			},
+			{
+				"TeamName": "Molly's Unattached Track Team",
+				"FirstName": "Molly",
+				"Lastname": "Christiansen",
+				"Grade": 10,
+				"Place": 21,
+				"Time": "1:10.51"
+			},
+			{
+				"TeamName": "Emma leigh Ezernack",
+				"FirstName": "Emma",
+				"Lastname": "Ezernack",
+				"Grade": 11,
+				"Place": 22,
+				"Time": "1:11.37"
+			},
+			{
+				"TeamName": "Bethany's Unattached Team",
+				"FirstName": "Bethany",
+				"Lastname": "Vrska",
+				"Grade": 9,
+				"Place": 23,
+				"Time": "1:12.05"
+			},
+			{
+				"TeamName": "Raise The Bar",
+				"FirstName": "Hadley",
+				"Lastname": "Miillsap",
+				"Grade": 8,
+				"Place": 24,
+				"Time": "1:12.19"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Mylie",
+				"Lastname": "Kaiser",
+				"Grade": 10,
+				"Place": 25,
+				"Time": "1:12.35"
+			},
+			{
+				"TeamName": "Dan Kapelos",
+				"FirstName": "Makayla",
+				"Lastname": "Wood",
+				"Grade": 10,
+				"Place": 26,
+				"Time": "1:12.80"
+			},
+			{
+				"TeamName": "Skelton",
+				"FirstName": "Mallory",
+				"Lastname": "Skelton",
+				"Grade": 12,
+				"Place": 27,
+				"Time": "1:13.11"
+			},
+			{
+				"TeamName": "Megan's Unattached Track Team",
+				"FirstName": "Beth",
+				"Lastname": "Robinson",
+				"Grade": 12,
+				"Place": 28,
+				"Time": "1:13.73"
+			},
+			{
+				"TeamName": "Adyson's Unattached Team",
+				"FirstName": "Adyson",
+				"Lastname": "Orton",
+				"Grade": 11,
+				"Place": 29,
+				"Time": "1:14.20"
+			},
+			{
+				"TeamName": "Addison M Losik",
+				"FirstName": "Addison",
+				"Lastname": "Losik",
+				"Grade": 11,
+				"Place": 30,
+				"Time": "1:14.23"
+			},
+			{
+				"TeamName": "Clairee's Unattached Team",
+				"FirstName": "Clairee",
+				"Lastname": "Bingham",
+				"Grade": 10,
+				"Place": 31,
+				"Time": "1:14.25"
+			},
+			{
+				"TeamName": "Amy Bullock",
+				"FirstName": "Amy",
+				"Lastname": "Bullock",
+				"Grade": 12,
+				"Place": 32,
+				"Time": "1:14.89"
+			},
+			{
+				"TeamName": "Olivia's Unattached Team",
+				"FirstName": "Olivia",
+				"Lastname": "Silvaz",
+				"Grade": 12,
+				"Place": 33,
+				"Time": "1:16.30"
+			},
+			{
+				"TeamName": "Hanna's Unattached Team",
+				"FirstName": "Hanna",
+				"Lastname": "Petersen",
+				"Grade": 12,
+				"Place": 34,
+				"Time": "1:16.63"
+			},
+			{
+				"TeamName": "Tylita's team",
+				"FirstName": "Tylita",
+				"Lastname": "Bond",
+				"Grade": 9,
+				"Place": 35,
+				"Time": "1:16.98"
+			},
+			{
+				"TeamName": "Isabelle's Unattached Team",
+				"FirstName": "Isabelle",
+				"Lastname": "Rigo",
+				"Grade": 11,
+				"Place": 36,
+				"Time": "1:17.50"
+			},
+			{
+				"TeamName": "Woods Cross",
+				"FirstName": "Lydia",
+				"Lastname": "Ponder",
+				"Grade": 12,
+				"Place": 37,
+				"Time": "1:19.63"
+			},
+			{
+				"TeamName": "Tarnue Ali",
+				"FirstName": "Malaiyha",
+				"Lastname": "Muya",
+				"Grade": 5,
+				"Place": 38,
+				"Time": "1:20.80"
+			},
+			{
+				"TeamName": "Tarnue Ali",
+				"FirstName": "Palmer",
+				"Lastname": "Mower",
+				"Grade": 3,
+				"Place": 39,
+				"Time": "1:24.55"
+			}
+		]
+	},
+	{
+		"EventID": 751,
+		"Gender": "male",
+		"Name": "Boys 400m Dash",
+		"Result": [
+			{
+				"TeamName": "West Jordan",
+				"FirstName": "Dominic",
+				"Lastname": "Overby",
+				"Grade": 12,
+				"Place": 1,
+				"Time": "50.24"
+			},
+			{
+				"TeamName": "Gabe Hutchinson",
+				"FirstName": "Gabe",
+				"Lastname": "Hutchinson",
+				"Grade": 12,
+				"Place": 2,
+				"Time": "51.66"
+			},
+			{
+				"TeamName": "Unattached Weber",
+				"FirstName": "Nik",
+				"Lastname": "Larsen",
+				"Grade": 12,
+				"Place": 3,
+				"Time": "51.94"
+			},
+			{
+				"TeamName": "Daymon Visser",
+				"FirstName": "Josiah",
+				"Lastname": "Gonzales",
+				"Grade": 12,
+				"Place": 4,
+				"Time": "52.14"
+			},
+			{
+				"TeamName": "Morgan",
+				"FirstName": "Tucker",
+				"Lastname": "Giles",
+				"Grade": 12,
+				"Place": 5,
+				"Time": "53.04"
+			},
+			{
+				"TeamName": "Caleb's Unattached Team",
+				"FirstName": "Caleb",
+				"Lastname": "Price",
+				"Grade": 12,
+				"Place": 6,
+				"Time": "53.22"
+			},
+			{
+				"TeamName": "Landon's Unattached Team",
+				"FirstName": "Landon",
+				"Lastname": "Myers",
+				"Grade": 11,
+				"Place": 7,
+				"Time": "53.33"
+			},
+			{
+				"TeamName": "Victoria's Unattached Team",
+				"FirstName": "Ethan",
+				"Lastname": "Winterton",
+				"Grade": 11,
+				"Place": 8,
+				"Time": "53.54"
+			},
+			{
+				"TeamName": "Kellen's Unattached Team",
+				"FirstName": "Kellen",
+				"Lastname": "McKeehan",
+				"Grade": 12,
+				"Place": 9,
+				"Time": "53.58"
+			},
+			{
+				"TeamName": "Phillip's Unattached Team",
+				"FirstName": "Phillip",
+				"Lastname": "Olsen",
+				"Grade": 12,
+				"Place": 10,
+				"Time": "53.85"
+			},
+			{
+				"TeamName": "Megan's Unattached Track Team",
+				"FirstName": "Erick",
+				"Lastname": "Robinson",
+				"Grade": 11,
+				"Place": 11,
+				"Time": "53.86"
+			},
+			{
+				"TeamName": "Cedar Reds",
+				"FirstName": "Ammon",
+				"Lastname": "York",
+				"Grade": 12,
+				"Place": 12,
+				"Time": "53.97"
+			},
+			{
+				"TeamName": "Ken's Unattached Track Team",
+				"FirstName": "Kenny",
+				"Lastname": "Whitmer",
+				"Grade": 10,
+				"Place": 13,
+				"Time": "54.06"
+			},
+			{
+				"TeamName": "CHEETAHS UTAH TRACK CLUB",
+				"FirstName": "Jared",
+				"Lastname": "Schulte",
+				"Grade": 12,
+				"Place": 14,
+				"Time": "54.15"
+			},
+			{
+				"TeamName": "Unattached",
+				"FirstName": "Peter",
+				"Lastname": "Huntsman",
+				"Grade": 10,
+				"Place": 15,
+				"Time": "54.17"
+			},
+			{
+				"TeamName": "Marsh Valley",
+				"FirstName": "Christian",
+				"Lastname": "Bastian",
+				"Grade": 12,
+				"Place": 16,
+				"Time": "54.28"
+			},
+			{
+				"TeamName": "CHEETAHS UTAH TRACK CLUB",
+				"FirstName": "Judah",
+				"Lastname": "Valle",
+				"Grade": 8,
+				"Place": 17,
+				"Time": "54.40"
+			},
+			{
+				"TeamName": "Copper Hills",
+				"FirstName": "Caleb",
+				"Lastname": "Steele",
+				"Grade": 12,
+				"Place": 18,
+				"Time": "54.46"
+			},
+			{
+				"TeamName": "Mike Nelson",
+				"FirstName": "Aaron",
+				"Lastname": "Caldwell",
+				"Grade": 12,
+				"Place": 19,
+				"Time": "54.47"
+			},
+			{
+				"TeamName": "Mike Nelson",
+				"FirstName": "Ezra",
+				"Lastname": "Nelson",
+				"Grade": 12,
+				"Place": 20,
+				"Time": "54.48"
+			},
+			{
+				"TeamName": "Kyrik Patch",
+				"FirstName": "Kyrik",
+				"Lastname": "Patch",
+				"Grade": 11,
+				"Place": 21,
+				"Time": "54.51"
+			},
+			{
+				"TeamName": "Herriman",
+				"FirstName": "Zeke",
+				"Lastname": "Kearney",
+				"Grade": 11,
+				"Place": 22,
+				"Time": "54.68"
+			},
+			{
+				"TeamName": "Ty's Unattached Team",
+				"FirstName": "Ty",
+				"Lastname": "Gibbons",
+				"Grade": 12,
+				"Place": 23,
+				"Time": "54.96"
+			},
+			{
+				"TeamName": "Izaac's most epic legendary coolest bestest team",
+				"FirstName": "Izaac",
+				"Lastname": "Crosland",
+				"Grade": 12,
+				"Place": 24,
+				"Time": "54.97"
+			},
+			{
+				"TeamName": "Jack's Unattached Track Team",
+				"FirstName": "Jack",
+				"Lastname": "Christiansen",
+				"Grade": 12,
+				"Place": 25,
+				"Time": "55.02"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Dez",
+				"Lastname": "Jenkins",
+				"Grade": 12,
+				"Place": 26,
+				"Time": "55.15"
+			},
+			{
+				"TeamName": "Crew Draney Unattached",
+				"FirstName": "Crew",
+				"Lastname": "Draney",
+				"Grade": 11,
+				"Place": 27,
+				"Time": "55.40"
+			},
+			{
+				"TeamName": "Cameron's Hiatt",
+				"FirstName": "Cameron",
+				"Lastname": "Hiatt",
+				"Grade": 12,
+				"Place": 28,
+				"Time": "55.44"
+			},
+			{
+				"TeamName": "Brakken's Unattached Track Team",
+				"FirstName": "Brakken",
+				"Lastname": "Bell",
+				"Grade": 12,
+				"Place": 29,
+				"Time": "55.58"
+			},
+			{
+				"TeamName": "Clearfield running",
+				"FirstName": "Colin",
+				"Lastname": "Thompson",
+				"Grade": 12,
+				"Place": 30,
+				"Time": "56.40"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Ayden",
+				"Lastname": "Hartzell",
+				"Grade": 11,
+				"Place": 31,
+				"Time": "56.74"
+			},
+			{
+				"TeamName": "Connor Orges",
+				"FirstName": "Connor",
+				"Lastname": "Orges",
+				"Grade": 12,
+				"Place": 32,
+				"Time": "57.20"
+			},
+			{
+				"TeamName": "Parker's Unattached Team",
+				"FirstName": "Parker",
+				"Lastname": "Jacobs",
+				"Grade": 11,
+				"Place": 33,
+				"Time": "57.40"
+			},
+			{
+				"TeamName": "CHEETAHS UTAH TRACK CLUB",
+				"FirstName": "Leeson",
+				"Lastname": "Taylor",
+				"Grade": 12,
+				"Place": 33,
+				"Time": "57.40"
+			},
+			{
+				"TeamName": "Alvin's Unattached Team",
+				"FirstName": "Alvin",
+				"Lastname": "Yuan",
+				"Grade": 0,
+				"Place": 35,
+				"Time": "57.64"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "Lincoln",
+				"Lastname": "Goodman",
+				"Grade": 10,
+				"Place": 36,
+				"Time": "57.70"
+			},
+			{
+				"TeamName": "Russell's Unattached Team",
+				"FirstName": "Trace",
+				"Lastname": "Thomas",
+				"Grade": 11,
+				"Place": 37,
+				"Time": "57.73"
+			},
+			{
+				"TeamName": "Izaac's most epic legendary coolest bestest team",
+				"FirstName": "Jacob",
+				"Lastname": "Peterson",
+				"Grade": 12,
+				"Place": 38,
+				"Time": "57.92"
+			},
+			{
+				"TeamName": "Zachary's Unattached Team",
+				"FirstName": "Zachary",
+				"Lastname": "Bott",
+				"Grade": 12,
+				"Place": 39,
+				"Time": "57.93"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "Aidden",
+				"Lastname": "Wilson",
+				"Grade": 12,
+				"Place": 40,
+				"Time": "57.98"
+			},
+			{
+				"TeamName": "Brody's Unattached Track Team",
+				"FirstName": "Brody",
+				"Lastname": "Bigelow",
+				"Grade": 12,
+				"Place": 41,
+				"Time": "58.03"
+			},
+			{
+				"TeamName": "Tommy's Unattached Team",
+				"FirstName": "Thomas",
+				"Lastname": "Hansen",
+				"Grade": 12,
+				"Place": 42,
+				"Time": "58.07"
+			},
+			{
+				"TeamName": "Tarnue Ali",
+				"FirstName": "Ayden",
+				"Lastname": "Ross",
+				"Grade": 11,
+				"Place": 43,
+				"Time": "58.21"
+			},
+			{
+				"TeamName": "Robert Flores",
+				"FirstName": "Robert",
+				"Lastname": "Flores",
+				"Grade": 11,
+				"Place": 44,
+				"Time": "58.47"
+			},
+			{
+				"TeamName": "David’s Unattached Track Team",
+				"FirstName": "David",
+				"Lastname": "Fletcher",
+				"Grade": 11,
+				"Place": 45,
+				"Time": "58.92"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Paxton",
+				"Lastname": "Beebe",
+				"Grade": 11,
+				"Place": 46,
+				"Time": "59.01"
+			},
+			{
+				"TeamName": "Team Slay",
+				"FirstName": "Caleb",
+				"Lastname": "Robinson",
+				"Grade": 12,
+				"Place": 47,
+				"Time": "59.07"
+			},
+			{
+				"TeamName": "Unattached Team",
+				"FirstName": "Ty",
+				"Lastname": "Johnson",
+				"Grade": 10,
+				"Place": 48,
+				"Time": "59.31"
+			},
+			{
+				"TeamName": "Brown’s Unattached Team",
+				"FirstName": "Carter",
+				"Lastname": "Brown",
+				"Grade": 9,
+				"Place": 49,
+				"Time": "59.34"
+			},
+			{
+				"TeamName": "Benham Unattached Team",
+				"FirstName": "Gavin",
+				"Lastname": "Benham",
+				"Grade": 11,
+				"Place": 50,
+				"Time": "59.61"
+			},
+			{
+				"TeamName": "Brown’s Unattached Team",
+				"FirstName": "Cole",
+				"Lastname": "Brown",
+				"Grade": 9,
+				"Place": 50,
+				"Time": "59.61"
+			},
+			{
+				"TeamName": "Owen's Unattached Team",
+				"FirstName": "Owen",
+				"Lastname": "Farrer",
+				"Grade": 12,
+				"Place": 52,
+				"Time": "59.64"
+			},
+			{
+				"TeamName": "Robert's Unattached Team",
+				"FirstName": "Robert",
+				"Lastname": "Johnson",
+				"Grade": 12,
+				"Place": 52,
+				"Time": "59.64"
+			},
+			{
+				"TeamName": "Unattached Team",
+				"FirstName": "Seth",
+				"Lastname": "Larson",
+				"Grade": 12,
+				"Place": 54,
+				"Time": "59.75"
+			},
+			{
+				"TeamName": "Mountain View High School-Wy",
+				"FirstName": "Paxton",
+				"Lastname": "Walker",
+				"Grade": 12,
+				"Place": 55,
+				"Time": "1:00.19"
+			},
+			{
+				"TeamName": "Tarnue Ali",
+				"FirstName": "Tyrese",
+				"Lastname": "Ali",
+				"Grade": 7,
+				"Place": 56,
+				"Time": "1:00.45"
+			},
+			{
+				"TeamName": "TERRENCE's Unattached Team",
+				"FirstName": "Terrence",
+				"Lastname": "Kalimasi",
+				"Grade": 11,
+				"Place": 57,
+				"Time": "1:00.63"
+			},
+			{
+				"TeamName": "Kevin's Unattached Team",
+				"FirstName": "Ryan",
+				"Lastname": "Wilson",
+				"Grade": 12,
+				"Place": 58,
+				"Time": "1:00.84"
+			},
+			{
+				"TeamName": "Quick Feet Track Club",
+				"FirstName": "Ricardo",
+				"Lastname": "Alvarez",
+				"Grade": 10,
+				"Place": 59,
+				"Time": "1:01.67"
+			},
+			{
+				"TeamName": "West Jordan",
+				"FirstName": "Ryan",
+				"Lastname": "Smith",
+				"Grade": 11,
+				"Place": 60,
+				"Time": "1:02.11"
+			},
+			{
+				"TeamName": "Elly's Unattached Team",
+				"FirstName": "Khai",
+				"Lastname": "Jeppsen",
+				"Grade": 9,
+				"Place": 61,
+				"Time": "1:02.16"
+			},
+			{
+				"TeamName": "Tate's Unattached Team",
+				"FirstName": "Tate",
+				"Lastname": "McMillan",
+				"Grade": 10,
+				"Place": 62,
+				"Time": "1:02.46"
+			},
+			{
+				"TeamName": "Seth's Unattached Team",
+				"FirstName": "Seth",
+				"Lastname": "Taylor",
+				"Grade": 11,
+				"Place": 63,
+				"Time": "1:03.02"
+			},
+			{
+				"TeamName": "Adam's Unattached Team",
+				"FirstName": "Adam",
+				"Lastname": "Carman",
+				"Grade": 10,
+				"Place": 64,
+				"Time": "1:03.40"
+			},
+			{
+				"TeamName": "I don’t really know",
+				"FirstName": "Eilya",
+				"Lastname": "Parish",
+				"Grade": 12,
+				"Place": 65,
+				"Time": "1:04.33"
+			},
+			{
+				"TeamName": "Nate’s Track Team",
+				"FirstName": "Nathan",
+				"Lastname": "Milne",
+				"Grade": 10,
+				"Place": 66,
+				"Time": "1:05.63"
+			},
+			{
+				"TeamName": "Mason Casey",
+				"FirstName": "Mason",
+				"Lastname": "Casey",
+				"Grade": 9,
+				"Place": 67,
+				"Time": "1:05.64"
+			},
+			{
+				"TeamName": "Terrence K World",
+				"FirstName": "Ian",
+				"Lastname": "Colton",
+				"Grade": 11,
+				"Place": 67,
+				"Time": "1:05.64"
+			},
+			{
+				"TeamName": "Tarnue Ali",
+				"FirstName": "Crew",
+				"Lastname": "Mower",
+				"Grade": 4,
+				"Place": 69,
+				"Time": "1:06.19"
+			},
+			{
+				"TeamName": "Ben's Unattached Track Team",
+				"FirstName": "Ben",
+				"Lastname": "Horsley",
+				"Grade": 10,
+				"Place": 70,
+				"Time": "1:06.29"
+			},
+			{
+				"TeamName": "Juab",
+				"FirstName": "Braiden",
+				"Lastname": "Taylor",
+				"Grade": 9,
+				"Place": 71,
+				"Time": "1:12.22"
+			},
+			{
+				"TeamName": "Hayden's Unattached Team",
+				"FirstName": "Hayden",
+				"Lastname": "Hicks",
+				"Grade": 12,
+				"Place": 72,
+				"Time": "1:13.20"
+			},
+			{
+				"TeamName": "JJ Mendoza",
+				"FirstName": "JJ",
+				"Lastname": "Mendoza",
+				"Grade": 4,
+				"Place": 73,
+				"Time": "1:19.01"
+			},
+			{
+				"TeamName": "Wyatt Wiseman’s Unattached Track Team",
+				"FirstName": "Wyatt",
+				"Lastname": "Wiseman",
+				"Grade": 0,
+				"Place": 74,
+				"Time": "1:20.53"
+			},
+			{
+				"TeamName": "Cottonwood",
+				"FirstName": "Peter",
+				"Lastname": "Haws",
+				"Grade": 10,
+				"Place": 75,
+				"Time": "1:34.39"
+			}
+		]
+	},
+	{
+		"EventID": 752,
+		"Gender": "female",
+		"Name": "Girls 2 Mile Run",
+		"Result": [
+			{
+				"TeamName": "Kings Peak Athletics",
+				"FirstName": "jaylie",
+				"Lastname": "jenkins",
+				"Grade": 11,
+				"Place": 1,
+				"Time": "11:30.06"
+			},
+			{
+				"TeamName": "Maddie's Unattached Team",
+				"FirstName": "Madelyn",
+				"Lastname": "Reeder",
+				"Grade": 9,
+				"Place": 2,
+				"Time": "11:38.11"
+			},
+			{
+				"TeamName": "Madison's Unattached Team",
+				"FirstName": "Madison",
+				"Lastname": "Antonino",
+				"Grade": 11,
+				"Place": 3,
+				"Time": "11:46.61"
+			},
+			{
+				"TeamName": "South Fremont",
+				"FirstName": "Sage",
+				"Lastname": "Lyon",
+				"Grade": 12,
+				"Place": 4,
+				"Time": "11:52.97"
+			},
+			{
+				"TeamName": "Alexis's Unattached Track Team",
+				"FirstName": "Alexis",
+				"Lastname": "Bradshaw",
+				"Grade": 11,
+				"Place": 5,
+				"Time": "12:02.52"
+			},
+			{
+				"TeamName": "Union",
+				"FirstName": "River",
+				"Lastname": "White",
+				"Grade": 10,
+				"Place": 6,
+				"Time": "12:05.65"
+			},
+			{
+				"TeamName": "Kaylee Hale",
+				"FirstName": "Kaylee",
+				"Lastname": "Hale",
+				"Grade": 12,
+				"Place": 7,
+				"Time": "12:11.94"
+			},
+			{
+				"TeamName": "Box Elder High School",
+				"FirstName": "Kassidie",
+				"Lastname": "Douglass",
+				"Grade": 11,
+				"Place": 8,
+				"Time": "12:13.71"
+			},
+			{
+				"TeamName": "Herriman",
+				"FirstName": "McKensie",
+				"Lastname": "Bowen",
+				"Grade": 12,
+				"Place": 9,
+				"Time": "12:15.96"
+			},
+			{
+				"TeamName": "Kaspricks",
+				"FirstName": "Ainsleigh",
+				"Lastname": "Kasprick",
+				"Grade": 11,
+				"Place": 10,
+				"Time": "12:22.66"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Jocelyn",
+				"Lastname": "Capener",
+				"Grade": 12,
+				"Place": 11,
+				"Time": "12:23.48"
+			},
+			{
+				"TeamName": "Karlie's Unattached Team",
+				"FirstName": "Indianna",
+				"Lastname": "Lundell",
+				"Grade": 11,
+				"Place": 12,
+				"Time": "12:35.87"
+			},
+			{
+				"TeamName": "Jessica's Unattached Team",
+				"FirstName": "Jessica",
+				"Lastname": "Wilson",
+				"Grade": 12,
+				"Place": 13,
+				"Time": "12:38.25"
+			},
+			{
+				"TeamName": "Firth Unattached Team",
+				"FirstName": "Kynzie",
+				"Lastname": "Nielson",
+				"Grade": 11,
+				"Place": 14,
+				"Time": "12:38.91"
+			},
+			{
+				"TeamName": "Emma R York",
+				"FirstName": "Emma",
+				"Lastname": "York",
+				"Grade": 11,
+				"Place": 15,
+				"Time": "12:43.26"
+			},
+			{
+				"TeamName": "Hillcrest",
+				"FirstName": "Edith",
+				"Lastname": "Neslen",
+				"Grade": 12,
+				"Place": 16,
+				"Time": "12:44.94"
+			},
+			{
+				"TeamName": "2 Fast 1 Furious",
+				"FirstName": "Chelsea",
+				"Lastname": "Shakespear",
+				"Grade": 11,
+				"Place": 17,
+				"Time": "12:48.95"
+			},
+			{
+				"TeamName": "Sophie's Unattached Team",
+				"FirstName": "Sophie",
+				"Lastname": "Starr",
+				"Grade": 11,
+				"Place": 18,
+				"Time": "13:06.23"
+			},
+			{
+				"TeamName": "Whit's Unattached Track Team",
+				"FirstName": "Ava",
+				"Lastname": "Sargent",
+				"Grade": 10,
+				"Place": 19,
+				"Time": "13:12.98"
+			},
+			{
+				"TeamName": "Pleasant Grove",
+				"FirstName": "Hallie",
+				"Lastname": "Bendoski",
+				"Grade": 0,
+				"Place": 20,
+				"Time": "13:13.90"
+			},
+			{
+				"TeamName": "Brianna's Unattached Track Team",
+				"FirstName": "Brianna",
+				"Lastname": "Cook",
+				"Grade": 10,
+				"Place": 21,
+				"Time": "13:14.81"
+			},
+			{
+				"TeamName": "2 Fast 1 Furious",
+				"FirstName": "Ali",
+				"Lastname": "Suhaka",
+				"Grade": 11,
+				"Place": 22,
+				"Time": "13:20.76"
+			},
+			{
+				"TeamName": "Murdock GRV",
+				"FirstName": "Isabelle",
+				"Lastname": "Murdock",
+				"Grade": 11,
+				"Place": 23,
+				"Time": "13:26.17"
+			},
+			{
+				"TeamName": "Jessica's Unattached Team",
+				"FirstName": "Sage",
+				"Lastname": "Johnson",
+				"Grade": 11,
+				"Place": 24,
+				"Time": "13:26.80"
+			},
+			{
+				"TeamName": "Jessica's Unattached Team",
+				"FirstName": "Kelly",
+				"Lastname": "Wilson",
+				"Grade": 9,
+				"Place": 25,
+				"Time": "13:29.99"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Kaitlyn",
+				"Lastname": "Bach",
+				"Grade": 11,
+				"Place": 26,
+				"Time": "13:37.54"
+			},
+			{
+				"TeamName": "vianey's Unattached Team",
+				"FirstName": "Vianey",
+				"Lastname": "Toledo",
+				"Grade": 11,
+				"Place": 27,
+				"Time": "13:39.38"
+			},
+			{
+				"TeamName": "Seidy's Unattached Team",
+				"FirstName": "Seidy",
+				"Lastname": "Hernandez",
+				"Grade": 11,
+				"Place": 28,
+				"Time": "13:43.49"
+			},
+			{
+				"TeamName": "Addie's Unattached Team",
+				"FirstName": "Addie",
+				"Lastname": "Hillhouse",
+				"Grade": 9,
+				"Place": 29,
+				"Time": "13:44.71"
+			},
+			{
+				"TeamName": "Abigail's Unattached Team",
+				"FirstName": "Abbie",
+				"Lastname": "Johnson",
+				"Grade": 12,
+				"Place": 30,
+				"Time": "13:45.98"
+			},
+			{
+				"TeamName": "Firth Unattached Team",
+				"FirstName": "Allie",
+				"Lastname": "Nielson",
+				"Grade": 9,
+				"Place": 31,
+				"Time": "13:52.04"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Gracey",
+				"Lastname": "Visser",
+				"Grade": 10,
+				"Place": 32,
+				"Time": "13:53.40"
+			},
+			{
+				"TeamName": "Kimiya's Unattached Track Team",
+				"FirstName": "Kimiya",
+				"Lastname": "Mavaddat",
+				"Grade": 11,
+				"Place": 33,
+				"Time": "13:56.21"
+			},
+			{
+				"TeamName": "Murdock GRV",
+				"FirstName": "Lily",
+				"Lastname": "Murdock",
+				"Grade": 11,
+				"Place": 34,
+				"Time": "14:47.46"
+			},
+			{
+				"TeamName": "Evangeline's Unattached Track Team",
+				"FirstName": "Evangeline",
+				"Lastname": "Gladden",
+				"Grade": 10,
+				"Place": 35,
+				"Time": "14:50.99"
+			},
+			{
+				"TeamName": "Karlie's Unattached Team",
+				"FirstName": "Maylin",
+				"Lastname": "Lundell",
+				"Grade": 10,
+				"Place": 36,
+				"Time": "14:51.18"
+			},
+			{
+				"TeamName": "Sophia Clark",
+				"FirstName": "Sophia",
+				"Lastname": "Clark",
+				"Grade": 10,
+				"Place": 37,
+				"Time": "15:15.22"
+			},
+			{
+				"TeamName": "Pleasant Grove",
+				"FirstName": "Meg",
+				"Lastname": "Thomas",
+				"Grade": 9,
+				"Place": 38,
+				"Time": "15:33.57"
+			},
+			{
+				"TeamName": "Star Valley Braves Unattached Team",
+				"FirstName": "Madison",
+				"Lastname": "Strgar",
+				"Grade": 11,
+				"Place": 39,
+				"Time": "15:46.73"
+			},
+			{
+				"TeamName": "Isela Suarez",
+				"FirstName": "Isela",
+				"Lastname": "Suarez",
+				"Grade": 9,
+				"Place": 40,
+				"Time": "15:46.86"
+			},
+			{
+				"TeamName": "Alexandria's Unattached Team",
+				"FirstName": "Alexandria",
+				"Lastname": "Box",
+				"Grade": 11,
+				"Place": 41,
+				"Time": "16:24.00"
+			},
+			{
+				"TeamName": "Jasmine Chapman",
+				"FirstName": "Jasmine",
+				"Lastname": "Chapman",
+				"Grade": 10,
+				"Place": 42,
+				"Time": "16:43.74"
+			},
+			{
+				"TeamName": "Akira's Unattached Track Team",
+				"FirstName": "Akira",
+				"Lastname": "Curfman",
+				"Grade": 12,
+				"Place": 43,
+				"Time": "17:13.88"
+			}
+		]
+	},
+	{
+		"EventID": 753,
+		"Gender": "male",
+		"Name": "Boys 2 Mile Run",
+		"Result": [
+			{
+				"TeamName": "Star Valley Braves",
+				"FirstName": "Habtamu",
+				"Lastname": "Wetzel",
+				"Grade": 11,
+				"Place": 1,
+				"Time": "9:41.11"
+			},
+			{
+				"TeamName": "Izaac's most epic legendary coolest bestest team",
+				"FirstName": "Landon",
+				"Lastname": "Sturgeon",
+				"Grade": 11,
+				"Place": 2,
+				"Time": "9:42.78"
+			},
+			{
+				"TeamName": "Zach's Unattached Team",
+				"FirstName": "Zach",
+				"Lastname": "Hillhouse",
+				"Grade": 12,
+				"Place": 3,
+				"Time": "9:49.82"
+			},
+			{
+				"TeamName": "Clark’s Unattached Team",
+				"FirstName": "Clark",
+				"Lastname": "Peters",
+				"Grade": 12,
+				"Place": 4,
+				"Time": "9:51.29"
+			},
+			{
+				"TeamName": "Matthew's Unattached Track Team",
+				"FirstName": "Matthew",
+				"Lastname": "Costello",
+				"Grade": 11,
+				"Place": 5,
+				"Time": "10:10.06"
+			},
+			{
+				"TeamName": "Jase's Unattached Track Team",
+				"FirstName": "Jase",
+				"Lastname": "Burton",
+				"Grade": 11,
+				"Place": 6,
+				"Time": "10:10.63"
+			},
+			{
+				"TeamName": "Ethan’s Unattached Team",
+				"FirstName": "Ethan",
+				"Lastname": "Lund",
+				"Grade": 11,
+				"Place": 7,
+				"Time": "10:14.53"
+			},
+			{
+				"TeamName": "Ammon's Unattached Track Team",
+				"FirstName": "Ammon",
+				"Lastname": "Barton",
+				"Grade": 12,
+				"Place": 8,
+				"Time": "10:16.66"
+			},
+			{
+				"TeamName": "Box Elder",
+				"FirstName": "Zenock",
+				"Lastname": "Larson",
+				"Grade": 11,
+				"Place": 9,
+				"Time": "10:20.14"
+			},
+			{
+				"TeamName": "Rex's Unattached Team",
+				"FirstName": "Christopher",
+				"Lastname": "Peterson",
+				"Grade": 10,
+				"Place": 10,
+				"Time": "10:22.94"
+			},
+			{
+				"TeamName": "Bryce R",
+				"FirstName": "Bryce",
+				"Lastname": "Runnells",
+				"Grade": 10,
+				"Place": 11,
+				"Time": "10:24.40"
+			},
+			{
+				"TeamName": "Peter Lorch",
+				"FirstName": "Peter",
+				"Lastname": "Lorch",
+				"Grade": 12,
+				"Place": 12,
+				"Time": "10:30.12"
+			},
+			{
+				"TeamName": "Timpanogos High School",
+				"FirstName": "Gage",
+				"Lastname": "Hart",
+				"Grade": 10,
+				"Place": 13,
+				"Time": "10:30.20"
+			},
+			{
+				"TeamName": "Payson",
+				"FirstName": "Ethan",
+				"Lastname": "Kimmel",
+				"Grade": 12,
+				"Place": 14,
+				"Time": "10:31.11"
+			},
+			{
+				"TeamName": "Salem Hills",
+				"FirstName": "Gary",
+				"Lastname": "Taylor",
+				"Grade": 12,
+				"Place": 15,
+				"Time": "10:33.98"
+			},
+			{
+				"TeamName": "Cruze's Unattached Team",
+				"FirstName": "Cruze",
+				"Lastname": "Hallows",
+				"Grade": 10,
+				"Place": 16,
+				"Time": "10:34.37"
+			},
+			{
+				"TeamName": "un affiliated affiliated to maple mountain",
+				"FirstName": "Austin",
+				"Lastname": "Byers",
+				"Grade": 11,
+				"Place": 17,
+				"Time": "10:37.95"
+			},
+			{
+				"TeamName": "Mason's Unattached Team",
+				"FirstName": "Mason",
+				"Lastname": "Staheli",
+				"Grade": 10,
+				"Place": 18,
+				"Time": "10:39.14"
+			},
+			{
+				"TeamName": "Clark Boys",
+				"FirstName": "Cooper",
+				"Lastname": "Clark",
+				"Grade": 9,
+				"Place": 19,
+				"Time": "10:40.88"
+			},
+			{
+				"TeamName": "Evanstkn",
+				"FirstName": "Gideon",
+				"Lastname": "Stahl",
+				"Grade": 12,
+				"Place": 20,
+				"Time": "10:43.88"
+			},
+			{
+				"TeamName": "AJ unattached",
+				"FirstName": "AJ",
+				"Lastname": "Stalker",
+				"Grade": 12,
+				"Place": 21,
+				"Time": "10:44.15"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Bryan",
+				"Lastname": "Baxter",
+				"Grade": 9,
+				"Place": 22,
+				"Time": "10:47.56"
+			},
+			{
+				"TeamName": "Grantsville",
+				"FirstName": "Isaac",
+				"Lastname": "Nordgren",
+				"Grade": 11,
+				"Place": 23,
+				"Time": "10:49.07"
+			},
+			{
+				"TeamName": "Star  Valley-Colton",
+				"FirstName": "Colton",
+				"Lastname": "Cranney",
+				"Grade": 10,
+				"Place": 24,
+				"Time": "10:50.29"
+			},
+			{
+				"TeamName": "Fruitland",
+				"FirstName": "Landon",
+				"Lastname": "Hillam",
+				"Grade": 9,
+				"Place": 25,
+				"Time": "10:52.81"
+			},
+			{
+				"TeamName": "Carson's Unattached Team",
+				"FirstName": "Carson",
+				"Lastname": "Gurr",
+				"Grade": 11,
+				"Place": 26,
+				"Time": "10:53.78"
+			},
+			{
+				"TeamName": "Clark Boys",
+				"FirstName": "Hudson",
+				"Lastname": "Clark",
+				"Grade": 11,
+				"Place": 27,
+				"Time": "10:54.13"
+			},
+			{
+				"TeamName": "Star Valley",
+				"FirstName": "Matt",
+				"Lastname": "Heywood",
+				"Grade": 11,
+				"Place": 28,
+				"Time": "10:54.56"
+			},
+			{
+				"TeamName": "Spencer Dastrup's Unattached Team",
+				"FirstName": "Spencer",
+				"Lastname": "Dastrup",
+				"Grade": 11,
+				"Place": 29,
+				"Time": "10:57.07"
+			},
+			{
+				"TeamName": "Provo",
+				"FirstName": "Lucas",
+				"Lastname": "Anderson",
+				"Grade": 11,
+				"Place": 30,
+				"Time": "10:58.28"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Jamar",
+				"Lastname": "McDowell",
+				"Grade": 12,
+				"Place": 31,
+				"Time": "10:58.53"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Jamison",
+				"Lastname": "Williams",
+				"Grade": 12,
+				"Place": 32,
+				"Time": "10:59.60"
+			},
+			{
+				"TeamName": "Benjamin Killebrew",
+				"FirstName": "Benjamin",
+				"Lastname": "Killebrew",
+				"Grade": 10,
+				"Place": 33,
+				"Time": "11:04.68"
+			},
+			{
+				"TeamName": "Cottonwood",
+				"FirstName": "Ethan",
+				"Lastname": "Merryweather",
+				"Grade": 0,
+				"Place": 34,
+				"Time": "11:07.78"
+			},
+			{
+				"TeamName": "Union",
+				"FirstName": "Aften",
+				"Lastname": "Richens",
+				"Grade": 12,
+				"Place": 35,
+				"Time": "11:08.45"
+			},
+			{
+				"TeamName": "Dutson",
+				"FirstName": "Zach",
+				"Lastname": "Dutson",
+				"Grade": 11,
+				"Place": 36,
+				"Time": "11:09.69"
+			},
+			{
+				"TeamName": "Zachary Christensen",
+				"FirstName": "Zachary",
+				"Lastname": "Christensen",
+				"Grade": 10,
+				"Place": 37,
+				"Time": "11:10.09"
+			},
+			{
+				"TeamName": "Hunter's Unattached Team",
+				"FirstName": "Hunter",
+				"Lastname": "Horrocks",
+				"Grade": 10,
+				"Place": 38,
+				"Time": "11:12.25"
+			},
+			{
+				"TeamName": "Arath's Unattached Team",
+				"FirstName": "Arath",
+				"Lastname": "Corrales",
+				"Grade": 12,
+				"Place": 39,
+				"Time": "11:16.68"
+			},
+			{
+				"TeamName": "Pleasant Grove",
+				"FirstName": "Joshua",
+				"Lastname": "Beck",
+				"Grade": 10,
+				"Place": 40,
+				"Time": "11:20.11"
+			},
+			{
+				"TeamName": "Hunter Huwe Pleasant Grove",
+				"FirstName": "Hunter",
+				"Lastname": "Huwe",
+				"Grade": 12,
+				"Place": 41,
+				"Time": "11:21.08"
+			},
+			{
+				"TeamName": "Tanner Child",
+				"FirstName": "Tanner",
+				"Lastname": "Child",
+				"Grade": 12,
+				"Place": 42,
+				"Time": "11:21.91"
+			},
+			{
+				"TeamName": "Isaac's Unattached Team",
+				"FirstName": "Isaac",
+				"Lastname": "Tims",
+				"Grade": 11,
+				"Place": 43,
+				"Time": "11:23.34"
+			},
+			{
+				"TeamName": "Bos’s Unattached Track Team",
+				"FirstName": "Boston",
+				"Lastname": "Baggett",
+				"Grade": 9,
+				"Place": 44,
+				"Time": "11:24.46"
+			},
+			{
+				"TeamName": "Unattached",
+				"FirstName": "Trace",
+				"Lastname": "Cresap",
+				"Grade": 10,
+				"Place": 45,
+				"Time": "11:26.93"
+			},
+			{
+				"TeamName": "Farmington",
+				"FirstName": "Brayden",
+				"Lastname": "Scoresby",
+				"Grade": 11,
+				"Place": 46,
+				"Time": "11:27.27"
+			},
+			{
+				"TeamName": "Haeden Christopher Carter",
+				"FirstName": "Haeden",
+				"Lastname": "Carter",
+				"Grade": 10,
+				"Place": 47,
+				"Time": "11:28.60"
+			},
+			{
+				"TeamName": "Davis's Unattached Team",
+				"FirstName": "Davis",
+				"Lastname": "Staheli",
+				"Grade": 9,
+				"Place": 48,
+				"Time": "11:31.32"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Aidan",
+				"Lastname": "Conrad",
+				"Grade": 11,
+				"Place": 49,
+				"Time": "11:34.51"
+			},
+			{
+				"TeamName": "Micah Esplin",
+				"FirstName": "Micah",
+				"Lastname": "Esplin",
+				"Grade": 0,
+				"Place": 50,
+				"Time": "11:34.98"
+			},
+			{
+				"TeamName": "Copper Hills",
+				"FirstName": "Liam",
+				"Lastname": "Hanson",
+				"Grade": 11,
+				"Place": 51,
+				"Time": "11:37.20"
+			},
+			{
+				"TeamName": "Corb’s unaffiliated team",
+				"FirstName": "Corbin",
+				"Lastname": "Hancock",
+				"Grade": 10,
+				"Place": 52,
+				"Time": "11:37.42"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Justin",
+				"Lastname": "Moon",
+				"Grade": 11,
+				"Place": 53,
+				"Time": "11:38.07"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Croydon",
+				"Lastname": "Francis",
+				"Grade": 12,
+				"Place": 54,
+				"Time": "11:39.68"
+			},
+			{
+				"TeamName": "Benjamin Solomon",
+				"FirstName": "Benjamin",
+				"Lastname": "Solomon",
+				"Grade": 12,
+				"Place": 55,
+				"Time": "11:42.06"
+			},
+			{
+				"TeamName": "Green River",
+				"FirstName": "Jesse",
+				"Lastname": "Kimble",
+				"Grade": 9,
+				"Place": 56,
+				"Time": "11:43.82"
+			},
+			{
+				"TeamName": "Nelson",
+				"FirstName": "Emmitt",
+				"Lastname": "Nelson",
+				"Grade": 10,
+				"Place": 57,
+				"Time": "11:47.12"
+			},
+			{
+				"TeamName": "Trent's Unattached Team",
+				"FirstName": "Dallin",
+				"Lastname": "Douglas",
+				"Grade": 11,
+				"Place": 58,
+				"Time": "11:50.14"
+			},
+			{
+				"TeamName": "Maxwell R Hill",
+				"FirstName": "Maxwell",
+				"Lastname": "Hill",
+				"Grade": 10,
+				"Place": 59,
+				"Time": "11:51.16"
+			},
+			{
+				"TeamName": "Gavin Unattached Team",
+				"FirstName": "Gavin",
+				"Lastname": "Watkins",
+				"Grade": 11,
+				"Place": 60,
+				"Time": "11:51.56"
+			},
+			{
+				"TeamName": "Evanston",
+				"FirstName": "Colby",
+				"Lastname": "Farrens",
+				"Grade": 12,
+				"Place": 61,
+				"Time": "11:51.67"
+			},
+			{
+				"TeamName": "Vegas Bolts",
+				"FirstName": "Samuel",
+				"Lastname": "Bennion",
+				"Grade": 10,
+				"Place": 62,
+				"Time": "11:57.51"
+			},
+			{
+				"TeamName": "Jaxson's Unattached Team",
+				"FirstName": "Jaxson",
+				"Lastname": "Hadley",
+				"Grade": 10,
+				"Place": 63,
+				"Time": "12:01.41"
+			},
+			{
+				"TeamName": "Tristan's Unattached Team",
+				"FirstName": "Tristan",
+				"Lastname": "Stafford",
+				"Grade": 9,
+				"Place": 64,
+				"Time": "12:03.89"
+			},
+			{
+				"TeamName": "Jex's Unattached Team",
+				"FirstName": "Eric",
+				"Lastname": "Jex",
+				"Grade": 12,
+				"Place": 65,
+				"Time": "12:04.04"
+			},
+			{
+				"TeamName": "Logan's Unattached Team",
+				"FirstName": "Logan",
+				"Lastname": "Denney",
+				"Grade": 10,
+				"Place": 66,
+				"Time": "12:05.15"
+			},
+			{
+				"TeamName": "Andrew's Unattached Track Team",
+				"FirstName": "Andrew",
+				"Lastname": "Yosai",
+				"Grade": 11,
+				"Place": 67,
+				"Time": "12:07.45"
+			},
+			{
+				"TeamName": "Tanner Huwe's Unattached Team",
+				"FirstName": "Tanner",
+				"Lastname": "Huwe",
+				"Grade": 11,
+				"Place": 68,
+				"Time": "12:10.53"
+			},
+			{
+				"TeamName": "Johnson",
+				"FirstName": "Caden",
+				"Lastname": "Johnson",
+				"Grade": 11,
+				"Place": 69,
+				"Time": "12:12.64"
+			},
+			{
+				"TeamName": "Jackey's Unattached Team",
+				"FirstName": "Jackey",
+				"Lastname": "Lian",
+				"Grade": 11,
+				"Place": 70,
+				"Time": "12:15.61"
+			},
+			{
+				"TeamName": "Peter's Unattached Track Team",
+				"FirstName": "Peter",
+				"Lastname": "Maffey",
+				"Grade": 9,
+				"Place": 71,
+				"Time": "12:16.62"
+			},
+			{
+				"TeamName": "Cortez",
+				"FirstName": "Cruz",
+				"Lastname": "Plewe",
+				"Grade": 9,
+				"Place": 72,
+				"Time": "12:26.85"
+			},
+			{
+				"TeamName": "Philip's Unattached Team",
+				"FirstName": "Philip",
+				"Lastname": "Soderstrom",
+				"Grade": 0,
+				"Place": 73,
+				"Time": "12:27.48"
+			},
+			{
+				"TeamName": "Ethan’s Unattached Team",
+				"FirstName": "Jack",
+				"Lastname": "Lund",
+				"Grade": 9,
+				"Place": 74,
+				"Time": "12:29.36"
+			},
+			{
+				"TeamName": "Croy Fagergren",
+				"FirstName": "Croy",
+				"Lastname": "Fagergren",
+				"Grade": 9,
+				"Place": 75,
+				"Time": "12:31.33"
+			},
+			{
+				"TeamName": "Jose's Unattached Track Team",
+				"FirstName": "Jose",
+				"Lastname": "Zuniga Garcia",
+				"Grade": 11,
+				"Place": 76,
+				"Time": "12:46.56"
+			},
+			{
+				"TeamName": "Blake's Unattached Team",
+				"FirstName": "William",
+				"Lastname": "Durtschi",
+				"Grade": 10,
+				"Place": 77,
+				"Time": "13:04.25"
+			},
+			{
+				"TeamName": "Myron Alfonzo Unattached Track Team",
+				"FirstName": "Myron",
+				"Lastname": "Alfonso",
+				"Grade": 10,
+				"Place": 78,
+				"Time": "13:07.36"
+			},
+			{
+				"TeamName": "Tommy's Unattached Team",
+				"FirstName": "Tommy",
+				"Lastname": "Miner",
+				"Grade": 10,
+				"Place": 79,
+				"Time": "13:07.97"
+			},
+			{
+				"TeamName": "Liam's Unattached Track Team",
+				"FirstName": "Liam",
+				"Lastname": "Welch",
+				"Grade": 9,
+				"Place": 80,
+				"Time": "13:12.56"
+			},
+			{
+				"TeamName": "Michael Casebolt",
+				"FirstName": "Michael",
+				"Lastname": "Casebolt",
+				"Grade": 12,
+				"Place": 81,
+				"Time": "13:15.79"
+			},
+			{
+				"TeamName": "Jordan Andrew GRV",
+				"FirstName": "Jordan",
+				"Lastname": "Andrew",
+				"Grade": 11,
+				"Place": 82,
+				"Time": "13:45.56"
+			},
+			{
+				"TeamName": "Cody Pulham",
+				"FirstName": "cody",
+				"Lastname": "pulham",
+				"Grade": 0,
+				"Place": 83,
+				"Time": "14:01.86"
+			},
+			{
+				"TeamName": "Ashur Hamilton",
+				"FirstName": "Ashur",
+				"Lastname": "Hamilton",
+				"Grade": 9,
+				"Place": 84,
+				"Time": "14:19.46"
+			}
+		]
+	},
+	{
+		"EventID": 756,
+		"Gender": "female",
+		"Name": "Girls 4x320 Relay",
+		"Result": [
+			{
+				"TeamName": "Bria Anderson",
+				"FirstName": "",
+				"Lastname": "",
+				"Grade": 0,
+				"Place": 1,
+				"Time": "3:00.15"
+			},
+			{
+				"TeamName": "Allie Wilkins",
+				"FirstName": "",
+				"Lastname": "",
+				"Grade": 0,
+				"Place": 2,
+				"Time": "3:09.47"
+			},
+			{
+				"TeamName": "Highland",
+				"FirstName": "",
+				"Lastname": "",
+				"Grade": 0,
+				"Place": 3,
+				"Time": "3:12.80"
+			},
+			{
+				"TeamName": "Alta",
+				"FirstName": "",
+				"Lastname": "",
+				"Grade": 0,
+				"Place": 4,
+				"Time": "3:18.03"
+			},
+			{
+				"TeamName": "NTG Unattached Athletes",
+				"FirstName": "",
+				"Lastname": "",
+				"Grade": 0,
+				"Place": 5,
+				"Time": "3:21.07"
+			},
+			{
+				"TeamName": "Kings Peak Athletics",
+				"FirstName": "",
+				"Lastname": "",
+				"Grade": 0,
+				"Place": 6,
+				"Time": "3:21.51"
+			},
+			{
+				"TeamName": "Isabelle's Unattached Team",
+				"FirstName": "",
+				"Lastname": "",
+				"Grade": 0,
+				"Place": 7,
+				"Time": "3:41.34"
+			}
+		]
+	},
+	{
+		"EventID": 757,
+		"Gender": "male",
+		"Name": "Boys 4x320 Relay",
+		"Result": [
+			{
+				"TeamName": "Logan Sircable",
+				"FirstName": "",
+				"Lastname": "",
+				"Grade": 0,
+				"Place": 1,
+				"Time": "2:45.02"
+			},
+			{
+				"TeamName": "Russell's Unattached Team",
+				"FirstName": "",
+				"Lastname": "",
+				"Grade": 0,
+				"Place": 2,
+				"Time": "2:50.65"
+			},
+			{
+				"TeamName": "Decker's Unattached Team",
+				"FirstName": "",
+				"Lastname": "",
+				"Grade": 0,
+				"Place": 3,
+				"Time": "3:06.63"
+			}
+		]
+	}
+]

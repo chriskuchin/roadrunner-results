@@ -6,8 +6,11 @@ import (
 	"io"
 	"net/http"
 	"regexp"
+	"strings"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/client/model"
+	client_util "github.com/chriskuchin/roadrunner-results/pkg/client/util"
+	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/rs/zerolog/log"
 )
 
@@ -101,8 +104,35 @@ func getMeetIDFromURL(eventURL string) string {
 	return ""
 }
 
-func processRawEventData([]MTTRXRawResults) []model.Event {
-	return nil
+func processRawEventData(rawEventData []MTTRXRawResults) []model.Event {
+	// fmt.Println(rawEventData)
+	var results []model.Event = []model.Event{}
+	for _, event := range rawEventData {
+		if len(event.Result) == 0 || strings.Contains(event.Name, "Relay") {
+			continue
+		}
+
+		var eventResult model.Event = model.Event{
+			Name: event.Name,
+			Results: []model.Result{},
+			Distance: client_util.GetEventDistanceFromHeader(event.Name),
+		}
+
+		for _, result := range event.Result {
+			var athleteResult model.Result = model.Result{
+				FirstName: result.FirstName,
+				LastName: result.Lastname,
+				Gender: event.Gender,
+				Place: result.Place,
+				Grade: fmt.Sprintf("%d", result.Grade),
+				Time: util.ConvertFormatTimeToMilliseconds(result.Time),
+			}
+			eventResult.Results = append(eventResult.Results, athleteResult)
+		}
+
+		results = append(results, eventResult)
+	}
+	return results
 }
 
 func getRawEventData(meetID string) ([]MTTRXRawResults, error) {
@@ -163,7 +193,7 @@ func getRawEventData(meetID string) ([]MTTRXRawResults, error) {
 				Grade:     result.Grade,
 			}
 
-			if result.Mark != nil {
+			if result.Mark != nil && result.Mark.Type == "time" {
 				currentAthlete.Time = result.Mark.English
 				rawEventResults.Result = append(rawEventResults.Result, currentAthlete)
 			}
