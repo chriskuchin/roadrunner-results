@@ -14,5 +14,6 @@ type Result struct {
 	Team      string `json:"team"`
 	Year      string `json:"year"`
 	Grade     string `json:"grade"`
+	Bib       string `json:"bib_number"`
 	Time      int    `json:"time"`
 }

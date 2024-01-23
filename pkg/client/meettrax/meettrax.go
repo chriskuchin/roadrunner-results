@@ -122,7 +122,7 @@ func processRawEventData(rawEventData []MTTRXRawResults) []model.Event {
 			var athleteResult model.Result = model.Result{
 				FirstName: result.FirstName,
 				LastName: result.Lastname,
-				Gender: event.Gender,
+				Gender: strings.ToTitle(event.Gender),
 				Place: result.Place,
 				Grade: fmt.Sprintf("%d", result.Grade),
 				Time: util.ConvertFormatTimeToMilliseconds(result.Time),

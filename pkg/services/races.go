@@ -8,6 +8,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/chriskuchin/roadrunner-results/pkg/client"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
@@ -154,6 +155,43 @@ func GetRace(ctx context.Context, db *sqlx.DB) (RaceResult, error) {
 			BirthYearHistogram: birthYearDistro,
 		},
 	}, nil
+}
+
+func ImportRaceFromURL(ctx context.Context, db *sqlx.DB, url string, date time.Time, name string) (string, error) {
+	eventInfo := client.GetEventInformation(ctx, url)
+	raceID, err := CreateRace(ctx, db, name, date)
+	ctx = context.WithValue(ctx, util.RaceID, raceID)
+	if err != nil {
+		return "", err
+	}
+
+	bib := 100
+	for _, event := range eventInfo {
+		eventID, err := AddEvent(ctx, db, raceID, event.Name, "", int(event.Distance))
+		if err != nil {
+			return "", err
+		}
+
+		ctx = context.WithValue(ctx, util.EventID, eventID)
+		for _, result := range event.Results {
+			grade, _ := strconv.Atoi(result.Grade)
+			AddParticipant(ctx, db, ParticipantRow{
+ 				RaceID:    raceID,
+				BibNumber: fmt.Sprintf("%d", bib),
+				FirstName: result.FirstName,
+				LastName:  result.LastName,
+				BirthYear: grade,
+				Gender:    result.Gender,
+				Team:      result.Team,
+			})
+
+			// RecordElapsedTimeResult(ctx, int64(result.Time))
+			_ = InsertResults(ctx, db, raceID, eventID, fmt.Sprintf("%d", bib), fmt.Sprintf("%d", result.Time))
+			bib++
+		}
+	}
+
+	return raceID, nil
 }
 
 func CreateRace(ctx context.Context, db *sqlx.DB, name string, date time.Time) (string, error) {

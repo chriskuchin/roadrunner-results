@@ -105,14 +105,21 @@
           </div>
         </div>
         <div class="field">
+          <label class="label">Description</label>
+          <div class="control">
+            <input class="input" type="text" placeholder="Race Description" v-model="raceModal.description">
+          </div>
+        </div>
+        <div class="field">
           <label class="label">Date</label>
           <div class="control">
-            <input class="input" type="date" placeholder="" v-model="raceModal.date"> {{ raceModal.date }}
+            <input class="input" type="date" placeholder="" v-model="raceModal.date">
           </div>
         </div>
         <div class="field is-grouped">
           <div class="control">
-            <button :class="['button', 'is-link', { 'is-loading': raceModal.creating }]" @click="">Submit</button>
+            <button :class="['button', 'is-link', { 'is-loading': raceModal.importing }]"
+              @click="raceModalImportRace">Submit</button>
           </div>
           <div class="control">
             <button class="button is-link is-light" @click="toggleCreateRaceModal">Cancel</button>
@@ -133,7 +140,7 @@ import { useRacesStore } from "../store/races"
 import { useRaceStore } from '../store/race'
 import { useUserStore } from '../store/user'
 import { useDivisionsStore } from '../store/divisions'
-import { createRace, deleteRace } from "../api/races"
+import { createRace, importRace, deleteRace } from "../api/races"
 import Modal from '../components/Modal.vue'
 import FAB from '../components/Fab.vue'
 import Notification from '../components/Notification.vue'
@@ -163,6 +170,7 @@ export default {
       raceModal: {
         show: false,
         creating: false,
+        importing: false,
         description: "",
         date: "",
         importURL: "",
@@ -198,8 +206,12 @@ export default {
       let raceDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2])
       return raceDate.toLocaleDateString('us-EN', options)
     },
-    raceModalImportRace: function () {
-
+    raceModalImportRace: async function () {
+      this.raceModal.importing = true
+      await importRace(this.raceModal.importURL, this.raceModal.description, this.raceModal.date)
+      this.toggleCreateRaceModal()
+      this.racesStore.loadRaces()
+      this.raceModal.importing = false
     },
     raceModalTabClick: function (tabID) {
       this.raceModal.tabs.activeTab = tabID

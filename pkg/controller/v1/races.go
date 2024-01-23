@@ -94,6 +94,21 @@ func (api *Handler) createRace(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	if raceRequest.ImportURL != "" {
+		raceID, err := services.ImportRaceFromURL(ctx, api.db, raceRequest.ImportURL, date, raceRequest.Name)
+		if err != nil {
+			handleServerError(err, w, r)
+			return
+		}
+
+		render.Status(r, http.StatusCreated)
+		render.JSON(w, r, map[string]string{
+			"id": raceID,
+		})
+
+		return
+	}
+
 	raceID, err := services.CreateRace(ctx, api.db, raceRequest.Name, date)
 	if err != nil {
 		handleServerError(err, w, r)
@@ -173,6 +188,7 @@ func raceCtx(next http.Handler) http.Handler {
 }
 
 type RaceRequest struct {
-	Name string `json:"name"`
-	Date string `json:"date"`
+	Name      string `json:"name"`
+	Date      string `json:"date"`
+	ImportURL string `json:"url"`
 }

@@ -33,6 +33,27 @@ async function createRace(description, date) {
 	return await getRaces();
 }
 
+async function importRace(url, description, date) {
+	const res = await fetch(
+		"/api/v1/races",
+		await setAuthHeader({
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				url: url,
+				name: description,
+				date: date,
+			}),
+		}),
+	);
+
+	if (!res.ok) return [];
+
+	return await getRaces();
+}
+
 async function deleteRace(raceID) {
 	const res = await fetch(
 		`/api/v1/races/${raceID}`,
@@ -58,4 +79,4 @@ async function getRaceVolunteers(raceID) {
 	return [];
 }
 
-export { getRaces, createRace, deleteRace, getRaceVolunteers };
+export { getRaces, createRace, importRace, deleteRace, getRaceVolunteers };
