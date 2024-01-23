@@ -113,19 +113,19 @@ func processRawEventData(rawEventData []MTTRXRawResults) []model.Event {
 		}
 
 		var eventResult model.Event = model.Event{
-			Name: event.Name,
-			Results: []model.Result{},
+			Name:     event.Name,
+			Results:  []model.Result{},
 			Distance: client_util.GetEventDistanceFromHeader(event.Name),
 		}
 
 		for _, result := range event.Result {
 			var athleteResult model.Result = model.Result{
 				FirstName: result.FirstName,
-				LastName: result.Lastname,
-				Gender: strings.ToTitle(event.Gender),
-				Place: result.Place,
-				Grade: fmt.Sprintf("%d", result.Grade),
-				Time: util.ConvertFormatTimeToMilliseconds(result.Time),
+				LastName:  result.Lastname,
+				Gender:    strings.ToTitle(event.Gender),
+				Place:     result.Place,
+				Grade:     fmt.Sprintf("%d", result.Grade),
+				Time:      util.ConvertFormatTimeToMilliseconds(result.Time),
 			}
 			eventResult.Results = append(eventResult.Results, athleteResult)
 		}

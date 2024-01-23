@@ -176,7 +176,7 @@ func ImportRaceFromURL(ctx context.Context, db *sqlx.DB, url string, date time.T
 		for _, result := range event.Results {
 			grade, _ := strconv.Atoi(result.Grade)
 			AddParticipant(ctx, db, ParticipantRow{
- 				RaceID:    raceID,
+				RaceID:    raceID,
 				BibNumber: fmt.Sprintf("%d", bib),
 				FirstName: result.FirstName,
 				LastName:  result.LastName,
