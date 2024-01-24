@@ -16,7 +16,7 @@ import (
 
 var (
 	meetIDRegex         = regexp.MustCompile(`https:\/\/meettrax.com\/meets\/(\d+).+`)
-	inertiaVersionRegex = regexp.MustCompile(`&quot;version&quot;:&quot;(\w+\d+)&quot;`)
+	inertiaVersionRegex = regexp.MustCompile(`&quot;version&quot;:&quot;(.+)&quot;`)
 )
 
 type MTTRXEventObject struct {
@@ -57,6 +57,7 @@ type MTTRXRoundAthleteResultData struct {
 	Grade     int        `json:"athlete_grade"`
 	Place     int        `json:"meet_event_round_place"`
 	Mark      *MTTRXMark `json:"mark"`
+	Bib       int        `json:"meet_event_entry_id"`
 }
 
 type MTTRXEventDataEvents struct {
@@ -83,6 +84,7 @@ type MTTRXRawAthleteResults struct {
 	Grade     int
 	Place     int
 	Time      string
+	Bib       string
 }
 
 func GetEventInformation(eventURL string) []model.Event {
@@ -105,7 +107,6 @@ func getMeetIDFromURL(eventURL string) string {
 }
 
 func processRawEventData(rawEventData []MTTRXRawResults) []model.Event {
-	// fmt.Println(rawEventData)
 	var results []model.Event = []model.Event{}
 	for _, event := range rawEventData {
 		if len(event.Result) == 0 || strings.Contains(event.Name, "Relay") {
@@ -126,6 +127,8 @@ func processRawEventData(rawEventData []MTTRXRawResults) []model.Event {
 				Place:     result.Place,
 				Grade:     fmt.Sprintf("%d", result.Grade),
 				Time:      util.ConvertFormatTimeToMilliseconds(result.Time),
+				Team:      result.TeamName,
+				Bib:       result.Bib,
 			}
 			eventResult.Results = append(eventResult.Results, athleteResult)
 		}
@@ -191,9 +194,10 @@ func getRawEventData(meetID string) ([]MTTRXRawResults, error) {
 				Lastname:  result.LastName,
 				Place:     result.Place,
 				Grade:     result.Grade,
+				Bib:       fmt.Sprintf("%d", result.Bib),
 			}
 
-			if result.Mark != nil && result.Mark.Type == "time" {
+			if result.Mark != nil && result.Mark.Type == "time" && result.Mark.English != "" {
 				currentAthlete.Time = result.Mark.English
 				rawEventResults.Result = append(rawEventResults.Result, currentAthlete)
 			}

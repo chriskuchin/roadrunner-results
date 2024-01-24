@@ -12,6 +12,13 @@ func Test_convertFormatTimeToMilliseconds(t *testing.T) {
 		want int
 	}{
 		{
+			name: "failing",
+			args: args{
+				formattedTime: "4:32.09",
+			},
+			want: 272090,
+		},
+		{
 			name: "2_minutes",
 			args: args{
 				formattedTime: "2:23.34",

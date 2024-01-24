@@ -3,6 +3,8 @@ package util
 import (
 	"regexp"
 	"strconv"
+
+	"github.com/rs/zerolog/log"
 )
 
 var parseTimeRE = regexp.MustCompile(`(\d+)`)
@@ -15,31 +17,29 @@ func ConvertFormatTimeToMilliseconds(formattedTime string) int {
 	var msIndex int = 2
 
 	var err error
-	var minutes int64 = 0
+	var minutes int = 0
 	if len(parsedTime) == 2 {
 		secondsIndex = 0
 		msIndex = 1
 	} else if len(parsedTime) == 3 {
-		minutes, err = strconv.ParseInt(parsedTime[minutesIndex][1], 0, 64)
+		minutes, err = strconv.Atoi(parsedTime[minutesIndex][1])
 		if err != nil {
+			log.Error().Str("time_input", formattedTime).Err(err).Send()
 			return 0
 		}
 	}
 
-	seconds, err := strconv.ParseInt(parsedTime[secondsIndex][1], 0, 64)
+	seconds, err := strconv.Atoi(parsedTime[secondsIndex][1])
 	if err != nil {
+		log.Error().Str("time_input", formattedTime).Err(err).Send()
 		return 0
 	}
 
-	ms, err := strconv.ParseInt(parsedTime[msIndex][1], 0, 64)
+	ms, err := strconv.Atoi(parsedTime[msIndex][1])
 	if err != nil {
+		log.Error().Str("time_input", formattedTime).Err(err).Send()
 		return 0
 	}
 
-	return int(minutes)*60000 + int(seconds)*1000 + int(ms)*10
-	// let min = Math.floor(ms / 60000)
-	// ms = ms % 60000
-	// let sec = Math.floor(ms / 1000)
-	// ms = Math.floor((ms % 1000) / 10)
-	// return min + ":" + addLeadingZeros(sec) + "." + addLeadingZeros(ms)
+	return minutes*60000 + seconds*1000 + ms*10
 }

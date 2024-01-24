@@ -77,7 +77,6 @@ func FindAthleteResults(ctx context.Context, db *sqlx.DB, filters map[string]str
 			log.Error().Err(err).Send()
 			continue
 		}
-		log.Info().Interface("result", row).Interface("event", event).Err(err).Send()
 
 		athleteResults = append(athleteResults, AthleteResult{
 			Event:     event,

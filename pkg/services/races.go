@@ -165,7 +165,6 @@ func ImportRaceFromURL(ctx context.Context, db *sqlx.DB, url string, date time.T
 		return "", err
 	}
 
-	bib := 100
 	for _, event := range eventInfo {
 		eventID, err := AddEvent(ctx, db, raceID, event.Name, "", int(event.Distance))
 		if err != nil {
@@ -177,7 +176,7 @@ func ImportRaceFromURL(ctx context.Context, db *sqlx.DB, url string, date time.T
 			grade, _ := strconv.Atoi(result.Grade)
 			AddParticipant(ctx, db, ParticipantRow{
 				RaceID:    raceID,
-				BibNumber: fmt.Sprintf("%d", bib),
+				BibNumber: result.Bib,
 				FirstName: result.FirstName,
 				LastName:  result.LastName,
 				BirthYear: grade,
@@ -185,9 +184,10 @@ func ImportRaceFromURL(ctx context.Context, db *sqlx.DB, url string, date time.T
 				Team:      result.Team,
 			})
 
-			// RecordElapsedTimeResult(ctx, int64(result.Time))
-			_ = InsertResults(ctx, db, raceID, eventID, fmt.Sprintf("%d", bib), fmt.Sprintf("%d", result.Time))
-			bib++
+			err = InsertResults(ctx, db, raceID, eventID, result.Bib, fmt.Sprintf("%d", result.Time))
+			if err != nil {
+				log.Error().Err(err).Send()
+			}
 		}
 	}
 
@@ -207,7 +207,6 @@ func CreateRaceWithID(ctx context.Context, db *sqlx.DB, id, name string, date ti
 		return err
 	}
 	_, err = db.Exec(createRaceQuery, id, name, util.GetCurrentUserID(ctx), dateNum)
-	log.Error().Err(err).Int("date", dateNum).Send()
 	return err
 }
 

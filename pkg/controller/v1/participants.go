@@ -101,7 +101,7 @@ func (api *Handler) importParticipantsCSV(w http.ResponseWriter, r *http.Request
 				} else if row[4] == "F" {
 					gender = "Female"
 				} else {
-					log.Error().Msg("Skipping Row bad Gender")
+					log.Warn().Msg("Skipping Row bad Gender")
 					continue
 				}
 				pRow := services.ParticipantRow{
@@ -117,7 +117,7 @@ func (api *Handler) importParticipantsCSV(w http.ResponseWriter, r *http.Request
 				err = services.AddParticipant(r.Context(), api.db, pRow)
 				if err != nil {
 					failedRows++
-					log.Error().Err(err).Str("value", strings.Join(row, ",")).Int("failed", failedRows).Int("success", rowsInserted).Send()
+					log.Warn().Err(err).Str("value", strings.Join(row, ",")).Int("failed", failedRows).Int("success", rowsInserted).Send()
 				} else {
 					rowsInserted++
 				}

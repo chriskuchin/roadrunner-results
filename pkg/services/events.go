@@ -116,7 +116,6 @@ func DeleteRaceEvent(ctx context.Context, db *sqlx.DB) error {
 func GetRaceEventCount(ctx context.Context, db *sqlx.DB) (int, error) {
 	row := db.QueryRow(selectRaceEventCountQuery, util.GetRaceIDFromContext(ctx))
 	if row.Err() != nil {
-		log.Error().Msg("err")
 		return 0, row.Err()
 	}
 

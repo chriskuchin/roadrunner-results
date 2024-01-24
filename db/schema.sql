@@ -2,9 +2,8 @@ CREATE TABLE IF NOT EXISTS "schema_migrations" (version varchar(128) primary key
 CREATE TABLE races (
     race_id varchar(255) UNIQUE,
     owner_id varchar(255),
-    race_name varchar(255),
-    race_date INTEGER DEFAULT NULL
-);
+    race_name varchar(255)
+, race_date INTEGER DEFAULT NULL);
 CREATE TABLE events (
     race_id varchar(255),
     event_id varchar(255),
