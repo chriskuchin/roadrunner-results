@@ -12,6 +12,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/jmoiron/sqlx"
+
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -75,7 +76,7 @@ func main() {
 					}
 
 					log.Debug().Str("db", dbPath).Send()
-					db, err := sqlx.Open("sqlite3", dbPath)
+					db, err := sqlx.Open("sqlite3", fmt.Sprintf("%s?_journal_mode=WAL&mode=rwc&cache=shared", dbPath))
 					if err != nil {
 						log.Fatal().Err(err).Send()
 					}

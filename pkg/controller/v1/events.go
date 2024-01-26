@@ -29,7 +29,14 @@ func EventsRoutes(handler *Handler) chi.Router {
 }
 
 func (api *Handler) deleteEvent(w http.ResponseWriter, r *http.Request) {
-	services.DeleteRaceEvent(r.Context(), api.db)
+	err := services.DeleteRaceEvent(r.Context(), api.db)
+	if err != nil {
+		log.Error().Err(err).Send()
+		handleServerError(err, w, r)
+		return
+	}
+	render.NoContent(w, r)
+
 }
 
 func (api *Handler) getEvent(w http.ResponseWriter, r *http.Request) {
