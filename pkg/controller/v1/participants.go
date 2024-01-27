@@ -110,7 +110,7 @@ func (api *Handler) importParticipantsCSV(w http.ResponseWriter, r *http.Request
 					FirstName: firstName,
 					LastName:  lastName,
 					Team:      row[2],
-					BirthYear: birthYear,
+					BirthYear: int64(birthYear),
 					Gender:    gender,
 				}
 
@@ -211,7 +211,7 @@ func (api *Handler) updateParticipant(w http.ResponseWriter, r *http.Request) {
 		BibNumber: fmt.Sprint(payload.BibNumber),
 		Team:      payload.Team,
 		Gender:    payload.Gender,
-		BirthYear: payload.BirthYear,
+		BirthYear: int64(payload.BirthYear),
 	})
 
 	if err != nil {
@@ -235,7 +235,7 @@ func (api *Handler) createParticipant(w http.ResponseWriter, r *http.Request) {
 		BibNumber: fmt.Sprint(request.BibNumber),
 		FirstName: request.FirstName,
 		LastName:  request.LastName,
-		BirthYear: request.BirthYear,
+		BirthYear: int64(request.BirthYear),
 		Gender:    request.Gender,
 		Team:      request.Team,
 		RaceID:    util.GetRaceIDFromContext(r.Context()),

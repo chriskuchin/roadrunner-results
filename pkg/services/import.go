@@ -71,7 +71,7 @@ func ImportFromSheet(ctx context.Context, db *sqlx.DB, sheetId string) {
 						// EventID:   events[heatID],
 						FirstName: strings.Split(row[1].(string), " ")[0],
 						LastName:  strings.Join(strings.Split(row[1].(string), " ")[1:], " "),
-						BirthYear: birthYear,
+						BirthYear: int64(birthYear),
 						Gender:    row[4].(string),
 						Team:      row[2].(string),
 						BibNumber: row[0].(string),

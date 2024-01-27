@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
@@ -18,7 +19,8 @@ const (
 			last_name,
 			gender,
 			team,
-			birth_year
+			birth_year,
+			grade
 		)
 		VALUES (
 			:race_id,
@@ -27,7 +29,8 @@ const (
 			:last_name,
 			:gender,
 			:team,
-			:birth_year
+			:birth_year,
+			:grade
 		)
 	`
 	selectRaceParticipantCountQuery = `
@@ -66,14 +69,15 @@ const (
 
 type (
 	ParticipantRow struct {
-		ID        int    `db:"rowid"`
-		RaceID    string `db:"race_id"`
-		BibNumber string `db:"bib_number"`
-		FirstName string `db:"first_name"`
-		LastName  string `db:"last_name"`
-		BirthYear int    `db:"birth_year"`
-		Gender    string `db:"gender"`
-		Team      string `db:"team"`
+		ID        int           `db:"rowid"`
+		RaceID    string        `db:"race_id"`
+		BibNumber string        `db:"bib_number"`
+		FirstName string        `db:"first_name"`
+		LastName  string        `db:"last_name"`
+		BirthYear int64         `db:"birth_year"`
+		Grade     sql.NullInt64 `db:"grade"`
+		Gender    string        `db:"gender"`
+		Team      string        `db:"team"`
 	}
 
 	ParticipantObject struct {
@@ -81,7 +85,8 @@ type (
 		BibNumber string `json:"bibNumber"`
 		FirstName string `json:"firstName"`
 		LastName  string `json:"lastName"`
-		BirthYear int    `json:"birthYear"`
+		BirthYear int64  `json:"birthYear,omitempty"`
+		Grade     *int64 `json:"grade,omitempty"`
 		Gender    string `json:"gender"`
 		Team      string `json:"team"`
 	}
@@ -134,15 +139,22 @@ func ListParticipants(ctx context.Context, db *sqlx.DB, limit, offset int, filte
 
 	results := []ParticipantObject{}
 	for _, participant := range dbResults {
-		results = append(results, ParticipantObject{
+		pObj := ParticipantObject{
 			ID:        participant.ID,
 			BibNumber: participant.BibNumber,
 			FirstName: participant.FirstName,
 			LastName:  participant.LastName,
-			BirthYear: participant.BirthYear,
 			Gender:    participant.Gender,
 			Team:      participant.Team,
-		})
+		}
+
+		if participant.Grade.Valid {
+			pObj.Grade = &participant.Grade.Int64
+		}
+
+		pObj.BirthYear = participant.BirthYear
+
+		results = append(results, pObj)
 	}
 
 	return results, nil

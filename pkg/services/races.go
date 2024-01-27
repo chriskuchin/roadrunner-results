@@ -173,16 +173,21 @@ func ImportRaceFromURL(ctx context.Context, db *sqlx.DB, url string, date time.T
 
 		ctx = context.WithValue(ctx, util.EventID, eventID)
 		for _, result := range event.Results {
-			grade, _ := strconv.Atoi(result.Grade)
-			AddParticipant(ctx, db, ParticipantRow{
+			pRow := ParticipantRow{
 				RaceID:    raceID,
 				BibNumber: result.Bib,
 				FirstName: result.FirstName,
 				LastName:  result.LastName,
-				BirthYear: grade,
 				Gender:    result.Gender,
 				Team:      result.Team,
-			})
+			}
+
+			if result.Grade != "" {
+				grade, _ := strconv.Atoi(result.Grade)
+				pRow.Grade = sql.NullInt64{Int64: int64(grade), Valid: true}
+			}
+
+			AddParticipant(ctx, db, pRow)
 
 			err = InsertResults(ctx, db, raceID, eventID, result.Bib, fmt.Sprintf("%d", result.Time))
 			if err != nil {
