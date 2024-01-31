@@ -116,7 +116,7 @@ export default {
         description: "",
         type: "timer",
         distance: 0,
-        distance_raw: "1600",
+        distance_raw: 1600,
         distance_unit: "meter"
       }
     }
@@ -158,7 +158,9 @@ export default {
     resetModal: function () {
       this.modal.description = ""
       this.modal.type = "timer"
-      this.modal.distance = 1600
+      this.modal.distance = 0
+      this.modal.distance_raw = 1600
+      this.modal.distance_unit = "meter"
     },
     deleteEvent: function (event) {
       var self = this
