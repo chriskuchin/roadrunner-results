@@ -54,19 +54,20 @@
         </div>
       </div>
 
-      <div class="field" v-if="modal.type == 'timer'">
-        <label class="label">Event Distance</label>
+
+      <div class="field has-addons" v-if="modal.type == 'timer'">
+        <!-- <label class="label" style="clear:both;">Event Distance</label> -->
         <div class="control">
-          <div class="select">
-            <select v-model.number="modal.distance">
-              <option value="50">50m</option>
-              <option value="100">100m</option>
-              <option value="200">200m</option>
-              <option value="400">400m</option>
-              <option value="800">800m</option>
-              <option value="1600">1600m</option>
+          <input class="input" type="text" placeholder="Event Distance" v-model="modal.distance_raw">
+        </div>
+        <div class="control">
+          <span class="select">
+            <select v-model="modal.distance_unit">
+              <option value="meter">Meters</option>
+              <option value="kilometer">Kilometer(s)</option>
+              <option value="mile">Mile(s)</option>
             </select>
-          </div>
+          </span>
         </div>
       </div>
 
@@ -114,11 +115,27 @@ export default {
         creating: false,
         description: "",
         type: "timer",
-        distance: 1600
+        distance: 0,
+        distance_raw: "1600",
+        distance_unit: "meter"
       }
     }
   },
   methods: {
+    eventDistance: function () {
+      if (this.modal.type == "timer") {
+        switch (this.modal.distance_unit) {
+          case "meter":
+            return this.modal.distance_raw
+          case "mile":
+            return Math.ceil(this.modal.distance_raw * 1609.344)
+          case "kilometer":
+            return this.modal.distance_raw * 1000
+        }
+      } else {
+        return this.modal.distance
+      }
+    },
     toggleModal: function () {
       // reset the modal before opening it
       if (!this.modal.show) {
@@ -129,8 +146,10 @@ export default {
     },
     modalSubmit: function () {
       let raceID = this.$route.params.raceId
+      let eventDistance = this.eventDistance()
+
       var self = this
-      createRaceEvent(raceID, this.modal.description, this.modal.type, this.modal.distance).then(() => {
+      createRaceEvent(raceID, this.modal.description, this.modal.type, eventDistance).then(() => {
         self.raceStore.loadRace(raceID)
       })
 

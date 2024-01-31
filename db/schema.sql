@@ -22,12 +22,6 @@ CREATE TABLE participants (
     team varchar(255), grade INTEGER DEFAULT NULL,
     UNIQUE(race_id, bib_number)
 );
-CREATE TABLE event_participation (
-    race_id varchar(255) NOT NULL,
-    event_id varchar(255) NOT NULL,
-    bib_number varchar(255) NOT NULL,
-    UNIQUE(race_id, event_id, bib_number)
-);
 CREATE TABLE results (
     race_id varchar(255),
     event_id varchar(255),
@@ -81,4 +75,5 @@ INSERT INTO "schema_migrations" (version) VALUES
   ('20230829005108'),
   ('20231002012233'),
   ('20231114033313'),
-  ('20240126032858');
+  ('20240126032858'),
+  ('20240131022953');

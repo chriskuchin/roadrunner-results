@@ -83,7 +83,7 @@
         <div class="field">
           <label class="label">Date</label>
           <div class="control">
-            <input class="input" type="date" placeholder="" v-model="raceModal.date"> {{ raceModal.date }}
+            <input class="input" type="date" placeholder="" v-model="raceModal.date">
           </div>
         </div>
         <div class="field is-grouped">

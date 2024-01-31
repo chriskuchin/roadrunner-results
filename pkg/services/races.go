@@ -246,7 +246,6 @@ var raceTables []string = []string{
 	"races",
 	"events",
 	"participants",
-	"event_participation",
 	"results",
 	"heats",
 	"timers",

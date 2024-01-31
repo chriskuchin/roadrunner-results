@@ -80,12 +80,6 @@ func ImportFromSheet(ctx context.Context, db *sqlx.DB, sheetId string) {
 						log.Error().Err(err).Send()
 					}
 
-					err = RecordEventParticipation(ctx, db, sheetId, events[heatID], row[0].(string))
-
-					if err != nil {
-						log.Error().Err(err).Send()
-					}
-
 					err = InsertResults(ctx, db, sheetId, events[heatID], row[0].(string), row[5].(string))
 					if err != nil {
 						log.Error().Err(err).Send()
