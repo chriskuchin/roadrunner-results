@@ -215,9 +215,9 @@ func CreateRaceWithID(ctx context.Context, db *sqlx.DB, id, name string, date ti
 	return err
 }
 
-func ListRaces(ctx context.Context, db *sqlx.DB) ([]RaceResult, error) {
+func ListRaces(ctx context.Context, db *sqlx.DB, limit, offset int) ([]RaceResult, error) {
 	races := []RaceRow{}
-	err := db.Select(&races, "select * from races ORDER BY rowid DESC LIMIT ?", 20)
+	err := db.Select(&races, "select * from races ORDER BY race_date DESC LIMIT ? OFFSET ?", limit, offset)
 	if err != nil {
 		log.Error().Err(err).Send()
 		return nil, err

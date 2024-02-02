@@ -54,7 +54,6 @@
         </div>
       </div>
 
-
       <div class="field has-addons" v-if="modal.type == 'timer'">
         <!-- <label class="label" style="clear:both;">Event Distance</label> -->
         <div class="control">
@@ -136,8 +135,22 @@ export default {
         return this.modal.distance
       }
     },
+    eventDescription: function () {
+      switch (this.modal.distance_unit) {
+        case "meter":
+          return `${this.modal.distance_raw}m`
+        case "mile":
+          if (this.modal.distance_raw == 1)
+            return `${this.modal.distance_raw} mile`
+          else
+            return `${this.modal.distance_raw} miles`
+        case "kilometer":
+          return `${this.modal.distance_raw}k`
+      }
+
+      return `${this.modal.distance_raw} ${this.modal.distance_unit}`
+    },
     toggleModal: function () {
-      // reset the modal before opening it
       if (!this.modal.show) {
         this.resetModal()
       }
@@ -147,9 +160,10 @@ export default {
     modalSubmit: function () {
       let raceID = this.$route.params.raceId
       let eventDistance = this.eventDistance()
+      let description = this.modal.description != "" ? this.modal.description : this.eventDescription()
 
       var self = this
-      createRaceEvent(raceID, this.modal.description, this.modal.type, eventDistance).then(() => {
+      createRaceEvent(raceID, description, this.modal.type, eventDistance).then(() => {
         self.raceStore.loadRace(raceID)
       })
 

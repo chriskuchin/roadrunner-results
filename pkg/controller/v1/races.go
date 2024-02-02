@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/google"
@@ -65,9 +66,30 @@ func (api *Handler) getRace(w http.ResponseWriter, r *http.Request) {
 
 // GET /races
 func (api *Handler) listRaces(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
+	var err error
+	limit := 20
+	if r.URL.Query().Has("limit") {
+		limit, err = strconv.Atoi(r.URL.Query().Get("limit"))
+		if err != nil {
+			handleBadRequest(err, w, r)
+			return
+		}
+	}
 
-	races, _ := services.ListRaces(ctx, api.db)
+	offset := 0
+	if r.URL.Query().Has("offset") {
+		offset, err = strconv.Atoi(r.URL.Query().Get("offset"))
+		if err != nil {
+			handleBadRequest(err, w, r)
+			return
+		}
+	}
+
+	races, err := services.ListRaces(r.Context(), api.db, limit, offset)
+	if err != nil {
+		handleServerError(err, w, r)
+		return
+	}
 
 	render.JSON(w, r, races)
 }
