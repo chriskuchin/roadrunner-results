@@ -4,7 +4,7 @@ ADD . /public
 WORKDIR /public
 RUN npm install && npm run build
 
-FROM --platform=$BUILDPLATFORM golang:1.21-alpine3.18 AS builder
+FROM --platform=$BUILDPLATFORM golang:1.22-alpine3.18 AS builder
 
 COPY ${PWD} /app
 WORKDIR /app
