@@ -42,6 +42,9 @@ import {
 	faRepeat,
 	faRuler,
 	faStopwatch,
+	faUser,
+	faCrown,
+	faAngleDown
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
 	faPlus,
@@ -54,6 +57,9 @@ library.add(
 	faEllipsisV,
 	faArrowLeftLong,
 	faFlagCheckered,
+	faUser,
+	faCrown,
+	faAngleDown,
 );
 
 require("./assets/");

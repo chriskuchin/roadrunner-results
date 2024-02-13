@@ -16,8 +16,6 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "@peeky/server": "^0.14.0",
-        "@peeky/test": "^0.14.1",
         "@vue/compiler-sfc": "^3.4.14",
         "bulma": "^0.9.4",
         "css-loader": "^6.9.1",
@@ -25,6 +23,7 @@
         "mini-css-extract-plugin": "^2.7.7",
         "sass": "^1.70.0",
         "sass-loader": "^14.0.0",
+        "vitest": "^1.2.2",
         "vue-loader": "^17.4.2",
         "webpack": "^5.90.3",
         "webpack-cli": "^5.1.4",

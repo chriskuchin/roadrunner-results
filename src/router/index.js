@@ -15,6 +15,7 @@ const RaceDivisionResultsPage = () =>
 const RaceVolunteersPage = () => import("../views/RaceVolunteers.vue");
 const RaceInfoPage = () => import("../views/RacePage.vue");
 const AthletePage = () => import("../views/AthletePage.vue");
+const DistanceResults = () => import("../views/DistanceResults.vue");
 
 const routes = [
 	{ path: "/", component: HomePage },
@@ -43,6 +44,7 @@ const routes = [
 			},
 			{ path: "events/:eventId/results", component: RaceEventsResultsPage },
 			{ path: "events/:eventId/timer", component: RaceTimer, name: "timer" },
+			{ path: "events/:eventId/distance", component: DistanceResults, name: "distance" },
 		],
 	},
 	{ path: "/login", component: LoginPage },
