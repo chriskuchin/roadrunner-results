@@ -40,7 +40,7 @@ module.exports = (env, argv) => {
 		module: {
 			rules: [
 				{
-					test: /\.json/,
+					test: /manifest\.json/,
 					type: "asset/resource",
 					generator: {
 						filename: "[name][ext]",
