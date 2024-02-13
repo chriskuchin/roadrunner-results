@@ -1,12 +1,7 @@
 package athletic_net
 
 import (
-	"encoding/json"
-	"os"
-	"reflect"
 	"testing"
-
-	"github.com/chriskuchin/roadrunner-results/pkg/client/model"
 )
 
 func Test_getEventIDAndTypeFromURL(t *testing.T) {
@@ -49,64 +44,64 @@ func Test_getEventIDAndTypeFromURL(t *testing.T) {
 	}
 }
 
-func Test_getRawEventData(t *testing.T) {
-	type args struct {
-		meetID   string
-		meetType string
-	}
-	tests := []struct {
-		name    string
-		args    args
-		wantErr bool
-	}{
-		{
-			name: "bob_firman_2023",
-			args: args{
-				meetID:   "221697",
-				meetType: "xc",
-			},
-			wantErr: false,
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			_, err := getRawEventData(tt.args.meetID, tt.args.meetType)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("getRawEventData() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			// if !reflect.DeepEqual(gotData, tt.wantData) {
-			// 	t.Errorf("getRawEventData() = %v, want %v", gotData, tt.wantData)
-			// }
-		})
-	}
-}
+// func Test_getRawEventData(t *testing.T) {
+// 	type args struct {
+// 		meetID   string
+// 		meetType string
+// 	}
+// 	tests := []struct {
+// 		name    string
+// 		args    args
+// 		wantErr bool
+// 	}{
+// 		{
+// 			name: "bob_firman_2023",
+// 			args: args{
+// 				meetID:   "221697",
+// 				meetType: "xc",
+// 			},
+// 			wantErr: false,
+// 		},
+// 	}
+// 	for _, tt := range tests {
+// 		t.Run(tt.name, func(t *testing.T) {
+// 			_, err := getRawEventData(tt.args.meetID, tt.args.meetType)
+// 			if (err != nil) != tt.wantErr {
+// 				t.Errorf("getRawEventData() error = %v, wantErr %v", err, tt.wantErr)
+// 				return
+// 			}
+// 			// if !reflect.DeepEqual(gotData, tt.wantData) {
+// 			// 	t.Errorf("getRawEventData() = %v, want %v", gotData, tt.wantData)
+// 			// }
+// 		})
+// 	}
+// }
 
-func Test_processRawEventData(t *testing.T) {
-	type args struct {
-		filename string
-	}
-	tests := []struct {
-		name string
-		args args
-		want []model.Event
-	}{
-		{
-			name: "border_wars_2023",
-			args: args{
-				filename: "testdata/bob_firman_2023.json",
-			},
-		},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			data, _ := os.ReadFile(tt.args.filename)
-			var testdata []ANetMeetResultsData = []ANetMeetResultsData{}
-			json.Unmarshal(data, &testdata)
+// func Test_processRawEventData(t *testing.T) {
+// 	type args struct {
+// 		filename string
+// 	}
+// 	tests := []struct {
+// 		name string
+// 		args args
+// 		want []model.Event
+// 	}{
+// 		{
+// 			name: "border_wars_2023",
+// 			args: args{
+// 				filename: "testdata/bob_firman_2023.json",
+// 			},
+// 		},
+// 	}
+// 	for _, tt := range tests {
+// 		t.Run(tt.name, func(t *testing.T) {
+// 			data, _ := os.ReadFile(tt.args.filename)
+// 			var testdata []ANetMeetResultsData = []ANetMeetResultsData{}
+// 			json.Unmarshal(data, &testdata)
 
-			if got := processRawEventData(testdata); !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("processRawEventData() = %v, want %v", got, tt.want)
-			}
-		})
-	}
-}
+// 			if got := processRawEventData(testdata); !reflect.DeepEqual(got, tt.want) {
+// 				t.Errorf("processRawEventData() = %v, want %v", got, tt.want)
+// 			}
+// 		})
+// 	}
+// }

@@ -17,3 +17,8 @@ webpack-debug:
 
 fmt:
   biome format . --write
+
+test:
+  npx vitest run
+
+  go test ./...
