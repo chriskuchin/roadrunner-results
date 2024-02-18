@@ -1,4 +1,4 @@
-package v1
+package apiutil
 
 import (
 	"fmt"
@@ -7,16 +7,20 @@ import (
 	"github.com/go-chi/render"
 )
 
-func handleBadRequest(err error, w http.ResponseWriter, r *http.Request) {
+func HandleBadRequest(err error, w http.ResponseWriter, r *http.Request) {
 	render.Status(r, http.StatusBadRequest)
 	render.JSON(w, r, map[string]string{
 		"error": fmt.Sprintf("%v", err),
 	})
 }
 
-func handleServerError(err error, w http.ResponseWriter, r *http.Request) {
+func HandleServerError(err error, w http.ResponseWriter, r *http.Request) {
 	render.Status(r, http.StatusInternalServerError)
 	render.JSON(w, r, map[string]string{
 		"error": fmt.Sprintf("%v", err),
 	})
+}
+
+func Unimplemented(w http.ResponseWriter, r *http.Request) {
+	w.WriteHeader(http.StatusNotImplemented)
 }

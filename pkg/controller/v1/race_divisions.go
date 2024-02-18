@@ -5,63 +5,58 @@ import (
 	"io"
 	"net/http"
 
+	apiutil "github.com/chriskuchin/roadrunner-results/pkg/controller/api-util"
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
-	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/render"
+	"github.com/jmoiron/sqlx"
 )
 
-type DivisionDefinitionPayload struct {
-	Description string   `json:"display"`
-	Filters     []Filter `json:"filters"`
+func HandleDivisionsList(db *sqlx.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		results, err := services.ListRaceDivisions(r.Context(), db)
+		if err != nil {
+			apiutil.HandleBadRequest(err, w, r)
+			return
+		}
+
+		render.JSON(w, r, results)
+	}
 }
 
-type Filter struct {
-	Key    string   `json:"key"`
-	Values []string `json:"values,omitempty"`
-}
-
-func RaceDivisionsRoutes(handler *Handler) chi.Router {
-	r := chi.NewRouter()
-
-	r.Get("/", handler.listDivisions)
-	r.Post("/", handler.createDivision)
-
-	return r
-}
-
-func (api *Handler) listDivisions(w http.ResponseWriter, r *http.Request) {
-	results, err := services.ListRaceDivisions(r.Context(), api.db)
-	if err != nil {
-		handleBadRequest(err, w, r)
-		return
+func HandleDivisionsCreate(db *sqlx.DB) http.HandlerFunc {
+	type Filter struct {
+		Key    string   `json:"key"`
+		Values []string `json:"values,omitempty"`
 	}
 
-	render.JSON(w, r, results)
-}
-
-func (api *Handler) createDivision(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-
-	body, err := io.ReadAll(r.Body)
-	if err != nil {
-		handleBadRequest(err, w, r)
-		return
+	type DivisionDefinitionPayload struct {
+		Description string   `json:"display"`
+		Filters     []Filter `json:"filters"`
 	}
 
-	var payload DivisionDefinitionPayload
-	err = json.Unmarshal(body, &payload)
-	if err != nil {
-		handleBadRequest(err, w, r)
-		return
-	}
+	return func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
 
-	var filters []services.Filter = []services.Filter{}
-	for _, v := range payload.Filters {
-		filters = append(filters, services.Filter{
-			Key:    v.Key,
-			Values: v.Values,
-		})
-	}
-	services.CreateDivision(ctx, api.db, payload.Description, filters)
+		body, err := io.ReadAll(r.Body)
+		if err != nil {
+			apiutil.HandleBadRequest(err, w, r)
+			return
+		}
 
+		var payload DivisionDefinitionPayload
+		err = json.Unmarshal(body, &payload)
+		if err != nil {
+			apiutil.HandleBadRequest(err, w, r)
+			return
+		}
+
+		var filters []services.Filter = []services.Filter{}
+		for _, v := range payload.Filters {
+			filters = append(filters, services.Filter{
+				Key:    v.Key,
+				Values: v.Values,
+			})
+		}
+		services.CreateDivision(ctx, db, payload.Description, filters)
+	}
 }
