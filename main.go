@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"path/filepath"
 
 	firebase "firebase.google.com/go/v4"
 	"github.com/chriskuchin/roadrunner-results/pkg/controller"
@@ -93,19 +92,7 @@ func main() {
 					r.Use(middleware.Logger)
 					r.Use(middleware.Recoverer)
 
-					r.Route("/", func(r chi.Router) {
-						r.Mount("/healthcheck", controller.HealthcheckResources{}.Routes())
-						r.Mount("/api", controller.Routes(app, db, debug))
-
-						r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
-							_, err := os.Stat(filepath.Join(frontendFolder, r.URL.Path))
-							if os.IsNotExist(err) {
-								http.ServeFile(w, r, filepath.Join(frontendFolder, "index.html"))
-							} else {
-								http.FileServer(http.Dir(frontendFolder)).ServeHTTP(w, r)
-							}
-						})
-					})
+					r.Mount("/", controller.Routes(app, db, frontendFolder, debug))
 
 					log.Debug().Msgf("Launching server listening on: %s", port)
 					err = http.ListenAndServe(fmt.Sprintf(":%s", port), r)
