@@ -1,10 +1,9 @@
-CREATE TABLE IF NOT EXISTS "schema_migrations" (version varchar(255) primary key);
+CREATE TABLE IF NOT EXISTS "schema_migrations" (version varchar(128) primary key);
 CREATE TABLE races (
     race_id varchar(255) UNIQUE,
     owner_id varchar(255),
-    race_name varchar(255),
-    race_date INTEGER DEFAULT NULL
-);
+    race_name varchar(255)
+, race_date INTEGER DEFAULT NULL);
 CREATE TABLE events (
     race_id varchar(255),
     event_id varchar(255),
@@ -68,6 +67,14 @@ CREATE TABLE race_divisions (
   display VARCHAR(255),
   filters TEXT
 );
+CREATE TABLE attempts (
+  race_id VARCHAR(255),
+  event_id VARCHAR(255),
+  bib VARCHAR(255),
+  attempt_no INTEGER DEFAULT 1,
+  result REAL,
+  UNIQUE(race_id, event_id, bib, attempt_no)
+);
 -- Dbmate schema migrations
 INSERT INTO "schema_migrations" (version) VALUES
   ('20220708034230'),
@@ -77,4 +84,5 @@ INSERT INTO "schema_migrations" (version) VALUES
   ('20231002012233'),
   ('20231114033313'),
   ('20240126032858'),
-  ('20240131022953');
+  ('20240131022953'),
+  ('20240213021725');
