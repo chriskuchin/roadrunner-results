@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
@@ -101,14 +100,14 @@ const (
 	) VALUES(?, ?, ?, 0)`
 )
 
-func CreateTimer(ctx context.Context, db *sqlx.DB) (string, error) {
+func CreateTimer(ctx context.Context, db *sqlx.DB, raceID, eventID string) (string, error) {
 	timerID := uuid.New().String()
-	_, err := db.Exec(createTimerQuery, timerID, util.GetEventIDFromContext(ctx), util.GetRaceIDFromContext(ctx))
+	_, err := db.Exec(createTimerQuery, timerID, eventID, raceID)
 	return timerID, err
 }
 
-func StartTimer(ctx context.Context, db *sqlx.DB, start int64) error {
-	res, err := db.Exec(startTimerQuery, start, util.GetTimerIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetRaceIDFromContext(ctx))
+func StartTimer(ctx context.Context, db *sqlx.DB, raceID, eventID, timerID string, start int64) error {
+	res, err := db.Exec(startTimerQuery, start, timerID, eventID, raceID)
 	if err != nil {
 		return err
 	}
@@ -124,9 +123,9 @@ func StartTimer(ctx context.Context, db *sqlx.DB, start int64) error {
 	return nil
 }
 
-func ListTimers(ctx context.Context, db *sqlx.DB, limit, offset int) ([]TimerResult, error) {
+func ListTimers(ctx context.Context, db *sqlx.DB, raceID, eventID string, limit, offset int) ([]TimerResult, error) {
 	var rows []TimerRow
-	err := db.Select(&rows, listEventTimersQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), limit, offset)
+	err := db.Select(&rows, listEventTimersQuery, raceID, eventID, limit, offset)
 	if err != nil {
 		log.Error().Err(err).Send()
 		return nil, err
@@ -141,15 +140,15 @@ func ListTimers(ctx context.Context, db *sqlx.DB, limit, offset int) ([]TimerRes
 	return results, nil
 }
 
-func DeleteTimer(ctx context.Context, db *sqlx.DB) error {
-	_, err := db.Exec(deleteEventTimerQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetTimerIDFromContext(ctx))
+func DeleteTimer(ctx context.Context, db *sqlx.DB, raceID, eventID, timerID string) error {
+	_, err := db.Exec(deleteEventTimerQuery, raceID, eventID, timerID)
 	return err
 
 }
 
-func GetTimer(ctx context.Context, db *sqlx.DB) (*TimerResult, error) {
+func GetTimer(ctx context.Context, db *sqlx.DB, raceID, eventID, timerID string) (*TimerResult, error) {
 	var result []*TimerRow
-	err := db.Select(&result, getEventTimerQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetTimerIDFromContext(ctx))
+	err := db.Select(&result, getEventTimerQuery, raceID, eventID, timerID)
 	if err != nil {
 		return nil, err
 	} else if len(result) == 0 {
@@ -164,8 +163,8 @@ func GetTimer(ctx context.Context, db *sqlx.DB) (*TimerResult, error) {
 	}, nil
 }
 
-func GetActiveTimerStart(ctx context.Context, db *sqlx.DB) (int64, string, error) {
-	row := db.QueryRow(getActiveEventTimerQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))
+func GetActiveTimerStart(ctx context.Context, db *sqlx.DB, raceID, eventID string) (int64, string, error) {
+	row := db.QueryRow(getActiveEventTimerQuery, raceID, eventID)
 	if row.Err() != nil {
 		return 0, "", row.Err()
 	}
@@ -176,7 +175,7 @@ func GetActiveTimerStart(ctx context.Context, db *sqlx.DB) (int64, string, error
 	return start, timerID, nil
 }
 
-func RecordTime(ctx context.Context, db *sqlx.DB, timerID string, result int64) error {
-	_, err := db.Exec(appendTimerResult, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), timerID, result)
+func RecordTime(ctx context.Context, db *sqlx.DB, raceID, eventID, timerID string, result int64) error {
+	_, err := db.Exec(appendTimerResult, raceID, eventID, timerID, result)
 	return err
 }

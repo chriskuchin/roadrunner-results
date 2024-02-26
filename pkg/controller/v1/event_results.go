@@ -53,6 +53,7 @@ func HandleEventResultsUpdate(db *sqlx.DB) http.HandlerFunc {
 
 func HandleEventResultsGet(db *sqlx.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
 		var results []services.ParticipantEventResult
 		var filters map[string][]string = map[string][]string{}
 
@@ -60,7 +61,7 @@ func HandleEventResultsGet(db *sqlx.DB) http.HandlerFunc {
 		filters["event"] = []string{util.GetEventIDFromContext(r.Context())}
 		if r.URL.Query().Has("timerId") {
 			if r.URL.Query()["timerId"][0] == "latest" {
-				_, timerId, err := services.GetActiveTimerStart(r.Context(), db)
+				_, timerId, err := services.GetActiveTimerStart(r.Context(), db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))
 				if err != nil {
 					apiutil.HandleBadRequest(err, w, r)
 					return
@@ -149,28 +150,26 @@ func HandleEventResultsCreate(db *sqlx.DB, s3Client *s3.Client, bucket string) h
 		} else {
 			body, err := io.ReadAll(r.Body)
 			if err != nil {
-				log.Error().Err(err).Send()
-				w.WriteHeader(http.StatusBadRequest)
+				apiutil.HandleBadRequest(err, w, r)
 				return
 			}
 
 			var payload RecordResultRequestPayload
 			err = json.Unmarshal(body, &payload)
 			if err != nil {
-				log.Error().Err(err).Send()
-				w.WriteHeader(http.StatusBadRequest)
+				apiutil.HandleBadRequest(err, w, r)
 				return
 			}
 
 			ctx := util.SetDB(r.Context(), db)
 			if payload.End > 0 {
-				err = services.RecordTimerResult(ctx, payload.End)
+				err = services.RecordTimerResult(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), payload.End)
 				if err != nil {
 					apiutil.HandleBadRequest(err, w, r)
 					return
 				}
 			} else if payload.ElapsedTime > 0 {
-				err = services.RecordElapsedTimeResult(ctx, payload.ElapsedTime)
+				err = services.RecordElapsedTimeResult(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), payload.ElapsedTime)
 				if err != nil {
 					apiutil.HandleBadRequest(err, w, r)
 					return
@@ -180,7 +179,7 @@ func HandleEventResultsCreate(db *sqlx.DB, s3Client *s3.Client, bucket string) h
 			if payload.Bib != "" {
 				timerID := payload.Timer
 				if timerID == "" {
-					_, timerID, err = services.GetActiveTimerStart(ctx, db)
+					_, timerID, err = services.GetActiveTimerStart(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))
 					if err != nil {
 						apiutil.HandleBadRequest(err, w, r)
 						return

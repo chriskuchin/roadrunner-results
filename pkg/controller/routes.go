@@ -100,6 +100,9 @@ func Routes(app *firebase.App, db *sqlx.DB, assetsFolder string, debug bool) chi
 									r.Get("/", v1.HandleEventResultsGet(db))
 									r.Post("/", v1.HandleEventResultsCreate(db, s3, "photo-finish"))
 									r.Put("/", v1.HandleEventResultsCreate(db, s3, "photo-finish"))
+									r.Route("/attempts", func(r chi.Router) {
+										r.Post("/", v1.HandleEventAttemptsCreate(db))
+									})
 									r.Route("/{resultID}", func(r chi.Router) {
 										r.Use(middleware.ResultCtx)
 										r.Patch("/", v1.HandleEventResultsUpdate(db))
