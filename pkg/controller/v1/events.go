@@ -9,14 +9,13 @@ import (
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/render"
 	"github.com/jmoiron/sqlx"
-	"github.com/rs/zerolog/log"
 )
 
 func HandleEventDelete(db *sqlx.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		err := services.DeleteRaceEvent(r.Context(), db)
+		ctx := r.Context()
+		err := services.DeleteRaceEvent(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))
 		if err != nil {
-			log.Error().Err(err).Send()
 			apiutil.HandleServerError(err, w, r)
 			return
 		}
@@ -30,13 +29,14 @@ func HandleEventGet(db *sqlx.DB) http.HandlerFunc {
 
 func HandleEventsList(db *sqlx.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if util.GetRaceIDFromContext(r.Context()) == "" {
+		ctx := r.Context()
+		if util.GetRaceIDFromContext(ctx) == "" {
 			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte("Missing RaceID"))
 			return
 		}
 
-		results, err := services.GetRaceEvents(r.Context(), db)
+		results, err := services.GetRaceEvents(ctx, db, util.GetRaceIDFromContext(ctx))
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte("Unknown error please try again"))

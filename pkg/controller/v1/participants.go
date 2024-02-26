@@ -112,6 +112,7 @@ func HandleParticipantsNextBibNumber() http.HandlerFunc {
 
 func HandleParticipantsList(db *sqlx.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
 		var err error
 		var limit int = 10
 		if r.URL.Query().Get("limit") != "" {
@@ -150,7 +151,7 @@ func HandleParticipantsList(db *sqlx.DB) http.HandlerFunc {
 			filters["name"] = r.URL.Query().Get("name")
 		}
 
-		results, err := services.ListParticipants(r.Context(), db, limit, offset, filters)
+		results, err := services.ListParticipants(ctx, db, util.GetRaceIDFromContext(ctx), limit, offset, filters)
 		if err != nil {
 			log.Error().Err(err).Send()
 			w.WriteHeader(http.StatusInternalServerError)

@@ -3,7 +3,6 @@ package services
 import (
 	"context"
 
-	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/google/uuid"
 	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
@@ -67,9 +66,9 @@ func AddEvent(ctx context.Context, db *sqlx.DB, raceID, description, eventType s
 	return id, err
 }
 
-func GetRaceEvents(ctx context.Context, db *sqlx.DB) ([]EventObject, error) {
+func GetRaceEvents(ctx context.Context, db *sqlx.DB, raceID string) ([]EventObject, error) {
 	var dbEvents []EventRow
-	err := db.Select(&dbEvents, listRaceEventsQuery, util.GetRaceIDFromContext(ctx))
+	err := db.Select(&dbEvents, listRaceEventsQuery, raceID)
 	if err != nil {
 		log.Error().Err(err).Send()
 		return nil, err
@@ -104,8 +103,8 @@ func GetRaceEvent(ctx context.Context, db *sqlx.DB, raceID, eventID string) (Eve
 	}, nil
 }
 
-func DeleteRaceEvent(ctx context.Context, db *sqlx.DB) error {
-	_, err := db.Exec(deleteEventQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))
+func DeleteRaceEvent(ctx context.Context, db *sqlx.DB, raceID, eventID string) error {
+	_, err := db.Exec(deleteEventQuery, raceID, eventID)
 	if err != nil {
 		return err
 	}
@@ -113,8 +112,8 @@ func DeleteRaceEvent(ctx context.Context, db *sqlx.DB) error {
 	return nil
 }
 
-func GetRaceEventCount(ctx context.Context, db *sqlx.DB) (int, error) {
-	row := db.QueryRow(selectRaceEventCountQuery, util.GetRaceIDFromContext(ctx))
+func GetRaceEventCount(ctx context.Context, db *sqlx.DB, raceID string) (int, error) {
+	row := db.QueryRow(selectRaceEventCountQuery, raceID)
 	if row.Err() != nil {
 		return 0, row.Err()
 	}

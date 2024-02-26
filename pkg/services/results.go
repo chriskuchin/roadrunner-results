@@ -3,7 +3,6 @@ package services
 import (
 	"context"
 
-	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -35,12 +34,12 @@ func InsertResults(ctx context.Context, db *sqlx.DB, raceID, eventID, bibNumber,
 	return err
 }
 
-func InsertPartialResult(ctx context.Context, result int64, timerID string) error {
+func InsertPartialResult(ctx context.Context, db *sqlx.DB, raceID, eventID string, result int64, timerID string) error {
 	var err error
 	if timerID == "" {
-		_, err = util.GetDB(ctx).Exec(insertPartialQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), nil, result)
+		_, err = db.Exec(insertPartialQuery, raceID, eventID, nil, result)
 	} else {
-		_, err = util.GetDB(ctx).Exec(insertPartialQuery, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), timerID, result)
+		_, err = db.Exec(insertPartialQuery, raceID, eventID, timerID, result)
 	}
 	return err
 }

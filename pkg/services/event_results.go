@@ -82,10 +82,10 @@ func GetEventResults(ctx context.Context, db *sqlx.DB, filters map[string][]stri
 
 	query = fmt.Sprintf("%s ORDER BY r.result ASC", query)
 	log.Debug().Str("query", query).Interface("filter", filterValues).Send()
-	return runEventResultsQuery(db, query, filterValues...)
+	return runEventResultsQuery(ctx, db, query, filterValues...)
 }
 
-func runEventResultsQuery(db *sqlx.DB, query string, args ...interface{}) ([]ParticipantEventResult, error) {
+func runEventResultsQuery(ctx context.Context, db *sqlx.DB, query string, args ...interface{}) ([]ParticipantEventResult, error) {
 	var results []EventResultsRow
 	err := db.Select(&results, query, args...)
 	if err != nil {
@@ -110,18 +110,18 @@ func runEventResultsQuery(db *sqlx.DB, query string, args ...interface{}) ([]Par
 	return participantResults, nil
 }
 
-func RecordElapsedTimeResult(ctx context.Context, elapsed int64) error {
-	return InsertPartialResult(ctx, elapsed, "")
+func RecordElapsedTimeResult(ctx context.Context, db *sqlx.DB, raceID, eventID string, elapsed int64) error {
+	return InsertPartialResult(ctx, db, raceID, eventID, elapsed, "")
 }
 
-func RecordTimerResult(ctx context.Context, endTS int64) error {
-	start, timerID, err := GetActiveTimerStart(ctx, util.GetDB(ctx))
+func RecordTimerResult(ctx context.Context, db *sqlx.DB, raceID, eventID string, endTS int64) error {
+	start, timerID, err := GetActiveTimerStart(ctx, util.GetDB(ctx), raceID, eventID)
 	if err != nil {
 		log.Error().Err(err).Send()
 		return err
 	}
 
-	return InsertPartialResult(ctx, endTS-start, timerID)
+	return InsertPartialResult(ctx, db, raceID, eventID, endTS-start, timerID)
 }
 
 const recordFinisherQuery string = `

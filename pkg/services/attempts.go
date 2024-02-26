@@ -2,10 +2,8 @@ package services
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/jmoiron/sqlx"
-	"github.com/rs/zerolog/log"
 )
 
 type AttemptsRow struct {
@@ -31,28 +29,21 @@ func RecordAttempt(ctx context.Context, db *sqlx.DB, raceID, eventID, bib string
 	return err
 }
 
-func ListAttempts(ctx context.Context, db *sqlx.DB, raceID, eventID, bib string) error {
+func ListAttempts(ctx context.Context, db *sqlx.DB, raceID, eventID, bib string) ([]AttemptsRow, error) {
 	var attempts []AttemptsRow
 	err := db.Select(&attempts, listAttemptsQuery, raceID, eventID, bib)
 	if err != nil {
-		log.Error().Err(err).Send()
-		return err
+		return nil, err
 	}
 
-	for _, attempt := range attempts {
-		fmt.Println(attempt)
-	}
-	return nil
+	return attempts, nil
 }
 
 func UpsertBestAttemptResults(ctx context.Context, db *sqlx.DB, raceID, eventID, bib string) error {
-	rslt, err := db.Exec(upsertResultQuery, raceID, eventID, bib)
+	_, err := db.Exec(upsertResultQuery, raceID, eventID, bib)
 	if err != nil {
-		log.Err(err).Send()
 		return err
 	}
 
-	rows, _ := rslt.RowsAffected()
-	log.Info().Int64("result", rows).Send()
 	return nil
 }
