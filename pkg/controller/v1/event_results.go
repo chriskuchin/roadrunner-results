@@ -114,7 +114,7 @@ func HandleEventResultsCreate(db *sqlx.DB, s3Client *s3.Client, bucket string) h
 		if strings.HasPrefix(contentType, "multipart/form-data") {
 			reader, err := r.MultipartReader()
 			if err != nil {
-				w.WriteHeader(http.StatusBadRequest)
+				apiutil.HandleBadRequest(err, w, r)
 				return
 			}
 
@@ -126,8 +126,7 @@ func HandleEventResultsCreate(db *sqlx.DB, s3Client *s3.Client, bucket string) h
 
 				b, err := io.ReadAll(part)
 				if err != nil {
-					log.Error().Err(err).Send()
-					w.WriteHeader(http.StatusBadRequest)
+					apiutil.HandleBadRequest(err, w, r)
 					return
 				}
 
