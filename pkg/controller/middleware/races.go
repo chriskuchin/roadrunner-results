@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/http"
 
+	apiutil "github.com/chriskuchin/roadrunner-results/pkg/controller/api-util"
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/chi/v5"
@@ -35,8 +36,7 @@ func UserAuthMiddleware(db *sqlx.DB) func(http.Handler) http.Handler {
 			uid := util.GetCurrentUserID(r.Context())
 			ownerID, err := services.GetRaceOwnerID(r.Context(), db, raceID)
 			if err != nil {
-				log.Error().Err(err).Send()
-				w.WriteHeader(http.StatusServiceUnavailable)
+				apiutil.HandleServiceUnavailable(err, w, r)
 				return
 			}
 
@@ -47,8 +47,7 @@ func UserAuthMiddleware(db *sqlx.DB) func(http.Handler) http.Handler {
 
 			authorizedUsers, err := services.GetRaceAuthorizedUsers(r.Context(), db, raceID)
 			if err != nil {
-				log.Error().Err(err).Send()
-				w.WriteHeader(http.StatusServiceUnavailable)
+				apiutil.HandleServiceUnavailable(err, w, r)
 				return
 			}
 
@@ -57,7 +56,7 @@ func UserAuthMiddleware(db *sqlx.DB) func(http.Handler) http.Handler {
 				return
 			}
 
-			w.WriteHeader(http.StatusUnauthorized)
+			apiutil.HandleUnauthorized(w, r)
 		})
 	}
 }

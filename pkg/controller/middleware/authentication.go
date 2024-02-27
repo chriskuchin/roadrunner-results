@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"firebase.google.com/go/v4/auth"
+	apiutil "github.com/chriskuchin/roadrunner-results/pkg/controller/api-util"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 )
 
@@ -26,7 +27,7 @@ func AuthenticationMiddleware(authClient *auth.Client) func(http.Handler) http.H
 					next.ServeHTTP(w, r)
 					return
 				} else {
-					w.WriteHeader(http.StatusUnauthorized)
+					apiutil.HandleUnauthorized(w, r)
 					return
 				}
 			}
