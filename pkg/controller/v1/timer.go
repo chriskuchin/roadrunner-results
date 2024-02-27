@@ -1,7 +1,6 @@
 package v1
 
 import (
-	"context"
 	"fmt"
 	"net/http"
 
@@ -18,7 +17,8 @@ func HandleTimersCreate(db *sqlx.DB) http.HandlerFunc {
 	}
 	return func(w http.ResponseWriter, r *http.Request) {
 		// create and then start
-		timerID, err := services.CreateTimer(r.Context(), db)
+		ctx := r.Context()
+		timerID, err := services.CreateTimer(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))
 		if err != nil {
 			log.Error().Err(err).Send()
 			render.Status(r, http.StatusInternalServerError)
@@ -40,7 +40,7 @@ func HandleTimersCreate(db *sqlx.DB) http.HandlerFunc {
 		}
 
 		if timerR.Start != 0 {
-			err = services.StartTimer(context.WithValue(r.Context(), util.TimerID, timerID), db, timerR.Start)
+			err = services.StartTimer(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), timerID, timerR.Start)
 			if err != nil {
 				log.Error().Err(err).Send()
 				render.Status(r, http.StatusBadRequest)
@@ -67,6 +67,7 @@ func HandleTimerStart(db *sqlx.DB) http.HandlerFunc {
 	}
 
 	return func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
 		timerR := TimerRequest{}
 		err := render.DecodeJSON(r.Body, timerR)
 		if err != nil {
@@ -78,7 +79,7 @@ func HandleTimerStart(db *sqlx.DB) http.HandlerFunc {
 
 		}
 
-		err = services.StartTimer(r.Context(), db, timerR.Start)
+		err = services.StartTimer(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetTimerIDFromContext(ctx), timerR.Start)
 		if err != nil {
 			render.Status(r, http.StatusInternalServerError)
 			render.JSON(w, r, map[string]string{
@@ -94,7 +95,8 @@ func HandleTimerStart(db *sqlx.DB) http.HandlerFunc {
 
 func HandleTimersList(db *sqlx.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		result, err := services.ListTimers(r.Context(), db, 10, 0)
+		ctx := r.Context()
+		result, err := services.ListTimers(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), 10, 0)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
@@ -106,7 +108,8 @@ func HandleTimersList(db *sqlx.DB) http.HandlerFunc {
 
 func HandleTimerGet(db *sqlx.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		result, err := services.GetTimer(r.Context(), db)
+		ctx := r.Context()
+		result, err := services.GetTimer(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetTimerIDFromContext(ctx))
 		if err != nil {
 			if err.Error() == "timer not found" {
 				w.WriteHeader(http.StatusNotFound)
@@ -122,7 +125,8 @@ func HandleTimerGet(db *sqlx.DB) http.HandlerFunc {
 
 func HandleTimerDelete(db *sqlx.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		err := services.DeleteTimer(r.Context(), db)
+		ctx := r.Context()
+		err := services.DeleteTimer(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetTimerIDFromContext(ctx))
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return

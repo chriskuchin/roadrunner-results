@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 
-	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 )
@@ -44,14 +43,14 @@ type DivisionResults struct {
 	Filters []Filter `json:"filters"`
 }
 
-func CreateDivision(ctx context.Context, db *sqlx.DB, display string, filters []Filter) error {
+func CreateDivision(ctx context.Context, db *sqlx.DB, raceID string, display string, filters []Filter) error {
 
 	dbFilters, err := json.Marshal(filters)
 	if err != nil {
 		log.Error().Err(err).Send()
 		return err
 	}
-	_, err = db.ExecContext(ctx, createRaceDivisionQuery, util.GetRaceIDFromContext(ctx), display, string(dbFilters))
+	_, err = db.ExecContext(ctx, createRaceDivisionQuery, raceID, display, string(dbFilters))
 	if err != nil {
 		return err
 	}
@@ -59,11 +58,10 @@ func CreateDivision(ctx context.Context, db *sqlx.DB, display string, filters []
 	return nil
 }
 
-func ListRaceDivisions(ctx context.Context, db *sqlx.DB) ([]DivisionResults, error) {
+func ListRaceDivisions(ctx context.Context, db *sqlx.DB, raceID string) ([]DivisionResults, error) {
 	divisionRows := []DivisionRow{}
-	err := db.Select(&divisionRows, listRaceDivisionsQuery, util.GetRaceIDFromContext(ctx))
+	err := db.Select(&divisionRows, listRaceDivisionsQuery, raceID)
 	if err != nil {
-		log.Error().Err(err).Send()
 		return nil, err
 	}
 

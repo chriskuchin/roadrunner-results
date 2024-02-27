@@ -1,6 +1,6 @@
 <template>
   <div class="fixed-bottom">
-    <a class="button is-primary is-large fab" @click="$emit('click')">
+    <a :class="['button', button_type, 'is-large', 'fab']" @click="$emit('click')" :disabled="disabled">
       <slot>
         <icon icon="fa-solid fa-plus"></icon>
       </slot>
@@ -10,6 +10,16 @@
 
 <script>
 export default {
+  props: {
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    button_type: {
+      type: String,
+      default: "is-primary"
+    }
+  },
   emits: ["click"]
 };
 </script>

@@ -7,13 +7,15 @@ import (
 
 	apiutil "github.com/chriskuchin/roadrunner-results/pkg/controller/api-util"
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
+	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/render"
 	"github.com/jmoiron/sqlx"
 )
 
 func HandleDivisionsList(db *sqlx.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		results, err := services.ListRaceDivisions(r.Context(), db)
+		ctx := r.Context()
+		results, err := services.ListRaceDivisions(ctx, db, util.GetRaceIDFromContext(ctx))
 		if err != nil {
 			apiutil.HandleBadRequest(err, w, r)
 			return
@@ -57,6 +59,6 @@ func HandleDivisionsCreate(db *sqlx.DB) http.HandlerFunc {
 				Values: v.Values,
 			})
 		}
-		services.CreateDivision(ctx, db, payload.Description, filters)
+		services.CreateDivision(ctx, db, util.GetRaceIDFromContext(ctx), payload.Description, filters)
 	}
 }

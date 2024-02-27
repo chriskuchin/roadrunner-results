@@ -8,6 +8,7 @@ import (
 
 	apiutil "github.com/chriskuchin/roadrunner-results/pkg/controller/api-util"
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
+	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/render"
 	"github.com/jmoiron/sqlx"
@@ -30,7 +31,8 @@ func HandleRaceImportSheet(db *sqlx.DB) http.HandlerFunc {
 
 func HandleRaceGet(db *sqlx.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		race, err := services.GetRace(r.Context(), db)
+		ctx := r.Context()
+		race, err := services.GetRace(ctx, db, util.GetRaceIDFromContext(ctx))
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			return
