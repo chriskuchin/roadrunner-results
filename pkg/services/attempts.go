@@ -20,7 +20,7 @@ const (
 	upsertResultQuery = `INSERT into results(race_id, event_id, bib_number, result)
     SELECT race_id, event_id, bib as bib_number, MAX(result) from attempts where race_id = ? AND event_id = ? AND bib = ?
     ON CONFLICT(race_id, event_id, bib_number) DO UPDATE SET result=excluded.result`
-	//  INSERT INTO results(race_id, event_id, bib_number, result) SELECT race_id, event_id, bib as bib_number, MAX(result) from attempts
+
 	listAttemptsQuery = `SELECT * FROM attempts where race_id = ? AND event_id = ? AND bib = ? ORDER BY result DESC`
 )
 
