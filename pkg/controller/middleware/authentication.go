@@ -19,7 +19,9 @@ func AuthenticationMiddleware(authClient *auth.Client) func(http.Handler) http.H
 			var tokErr error
 			if apiKey != "" {
 				tokResult, tokErr = authClient.VerifyIDToken(r.Context(), apiKey)
-				r = r.WithContext(context.WithValue(r.Context(), util.UserToken, *tokResult))
+				if tokErr == nil {
+					r = r.WithContext(context.WithValue(r.Context(), util.UserToken, *tokResult))
+				}
 			}
 
 			if r.Method != http.MethodGet && r.Method != http.MethodOptions {
