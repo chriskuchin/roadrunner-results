@@ -82,6 +82,10 @@ func Routes(app *firebase.App, db *sqlx.DB, assetsFolder string, debug bool) chi
 							r.Get("/next_bib", v1.HandleParticipantsNextBibNumber())
 							r.Get("/teams", v1.HandleParticipantsDistinctTeams())
 							r.Post("/csv", v1.HandleParticipantsImportCSV(db))
+							r.Route("/bib/{bib_number}", func(r chi.Router) {
+								r.Use(middleware.BibNumberCtx)
+								r.Get("/", v1.HandleParticipantGetByBibNumber(db))
+							})
 							r.Route("/{participantID}", func(r chi.Router) {
 								r.Use(middleware.ParticipantCtx)
 								r.Get("/", v1.HandleParticipantGet())
@@ -102,6 +106,10 @@ func Routes(app *firebase.App, db *sqlx.DB, assetsFolder string, debug bool) chi
 									r.Put("/", v1.HandleEventResultsCreate(db, s3, "photo-finish"))
 									r.Route("/attempts", func(r chi.Router) {
 										r.Post("/", v1.HandleEventAttemptsCreate(db))
+										r.Route("/{bib_number}", func(r chi.Router) {
+											r.Use(middleware.BibNumberCtx)
+											r.Get("/", v1.HandleEventAttemptsList(db))
+										})
 									})
 									r.Route("/{resultID}", func(r chi.Router) {
 										r.Use(middleware.ResultCtx)

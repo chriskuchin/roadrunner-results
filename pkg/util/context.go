@@ -22,6 +22,7 @@ const (
 	PhotoKey      key = 8
 	UserToken     key = 9
 	ResultID      key = 10
+	BibNumber     key = 11
 )
 
 func GetCurrentUserToken(ctx context.Context) auth.Token {
@@ -47,6 +48,10 @@ func getValueFromContext(ctx context.Context, k key) string {
 	}
 
 	return result
+}
+
+func GetBibNumberFromContext(ctx context.Context) string {
+	return getValueFromContext(ctx, BibNumber)
 }
 
 func GetResultIDFromContext(ctx context.Context) string {

@@ -64,6 +64,11 @@ const (
 			GROUP BY birth_year, gender
 			ORDER BY birth_year
 	`
+
+	selectRaceParticipantByBibNumber = `
+		select * from participants
+			where race_id = ? AND bib_number = ?
+	`
 )
 
 type (
@@ -101,6 +106,16 @@ select rowid, * from participants
 	where
 		race_id = ?
 `
+
+func GetParticipantByBibNumber(ctx context.Context, db *sqlx.DB, raceID, bibNumber string) (ParticipantRow, error) {
+	var participant []ParticipantRow
+	err := db.Select(&participant, selectRaceParticipantByBibNumber, raceID, bibNumber)
+	if err != nil {
+		return ParticipantRow{}, err
+	}
+
+	return participant[0], nil
+}
 
 func ListParticipants(ctx context.Context, db *sqlx.DB, raceID string, limit, offset int, filters map[string]string) ([]ParticipantObject, error) {
 	var query string = listParticipantsQuery

@@ -106,6 +106,42 @@ func HandleParticipantsImportCSV(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
+func HandleParticipantGetByBibNumber(db *sqlx.DB) http.HandlerFunc {
+	type response struct {
+		BibNumber string `json:"bib_number"`
+		FirstName string `json:"first_name"`
+		LastName  string `json:"last_name"`
+		BirthYear int64  `json:"birth_year"`
+		Team      string `json:"team"`
+		Gender    string `json:"gender"`
+		Grade     int64  `json:"grade"`
+	}
+	return func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
+
+		participant, err := services.GetParticipantByBibNumber(ctx, db, util.GetRaceIDFromContext(ctx), util.GetBibNumberFromContext(ctx))
+		if err != nil {
+			apiutil.HandleServerError(err, w, r)
+			return
+		}
+
+		var result = response{
+			BibNumber: participant.BibNumber,
+			FirstName: participant.FirstName,
+			LastName:  participant.LastName,
+			Team:      participant.Team,
+			BirthYear: participant.BirthYear,
+			Gender:    participant.Gender,
+		}
+
+		if participant.Grade.Valid {
+			result.Grade = participant.Grade.Int64
+		}
+
+		render.JSON(w, r, result)
+	}
+}
+
 func HandleParticipantsNextBibNumber() http.HandlerFunc {
 	return apiutil.Unimplemented
 }

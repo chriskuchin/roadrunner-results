@@ -1,6 +1,6 @@
 <template>
   <div class="fixed-bottom">
-    <a :class="['button', button_type, 'is-large', 'fab']" @click="$emit('click')" :disabled="disabled">
+    <a :class="['button', button_type, 'is-large', 'fab']" @click="$emit('click')">
       <slot>
         <icon icon="fa-solid fa-plus"></icon>
       </slot>

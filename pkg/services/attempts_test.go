@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"reflect"
 	"testing"
 
 	"github.com/jmoiron/sqlx"
@@ -138,5 +139,102 @@ func TestUpsertBestAttemptResults(t *testing.T) {
 			ListAttempts(context.TODO(), db, tt.args.race_id, tt.args.event_id, tt.args.bib)
 		})
 		dbCleanup(tt.name)
+	}
+}
+
+func TestListAttempts(t *testing.T) {
+	type row struct {
+		race_id  string
+		event_id string
+		bib      string
+		attempt  int
+		result   float32
+	}
+	type args struct {
+		raceID  string
+		eventID string
+		bib     string
+	}
+	tests := []struct {
+		name    string
+		args    args
+		rows    []row
+		want    []AttemptsRow
+		wantErr bool
+	}{
+		{
+			name: "list",
+			args: args{
+				raceID:  "123",
+				eventID: "453",
+				bib:     "444",
+			},
+			rows: []row{
+				{
+					race_id:  "123",
+					event_id: "453",
+					bib:      "444",
+					attempt:  1,
+					result:   120.9,
+				},
+				{
+					race_id:  "123",
+					event_id: "453",
+					bib:      "444",
+					attempt:  2,
+					result:   120.7,
+				},
+				{
+					race_id:  "123",
+					event_id: "453",
+					bib:      "444",
+					attempt:  3,
+					result:   121,
+				},
+			},
+			want: []AttemptsRow{
+				{
+					RaceID:  "123",
+					EventID: "453",
+					Bib:     "444",
+					Attempt: 3,
+					Result:  121,
+				},
+				{
+					RaceID:  "123",
+					EventID: "453",
+					Bib:     "444",
+					Attempt: 1,
+					Result:  120.9,
+				},
+				{
+					RaceID:  "123",
+					EventID: "453",
+					Bib:     "444",
+					Attempt: 2,
+					Result:  120.7,
+				},
+			},
+			wantErr: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			db := dbSetup(tt.name)
+			for _, row := range tt.rows {
+				RecordAttempt(context.TODO(), db, row.race_id, row.event_id, row.bib, row.attempt, row.result)
+			}
+			got, err := ListAttempts(context.TODO(), db, tt.args.raceID, tt.args.eventID, tt.args.bib)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("ListAttempts() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+
+			for idx, attempt := range got {
+				if !reflect.DeepEqual(attempt, tt.want[idx]) {
+					t.Errorf("ListAttempts() = %v, want %v", attempt, tt.want[idx])
+				}
+			}
+		})
 	}
 }

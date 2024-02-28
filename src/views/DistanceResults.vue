@@ -9,11 +9,13 @@
           </a>
         </p>
         <p class="control is-expanded has-icons-left">
-          <input :class="['input', 'is-large']" ref="input" :type="getInputType" placeholder="Bib Number" />
+          <input :class="['input', 'is-large']" ref="input" :type="getInputType" placeholder="Bib Number"
+            v-on:blur="lookupAthlete" v-model="athlete.bib" />
           <span class="icon is-large is-left">
             <icon :icon="['fas', 'fa-user']"></icon>
           </span>
         </p>
+        {{ athlete }}
         <p class="control" v-if="false">
           <a :class="['button', 'is-static', 'is-large']">
             <!-- best attempt -->
@@ -96,8 +98,9 @@
 </template>
 
 <script>
-import { setAuthHeader } from '../api/auth';
 import { formatCentimeters } from '../utilities'
+import { getParticipantByBib } from '../api/participants'
+import { listEventAttempts } from '../api/attempts'
 import FAB from '../components/Fab.vue'
 
 export default {
@@ -108,6 +111,17 @@ export default {
   },
   data: function () {
     return {
+      athlete: {
+        info: {
+          firstName: "",
+          lastName: "",
+          team: "",
+          gender: "",
+          grade: "",
+          birthYear: "",
+        },
+        bib: ""
+      },
       format: "ftin",
       letterInput: false,
       attempts: [
@@ -132,6 +146,25 @@ export default {
     }
   },
   methods: {
+    lookupAthlete: async function (e) {
+      if (this.athlete.bib !== "") {
+        let participant = await getParticipantByBib(this.$route.params.raceId, this.athlete.bib)
+
+        this.attempts = await listEventAttempts(this.$route.params.raceId, this.$route.params.eventId, this.athlete.bib)
+
+        this.athlete.info.firstName = participant.first_name
+        this.athlete.info.lastName = participant.last_name
+        this.athlete.info.team = participant.team
+        this.athlete.info.gender = participant.gender
+        this.athlete.info.birthYear = participant.birth_year
+      } else {
+        this.athlete.info.firstName = ""
+        this.athlete.info.lastName = ""
+        this.athlete.info.team = ""
+        this.athlete.info.gender = ""
+        this.athlete.info.birthYear = ""
+      }
+    },
     recordAttempt: function () {
 
     },

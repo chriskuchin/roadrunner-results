@@ -64,3 +64,27 @@ func HandleEventAttemptsCreate(db *sqlx.DB) http.HandlerFunc {
 		render.JSON(w, r, result)
 	}
 }
+
+func HandleEventAttemptsList(db *sqlx.DB) http.HandlerFunc {
+	type attemptResponse struct {
+		AttemptNumber int     `json:"attempt_number"`
+		Result        float32 `json:"result"`
+	}
+	return func(w http.ResponseWriter, r *http.Request) {
+		var response []attemptResponse = []attemptResponse{}
+		ctx := r.Context()
+		attempts, err := services.ListAttempts(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetBibNumberFromContext(ctx))
+		if err != nil {
+			apiutil.HandleServerError(err, w, r)
+		}
+
+		for _, attempt := range attempts {
+			response = append(response, attemptResponse{
+				AttemptNumber: attempt.Attempt,
+				Result:        attempt.Result,
+			})
+		}
+
+		render.JSON(w, r, response)
+	}
+}
