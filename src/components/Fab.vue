@@ -11,7 +11,7 @@
 <script>
 export default {
   props: {
-    disabled: {
+    is_disabled: {
       type: Boolean,
       default: false
     },
@@ -20,6 +20,12 @@ export default {
       default: "is-primary"
     }
   },
-  emits: ["click"]
+  emits: ["click"],
+  computed: {
+    button_disabled: function () {
+      console.log(this.is_disabled === 'false')
+      console.log("test")
+    }
+  }
 };
 </script>

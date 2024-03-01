@@ -11,8 +11,21 @@ async function listEventAttempts(raceID, eventID, bibNumber) {
     if (res.ok) return await res.json();
 
     return [];
-
 }
 
+async function recordEventAttempt(raceID, eventID, bibNumber, attempt, distance) {
+    console.log(raceID, eventID, bibNumber, attempt, distance)
+    await fetch(
+        `/api/v1/races/${raceID}/events/${eventID}/results/attempts`,
+        await setAuthHeader({
+            method: "POST",
+            body: JSON.stringify({
+                attempt_number: attempt,
+                distance: distance,
+                bib: `${bibNumber}`
+            }),
+        }),
+    );
+}
 
-export { listEventAttempts }
+export { listEventAttempts, recordEventAttempt }

@@ -17,20 +17,20 @@ type (
 		BibNumber sql.NullString `db:"bib_number"`
 		BirthYear sql.NullInt32  `db:"birth_year"`
 		Gender    sql.NullString `db:"gender"`
-		Result    int            `db:"result"`
+		Result    float32        `db:"result"`
 		TimerID   sql.NullString `db:"timer_id"`
 		Team      sql.NullString `db:"team"`
 	}
 
 	ParticipantEventResult struct {
-		FirstName string `json:"first_name,omitempty"`
-		LastName  string `json:"last_name,omitempty"`
-		BibNumber string `json:"bib_number"`
-		BirthYear int    `json:"birth_year,omitempty"`
-		Gender    string `json:"gender,omitempty"`
-		Result    int    `json:"result_ms"`
-		TimerID   string `json:"timer_id"`
-		Team      string `json:"team"`
+		FirstName string  `json:"first_name,omitempty"`
+		LastName  string  `json:"last_name,omitempty"`
+		BibNumber string  `json:"bib_number"`
+		BirthYear int     `json:"birth_year,omitempty"`
+		Gender    string  `json:"gender,omitempty"`
+		Result    float32 `json:"result_ms"`
+		TimerID   string  `json:"timer_id"`
+		Team      string  `json:"team"`
 	}
 )
 

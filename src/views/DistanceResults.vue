@@ -53,13 +53,13 @@
           </div>
         </div> -->
         <div class="control is-expanded has-icons-left">
-          <input class="input is-large" placeholder="Feet" type="number">
+          <input class="input is-large" placeholder="Feet" type="number" ref="l-msr">
           <span class="icon is-large is-left">
             <icon :icon="['fas', 'fa-ruler']"></icon>
           </span>
         </div>
         <div class="control is-expanded has-icons-left">
-          <input class="input is-large" placeholder="Inches" type="number">
+          <input class="input is-large" placeholder="Inches" type="number" ref="s-msr">
           <span class="icon is-large is-left">
             <icon :icon="['fas', 'fa-ruler']"></icon>
           </span>
@@ -81,26 +81,26 @@
       </div>
     </div>
     <div class="level">
-      <div class="level-item has-text-centered" v-for="attempt in attempts">
+      <div class="level-item has-text-centered" v-for="(attempt, key) in attempts">
         <div>
           <p class="heading">
-            <icon :icon="['fas', 'fa-crown']"></icon> Attempt #{{ attempt.attempt }}
+            <icon v-if="key == 0" :icon="['fas', 'fa-crown']"></icon> Attempt #{{ attempt.attempt_number }}
           </p>
-          <p class="title">{{ formatCentimeters(attempt.distance, format) }}</p>
+          <p class="title">{{ formatCentimeters(attempt.result, format) }}</p>
         </div>
       </div>
     </div>
     <!-- <p :class="['help']" v-if="result.show">{{ result.msg }}</p> -->
-    <fab button_type="is-danger">
+    <fab button_type="is-danger" @click="recordAttempt" is_disabled="false">
       <icon icon="fa-solid fa-stopwatch"></icon>
     </fab>
   </div>
 </template>
 
 <script>
-import { formatCentimeters } from '../utilities'
+import { formatCentimeters, calculateCentimeters } from '../utilities'
 import { getParticipantByBib } from '../api/participants'
-import { listEventAttempts } from '../api/attempts'
+import { listEventAttempts, recordEventAttempt } from '../api/attempts'
 import FAB from '../components/Fab.vue'
 
 export default {
@@ -122,22 +122,10 @@ export default {
         },
         bib: ""
       },
+      current_attempt: 0,
       format: "ftin",
       letterInput: false,
-      attempts: [
-        {
-          attempt: 3,
-          distance: 162.56,
-        },
-        {
-          attempt: 1,
-          distance: 157.48,
-        },
-        {
-          attempt: 2,
-          distance: 154.94,
-        }
-      ]
+      attempts: []
     }
   },
   computed: {
@@ -150,23 +138,34 @@ export default {
       if (this.athlete.bib !== "") {
         let participant = await getParticipantByBib(this.$route.params.raceId, this.athlete.bib)
 
-        this.attempts = await listEventAttempts(this.$route.params.raceId, this.$route.params.eventId, this.athlete.bib)
-
         this.athlete.info.firstName = participant.first_name
         this.athlete.info.lastName = participant.last_name
         this.athlete.info.team = participant.team
         this.athlete.info.gender = participant.gender
         this.athlete.info.birthYear = participant.birth_year
+
+        this.attempts = await listEventAttempts(this.$route.params.raceId, this.$route.params.eventId, this.athlete.bib)
       } else {
         this.athlete.info.firstName = ""
         this.athlete.info.lastName = ""
         this.athlete.info.team = ""
         this.athlete.info.gender = ""
         this.athlete.info.birthYear = ""
+
+        this.attempts = []
       }
     },
-    recordAttempt: function () {
+    recordAttempt: async function () {
+      const largeVal = Number(this.$refs['l-msr'].value)
+      const smallVal = Number(this.$refs['s-msr'].value)
+      const distance = calculateCentimeters(largeVal, smallVal, this.format)
 
+      await recordEventAttempt(this.$route.params.raceId, this.$route.params.eventId, this.athlete.bib, this.attempts.length + 1, distance)
+
+      this.attempts = await listEventAttempts(this.$route.params.raceId, this.$route.params.eventId, this.athlete.bib)
+
+      this.$refs['l-msr'].value = ""
+      this.$refs['s-msr'].value = ""
     },
     formatCentimeters,
   }

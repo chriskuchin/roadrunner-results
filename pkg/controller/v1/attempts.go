@@ -8,6 +8,7 @@ import (
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/render"
 	"github.com/jmoiron/sqlx"
+	"github.com/rs/zerolog/log"
 )
 
 func HandleEventAttemptsCreate(db *sqlx.DB) http.HandlerFunc {
@@ -76,7 +77,10 @@ func HandleEventAttemptsList(db *sqlx.DB) http.HandlerFunc {
 		attempts, err := services.ListAttempts(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetBibNumberFromContext(ctx))
 		if err != nil {
 			apiutil.HandleServerError(err, w, r)
+			return
 		}
+
+		log.Info().Err(err).Interface("attempts", attempts).Msg("GRRRRRR")
 
 		for _, attempt := range attempts {
 			response = append(response, attemptResponse{
