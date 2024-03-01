@@ -12,6 +12,10 @@ db-down:
 webpack:
   npx webpack
 
+
+just pack:
+  just webpack
+
 webpack-debug:
   npx webpack --mode=development
 
