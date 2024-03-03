@@ -6,6 +6,7 @@ run:
 
 test:
   npx vitest run
+  go test ./...
 
 clean:
   just db-down
