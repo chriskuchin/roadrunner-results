@@ -4,6 +4,9 @@ run:
   just db-up
   go run main.go -debug server
 
+test:
+  npx vitest run
+
 clean:
   just db-down
 
