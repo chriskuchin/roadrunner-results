@@ -1,7 +1,14 @@
 db-url := "sqlite:./results.db"
 
 run:
+  just db-up
   go run main.go -debug server
+
+clean:
+  just db-down
+
+pack:
+  npx webpack --mode=development
 
 db-up:
   dbmate --url={{db-url}} up
@@ -9,15 +16,9 @@ db-up:
 db-down:
   dbmate --url={{db-url}} down
 
-webpack:
+build:
   npx webpack
 
-
-just pack:
-  just webpack
-
-webpack-debug:
-  npx webpack --mode=development
 
 fmt:
   biome format . --write

@@ -7,8 +7,8 @@
   <title>
     <%= htmlWebpackPlugin.options.title %>
   </title>
-  <% if (mode=='development' ){ print('<script src="//cdn.jsdelivr.net/npm/eruda"></script>')} %>
-  <% if (mode=='development' ){ print('<script>eruda.init();</script>')} %>
+  <% if (eruda){ print('<script src="//cdn.jsdelivr.net/npm/eruda"></script>')} %>
+  <% if (eruda){ print('<script>eruda.init();</script>')} %>
 </head>
 
 <body>
