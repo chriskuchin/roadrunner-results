@@ -92,9 +92,6 @@ func GetRace(ctx context.Context, db *sqlx.DB, raceID string) (RaceResult, error
 	}
 
 	race := dto[0]
-	if err != nil {
-		return RaceResult{}, err
-	}
 
 	eventCount, err := GetRaceEventCount(ctx, db, raceID)
 	if err != nil {

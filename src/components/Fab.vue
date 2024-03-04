@@ -22,10 +22,7 @@ export default {
   },
   emits: ["click"],
   computed: {
-    button_disabled: function () {
-      console.log(this.is_disabled === 'false')
-      console.log("test")
-    }
+    button_disabled: function () { }
   }
 };
 </script>

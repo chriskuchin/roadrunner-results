@@ -1,11 +1,10 @@
 <template>
-  <div class="container mt-5">
-    <div class="mb-5">
+  <div class="block mt-5 mx-5">
+    <div class="mb-3">
       <div class="field has-addons">
         <p class="control">
           <a :class="['button', 'is-static', 'is-large']">
-            <!-- attempts/allowed_attempts -->
-            3/3
+            {{ attempts.length }}
           </a>
         </p>
         <p class="control is-expanded has-icons-left">
@@ -15,18 +14,23 @@
             <icon :icon="['fas', 'fa-user']"></icon>
           </span>
         </p>
-        {{ athlete }}
         <p class="control" v-if="false">
-          <a :class="['button', 'is-static', 'is-large']">
-            <!-- best attempt -->
-            <!-- {{ time }} -->
-          </a>
+          <a :class="['button', 'is-static', 'is-large']"></a>
         </p>
       </div>
       <label class="checkbox">
         <input type="checkbox" v-model="letterInput">
         Allow Letters
       </label>
+    </div>
+    <div class="level" v-if="athlete.info.firstName != ''">
+      <div class="level-item has-text-centered">
+        <div>
+          <p class="heading">{{ athlete.info.team }}</p>
+          <h1 class="title">{{ athlete.info.firstName }} {{ athlete.info.lastName }}</h1>
+          <p>({{ athlete.info.birthYear }} {{ athlete.info.gender }})</p>
+        </div>
+      </div>
     </div>
     <div class="mb-5">
       <div class="field has-addons">
@@ -91,7 +95,7 @@
       </div>
     </div>
     <!-- <p :class="['help']" v-if="result.show">{{ result.msg }}</p> -->
-    <fab button_type="is-danger" @click="recordAttempt" is_disabled="false">
+    <fab button_type="is-danger" @click="recordAttempt">
       <icon icon="fa-solid fa-stopwatch"></icon>
     </fab>
   </div>
@@ -160,9 +164,7 @@ export default {
       const smallVal = Number(this.$refs['s-msr'].value)
       const distance = calculateCentimeters(largeVal, smallVal, this.format)
 
-      await recordEventAttempt(this.$route.params.raceId, this.$route.params.eventId, this.athlete.bib, this.attempts.length + 1, distance)
-
-      this.attempts = await listEventAttempts(this.$route.params.raceId, this.$route.params.eventId, this.athlete.bib)
+      this.attempts = await recordEventAttempt(this.$route.params.raceId, this.$route.params.eventId, this.athlete.bib, this.attempts.length + 1, distance)
 
       this.$refs['l-msr'].value = ""
       this.$refs['s-msr'].value = ""

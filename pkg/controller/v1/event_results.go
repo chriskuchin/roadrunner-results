@@ -89,9 +89,14 @@ func HandleEventResultsGet(db *sqlx.DB) http.HandlerFunc {
 			filters["year"] = r.URL.Query()["year"]
 		}
 
-		results, err := services.GetEventResults(r.Context(), db, filters)
+		order := "asc"
+		if r.URL.Query().Has("order") {
+			order = r.URL.Query().Get("order")
+		}
+
+		results, err := services.GetEventResults(r.Context(), db, filters, order)
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
+			apiutil.HandleServerError(err, w, r)
 			return
 		}
 

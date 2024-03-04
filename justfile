@@ -23,11 +23,5 @@ db-down:
 build:
   npx webpack
 
-
 fmt:
   biome format . --write
-
-test:
-  npx vitest run
-
-  go test ./...

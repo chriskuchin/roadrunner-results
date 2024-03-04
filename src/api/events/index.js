@@ -79,7 +79,6 @@ async function getEventResults(
 	const res = await fetch(`${url}?${filters.toString()}`);
 
 	if (!res.ok) {
-		console.log("error");
 		return [];
 	}
 

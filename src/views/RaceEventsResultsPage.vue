@@ -53,7 +53,7 @@
       <table class="table" style="min-width: 100%;">
         <thead>
           <th>Position</th>
-          <th>Time</th>
+          <th>Result</th>
           <th>Bib</th>
           <th>First Name</th>
           <th>Last Name</th>
@@ -65,7 +65,7 @@
         <tbody>
           <tr v-for="(result, place) in calculatedResults" :key="place">
             <td>{{ place + 1 }}</td>
-            <td>{{ formatMilliseconds(result.result_ms) }}</td>
+            <td> {{ formatCentimeters(result.result_ms, "ftin") }} {{ formatMilliseconds(result.result_ms) }}</td>
             <td>{{ result.bib_number }}</td>
             <td>{{ result.first_name }}</td>
             <td>{{ result.last_name }}</td>
@@ -84,7 +84,7 @@
 import { useEventStore } from "../store/event";
 import { useResultsStore } from "../store/results"
 import { mapStores, mapActions, mapState } from "pinia";
-import { formatMilliseconds } from "../utilities";
+import { formatMilliseconds, formatCentimeters } from "../utilities";
 import { useErrorBus } from "../store/error";
 
 export default {
@@ -173,6 +173,7 @@ export default {
         })
       }
     },
+    formatCentimeters,
     formatMilliseconds,
     calculateResults: async function () {
       this.calculatedResults = await this.getResults(this.$route.params.raceId, this.$route.params.eventId, this.filters.name, this.filters.gender, this.filters.team, this.filters.year, this.filters.timers)

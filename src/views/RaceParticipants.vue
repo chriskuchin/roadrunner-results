@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mx-5">
     <h1 class="title">Participants</h1>
     <div class="table-container">
       <table class="table" style="margin: 0 auto;">
@@ -253,7 +253,6 @@ export default {
       let success = await this.updateParticipant(this.$route.params.raceId, this.editForm.id, this.editForm)
 
       if (success) {
-        console.log("success")
         this.toggleEditModal()
         this.reload()
       } else {

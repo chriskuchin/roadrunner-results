@@ -4,10 +4,8 @@ const centimeters_per_foot = 30.48;
 const centimeters_per_inch = 2.54;
 
 function calculateCentimeters(large, small, format) {
-  console.log(large, small, format)
   switch (format) {
     case "ftin":
-      console.log("format", format)
       return large * centimeters_per_foot + small * centimeters_per_inch
     default:
       return 0
@@ -15,7 +13,6 @@ function calculateCentimeters(large, small, format) {
 }
 
 function formatCentimeters(cm, format) {
-  console.log(cm, format);
   switch (format) {
     case "ftin": {
       const ft = Math.floor(cm / centimeters_per_foot);

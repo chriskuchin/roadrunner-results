@@ -19,10 +19,7 @@ func HandleEventAttemptsCreate(db *sqlx.DB) http.HandlerFunc {
 	}
 	type attempt struct {
 		AttemptNumber int     `json:"attempt_number"`
-		Distance      float32 `json:"distance"`
-	}
-	type response struct {
-		Attempts []attempt `json:"attempts"`
+		Distance      float32 `json:"result"`
 	}
 
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -53,11 +50,10 @@ func HandleEventAttemptsCreate(db *sqlx.DB) http.HandlerFunc {
 			return
 		}
 
-		var result = response{
-			Attempts: []attempt{},
-		}
+		var result = []attempt{}
+
 		for _, a := range attempts {
-			result.Attempts = append(result.Attempts, attempt{
+			result = append(result, attempt{
 				AttemptNumber: a.Attempt,
 				Distance:      a.Result,
 			})

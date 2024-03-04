@@ -10,7 +10,10 @@
           </div>
           <div class="dropdown-menu" role="menu">
             <div class="dropdown-content">
-              <router-link class="dropdown-item" :to="getTimerLink(event)" v-if="isTimerEvent(event)">Timer</router-link>
+              <router-link class="dropdown-item" :to="getAttemptsLink(event)"
+                v-if="isDistanceEvent(event)">Attempts</router-link>
+              <router-link class="dropdown-item" :to="getTimerLink(event)"
+                v-if="isTimerEvent(event)">Timer</router-link>
               <router-link class="dropdown-item" :to="getRecordLink(event)"
                 v-if="isTimerEvent(event)">Recorder</router-link>
               <hr class="dropdown-divider" v-if="isTimerEvent(event)" />
@@ -187,6 +190,9 @@ export default {
       this.resetModal()
       this.toggleModal()
     },
+    getAttemptsLink: function (event) {
+      return `${this.getBaseEventLink(event)}/distance`
+    },
     getDivisionsLink: function (event) {
       return `/races/${this.$route.params.raceId}/divisions?eventId=${event.eventId}`
     },
@@ -204,6 +210,9 @@ export default {
     },
     isTimerEvent: function (event) {
       return event.type == "relay" || event.type == "timer"
+    },
+    isDistanceEvent: function (event) {
+      return event.type === "distance"
     },
     eventIcon: function (event) {
       switch (event.type) {

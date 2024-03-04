@@ -38,7 +38,15 @@ const (
 	getEventResultsQuery string = "SELECT p.first_name, p.last_name, r.bib_number, p.birth_year, p.gender, r.result, r.timer_id, p.team FROM results as r LEFT JOIN participants as p USING(bib_number, race_id) WHERE"
 )
 
-func GetEventResults(ctx context.Context, db *sqlx.DB, filters map[string][]string) ([]ParticipantEventResult, error) {
+var (
+	ORDER_ALLOWED map[string]string = map[string]string{"asc": "ASC", "desc": "DESC"}
+)
+
+func GetEventResults(ctx context.Context, db *sqlx.DB, filters map[string][]string, order string) ([]ParticipantEventResult, error) {
+	queryOrder, ok := ORDER_ALLOWED[order]
+	if !ok {
+		return nil, fmt.Errorf("non allowed order arg: %s", order)
+	}
 	query := getEventResultsQuery
 
 	var filterValues []interface{} = []interface{}{}
@@ -80,7 +88,7 @@ func GetEventResults(ctx context.Context, db *sqlx.DB, filters map[string][]stri
 		query = fmt.Sprintf("%s )", query)
 	}
 
-	query = fmt.Sprintf("%s ORDER BY r.result ASC", query)
+	query = fmt.Sprintf("%s ORDER BY r.result %s", query, queryOrder)
 	log.Debug().Str("query", query).Interface("filter", filterValues).Send()
 	return runEventResultsQuery(ctx, db, query, filterValues...)
 }
@@ -89,7 +97,7 @@ func runEventResultsQuery(ctx context.Context, db *sqlx.DB, query string, args .
 	var results []EventResultsRow
 	err := db.Select(&results, query, args...)
 	if err != nil {
-		log.Error().Err(err).Msg("Query Failed")
+		log.Error().Ctx(ctx).Err(err).Msg("Query Failed")
 		return nil, err
 	}
 
