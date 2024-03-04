@@ -65,7 +65,7 @@
         <tbody>
           <tr v-for="(result, place) in calculatedResults" :key="place">
             <td>{{ place + 1 }}</td>
-            <td> {{ formatCentimeters(result.result_ms, "ftin") }} {{ formatMilliseconds(result.result_ms) }}</td>
+            <td>{{ formatMilliseconds(result.result_ms) }}</td>
             <td>{{ result.bib_number }}</td>
             <td>{{ result.first_name }}</td>
             <td>{{ result.last_name }}</td>
