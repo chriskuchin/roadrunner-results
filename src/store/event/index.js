@@ -9,7 +9,6 @@ export const useEventStore = defineStore("event", {
 		name: "",
 		type: "",
 		distance: 0,
-		eventPromise: null,
 	}),
 	getters: {
 		timerList: (state) => state.timers,
@@ -26,23 +25,14 @@ export const useEventStore = defineStore("event", {
 				return
 			}
 
-			if (this.eventPromise === null) {
-				const url = `/api/v1/races/${raceID}/events/${eventID}`
-				this.eventPromise = fetch(url, setAuthHeader({ method: "GET" }))
-			}
-
-			let res = await this.eventPromise
-			this.eventPromise = null
-
-			if (!res.ok) {
+			const url = `/api/v1/races/${raceID}/events/${eventID}`
+			let res = await fetch(url, setAuthHeader({ method: "GET" }))
+			if (!res.ok)
 				return
-			}
 
-			try {
-				let event = await res.json()
-				this.loadEvent(event)
-			} catch (_) { }
+			let event = await res.json()
 
+			this.loadEvent(event)
 		},
 		async loadTimers(raceID, eventID) {
 			const url = `/api/v1/races/${raceID}/events/${eventID}/timers`;

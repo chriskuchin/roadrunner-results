@@ -93,20 +93,22 @@ export default {
     eventId(eventId) {
       this.results = {}
       this.$router.push({ path: this.$route.path, query: { eventId: eventId } })
-      this.divisions.forEach((division) => {
-        var genders = []
-        var birthYears = []
-        division.filters.forEach((filter) => {
-          if (filter.key == "gender") {
-            genders = filter.values
-          } else if (filter.key == "birth_year") {
-            birthYears = filter.values
-          }
-        })
-        this.loadEventByID(this.getRaceID(), eventId).then(() => {
+      this.loadEventByID(this.getRaceID(), eventId).then(() => {
+        this.divisions.forEach((division) => {
+          var genders = []
+          var birthYears = []
+          division.filters.forEach((filter) => {
+            if (filter.key == "gender") {
+              genders = filter.values
+            } else if (filter.key == "birth_year") {
+              birthYears = filter.values
+            }
+          })
           let order = "asc"
           if (this.type === "distance")
             order = "desc"
+
+          console.log(this.type)
 
           getEventResults(this.getRaceID(), eventId, "", genders, [], birthYears, [], order).then((results) => {
             if (results.length > 0)
