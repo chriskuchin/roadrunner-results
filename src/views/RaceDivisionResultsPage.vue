@@ -91,7 +91,6 @@ export default {
   },
   watch: {
     eventId(eventId) {
-      console.log(eventId)
       this.results = {}
       this.$router.push({ path: this.$route.path, query: { eventId: eventId } })
       this.loadEventByID(this.getRaceID(), eventId).then(() => {
