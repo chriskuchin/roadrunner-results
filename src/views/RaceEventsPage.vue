@@ -10,8 +10,8 @@
           </div>
           <div class="dropdown-menu" role="menu">
             <div class="dropdown-content">
-              <router-link class="dropdown-item" :to="getAttemptsLink(event)"
-                v-if="isDistanceEvent(event)">Attempts</router-link>
+              <a class="dropdown-item" @click="navigateToAttemptsRecorder(event)"
+                v-if="isDistanceEvent(event)">Attempts</a>
               <router-link class="dropdown-item" :to="getTimerLink(event)"
                 v-if="isTimerEvent(event)">Timer</router-link>
               <router-link class="dropdown-item" :to="getRecordLink(event)"
@@ -28,10 +28,10 @@
       </div>
       <div class="field has-addons">
         <p class="control">
-          <router-link :to="getResultsLink('results', event)" class="button is-primary">Results</router-link>
+          <button @click="navigateToEventResults(event)" class="button is-primary">Results</button>
         </p>
         <p class="control">
-          <router-link :to="getDivisionsLink(event)" class="button is-link">Division Results</router-link>
+          <button @click="navigateToDivisionResults(event)" class="button is-link">Division Results</button>
         </p>
       </div>
     </div>
@@ -98,9 +98,10 @@
 </template>
 
 <script>
-import { mapStores, mapState } from "pinia";
+import { mapStores, mapState, mapActions } from "pinia";
 import { useRaceStore } from "../store/race";
 import { useUserStore } from "../store/user"
+import { useEventStore } from "../store/event";
 import { createRaceEvent, deleteRaceEvent } from "../api/events"
 import Modal from '../components/Modal.vue'
 import FAB from '../components/Fab.vue'
@@ -124,6 +125,19 @@ export default {
     }
   },
   methods: {
+    ...mapActions(useEventStore, ['loadEvent']),
+    navigateToEventResults(event) {
+      this.loadEvent(event)
+      return this.$router.push(`${this.getBaseEventLink(event)}/results`)
+    },
+    navigateToDivisionResults(event) {
+      this.loadEvent(event)
+      return this.$router.push(`/races/${this.$route.params.raceId}/divisions?eventId=${event.eventId}`)
+    },
+    navigateToAttemptsRecorder(event) {
+      this.loadEvent(event)
+      return this.$router.push(`${this.getBaseEventLink(event)}/distance`)
+    },
     eventDistance: function () {
       if (this.modal.type == "timer") {
         switch (this.modal.distance_unit) {
@@ -189,12 +203,6 @@ export default {
     modalCancel: function () {
       this.resetModal()
       this.toggleModal()
-    },
-    getAttemptsLink: function (event) {
-      return `${this.getBaseEventLink(event)}/distance`
-    },
-    getDivisionsLink: function (event) {
-      return `/races/${this.$route.params.raceId}/divisions?eventId=${event.eventId}`
     },
     getResultsLink: function (page, event) {
       return this.getBaseEventLink(event) + `/${page}`

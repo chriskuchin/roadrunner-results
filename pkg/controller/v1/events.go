@@ -24,7 +24,28 @@ func HandleEventDelete(db *sqlx.DB) http.HandlerFunc {
 }
 
 func HandleEventGet(db *sqlx.DB) http.HandlerFunc {
-	return apiutil.Unimplemented
+	type response struct {
+		EventID     string `json:"eventId"`
+		Description string `json:"description"`
+		Type        string `json:"type"`
+		Distance    int    `json:"distance"`
+	}
+	return func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
+
+		event, err := services.GetRaceEvent(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))
+		if err != nil {
+			apiutil.HandleServerError(err, w, r)
+			return
+		}
+
+		render.JSON(w, r, response{
+			EventID:     event.EventID,
+			Description: event.Description,
+			Type:        event.Type,
+			Distance:    event.Distance,
+		})
+	}
 }
 
 func HandleEventsList(db *sqlx.DB) http.HandlerFunc {

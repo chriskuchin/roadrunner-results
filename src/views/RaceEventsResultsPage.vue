@@ -65,7 +65,7 @@
         <tbody>
           <tr v-for="(result, place) in calculatedResults" :key="place">
             <td>{{ place + 1 }}</td>
-            <td>{{ formatMilliseconds(result.result_ms) }}</td>
+            <td>{{ formatResults(result.result_ms) }}</td>
             <td>{{ result.bib_number }}</td>
             <td>{{ result.first_name }}</td>
             <td>{{ result.last_name }}</td>
@@ -105,12 +105,22 @@ export default {
     };
   },
   mounted: function () {
-    this.calculateResults()
+    var that = this
+    this.loadEventByID(this.$route.params.raceId, this.$route.params.eventId).then(() => {
+      that.calculateResults()
+    })
     this.getHeats()
   },
   methods: {
     ...mapActions(useErrorBus, { handleError: 'handle' }),
     ...mapActions(useResultsStore, ['getResults']),
+    ...mapActions(useEventStore, ['loadEventByID']),
+    formatResults: function (result) {
+      if (this.type === "distance")
+        return formatCentimeters(result, "ftin")
+      else
+        return formatMilliseconds(result)
+    },
     getDivisions: function () {
       let year = new Date().getFullYear()
       let firstDivision = `${year - 6}+`
@@ -176,7 +186,11 @@ export default {
     formatCentimeters,
     formatMilliseconds,
     calculateResults: async function () {
-      this.calculatedResults = await this.getResults(this.$route.params.raceId, this.$route.params.eventId, this.filters.name, this.filters.gender, this.filters.team, this.filters.year, this.filters.timers)
+      let order = "asc"
+      if (this.type === "distance")
+        order = "desc"
+
+      this.calculatedResults = await this.getResults(this.$route.params.raceId, this.$route.params.eventId, this.filters.name, this.filters.gender, this.filters.team, this.filters.year, this.filters.timers, order)
     },
   },
   watch: {
@@ -189,7 +203,7 @@ export default {
   },
   computed: {
     ...mapState(useResultsStore, ['years', 'genders', 'teams']),
-    ...mapStores(useEventStore),
+    ...mapState(useEventStore, ['type'])
   },
 };
 </script>

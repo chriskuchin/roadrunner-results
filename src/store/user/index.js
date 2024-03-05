@@ -1,6 +1,5 @@
 import {
 	browserLocalPersistence,
-	browserSessionPersistence,
 	createUserWithEmailAndPassword,
 	sendEmailVerification,
 	setPersistence,

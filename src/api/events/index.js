@@ -44,12 +44,17 @@ async function getEventResults(
 	team,
 	year,
 	timers,
+	order,
 ) {
 	const url = `/api/v1/races/${raceID}/events/${eventID}/results`;
 	const filters = new URLSearchParams();
 
 	if (name !== "") {
 		filters.append("name", name);
+	}
+
+	if (order !== "") {
+		filters.append("order", order)
 	}
 
 	if (timers != null && timers.length > 0) {

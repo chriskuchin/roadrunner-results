@@ -25,6 +25,7 @@ export const useResultsStore = defineStore("results", {
 			team,
 			year,
 			timers,
+			order,
 		) {
 			const results = await getEventResults(
 				raceID,
@@ -34,6 +35,7 @@ export const useResultsStore = defineStore("results", {
 				team,
 				year,
 				timers,
+				order,
 			);
 
 			for (const elem of results) {

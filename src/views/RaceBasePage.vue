@@ -9,19 +9,19 @@
         </li>
         <li :class="{ 'is-active': isEventPage }" v-if="isEventPage" class="is-active">
           <a href="#" aria-current="page">
-            {{ eventName($route.params.eventId) }}
+            {{ eventName(getEventId) }}
           </a>
         </li>
       </ul>
-    </nav> <router-view></router-view>
+    </nav>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import { useRaceStore } from "../store/race";
-import { mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
 
-const store = useRaceStore()
 export default {
   components: {},
   data: function () {
@@ -29,16 +29,24 @@ export default {
     }
   },
   mounted: function () {
-    store.loadRace(this.$route.params.raceId)
+    this.loadRace(this.$route.params.raceId)
   },
-  methods: {},
+  methods: {
+    ...mapActions(useRaceStore, ['loadRace']),
+  },
   computed: {
     ...mapState(useRaceStore, ["getName", "eventName"]),
+    getEventId: function () {
+      if (this.$route.params.eventId && this.$route.params.eventId !== "")
+        return this.$route.params.eventId
+      else if (this.$route.query.eventId && this.$route.query.eventId !== "")
+        return this.$route.query.eventId
+    },
     backPath: function () {
       return this.$route.path.slice(0, this.$route.path.lastIndexOf('/'))
     },
     isEventPage: function () {
-      return this.$route.params.eventId && this.$route.params.eventId != ""
+      return (this.$route.params.eventId && this.$route.params.eventId !== "") || (this.$route.query.eventId && this.$route.query.eventId !== "")
     }
   },
 };
