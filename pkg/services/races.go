@@ -78,7 +78,7 @@ func GetRaceOwnerID(ctx context.Context, db *sqlx.DB, id string) (string, error)
 	}
 
 	if len(ownerID) != 1 {
-		return "", fmt.Errorf("unexpected number of ownerIDs returned")
+		return "", fmt.Errorf("unexpected number of ownerIDs returned: %+v", ownerID)
 	}
 
 	return ownerID[0], nil

@@ -12,8 +12,13 @@ import (
 )
 
 func HandleTimersCreate(db *sqlx.DB) http.HandlerFunc {
+	type assignments struct {
+		Lane int    `json:"lane,omitempty"`
+		Bib  string `json:"bib,omitempty"`
+	}
 	type TimerRequest struct {
-		Start int64 `json:"start_ts,omitempty"`
+		Start       int64         `json:"start_ts,omitempty"`
+		Assignments []assignments `json:"assignments,omitempty"`
 	}
 	return func(w http.ResponseWriter, r *http.Request) {
 		// create and then start

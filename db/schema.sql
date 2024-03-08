@@ -75,6 +75,13 @@ CREATE TABLE attempts (
   result REAL,
   UNIQUE(race_id, event_id, bib, attempt_no)
 );
+CREATE TABLE lane_assignments (
+  race_id varchar(255),
+  event_id varchar(255),
+  timer_id varchar(255),
+  assignments TEXT,
+  UNIQUE(race_id, event_id, timer_id)
+);
 -- Dbmate schema migrations
 INSERT INTO "schema_migrations" (version) VALUES
   ('20220708034230'),
@@ -85,4 +92,5 @@ INSERT INTO "schema_migrations" (version) VALUES
   ('20231114033313'),
   ('20240126032858'),
   ('20240131022953'),
-  ('20240213021725');
+  ('20240213021725'),
+  ('20240306022224');
