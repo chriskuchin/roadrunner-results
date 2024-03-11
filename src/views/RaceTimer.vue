@@ -43,7 +43,8 @@
         <li :class="{ 'is-active': this.timer.id == timer.id }" v-for="(timer, index) in timers" :key="timer.id"
           @click="this.clickTab(timer)">
           <a>
-            <icon class="mr-2" v-if="timer.count > 0 && timer.timer_start != 0" icon="fa-solid fa-flag-checkered"></icon>
+            <icon class="mr-2" v-if="timer.count > 0 && timer.timer_start != 0" icon="fa-solid fa-flag-checkered">
+            </icon>
             Heat {{ index + 1 }} ({{ timer.count }})
           </a>
         </li>
@@ -71,6 +72,7 @@ import { setAuthHeader } from '../api/auth'
 import { useErrorBus } from '../store/error';
 import { useMediaStore } from '../store/media';
 import { mapActions } from 'pinia';
+import { listTimers } from '../api/timers';
 
 export default {
   components: {
@@ -148,9 +150,7 @@ export default {
       return this.timer.start == 0
     },
     async listTimers() {
-      let res = await fetch("/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/timers")
-
-      this.timers = await res.json()
+      this.timers = listTimers(this.raceID, this.eventID)
     },
     resumeTimer() {
       this.timer.timeout = setTimeout(this.tickTimer, 10)

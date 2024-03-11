@@ -12,6 +12,8 @@
             <div class="dropdown-content">
               <a class="dropdown-item" @click="navigateToAttemptsRecorder(event)"
                 v-if="isDistanceEvent(event)">Attempts</a>
+              <a class="dropdown-item" @click="navigateToDiaplayBoard(event)" v-if="isTimerEvent(event)">Display
+                Board</a>
               <router-link class="dropdown-item" :to="getTimerLink(event)"
                 v-if="isTimerEvent(event)">Timer</router-link>
               <router-link class="dropdown-item" :to="getRecordLink(event)"
@@ -126,6 +128,10 @@ export default {
   },
   methods: {
     ...mapActions(useEventStore, ['loadEvent']),
+    navigateToDiaplayBoard(event) {
+      this.loadEvent(event)
+      return this.$router.push(`${this.getBaseEventLink(event)}/board`)
+    },
     navigateToEventResults(event) {
       this.loadEvent(event)
       return this.$router.push(`${this.getBaseEventLink(event)}/results`)
