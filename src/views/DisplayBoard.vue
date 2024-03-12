@@ -43,7 +43,7 @@ export default {
       if (that.pages.length == 0) {
         that.refreshPages()
       }
-    }, 10000)
+    }, 30000)
   },
   data: function () {
     return {
