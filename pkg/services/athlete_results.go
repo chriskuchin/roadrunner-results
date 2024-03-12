@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 
 	"github.com/jmoiron/sqlx"
@@ -9,16 +10,17 @@ import (
 )
 
 type AthleteResultsRow struct {
-	RaceID    string `db:"race_id"`
-	EventID   string `db:"event_id"`
-	TimerID   string `db:"timer_id"`
-	BibNumber string `db:"bib_number"`
-	FirstName string `db:"first_name"`
-	LastName  string `db:"last_name"`
-	Gender    string `db:"gender"`
-	Team      string `db:"team"`
-	BirthYear string `db:"birth_year"`
-	Result    int    `db:"result"`
+	RaceID    string         `db:"race_id"`
+	EventID   string         `db:"event_id"`
+	TimerID   sql.NullString `db:"timer_id"`
+	BibNumber string         `db:"bib_number"`
+	FirstName string         `db:"first_name"`
+	LastName  string         `db:"last_name"`
+	Gender    string         `db:"gender"`
+	Team      string         `db:"team"`
+	BirthYear string         `db:"birth_year"`
+	Result    float64        `db:"result"`
+	Grade     sql.NullString `db:"grade"`
 }
 
 type AthleteResult struct {
@@ -30,7 +32,7 @@ type AthleteResult struct {
 	Gender    string      `json:"gender"`
 	Team      string      `json:"team"`
 	BirthYear string      `json:"birth_year"`
-	Result    int         `json:"result"`
+	Result    float64     `json:"result"`
 }
 
 func FindAthleteResults(ctx context.Context, db *sqlx.DB, filters map[string]string) ([]AthleteResult, error) {

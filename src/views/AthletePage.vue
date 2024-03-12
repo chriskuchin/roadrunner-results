@@ -16,7 +16,7 @@
           <th><abbr title="Time">time</abbr></th>
         </thead>
         <tbody>
-          <tr v-for="result in results">
+          <tr v-for="result in timerResults">
             <td>{{ result.event.description }}</td>
             <td>{{ calculateMiles(result.event.distance).toFixed(2) }}</td>
             <td>{{ calculateKilometers(result.event.distance).toFixed(2) }}</td>
@@ -62,6 +62,12 @@ export default {
     }
   },
   computed: {
+    distanceResults: function () {
+      return this.results.filter((result) => result.event.type == "distance")
+    },
+    timerResults: function () {
+      return this.results.filter((result) => result.event.type == "timer")
+    }
   },
   methods: {
     calculatePerKPace,

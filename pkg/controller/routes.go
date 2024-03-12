@@ -139,14 +139,14 @@ func Routes(app *firebase.App, db *sqlx.DB, assetsFolder string, debug bool) chi
 						})
 					})
 				})
+				r.Route("/athletes/results", func(r chi.Router) {
+					r.Get("/search", v1.HandleAthleteResultsSearch(db))
+				})
 			})
 		})
 
 		r.Route("/google", func(r chi.Router) {
 			r.HandleFunc("/oauth2/callback", v1.HandleGoogleOAuth())
-		})
-		r.Route("/athletes/results", func(r chi.Router) {
-			r.Get("/search", v1.HandleAthleteResultsSearch(db))
 		})
 		r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
 			_, err := os.Stat(filepath.Join(assetsFolder, r.URL.Path))
