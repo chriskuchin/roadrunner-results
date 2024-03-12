@@ -304,7 +304,7 @@ export default {
       let divisions = {}
       divisions[firstDivision] = yougestDivisionFilter
 
-      for (var i = 1; i <= 10; i = i + 2) {
+      for (var i = 1; i <= 30; i = i + 2) {
         var high = year - (6 + i)
         var low = year - (6 + i + 1)
         var currentDivision = `${low}-${high}`
