@@ -66,7 +66,7 @@ export default {
       const eventId = this.$route.params.eventId
       switch (this.currentPage.type) {
         case "timer":
-          this.page.results = await getEventResults(raceId, eventId, "", "", "", "", [this.currentPage.id], "desc")
+          this.page.results = await getEventResults(raceId, eventId, "", "", "", "", [this.currentPage.id], "asc")
           break;
 
         default:
@@ -76,7 +76,7 @@ export default {
               gender = filter.value
             }
           }
-          this.page.results = await getEventResults(raceId, eventId, [], [gender], [], [], [], "desc")
+          this.page.results = await getEventResults(raceId, eventId, [], [gender], [], [], [], "asc")
           break;
       }
     }
