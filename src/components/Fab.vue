@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed-bottom" v-if="is_disabled">
+  <div class="fixed-bottom">
     <a :class="['button', button_type, 'is-large', 'fab']" @click="emitClick">
       <slot>
         <icon icon="fa-solid fa-plus"></icon>
@@ -26,9 +26,7 @@ export default {
   },
   methods: {
     emitClick() {
-      if (!this.is_disabled)
-        this.$emit('click')
+      this.$emit('click')
     }
-  }
-};
+  };
 </script>
