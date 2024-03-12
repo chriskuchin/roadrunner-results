@@ -30,7 +30,7 @@ async function createRaceEvent(raceID, description, eventType, distance) {
 			method: "POST",
 			body: JSON.stringify({
 				description: description,
-				distance: distance,
+				distance: Number(distance),
 				type: eventType,
 			}),
 		}),
