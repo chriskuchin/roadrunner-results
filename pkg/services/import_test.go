@@ -126,7 +126,7 @@ func Test_getHeatDistanceMeters(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want int
+		want float64
 	}{
 		{
 			name: "test",

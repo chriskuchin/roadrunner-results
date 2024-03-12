@@ -23,6 +23,7 @@ async function deleteRaceEvent(raceID, eventID) {
 }
 
 async function createRaceEvent(raceID, description, eventType, distance) {
+	console.log(distance)
 	await fetch(
 		`/api/v1/races/${raceID}/events`,
 		await setAuthHeader({

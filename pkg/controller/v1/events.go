@@ -25,10 +25,10 @@ func HandleEventDelete(db *sqlx.DB) http.HandlerFunc {
 
 func HandleEventGet(db *sqlx.DB) http.HandlerFunc {
 	type response struct {
-		EventID     string `json:"eventId"`
-		Description string `json:"description"`
-		Type        string `json:"type"`
-		Distance    int    `json:"distance"`
+		EventID     string  `json:"eventId"`
+		Description string  `json:"description"`
+		Type        string  `json:"type"`
+		Distance    float64 `json:"distance"`
 	}
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
@@ -69,9 +69,9 @@ func HandleEventsList(db *sqlx.DB) http.HandlerFunc {
 
 func HandleEventsCreate(db *sqlx.DB) http.HandlerFunc {
 	type EventRequest struct {
-		Description string `json:"description"`
-		Type        string `json:"type"`
-		Distance    int    `json:"distance"`
+		Description string  `json:"description"`
+		Type        string  `json:"type"`
+		Distance    float64 `json:"distance"`
 	}
 
 	return func(w http.ResponseWriter, r *http.Request) {

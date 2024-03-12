@@ -150,7 +150,7 @@ export default {
           case "meter":
             return this.modal.distance_raw
           case "mile":
-            return Math.ceil(this.modal.distance_raw * 1609.344)
+            return this.modal.distance_raw * 1609.344
           case "kilometer":
             return this.modal.distance_raw * 1000
         }

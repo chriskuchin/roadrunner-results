@@ -111,7 +111,7 @@ func isRaceHeatResultsTab(tab string) bool {
 	return raceID.MatchString(tab)
 }
 
-func getHeatDistanceMeters(description ...string) int {
+func getHeatDistanceMeters(description ...string) float64 {
 	for _, race := range description {
 		matches := raceDistance.FindStringSubmatch(race)
 
@@ -122,10 +122,10 @@ func getHeatDistanceMeters(description ...string) int {
 		if strings.ToLower(matches[2]) == "k" {
 			dist, _ := strconv.Atoi(matches[1])
 
-			return dist * 1000
+			return float64(dist) * 1000
 		} else if strings.ToLower(matches[2]) == "m" {
 			dist, _ := strconv.Atoi(matches[1])
-			return dist
+			return float64(dist)
 		}
 	}
 	return 0

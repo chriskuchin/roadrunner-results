@@ -10,18 +10,18 @@ import (
 
 type (
 	EventObject struct {
-		EventID     string `json:"eventId"`
-		Description string `json:"description"`
-		Type        string `json:"type"`
-		Distance    int    `json:"distance"`
+		EventID     string  `json:"eventId"`
+		Description string  `json:"description"`
+		Type        string  `json:"type"`
+		Distance    float64 `json:"distance"`
 	}
 
 	EventRow struct {
-		RaceID      string `db:"race_id"`
-		EventID     string `db:"event_id"`
-		Description string `db:"event_description"`
-		Type        string `db:"event_type"`
-		Distance    int    `db:"distance"`
+		RaceID      string  `db:"race_id"`
+		EventID     string  `db:"event_id"`
+		Description string  `db:"event_description"`
+		Type        string  `db:"event_type"`
+		Distance    float64 `db:"distance"`
 	}
 )
 
@@ -60,7 +60,7 @@ const (
 	`
 )
 
-func AddEvent(ctx context.Context, db *sqlx.DB, raceID, description, eventType string, distance int) (string, error) {
+func AddEvent(ctx context.Context, db *sqlx.DB, raceID, description, eventType string, distance float64) (string, error) {
 	id := uuid.NewString()
 	_, err := db.Exec(addEventQuery, raceID, id, description, eventType, distance)
 	return id, err

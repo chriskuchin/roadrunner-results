@@ -55,11 +55,11 @@ type RaceResult struct {
 }
 
 type EventStats struct {
-	EventID     string `json:"eventId"`
-	Description string `json:"description"`
-	Type        string `json:"type"`
-	Distance    int    `json:"distance"`
-	Finishers   int    `json:"finishers"`
+	EventID     string  `json:"eventId"`
+	Description string  `json:"description"`
+	Type        string  `json:"type"`
+	Distance    float64 `json:"distance"`
+	Finishers   int     `json:"finishers"`
 }
 
 type ParticipantStats struct {
@@ -163,7 +163,7 @@ func ImportRaceFromURL(ctx context.Context, db *sqlx.DB, url string, date time.T
 	}
 
 	for _, event := range eventInfo {
-		eventID, err := AddEvent(ctx, db, raceID, event.Name, "", int(event.Distance))
+		eventID, err := AddEvent(ctx, db, raceID, event.Name, "", event.Distance)
 		if err != nil {
 			return "", err
 		}
