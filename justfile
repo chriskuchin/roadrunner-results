@@ -25,3 +25,6 @@ build:
 
 fmt:
   biome format . --write
+
+update:
+  kubectl rollout restart deploy/rslts-deployment
