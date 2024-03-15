@@ -2,25 +2,16 @@
   <div class="section">
     <div class="box" v-for="race in racesStore.getRaces" :key="race.id">
       <div class="has-text-right">
-        <div class="dropdown is-right" @click="getRaceMenu" v-if="isLoggedIn">
-          <div class="dropdown-trigger">
-            <span class="icon is-clickable" aria-haspopup="true" aria-controls="dropdown-menu">
-              <icon icon="fa-solid fa-ellipsis-v"></icon>
-            </span>
-          </div>
-          <div class="dropdown-menu" id="dropdown-menu" role="menu">
-            <div class="dropdown-content">
-              <a class="dropdown-item">Edit Race</a>
-              <router-link class="dropdown-item" :to="'/races/' + race.id + '/volunteers'">Volunteers</router-link>
-              <a class="dropdown-item" @click="toggleShareModal(race.id)">Add Volunteer</a>
-              <a class="dropdown-item" @click="toggleDivisionModal(race.id)">Manage Divisions</a>
-              <a class="dropdown-item" @click="generateDivisions(race.id)">Generate Divisions</a>
-              <router-link class="dropdown-item" :to="'/races/' + race.id">Race Info</router-link>
-              <hr class="dropdown-divider" />
-              <a class="dropdown-item" @click="deleteRace(race.id)">Delete Race</a>
-            </div>
-          </div>
-        </div>
+        <cm class="is-right" v-if="isLoggedIn">
+          <a class="dropdown-item">Edit Race</a>
+          <router-link class="dropdown-item" :to="'/races/' + race.id + '/volunteers'">Volunteers</router-link>
+          <a class="dropdown-item" @click="toggleShareModal(race.id)">Add Volunteer</a>
+          <a class="dropdown-item" @click="toggleDivisionModal(race.id)">Manage Divisions</a>
+          <a class="dropdown-item" @click="generateDivisions(race.id)">Generate Divisions</a>
+          <router-link class="dropdown-item" :to="'/races/' + race.id">Race Info</router-link>
+          <hr class="dropdown-divider" />
+          <a class="dropdown-item" @click="deleteRace(race.id)">Delete Race</a>
+        </cm>
       </div>
 
       <div class="title is-4">{{ race.name }}</div>
@@ -144,12 +135,14 @@ import { createRace, importRace, deleteRace } from "../api/races"
 import Modal from '../components/Modal.vue'
 import FAB from '../components/Fab.vue'
 import Notification from '../components/Notification.vue'
+import ContextMenu from '../components/DropdownMenu.vue'
 
 export default {
   components: {
     "modal": Modal,
     "fab": FAB,
     "not": Notification,
+    "cm": ContextMenu,
   },
   data: function () {
     return {

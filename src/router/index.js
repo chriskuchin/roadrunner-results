@@ -17,7 +17,8 @@ const RaceVolunteersPage = () => import("../views/RaceVolunteers.vue");
 const RaceInfoPage = () => import("../views/RacePage.vue");
 const AthletePage = () => import("../views/AthletePage.vue");
 const DistanceResults = () => import("../views/DistanceResults.vue");
-const DisplayBoard = () => import("../views/DisplayBoard.vue")
+const DisplayBoard = () => import("../views/DisplayBoard.vue");
+const LaneAssignment = () => import("../views/LaneAssignment.vue");
 
 const routes = [
 	{ path: "/", component: HomePage },
@@ -40,6 +41,7 @@ const routes = [
 				component: RaceDivisionResultsPage,
 			},
 			{ path: "events", name: "events", component: RaceEventsPage },
+			{ path: 'events/:eventId/lanes', component: LaneAssignment, name: "lanes" },
 			{
 				path: "events/:eventId/record",
 				component: RecordResults,

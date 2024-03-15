@@ -2,27 +2,16 @@
   <div class="section">
     <div class="box" v-for="event in  raceStore.eventList " :key="event.id">
       <div class="has-text-right">
-        <div class="dropdown is-right" @click="getEventMenu" v-if="isLoggedIn">
-          <div class="dropdown-trigger">
-            <span class="icon is-clickable" aria-haspopup="true" aria-controls="dropdown-menu">
-              <icon icon="fa-solid fa-ellipsis-v"></icon>
-            </span>
-          </div>
-          <div class="dropdown-menu" role="menu">
-            <div class="dropdown-content">
-              <a class="dropdown-item" @click="navigateToAttemptsRecorder(event)"
-                v-if="isDistanceEvent(event)">Attempts</a>
-              <a class="dropdown-item" @click="navigateToDiaplayBoard(event)" v-if="isTimerEvent(event)">Display
-                Board</a>
-              <router-link class="dropdown-item" :to="getTimerLink(event)"
-                v-if="isTimerEvent(event)">Timer</router-link>
-              <router-link class="dropdown-item" :to="getRecordLink(event)"
-                v-if="isTimerEvent(event)">Recorder</router-link>
-              <hr class="dropdown-divider" v-if="isTimerEvent(event)" />
-              <a href="#" class="dropdown-item" @click="deleteEvent(event)">Delete Event</a>
-            </div>
-          </div>
-        </div>
+
+        <cm class="is-right" v-if="isLoggedIn">
+          <a class="dropdown-item" @click="navigateToAttemptsRecorder(event)" v-if="isDistanceEvent(event)">Attempts</a>
+          <a class="dropdown-item" @click="navigateToDiaplayBoard(event)" v-if="isTimerEvent(event)">Display Board</a>
+          <router-link class="dropdown-item" :to="getTimerLink(event)" v-if="isTimerEvent(event)">Timer</router-link>
+          <router-link class="dropdown-item" :to="getRecordLink(event)"
+            v-if="isTimerEvent(event)">Recorder</router-link>
+          <hr class="dropdown-divider" v-if="isTimerEvent(event)" />
+          <a href="#" class="dropdown-item" @click="deleteEvent(event)">Delete Event</a>
+        </cm>
       </div>
 
       <div class="title is-4">
@@ -107,11 +96,13 @@ import { useEventStore } from "../store/event";
 import { createRaceEvent, deleteRaceEvent } from "../api/events"
 import Modal from '../components/Modal.vue'
 import FAB from '../components/Fab.vue'
+import ContextMenu from '../components/DropdownMenu.vue'
 
 export default {
   components: {
     'modal': Modal,
     'fab': FAB,
+    'cm': ContextMenu,
   },
   data: function () {
     return {
@@ -128,15 +119,6 @@ export default {
   },
   methods: {
     ...mapActions(useEventStore, ['loadEvent']),
-    getEventMenu: function (e) {
-      let target = e.currentTarget
-      if (target.className.includes("is-active")) {
-        target.className = target.className.replace("is-active", "")
-      }
-      else {
-        target.className = e.currentTarget.className + " is-active"
-      }
-    },
     navigateToDiaplayBoard(event) {
       this.loadEvent(event)
       return this.$router.push(`${this.getBaseEventLink(event)}/board`)
@@ -264,4 +246,4 @@ export default {
     ...mapStores(useRaceStore),
   }
 };
-</script>
+</script>../components/DropdownMenu.vue
