@@ -35,7 +35,7 @@
         @update:bib_number="editForm.bib_number = Number($event)"
         @update:birth_year="editForm.birth_year = Number($event)" @update:first_name="editForm.first_name = $event"
         @update:gender="editForm.gender = $event" @update:last_name="editForm.last_name = $event"
-        @update:team="editForm.team = $event" disable_bib_input="true" />
+        @update:team="editForm.team = $event" />
       <div class="field is-horizontal mt-5 mb-0 is-pulled-right">
         <div class=" field-body">
           <div class="field is-grouped">

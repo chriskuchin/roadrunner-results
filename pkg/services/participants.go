@@ -263,7 +263,7 @@ func GetRaceLastBibNumber(ctx context.Context, db *sqlx.DB) (int, error) {
 }
 
 func UpdateParticipant(ctx context.Context, db *sqlx.DB, raceID, participantID string, participant ParticipantRow) error {
-	query := "UPDATE participants SET first_name = ?, last_name = ?, birth_year = ?, team = ?, gender = ? WHERE race_id = ? AND rowid = ?"
-	_, err := db.ExecContext(ctx, query, participant.FirstName, participant.LastName, participant.BirthYear, participant.Team, participant.Gender, raceID, participantID)
+	query := "UPDATE participants SET first_name = ?, last_name = ?, birth_year = ?, team = ?, gender = ?, bib_number = ? WHERE race_id = ? AND rowid = ?"
+	_, err := db.ExecContext(ctx, query, participant.FirstName, participant.LastName, participant.BirthYear, participant.Team, participant.Gender, participant.BibNumber, raceID, participantID)
 	return err
 }

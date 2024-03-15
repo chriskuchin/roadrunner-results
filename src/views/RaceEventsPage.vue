@@ -2,7 +2,7 @@
   <div class="section">
     <div class="box" v-for="event in  raceStore.eventList " :key="event.id">
       <div class="has-text-right">
-        <div class="dropdown is-hoverable is-right" v-if="isLoggedIn">
+        <div class="dropdown is-right" @click="getEventMenu" v-if="isLoggedIn">
           <div class="dropdown-trigger">
             <span class="icon is-clickable" aria-haspopup="true" aria-controls="dropdown-menu">
               <icon icon="fa-solid fa-ellipsis-v"></icon>
@@ -128,6 +128,15 @@ export default {
   },
   methods: {
     ...mapActions(useEventStore, ['loadEvent']),
+    getEventMenu: function (e) {
+      let target = e.currentTarget
+      if (target.className.includes("is-active")) {
+        target.className = target.className.replace("is-active", "")
+      }
+      else {
+        target.className = e.currentTarget.className + " is-active"
+      }
+    },
     navigateToDiaplayBoard(event) {
       this.loadEvent(event)
       return this.$router.push(`${this.getBaseEventLink(event)}/board`)
