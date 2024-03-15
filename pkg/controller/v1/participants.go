@@ -69,9 +69,9 @@ func HandleParticipantsImportCSV(db *sqlx.DB) http.HandlerFunc {
 					firstName, lastName := util.SplitName(row[1])
 					birthYear, _ := strconv.Atoi(row[3])
 					gender := "Unknown"
-					if row[4] == "M" {
+					if row[4] == "M" || strings.ToLower(row[4]) == "male" {
 						gender = "Male"
-					} else if row[4] == "F" {
+					} else if row[4] == "F" || strings.ToLower(row[4]) == "female" {
 						gender = "Female"
 					} else {
 						log.Warn().Msg("Skipping Row bad Gender")
