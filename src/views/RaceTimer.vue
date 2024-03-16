@@ -72,7 +72,8 @@ import { setAuthHeader } from '../api/auth'
 import { useErrorBus } from '../store/error';
 import { useMediaStore } from '../store/media';
 import { mapActions } from 'pinia';
-import { listTimers } from '../api/timers';
+import { listTimers, startTimer } from '../api/timers';
+import { recordFinish } from '../api/results';
 
 export default {
   components: {
@@ -150,7 +151,7 @@ export default {
       return this.timer.start == 0
     },
     async listTimers() {
-      this.timers = listTimers(this.raceID, this.eventID)
+      this.timers = await listTimers(this.raceID, this.eventID)
     },
     resumeTimer() {
       this.timer.timeout = setTimeout(this.tickTimer, 10)
@@ -165,21 +166,10 @@ export default {
       this.timer.start = Date.now()
       this.timer.timeout = setTimeout(this.tickTimer, 10)
 
-      let config = await setAuthHeader({
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          start_ts: this.timer.start
-        })
-      })
-
-      let res = await fetch("/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/timers", config)
-      if (!res.ok) {
-        this.handleError(`Failed to start the timer: ${res.status}`)
-      } else {
-        this.timer.id = (await res.json()).id
+      try {
+        this.timer.id = await startTimer(this.raceID, this.eventID, this.timer.start)
+      } catch (err) {
+        this.handleError(err)
       }
     },
     stopTimer: function () {
@@ -204,19 +194,10 @@ export default {
       this.finishers.push(elapsedTime)
       this.takePicture(this.raceID, this.eventID, finishTime, elapsedTime)
 
-      let res = await fetch(
-        "/api/v1/races/" + this.raceID + "/events/" + this.eventID + "/results", await setAuthHeader({
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            end_ts: finishTime
-          })
-        }))
-
-      if (!res.ok) {
-        this.handleError("Failed to record finisher: " + res.status)
+      try {
+        await recordFinish(this.raceID, this.eventID, finishTime)
+      } catch (err) {
+        this.handleError(err)
       }
     },
     tickTimer: function () {
