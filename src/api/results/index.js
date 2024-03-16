@@ -18,5 +18,4 @@ async function recordFinish(raceId, eventId, finish) {
   }
 }
 
-
 export { recordFinish }

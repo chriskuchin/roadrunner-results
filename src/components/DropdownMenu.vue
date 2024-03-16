@@ -1,9 +1,11 @@
 <template>
   <div class="dropdown" @click="toggleMenu">
     <div class="dropdown-trigger">
-      <span class="icon is-clickable" aria-haspopup="true" aria-controls="dropdown-menu">
-        <icon icon="fa-solid fa-ellipsis-v"></icon>
-      </span>
+      <slot name="trigger">
+        <span class="icon is-clickable" aria-haspopup="true" aria-controls="dropdown-menu">
+          <icon icon="fa-solid fa-ellipsis-v"></icon>
+        </span>
+      </slot>
     </div>
     <div class="dropdown-menu" role="menu">
       <div class="dropdown-content">

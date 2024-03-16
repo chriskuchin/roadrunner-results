@@ -11,6 +11,11 @@
       </ul>
     </div>
     <div class="section">
+      <div class="select">
+        <select v-model="laneCount">
+          <option v-for="n in 8" :value="n + 3">{{ n + 3 }} Lanes</option>
+        </select>
+      </div>
       <table class="table">
         <thead>
           <tr>
@@ -31,10 +36,10 @@
           </tr>
         </tfoot>
         <tbody>
-          <tr v-for="(assignment, index) in lanes">
-            <th>{{ assignment.lane }}</th>
+          <tr v-for="(lane, index) in lanes">
+            <th>{{ lane.lane }}</th>
             <td><input :tabindex="index + 1" class="input is-small" type="text" placeholder="Text input"
-                :value="assignment.bib"></td>
+                :value="lane.bib"></td>
             <td></td>
             <td></td>
             <td></td>
@@ -47,46 +52,39 @@
 
 <script>
 
+import DropdownMenu from '../components/DropdownMenu.vue'
+
 export default {
   mounted: function () {
+    dm: DropdownMenu
   },
   data: function () {
     return {
       id: "123",
-      lanes: [
-        {
-          lane: 1,
-          bib: "211"
-        },
-        {
-          lane: 2,
-          bib: "221"
-        },
-        {
-          lane: 3,
-          bib: "272"
-        },
-        {
-          lane: 4,
-          bib: "222"
-        },
-        {
-          lane: 5,
-          bib: "233"
-        },
-        {
-          lane: 6,
-          bib: "243"
-        },
-        {
-          lane: 7,
-          bib: "289"
-        },
-        {
-          lane: 8,
-          bib: "227"
-        },
-      ],
+      laneCount: 8,
+      lanes: [],
+    }
+  },
+  watch: {
+    laneCount: {
+      handler(newCount) {
+        if (this.lanes.length < newCount) {
+          const lanesToAdd = newCount - this.lanes.length
+          const currentLength = this.lanes.length
+          for (let i = 1; i <= lanesToAdd; i++) {
+            this.lanes.push({
+              lane: i + currentLength,
+              bib: ""
+            })
+          }
+        } else if (this.lanes.length > newCount) {
+          const lanesToRemove = this.lanes.length - newCount
+          for (let i = 1; i <= lanesToRemove; i++) {
+            this.lanes.pop()
+          }
+        }
+      },
+      immediate: true
     }
   },
   computed: {
