@@ -16,7 +16,7 @@
           <option v-for="n in 8" :value="n + 3">{{ n + 3 }} Lanes</option>
         </select>
       </div>
-      <table class="table">
+      <table class="table" style="margin: 0 auto;">
         <thead>
           <tr>
             <th><abbr title="Lane Assignment">Lane</abbr></th>
@@ -38,11 +38,11 @@
         <tbody>
           <tr v-for="(lane, index) in lanes">
             <th>{{ lane.lane }}</th>
-            <td><input :tabindex="index + 1" class="input is-small" type="text" placeholder="Text input"
-                :value="lane.bib"></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td><input :tabindex="index + 1" class="input is-small" type="text" placeholder="Bib Number" @blur="bibBlur"
+                v-model="lanes[index].bib"></td>
+            <td>{{ participants[index].first_name }}</td>
+            <td>{{ participants[index].last_name }}</td>
+            <td>{{ participants[index].birth_year }}</td>
           </tr>
         </tbody>
       </table>
@@ -52,6 +52,7 @@
 
 <script>
 
+import { getParticipantByBib } from '../api/participants';
 import DropdownMenu from '../components/DropdownMenu.vue'
 
 export default {
@@ -63,6 +64,7 @@ export default {
       id: "123",
       laneCount: 8,
       lanes: [],
+      participants: [],
     }
   },
   watch: {
@@ -72,6 +74,11 @@ export default {
           const lanesToAdd = newCount - this.lanes.length
           const currentLength = this.lanes.length
           for (let i = 1; i <= lanesToAdd; i++) {
+            this.participants.push({
+              first_name: "",
+              last_name: "",
+              birth_year: "",
+            })
             this.lanes.push({
               lane: i + currentLength,
               bib: ""
@@ -80,6 +87,7 @@ export default {
         } else if (this.lanes.length > newCount) {
           const lanesToRemove = this.lanes.length - newCount
           for (let i = 1; i <= lanesToRemove; i++) {
+            this.participants.pop()
             this.lanes.pop()
           }
         }
@@ -90,6 +98,18 @@ export default {
   computed: {
   },
   methods: {
+    async bibBlur(e) {
+      const idx = e.target.tabIndex
+      const bib = e.target.value
+
+      if (bib !== "") {
+        let participant = await getParticipantByBib(this.$route.params.raceId, bib)
+
+        this.participants[idx - 1].first_name = participant.first_name
+        this.participants[idx - 1].last_name = participant.last_name
+        this.participants[idx - 1].birth_year = participant.birth_year
+      }
+    }
   }
 };
 </script>
