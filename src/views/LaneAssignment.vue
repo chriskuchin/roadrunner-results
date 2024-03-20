@@ -10,7 +10,7 @@
         <li :class="{ 'is-active': id == '' }"><a @click="newHeat">New +</a></li>
       </ul>
     </div>
-    <div class="section">
+    <div class="section" v-if="id !== ''">
       <div class="select">
         <select v-model="laneCount">
           <option v-for=" n  in  8 " :value="n + 3">{{ n + 3 }} Lanes</option>
