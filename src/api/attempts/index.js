@@ -14,7 +14,7 @@ async function listEventAttempts(raceID, eventID, bibNumber) {
 }
 
 async function recordEventAttempt(raceID, eventID, bibNumber, attempt, distance) {
-  let attemptResponse = await fetch(
+  const attemptResponse = await fetch(
     `/api/v1/races/${raceID}/events/${eventID}/attempts`,
     await setAuthHeader({
       method: "POST",

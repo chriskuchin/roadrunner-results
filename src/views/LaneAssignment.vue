@@ -3,17 +3,17 @@
     <h1>Lane Assignment</h1>
     <div class="tabs">
       <ul>
-        <li class="is-active"><a>Heat 1</a></li>
-        <li><a>Heat 2</a></li>
-        <li><a>Heat 3</a></li>
-        <li><a>Heat 4</a></li>
-        <li><a>New +</a></li>
+        <li :class="{ 'is-active': heat.timer_id == id }" v-for="(heat, index) in heats" :key="heat.timer_id"
+          @click="activateHeat(heat)"><a>Heat {{
+          index + 1 }}</a>
+        </li>
+        <li :class="{ 'is-active': id == '' }"><a @click="newHeat">New +</a></li>
       </ul>
     </div>
     <div class="section">
       <div class="select">
         <select v-model="laneCount">
-          <option v-for="n in 8" :value="n + 3">{{ n + 3 }} Lanes</option>
+          <option v-for=" n  in  8 " :value="n + 3">{{ n + 3 }} Lanes</option>
         </select>
       </div>
       <table class="table" style="margin: 0 auto;">
@@ -36,7 +36,7 @@
           </tr>
         </tfoot>
         <tbody>
-          <tr v-for="(lane, index) in lanes">
+          <tr v-for="( lane, index ) in  lanes ">
             <th>{{ lane.lane }}</th>
             <td><input :tabindex="index + 1" class="input is-small" type="text" placeholder="Bib Number" @blur="bibBlur"
                 v-model="lanes[index].bib"></td>
@@ -52,19 +52,22 @@
 
 <script>
 
+import { createNewHeat, listHeats } from '../api/heats';
 import { getParticipantByBib } from '../api/participants';
 import DropdownMenu from '../components/DropdownMenu.vue'
 
 export default {
-  mounted: function () {
-    dm: DropdownMenu
+  components: {},
+  mounted: async function () {
+    this.heats = await listHeats(this.$route.params.raceId, this.$route.params.eventId)
   },
   data: function () {
     return {
-      id: "123",
+      id: "",
       laneCount: 8,
       lanes: [],
       participants: [],
+      heats: [],
     }
   },
   watch: {
@@ -98,6 +101,25 @@ export default {
   computed: {
   },
   methods: {
+    activateHeat(heat) {
+      if (this.id != "") {
+        console.log("update the heat")
+      }
+      this.id = heat.timer_id
+
+      if (heat.assignments.length !== 0)
+        this.lanes = heat.assignments
+
+      if (this.lanes.length == 0) {
+        this.laneCount = 8
+      } else {
+        this.laneCount = this.lanes.length
+      }
+    },
+    async newHeat() {
+      const heat = await createNewHeat(this.$route.params.raceId, this.$route.params.eventId, [])
+      this.heats.push(heat)
+    },
     async bibBlur(e) {
       const idx = e.target.tabIndex
       const bib = e.target.value
