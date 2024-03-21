@@ -2,7 +2,7 @@
   <div class="container mx-5">
     <h1 class="title">Participants</h1>
     <div class="table-container">
-      <table class="table" style="margin: 0 auto;">
+      <table class="table is-hoverable is-fullwidth" style="margin: 0 auto;">
         <thead>
           <tr>
             <th><abbr title="Bib Number">Bib</abbr></th>
@@ -14,7 +14,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="participant in currentParticipants">
+          <tr v-for="participant in currentParticipants" class="is-size-4">
             <td>{{ participant.bibNumber }}</td>
             <td>{{ participant.firstName }} {{ participant.lastName }}</td>
             <td>{{ participant.birthYear }}</td>
