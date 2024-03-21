@@ -44,7 +44,9 @@ import {
 	faStopwatch,
 	faUser,
 	faCrown,
-	faAngleDown
+	faAngleDown,
+	faTrash,
+	faPencil
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
 	faPlus,
@@ -60,6 +62,8 @@ library.add(
 	faUser,
 	faCrown,
 	faAngleDown,
+	faTrash,
+	faPencil
 );
 
 require("./assets/");
