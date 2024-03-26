@@ -20,13 +20,13 @@
         </div>
       </div>
     </div>
-    <div class="tile is-ancestor">
-      <div class="tile is-parent">
-        <div class="tile is-6 is-child">
+    <div class="grid">
+      <div class="cell">
+        <div class="box is-6">
           <p class="title">Participants</p>
           <canvas id="birth-year"></canvas>
         </div>
-        <div class="tile is-6 is-child">
+        <div class="box is-6">
           <p class="title">Events</p>
           <ul class="has-text-centered">
             <li v-for="event in events" :key="event.eventId">
