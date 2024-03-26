@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="level">
+    <div class="level mb-4">
       <div class="level-item has-text-centered">
         <div>
           <p class="heading">Participants</p>
@@ -26,13 +26,15 @@
         </div>
       </div> -->
     </div>
-    <div class="tile is-ancestor">
-      <div class="tile is-parent">
-        <div class="tile is-6 is-child">
+    <div class="grid gap-3 is-col-min-3">
+      <div class="cell">
+        <div class="box">
           <p class="title">Participants</p>
           <canvas id="birth-year"></canvas>
         </div>
-        <div class="tile is-6 is-child">
+      </div>
+      <div class="cell">
+        <div class="box">
           <p class="title">Events</p>
           <ul class="has-text-centered">
             <li v-for="event in events" :key="event.eventId">
