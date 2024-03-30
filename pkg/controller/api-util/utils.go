@@ -33,11 +33,11 @@ func HandleServiceUnavailable(err error, w http.ResponseWriter, r *http.Request)
 }
 
 func HandleForbidden(w http.ResponseWriter, r *http.Request) {
-	render.Status(r, http.StatusForbidden)
+	w.WriteHeader(http.StatusForbidden)
 }
 
 func HandleUnauthorized(w http.ResponseWriter, r *http.Request) {
-	render.Status(r, http.StatusUnauthorized)
+	w.WriteHeader(http.StatusUnauthorized)
 }
 
 func Unimplemented(w http.ResponseWriter, r *http.Request) {

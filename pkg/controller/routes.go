@@ -28,7 +28,7 @@ func Routes(app *firebase.App, db *sqlx.DB, assetsFolder string, debug bool) chi
 	}
 
 	r := chi.NewRouter()
-	r.Use(middleware.AuthenticationMiddleware(authClient))
+	r.Use(middleware.AuthenticationMiddleware(authClient.VerifyIDToken, []string{http.MethodGet, http.MethodOptions}, os.Getenv))
 
 	if debug {
 		r.Use(cors.Handler(cors.Options{
@@ -59,6 +59,9 @@ func Routes(app *firebase.App, db *sqlx.DB, assetsFolder string, debug bool) chi
 		r.Route("/api", func(r chi.Router) {
 			r.Get("/healthcheck", HandleHealthcheckGet())
 			r.Route("/v1", func(r chi.Router) {
+				r.Route("/me", func(r chi.Router) {
+					r.Get("/", v1.HandleGetCurrentUser(db, authClient))
+				})
 				r.Route("/races", func(r chi.Router) {
 					r.Get("/", v1.HandleRacesList(db))
 					r.Post("/", v1.HandleRacesCreate(db))
@@ -68,7 +71,7 @@ func Routes(app *firebase.App, db *sqlx.DB, assetsFolder string, debug bool) chi
 					})
 					r.Route("/{raceID}", func(r chi.Router) {
 						r.Use(middleware.RaceCtx)
-						r.Use(middleware.UserAuthMiddleware(db))
+						r.Use(middleware.UserAuthMiddleware(db, []string{http.MethodGet, http.MethodOptions}))
 
 						r.Delete("/", v1.HandleRaceDelete(db))
 						r.Get("/", v1.HandleRaceGet(db))
@@ -114,6 +117,7 @@ func Routes(app *firebase.App, db *sqlx.DB, assetsFolder string, debug bool) chi
 									r.Route("/{resultID}", func(r chi.Router) {
 										r.Use(middleware.ResultCtx)
 										r.Patch("/", v1.HandleEventResultsUpdate(db))
+										r.Delete("/", v1.HandleEventResultsDelete(db))
 									})
 								})
 								r.Route("/heats", func(r chi.Router) {

@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="field is-horizontal">
+    <div class="field is-horizontal mb-2 mt-4">
       <div class="field-label is-normal">
         <label class="label">Name</label>
       </div>
@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="field is-horizontal">
+    <div class="field is-horizontal mb-2">
       <div class="field-label is-normal">
         <label class="label">Race Info</label>
       </div>
@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <div class="field is-horizontal">
+    <div class="field is-horizontal mb-2">
       <div class="field-label is-normal">
         <label class="label">Gender</label>
       </div>
@@ -62,7 +62,7 @@
       </div>
     </div>
 
-    <div class="field is-horizontal">
+    <div class="field is-horizontal mb-2">
       <div class="field-label is-normal">
         <label class="label">Birth Year</label>
       </div>
