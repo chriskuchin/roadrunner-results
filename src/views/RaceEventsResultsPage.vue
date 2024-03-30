@@ -61,10 +61,10 @@
           <th>Birth Year</th>
           <th>Team</th>
           <th>Division</th>
-          <th></th>
+          <th v-if="isLoggedIn"></th>
         </thead>
-        <tbody>
-          <tr v-for="(result, rowid) in calculatedResults" :key="rowid">
+        <tbody class="is-size-4">
+          <tr v-for="(result, rowid) in results" :key="rowid">
             <td>{{ rowid + 1 }}</td>
             <td>{{ formatResults(result.result_ms) }}</td>
             <td>{{ result.bib_number }}</td>
@@ -74,31 +74,22 @@
             <td>{{ result.birth_year }}</td>
             <td>{{ result.team }}</td>
             <td>{{ getParticipantDivision(result.birth_year) }}</td>
-            <td>
-              <!-- <div class="field has-addons">
+            <td v-if="isLoggedIn">
+              <div class="field has-addons">
                 <p class="control">
-                  <button class="button is-danger is-small" @click="deleteResult(result.result_id)">
-                    <span class="icon is-small">
-                      <icon icon="fa-solid fa-trash"></icon>
-                    </span>
-                  </button>
-                </p>
-                <p class="control">
-                  <button class="button is-small is-info" @click="editResult(result.result_id, rowid)">
+                  <button class="button is-small is-info" @click="editResult(rowid)">
                     <span class="icon is-small">
                       <icon icon="fa-solid fa-pencil"></icon>
                     </span>
                   </button>
                 </p>
-              </div> -->
+              </div>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
-    <edit-results ref="edit-results" />
-
-    <button class="button" @click="openModal">Press Me</button>
+    <edit-results ref="edit-results" @reload="calculateResults" />
   </div>
 </template>
 
@@ -107,8 +98,8 @@ import { useEventStore } from "../store/event";
 import { useResultsStore } from "../store/results"
 import { mapActions, mapState } from "pinia";
 import { useErrorBus } from "../store/error";
+import { useUserStore } from "../store/user";
 import { formatMilliseconds, formatCentimeters } from "../utilities";
-import { deleteResult } from "../api/results"
 import EditResultsModal from '../components/modals/EditResults.vue'
 
 export default {
@@ -117,7 +108,6 @@ export default {
   },
   data: function () {
     return {
-      calculatedResults: [],
       photos: [],
       options: {
         heats: [],
@@ -132,7 +122,7 @@ export default {
     };
   },
   mounted: function () {
-    var that = this
+    const that = this
     this.loadEventByID(this.$route.params.raceId, this.$route.params.eventId).then(() => {
       that.calculateResults()
     })
@@ -140,20 +130,10 @@ export default {
   },
   methods: {
     ...mapActions(useErrorBus, { handleError: 'handle' }),
-    ...mapActions(useResultsStore, ['getResults']),
+    ...mapActions(useResultsStore, ['loadResults']),
     ...mapActions(useEventStore, ['loadEventByID']),
-    openModal: function () {
-      this.$refs['edit-results'].open()
-    },
-    deleteResult: async function (resultId) {
-      if (window.confirm("Are you sure you want to delete this result?")) {
-        try {
-          await deleteResult(this.$route.params.raceId, this.$route.params.eventId, resultId)
-          this.calculateResults()
-        } catch (e) {
-          console.warn(e)
-        }
-      }
+    editResult: function (rowId) {
+      this.$refs['edit-results'].open(rowId)
     },
     formatResults: function (result) {
       if (this.type === "distance")
@@ -230,7 +210,7 @@ export default {
       if (this.type === "distance")
         order = "desc"
 
-      this.calculatedResults = await this.getResults(this.$route.params.raceId, this.$route.params.eventId, this.filters.name, this.filters.gender, this.filters.team, this.filters.year, this.filters.timers, order)
+      this.loadResults(this.$route.params.raceId, this.$route.params.eventId, this.filters.name, this.filters.gender, this.filters.team, this.filters.year, this.filters.timers, order)
     },
   },
   watch: {
@@ -242,7 +222,8 @@ export default {
     },
   },
   computed: {
-    ...mapState(useResultsStore, ['years', 'genders', 'teams']),
+    ...mapState(useUserStore, ['isLoggedIn']),
+    ...mapState(useResultsStore, ['years', 'genders', 'teams', 'results']),
     ...mapState(useEventStore, ['type'])
   },
 };

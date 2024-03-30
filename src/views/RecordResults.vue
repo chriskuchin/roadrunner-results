@@ -48,12 +48,11 @@
 
 <script>
 import { formatMilliseconds } from "../utilities";
-import { useResultsStore } from "../store/results";
-import { mapActions } from "pinia";
 import RacerInput from "../components/ResultsInput.vue";
 import ResultsTable from "../components/ResultsTable.vue";
 import Notification from '../components/Notification.vue';
 import Scanner from '../components/Scanner.vue'
+import { recordResult } from "../api/results";
 
 export default {
   components: {
@@ -83,14 +82,8 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useResultsStore, ["recordRunnerResult"]),
     bibInput: async function (e) {
-      let ok = await this.recordRunnerResult({
-        bib: e.bib,
-        raceId: this.$route.params.raceId,
-        eventId: this.$route.params.eventId,
-        timerId: this.timerId,
-      });
+      let ok = await recordResult(this.$route.params.raceId, this.$route.params.eventId, e.bib, this.timerId)
 
       if (ok) {
         if (e.success) {

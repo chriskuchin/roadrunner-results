@@ -15,7 +15,7 @@
       </div>
 
       <div class="title is-4">{{ race.name }}</div>
-      <div class="subtitle" v-if="race.date">{{ getRaceDate(race.date) }}</div>
+      <div class="subtitle mb-4" v-if="race.date">{{ getRaceDate(race.date) }}</div>
       <div class="buttons">
         <router-link :to="'/races/' + race.id + '/events'"
           class="button is-info is-light is-outlined">Events</router-link>

@@ -21,12 +21,12 @@ import (
 
 func HandleEventResultsUpdate(db *sqlx.DB) http.HandlerFunc {
 	type PatchResultPayload struct {
-		Time int    `json:"result"`
-		Bib  string `json:"bib_number"`
+		Result int    `json:"result"`
+		Bib    string `json:"bib_number"`
 	}
 
 	return func(w http.ResponseWriter, r *http.Request) {
-		// ctx := r.Context()
+		ctx := r.Context()
 
 		body, err := io.ReadAll(r.Body)
 		if err != nil {
@@ -42,12 +42,24 @@ func HandleEventResultsUpdate(db *sqlx.DB) http.HandlerFunc {
 		}
 
 		if payload.Bib != "" {
-			log.Info().Msg("Bib Update")
+			err := services.UpdateResultBib(ctx, db, util.GetResultIDFromContext(ctx), payload.Bib)
+			if err != nil {
+				log.Error().Err(err).Send()
+				apiutil.HandleServerError(err, w, r)
+				return
+			}
 		}
 
-		if payload.Time != 0 {
-			log.Info().Msg("Time Update")
+		if payload.Result != 0 {
+			err := services.UpdateResultResult(ctx, db, util.GetResultIDFromContext(ctx), payload.Result)
+			if err != nil {
+				log.Error().Err(err).Send()
+				apiutil.HandleServerError(err, w, r)
+				return
+			}
 		}
+
+		w.WriteHeader(http.StatusNoContent)
 	}
 }
 

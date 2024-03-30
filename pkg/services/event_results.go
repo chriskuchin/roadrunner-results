@@ -39,16 +39,22 @@ type (
 const (
 	getEventResultsQuery string = "SELECT p.first_name, p.last_name, r.bib_number, p.birth_year, p.gender, r.rowid, r.result, r.timer_id, p.team FROM results as r LEFT JOIN participants as p USING(bib_number, race_id) WHERE"
 
-	updateResultsTimeQuery string = "UPDATE results set result = ? WHERE rowid = ?"
+	updateResultsResultQuery string = "UPDATE results SET result = ? WHERE rowid = ?"
+	updateResultsBibQuery    string = "UPDATE results SET bib_number = ? WHERE rowid = ?"
 )
 
 var (
-	ORDER_ALLOWED map[string]string = map[string]string{"asc": "ASC", "desc": "DESC"}
+	order_allowed map[string]string = map[string]string{"asc": "ASC", "desc": "DESC"}
 )
 
-func UpdateResultTime(ctx context.Context, db *sqlx.DB, resultID string, time int) error {
+func UpdateResultResult(ctx context.Context, db *sqlx.DB, resultId string, result int) error {
+	_, err := db.ExecContext(ctx, updateResultsResultQuery, result, resultId)
+	return err
+}
 
-	return nil
+func UpdateResultBib(ctx context.Context, db *sqlx.DB, resultId, bib string) error {
+	_, err := db.ExecContext(ctx, updateResultsBibQuery, bib, resultId)
+	return err
 }
 
 func DeleteEventResult(ctx context.Context, db *sqlx.DB, resultId string) error {
@@ -57,7 +63,7 @@ func DeleteEventResult(ctx context.Context, db *sqlx.DB, resultId string) error 
 }
 
 func GetEventResults(ctx context.Context, db *sqlx.DB, filters map[string][]string, order string) ([]ParticipantEventResult, error) {
-	queryOrder, ok := ORDER_ALLOWED[order]
+	queryOrder, ok := order_allowed[order]
 	if !ok {
 		return nil, fmt.Errorf("non allowed order arg: %s", order)
 	}

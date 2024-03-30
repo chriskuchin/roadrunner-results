@@ -1,10 +1,13 @@
 import { defineStore } from "pinia";
-import { setAuthHeader } from "../../api/auth";
 import { getEventResults } from "../../api/events";
+import { deleteResult, recordResult, updateResult } from "../../api/results";
 
 export const useResultsStore = defineStore("results", {
 	state: () => {
 		return {
+			results: [],
+			raceId: "",
+			eventId: "",
 			teamOptions: new Set(),
 			genderOptions: new Set(),
 			yearOptions: new Set(),
@@ -17,9 +20,9 @@ export const useResultsStore = defineStore("results", {
 		years: (state) => [...state.yearOptions].sort(),
 	},
 	actions: {
-		getResults: async function (
-			raceID,
-			eventID,
+		loadResults: async function (
+			raceId,
+			eventId,
 			name,
 			gender,
 			team,
@@ -27,9 +30,12 @@ export const useResultsStore = defineStore("results", {
 			timers,
 			order,
 		) {
-			const results = await getEventResults(
-				raceID,
-				eventID,
+			this.raceId = raceId
+			this.eventId = eventId
+
+			this.results = await getEventResults(
+				raceId,
+				eventId,
 				name,
 				gender,
 				team,
@@ -38,37 +44,31 @@ export const useResultsStore = defineStore("results", {
 				order,
 			);
 
-			for (const elem of results) {
+			for (const elem of this.results) {
 				this.yearOptions.add(elem.birth_year);
 				this.teamOptions.add(elem.team);
 				this.genderOptions.add(elem.gender);
 				this.timerOptions.add(elem.timer_id);
 			}
-			return results;
+			return this.results;
+		},
+		updateResultByRowId: async function(rowId, result, bib) {
+			this.results[rowId]
+			console.log(this.results[rowId].result_id, result, bib)
+
+			await updateResult(this.raceId, this.eventId, this.results[rowId].result_id, result, bib)
+		},
+		getResultByRowId: function(rowId) {
+			return this.results[rowId]
+		},
+		deleteResultByRowId: async function (rowId) {
+			if (!this.raceId || !this.eventId)
+				throw new Error("raceId or eventId not set", this.raceId, this.eventId)
+
+			await deleteResult(this.raceId, this.eventId, this.results[rowId].result_id)
 		},
 		recordRunnerResult: async (runner) => {
-			const payload = {
-				bib_number: runner.bib,
-			};
-
-			if (runner.timerId !== "" && runner.timerId !== "latest") {
-				payload.timer_id = runner.timerId;
-			}
-
-			const url = `/api/v1/races/${runner.raceId}/events/${runner.eventId}/results`;
-
-			const res = await fetch(
-				url,
-				await setAuthHeader({
-					method: "PUT",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify(payload),
-				}),
-			);
-
-			return res.ok;
+			return await recordResult(runner.raceId, runner.eventId, runner.bib, runner.timerId)
 		},
 	},
 });

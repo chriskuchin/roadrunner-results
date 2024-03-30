@@ -29,4 +29,49 @@ async function deleteResult(raceId, eventId, resultId) {
   }
 }
 
-export { recordFinish, deleteResult }
+async function recordResult(raceId, eventId, bib, timerId) {
+  const payload = {
+    bib_number: bib,
+  };
+
+  if (timerId !== "" && timerId !== "latest") {
+    payload.timer_id = timerId;
+  }
+
+  const url = `/api/v1/races/${raceId}/events/${eventId}/results`;
+
+  const res = await fetch(
+    url,
+    await setAuthHeader({
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    }),
+  );
+
+  return res.ok;
+}
+
+async function updateResult(raceId, eventId, resultId, result, bib) {
+  const payload = {
+    result: result,
+    bib_number: bib,
+  }
+
+  const url = `/api/v1/races/${raceId}/events/${eventId}/results/${resultId}`;
+  const res = await fetch(
+    url,
+    await setAuthHeader({
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    }),
+  );
+}
+
+
+export { recordFinish, deleteResult, recordResult, updateResult }
