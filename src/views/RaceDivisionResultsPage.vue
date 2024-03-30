@@ -1,6 +1,6 @@
 <template>
   <div class="section">
-    <div class="field">
+    <div class="field mb-4">
       <div class="control">
         <label class="label is-large">Event</label>
         <div class="select is-large">
@@ -19,7 +19,7 @@
         </div>
       </div> -->
     </div>
-    <div class="box" v-for="(division) in  divisionTables" :key="division">
+    <div class="box mb-6" v-for="(division) in  divisionTables" :key="division">
       <h1 class="title">{{ division.display }}</h1>
       <div class="table-container">
         <table class="table" style="min-width: 100%;">

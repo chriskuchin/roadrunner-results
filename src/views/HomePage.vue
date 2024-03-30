@@ -3,7 +3,7 @@
     <div class="box mb-4" v-for="race in racesStore.getRaces" :key="race.id">
       <div class="has-text-right">
         <cm class="is-right" v-if="isLoggedIn">
-          <a class="dropdown-item">Edit Race</a>
+          <!-- <a class="dropdown-item">Edit Race</a> -->
           <router-link class="dropdown-item" :to="'/races/' + race.id + '/volunteers'">Volunteers</router-link>
           <a class="dropdown-item" @click="openShareModal(race.id)">Add Volunteer</a>
           <a class="dropdown-item" @click="openDivisionsModal(race.id)">Manage Divisions</a>
