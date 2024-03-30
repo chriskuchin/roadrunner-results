@@ -75,7 +75,7 @@
             <td>{{ result.team }}</td>
             <td>{{ getParticipantDivision(result.birth_year) }}</td>
             <td>
-              <div class="field has-addons">
+              <!-- <div class="field has-addons">
                 <p class="control">
                   <button class="button is-danger is-small" @click="deleteResult(result.result_id)">
                     <span class="icon is-small">
@@ -90,7 +90,7 @@
                     </span>
                   </button>
                 </p>
-              </div>
+              </div> -->
             </td>
           </tr>
         </tbody>
