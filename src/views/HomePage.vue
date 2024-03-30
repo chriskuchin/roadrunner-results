@@ -1,12 +1,12 @@
 <template>
   <div class="section">
-    <div class="box" v-for="race in racesStore.getRaces" :key="race.id">
+    <div class="box mb-4" v-for="race in racesStore.getRaces" :key="race.id">
       <div class="has-text-right">
         <cm class="is-right" v-if="isLoggedIn">
-          <a class="dropdown-item">Edit Race</a>
+          <!-- <a class="dropdown-item">Edit Race</a> -->
           <router-link class="dropdown-item" :to="'/races/' + race.id + '/volunteers'">Volunteers</router-link>
-          <a class="dropdown-item" @click="toggleShareModal(race.id)">Add Volunteer</a>
-          <a class="dropdown-item" @click="toggleDivisionModal(race.id)">Manage Divisions</a>
+          <a class="dropdown-item" @click="openShareModal(race.id)">Add Volunteer</a>
+          <a class="dropdown-item" @click="openDivisionsModal(race.id)">Manage Divisions</a>
           <a class="dropdown-item" @click="generateDivisions(race.id)">Generate Divisions</a>
           <router-link class="dropdown-item" :to="'/races/' + race.id">Race Info</router-link>
           <hr class="dropdown-divider" />
@@ -23,104 +23,10 @@
           class="button is-info is-light is-outlined">Participants</router-link>
       </div>
     </div>
-    <fab v-if="isLoggedIn" @click="toggleCreateRaceModal"></fab>
-    <modal @close="toggleShareModal" :show="volunteerModal.show">
-      <div class="title">Volunteers</div>
-      <hr />
-      <div class="subtitle">Add Volunteers</div>
-      <span class="tag is-black mr-2" v-for="volunteer in volunteerModal.volunteers" :key="volunteer.userId">
-        {{ volunteer.email }}
-      </span>
-      <div class="field">
-        <label class="label">Label</label>
-        <div class="control">
-          <input class="input" type="text" placeholder="Text input" v-model="volunteerModal.emailInput"
-            v-on:keyup.enter="appendEmailForShare">
-        </div>
-        <p class="help">Volunteers must have a user account. Enter the users email address above.</p>
-      </div>
-      <div class="field is-grouped is-grouped-multiline">
-        <div class="tags has-addons" v-for="email in volunteerModal.emails" style="margin: 0 5px;">
-          <span class="tag is-link">{{ email.email }}</span>
-          <span class="tag is-delete" @click="removeVolunteerEmail(email.email)"></span>
-        </div>
-      </div>
-      <div class="field is-grouped">
-        <div class="control">
-          <button class="button is-link" @click="addVolunteers">Share</button>
-        </div>
-        <div class="control">
-          <button class="button is-link is-light" @click="toggleShareModal">Cancel</button>
-        </div>
-      </div>
-    </modal>
-    <modal @close="toggleCreateRaceModal" :show="raceModal.show">
-      <div class="tabs">
-        <ul>
-          <li :class="{ 'is-active': raceModal.tabs.activeTab == 'create' }"><a
-              @click="raceModalTabClick('create')">Create Race</a></li>
-          <li :class="{ 'is-active': raceModal.tabs.activeTab == 'import' }"><a
-              @click="raceModalTabClick('import')">Import Race</a></li>
-        </ul>
-      </div>
-      <div v-if="raceModal.tabs.activeTab == 'create'">
-        <p class="title">Create Race</p>
-        <div class="field">
-          <label class="label">Description</label>
-          <div class="control">
-            <input class="input" type="text" placeholder="Race Description" v-model="raceModal.description">
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Date</label>
-          <div class="control">
-            <input class="input" type="date" placeholder="" v-model="raceModal.date">
-          </div>
-        </div>
-        <div class="field is-grouped">
-          <div class="control">
-            <button :class="['button', 'is-link', { 'is-loading': raceModal.creating }]"
-              @click="createRace">Submit</button>
-          </div>
-          <div class="control">
-            <button class="button is-link is-light" @click="toggleCreateRaceModal">Cancel</button>
-          </div>
-        </div>
-      </div>
-      <div v-if="raceModal.tabs.activeTab == 'import'">
-        <p class="title">Import Race</p>
-        <div class="field">
-          <label class="label">Race URL</label>
-          <div class="control">
-            <input class="input" type="text" placeholder="Race URL" v-model="raceModal.importURL">
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Description</label>
-          <div class="control">
-            <input class="input" type="text" placeholder="Race Description" v-model="raceModal.description">
-          </div>
-        </div>
-        <div class="field">
-          <label class="label">Date</label>
-          <div class="control">
-            <input class="input" type="date" placeholder="" v-model="raceModal.date">
-          </div>
-        </div>
-        <div class="field is-grouped">
-          <div class="control">
-            <button :class="['button', 'is-link', { 'is-loading': raceModal.importing }]"
-              @click="raceModalImportRace">Submit</button>
-          </div>
-          <div class="control">
-            <button class="button is-link is-light" @click="toggleCreateRaceModal">Cancel</button>
-          </div>
-        </div>
-      </div>
-    </modal>
-    <modal @close="toggleDivisionModal" :show="divisionModal.show">
-      <div v-for="division in divisions">{{ division.display }} - {{ division.filters }}</div>
-    </modal>
+    <fab v-if="isLoggedIn" @click="openCreateRaceModal"></fab>
+    <create-race-modal ref="create-race-modal" />
+    <share-modal ref="share-modal" />
+    <divisions-modal ref="divisions-modal" />
     <not :show="error.show" type="is-danger is-light" @close="dismissError">{{ error.msg }}</not>
   </div>
 </template>
@@ -131,46 +37,26 @@ import { useRacesStore } from "../store/races"
 import { useRaceStore } from '../store/race'
 import { useUserStore } from '../store/user'
 import { useDivisionsStore } from '../store/divisions'
-import { createRace, importRace, deleteRace } from "../api/races"
-import Modal from '../components/Modal.vue'
+import { deleteRace } from "../api/races"
+
 import FAB from '../components/Fab.vue'
 import Notification from '../components/Notification.vue'
 import ContextMenu from '../components/DropdownMenu.vue'
+import ShareRaceModal from '../components/modals/ShareModal.vue'
+import DivisionsModal from '../components/modals/DivisionsModal.vue'
+import CreateRaceModal from '../components/modals/CreateRaceModal.vue'
 
 export default {
   components: {
-    "modal": Modal,
+    "share-modal": ShareRaceModal,
+    "divisions-modal": DivisionsModal,
+    "create-race-modal": CreateRaceModal,
     "fab": FAB,
     "not": Notification,
     "cm": ContextMenu,
   },
   data: function () {
     return {
-      divisionModal: {
-        show: false,
-        raceId: "",
-      },
-      volunteerModal: {
-        show: false,
-        emailInput: "",
-        raceID: "",
-        emails: [],
-        volunteers: [],
-      },
-      volunteersModal: {
-        show: false,
-      },
-      raceModal: {
-        show: false,
-        creating: false,
-        importing: false,
-        description: "",
-        date: "",
-        importURL: "",
-        tabs: {
-          activeTab: "create",
-        }
-      },
       error: {
         show: false,
         msg: "",
@@ -199,16 +85,6 @@ export default {
       let raceDate = new Date(dateParts[0], dateParts[1] - 1, dateParts[2])
       return raceDate.toLocaleDateString('us-EN', options)
     },
-    raceModalImportRace: async function () {
-      this.raceModal.importing = true
-      await importRace(this.raceModal.importURL, this.raceModal.description, this.raceModal.date)
-      this.toggleCreateRaceModal()
-      this.racesStore.loadRaces()
-      this.raceModal.importing = false
-    },
-    raceModalTabClick: function (tabID) {
-      this.raceModal.tabs.activeTab = tabID
-    },
     contextMenuClick: function (raceId) {
       if (this.eventContextMenu.active[raceId] === undefined)
         this.eventContextMenu.active[raceId] = false
@@ -217,19 +93,6 @@ export default {
     },
     dismissError: function () {
       this.error.show = false
-    },
-    createRace: function () {
-      var self = this
-      self.raceModal.creating = true
-      createRace(self.raceModal.description, self.raceModal.date).then(() => {
-        self.raceModal.creating = false
-        self.raceModal.description = ""
-        self.toggleCreateRaceModal()
-        self.racesStore.loadRaces()
-      })
-    },
-    cancelCreateRace: function () {
-      this.raceModal.description = ""
     },
     deleteRace: function (raceID) {
       var self = this
@@ -240,52 +103,14 @@ export default {
         self.error.msg = err
       })
     },
-    toggleDivisionModal: function (raceID) {
-      this.divisionModal.show = !this.divisionModal.show
-      this.load(raceID).then(() => {
-        console.log("Loaded Divisions")
-      })
+    openCreateRaceModal: function () {
+      this.$refs['create-race-modal'].open()
     },
-    toggleCreateRaceModal: function () {
-      this.raceModal.show = !this.raceModal.show
+    openShareModal: function (raceId) {
+      this.$refs['share-modal'].open(raceId)
     },
-    toggleShareModal: function (raceID) {
-      this.volunteerModal.show = !this.volunteerModal.show
-
-      if (raceID && (typeof raceID === 'string' || raceID instanceof String)) {
-        this.volunteerModal.raceID = raceID
-      }
-
-      if (!this.volunteerModal.show) {
-        this.volunteerModal.emails = []
-        this.volunteerModal.emailInput = ""
-        this.volunteerModal.raceID = ""
-      } else {
-        this.listVolunteers(raceID).then((volunteers) => {
-          this.volunteerModal.volunteers = volunteers
-        })
-      }
-    },
-    appendEmailForShare: function () {
-      let email = this.volunteerModal.emailInput.trim()
-      if (email == "")
-        return
-
-      this.volunteerModal.emailInput = ""
-      this.volunteerModal.emails.push({
-        email: email
-      })
-    },
-    removeVolunteerEmail: function (email) {
-      let loc = this.volunteerModal.emails.indexOf(email)
-      if (loc > -1) {
-        this.volunteerModal.emails.splice(loc, 1)
-      }
-    },
-    addVolunteers: async function () {
-      await this.shareRace(this.volunteerModal.raceID, this.volunteerModal.emails)
-
-      this.toggleShareModal()
+    openDivisionsModal: function (raceId) {
+      this.$refs['divisions-modal'].open(raceId)
     },
     generateDivisions: async function (raceID) {
       let year = new Date().getFullYear()

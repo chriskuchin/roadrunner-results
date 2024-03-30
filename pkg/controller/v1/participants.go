@@ -63,6 +63,8 @@ func HandleParticipantsImportCSV(db *sqlx.DB) http.HandlerFunc {
 						continue
 					}
 					if row[1] == "" || len(row) != 5 {
+						failedRows++
+						log.Warn().Int("width", len(row)).Msg("not enough columns in the row")
 						continue
 					}
 
@@ -74,7 +76,8 @@ func HandleParticipantsImportCSV(db *sqlx.DB) http.HandlerFunc {
 					} else if row[4] == "F" || strings.ToLower(row[4]) == "female" {
 						gender = "Female"
 					} else {
-						log.Warn().Msg("Skipping Row bad Gender")
+						log.Warn().Str("gender", gender).Msg("Skipping Row bad Gender")
+						failedRows++
 						continue
 					}
 					pRow := services.ParticipantRow{

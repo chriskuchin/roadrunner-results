@@ -61,10 +61,11 @@
           <th>Birth Year</th>
           <th>Team</th>
           <th>Division</th>
+          <th></th>
         </thead>
         <tbody>
-          <tr v-for="(result, place) in calculatedResults" :key="place">
-            <td>{{ place + 1 }}</td>
+          <tr v-for="(result, rowid) in calculatedResults" :key="rowid">
+            <td>{{ rowid + 1 }}</td>
             <td>{{ formatResults(result.result_ms) }}</td>
             <td>{{ result.bib_number }}</td>
             <td>{{ result.first_name }}</td>
@@ -73,21 +74,47 @@
             <td>{{ result.birth_year }}</td>
             <td>{{ result.team }}</td>
             <td>{{ getParticipantDivision(result.birth_year) }}</td>
+            <td>
+              <!-- <div class="field has-addons">
+                <p class="control">
+                  <button class="button is-danger is-small" @click="deleteResult(result.result_id)">
+                    <span class="icon is-small">
+                      <icon icon="fa-solid fa-trash"></icon>
+                    </span>
+                  </button>
+                </p>
+                <p class="control">
+                  <button class="button is-small is-info" @click="editResult(result.result_id, rowid)">
+                    <span class="icon is-small">
+                      <icon icon="fa-solid fa-pencil"></icon>
+                    </span>
+                  </button>
+                </p>
+              </div> -->
+            </td>
           </tr>
         </tbody>
       </table>
     </div>
+    <edit-results ref="edit-results" />
+
+    <button class="button" @click="openModal">Press Me</button>
   </div>
 </template>
 
 <script>
 import { useEventStore } from "../store/event";
 import { useResultsStore } from "../store/results"
-import { mapStores, mapActions, mapState } from "pinia";
-import { formatMilliseconds, formatCentimeters } from "../utilities";
+import { mapActions, mapState } from "pinia";
 import { useErrorBus } from "../store/error";
+import { formatMilliseconds, formatCentimeters } from "../utilities";
+import { deleteResult } from "../api/results"
+import EditResultsModal from '../components/modals/EditResults.vue'
 
 export default {
+  components: {
+    'edit-results': EditResultsModal,
+  },
   data: function () {
     return {
       calculatedResults: [],
@@ -115,6 +142,19 @@ export default {
     ...mapActions(useErrorBus, { handleError: 'handle' }),
     ...mapActions(useResultsStore, ['getResults']),
     ...mapActions(useEventStore, ['loadEventByID']),
+    openModal: function () {
+      this.$refs['edit-results'].open()
+    },
+    deleteResult: async function (resultId) {
+      if (window.confirm("Are you sure you want to delete this result?")) {
+        try {
+          await deleteResult(this.$route.params.raceId, this.$route.params.eventId, resultId)
+          this.calculateResults()
+        } catch (e) {
+          console.warn(e)
+        }
+      }
+    },
     formatResults: function (result) {
       if (this.type === "distance")
         return formatCentimeters(result, "ftin")

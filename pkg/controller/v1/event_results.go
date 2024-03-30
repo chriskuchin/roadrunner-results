@@ -51,6 +51,20 @@ func HandleEventResultsUpdate(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
+func HandleEventResultsDelete(db *sqlx.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
+
+		err := services.DeleteEventResult(ctx, db, util.GetResultIDFromContext(ctx))
+		if err != nil {
+			apiutil.HandleServerError(err, w, r)
+			return
+		}
+
+		render.NoContent(w, r)
+	}
+}
+
 func HandleEventResultsGet(db *sqlx.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()

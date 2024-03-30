@@ -12,6 +12,7 @@ import (
 
 type (
 	EventResultsRow struct {
+		RowID     int            `db:"rowid"`
 		FirstName sql.NullString `db:"first_name"`
 		LastName  sql.NullString `db:"last_name"`
 		BibNumber sql.NullString `db:"bib_number"`
@@ -23,6 +24,7 @@ type (
 	}
 
 	ParticipantEventResult struct {
+		ResultID  int     `json:"result_id"`
 		FirstName string  `json:"first_name,omitempty"`
 		LastName  string  `json:"last_name,omitempty"`
 		BibNumber string  `json:"bib_number"`
@@ -35,12 +37,24 @@ type (
 )
 
 const (
-	getEventResultsQuery string = "SELECT p.first_name, p.last_name, r.bib_number, p.birth_year, p.gender, r.result, r.timer_id, p.team FROM results as r LEFT JOIN participants as p USING(bib_number, race_id) WHERE"
+	getEventResultsQuery string = "SELECT p.first_name, p.last_name, r.bib_number, p.birth_year, p.gender, r.rowid, r.result, r.timer_id, p.team FROM results as r LEFT JOIN participants as p USING(bib_number, race_id) WHERE"
+
+	updateResultsTimeQuery string = "UPDATE results set result = ? WHERE rowid = ?"
 )
 
 var (
 	ORDER_ALLOWED map[string]string = map[string]string{"asc": "ASC", "desc": "DESC"}
 )
+
+func UpdateResultTime(ctx context.Context, db *sqlx.DB, resultID string, time int) error {
+
+	return nil
+}
+
+func DeleteEventResult(ctx context.Context, db *sqlx.DB, resultId string) error {
+	_, err := db.ExecContext(ctx, "DELETE FROM results where rowid = ?", resultId)
+	return err
+}
 
 func GetEventResults(ctx context.Context, db *sqlx.DB, filters map[string][]string, order string) ([]ParticipantEventResult, error) {
 	queryOrder, ok := ORDER_ALLOWED[order]
@@ -104,6 +118,7 @@ func runEventResultsQuery(ctx context.Context, db *sqlx.DB, query string, args .
 	var participantResults []ParticipantEventResult = []ParticipantEventResult{}
 	for _, result := range results {
 		participantResults = append(participantResults, ParticipantEventResult{
+			ResultID:  result.RowID,
 			BibNumber: result.BibNumber.String,
 			Result:    result.Result,
 			FirstName: result.FirstName.String,

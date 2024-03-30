@@ -18,4 +18,15 @@ async function recordFinish(raceId, eventId, finish) {
   }
 }
 
-export { recordFinish }
+async function deleteResult(raceId, eventId, resultId) {
+  const url = `/api/v1/races/${raceId}/events/${eventId}/results/${resultId}`
+  const res = await fetch(url, await setAuthHeader({
+    method: "DELETE"
+  }))
+
+  if (!res.ok) {
+    throw new Error(`failed to delete result: ${res.status}`)
+  }
+}
+
+export { recordFinish, deleteResult }

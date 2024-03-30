@@ -1,6 +1,6 @@
 <template>
-  <div :class="['modal', { 'is-active': show }]">
-    <div class="modal-background" @click="(e) => $emit('close', e)"></div>
+  <div ref="modal" class="modal">
+    <div class="modal-background" @click="toggle"></div>
     <div class="modal-content">
       <div class="box">
         <slot></slot>
@@ -11,9 +11,18 @@
 
 <script>
 export default {
-  emits: ["close"],
-  props: {
-    show: Boolean
-  },
+  emits: ["close", "open"],
+  methods: {
+    toggle(e) {
+      const el = this.$refs.modal
+
+      el.classList.toggle('is-active')
+      if (el.classList.contains("is-active")) {
+        this.$emit('open', e)
+      } else {
+        this.$emit('close', e)
+      }
+    },
+  }
 };
 </script>
