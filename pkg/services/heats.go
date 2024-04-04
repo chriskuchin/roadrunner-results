@@ -44,13 +44,28 @@ const (
 			VALUES(?, ?, ?, json(?))
 	`
 
+	updateAssignmentsQuery = `
+	UPDATE lane_assignments
+		SET assignments = json(?)
+		WHERE
+			race_id = ? AND event_id = ? AND timer_id = ?
+	`
+
 	listHeatsQuery string = `
 		select * from timers
 			JOIN lane_assignments
 				USING(race_id, event_id, timer_id)
 		WHERE race_id = ? AND event_id = ?
 	`
+
+	DeleteLaneAssignmentsQuery string = `
+	DELETE FROM lane_assignments WHERE race_id = ? AND event_id = ? AND timer_id = ?
+	`
 )
+
+func DeleteHeat(ctx context.Context, db *sqlx.DB, race_id, event_id, timer_id string) error {
+	return nil
+}
 
 func CreateLaneAssignment(ctx context.Context, db *sqlx.DB, race_id, event_id, timer_id string, assignments AssignmentPayload) error {
 	payload, err := json.Marshal(assignments)
@@ -59,6 +74,17 @@ func CreateLaneAssignment(ctx context.Context, db *sqlx.DB, race_id, event_id, t
 	}
 
 	_, err = db.ExecContext(ctx, insertAssignmentsQuery, race_id, event_id, timer_id, string(payload))
+	return err
+}
+
+func UpdateLaneAssignments(ctx context.Context, db *sqlx.DB, race_id, event_id, timer_id string, assigments AssignmentPayload) error {
+	payload, err := json.Marshal(assigments)
+	if err != nil {
+		return err
+	}
+
+	_, err = db.ExecContext(ctx, updateAssignmentsQuery, payload, race_id, event_id, timer_id)
+
 	return err
 }
 

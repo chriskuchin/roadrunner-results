@@ -64,7 +64,7 @@
           <th v-if="isLoggedIn"></th>
         </thead>
         <tbody class="is-size-4">
-          <tr v-for="(result, rowid) in results" :key="rowid">
+          <tr v-for="(result, rowid) in results" :key="rowid" class="is-size-4">
             <td>{{ rowid + 1 }}</td>
             <td>{{ formatResults(result.result_ms) }}</td>
             <td>{{ result.bib_number }}</td>

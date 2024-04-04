@@ -123,6 +123,11 @@ func Routes(app *firebase.App, db *sqlx.DB, assetsFolder string, debug bool) chi
 								r.Route("/heats", func(r chi.Router) {
 									r.Get("/", v1.HandleHeatsList(db))
 									r.Post("/", v1.HandleHeatsCreate(db))
+									r.Route("/{timerID}", func(r chi.Router) {
+										r.Use(middleware.TimerCtx)
+										r.Put("/", v1.HandleHeatUpdate(db))
+										r.Delete("/", v1.HandleHeatDelete(db))
+									})
 								})
 								r.Route("/timers", func(r chi.Router) {
 									r.Post("/", v1.HandleTimersCreate(db))

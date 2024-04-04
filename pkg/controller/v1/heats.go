@@ -60,6 +60,51 @@ func HandleHeatsCreate(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
+func HandleHeatUpdate(db *sqlx.DB) http.HandlerFunc {
+	type assignment struct {
+		Lane int    `json:"lane"`
+		Bib  string `json:"bib"`
+	}
+	type request struct {
+		Assignments []assignment `json:"assignments"`
+	}
+
+	return func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
+		var req = request{}
+		err := render.DecodeJSON(r.Body, &req)
+		if err != nil {
+			apiutil.HandleBadRequest(err, w, r)
+			return
+		}
+
+		var assignmentsPayload = services.AssignmentPayload{
+			Assignments: []services.LaneAssignment{},
+		}
+
+		for _, assgnmt := range req.Assignments {
+			assignmentsPayload.Assignments = append(assignmentsPayload.Assignments, services.LaneAssignment{
+				Lane: assgnmt.Lane,
+				Bib:  assgnmt.Bib,
+			})
+		}
+
+		err = services.UpdateLaneAssignments(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetTimerIDFromContext(ctx), assignmentsPayload)
+		if err != nil {
+			apiutil.HandleServerError(err, w, r)
+			return
+		}
+
+		w.WriteHeader(http.StatusAccepted)
+	}
+}
+
+func HandleHeatDelete(db *sqlx.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNotImplemented)
+	}
+}
+
 func HandleHeatsList(db *sqlx.DB) http.HandlerFunc {
 	type assignments struct {
 		Lane int    `json:"lane"`

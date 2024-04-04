@@ -14,7 +14,7 @@ async function listHeats(raceID, eventID) {
 }
 
 async function createNewHeat(raceID, eventID, assignments) {
-  const attemptResponse = await fetch(
+  const response = await fetch(
     `/api/v1/races/${raceID}/events/${eventID}/heats`,
     await setAuthHeader({
       method: "POST",
@@ -24,9 +24,22 @@ async function createNewHeat(raceID, eventID, assignments) {
     }),
   );
 
-  if (attemptResponse.ok) return await attemptResponse.json()
+  if (response.ok) return await response.json()
 
-  return []
+  return {}
 }
 
-export { listHeats, createNewHeat }
+async function updateHeat(raceId, eventId, heatId, assignments) {
+  const response = await fetch(
+    `/api/v1/races/${raceId}/events/${eventId}/heats/${heatId}`,
+    await setAuthHeader({
+      method: "PUT",
+      body: JSON.stringify({
+        assignments: assignments,
+      }),
+    }),
+  );
+
+}
+
+export { listHeats, createNewHeat, updateHeat }

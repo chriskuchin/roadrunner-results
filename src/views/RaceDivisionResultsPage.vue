@@ -35,7 +35,7 @@
             <th>Other</th>
           </thead>
           <tbody>
-            <tr v-for="(result, place) in  division.results " :key="place">
+            <tr v-for="(result, place) in  division.results " :key="place" class="is-size-4">
               <td>{{ place + 1 }}</td>
               <td>{{ formatResults(result.result_ms) }}</td>
               <td>

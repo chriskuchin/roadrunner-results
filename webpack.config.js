@@ -24,7 +24,7 @@ module.exports = (env, argv) => {
   }
 
   let include_eruda = false
-  if (argv.name && argv.name == "mobile") {
+  if (argv.name && argv.name === "mobile") {
     include_eruda = true
   }
 

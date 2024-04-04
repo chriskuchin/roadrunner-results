@@ -15,6 +15,7 @@
         <select v-model="laneCount">
           <option v-for=" n  in  8 " :value="n + 3">{{ n + 3 }} Lanes</option>
         </select>
+        <button class="button" @click="saveHeat">Save</button>
       </div>
       <table class="table" style="margin: 0 auto;">
         <thead>
@@ -36,10 +37,10 @@
           </tr>
         </tfoot>
         <tbody>
-          <tr v-for="( lane, index ) in  lanes ">
+          <tr v-for="( lane, index ) in  lanes " class="is-size-4">
             <th>{{ lane.lane }}</th>
-            <td><input :tabindex="index + 1" class="input is-small" type="text" placeholder="Bib Number" @blur="bibBlur"
-                v-model="lanes[index].bib"></td>
+            <td><input :tabindex="index + 1" class="input is-medium" type="text" placeholder="Bib Number"
+                @blur="bibBlur" v-model="lanes[index].bib"></td>
             <td>{{ participants[index].first_name }}</td>
             <td>{{ participants[index].last_name }}</td>
             <td>{{ participants[index].birth_year }}</td>
@@ -52,7 +53,7 @@
 
 <script>
 
-import { createNewHeat, listHeats } from '../api/heats';
+import { createNewHeat, listHeats, updateHeat } from '../api/heats';
 import { getParticipantByBib } from '../api/participants';
 import DropdownMenu from '../components/DropdownMenu.vue'
 
@@ -73,27 +74,7 @@ export default {
   watch: {
     laneCount: {
       handler(newCount) {
-        if (this.lanes.length < newCount) {
-          const lanesToAdd = newCount - this.lanes.length
-          const currentLength = this.lanes.length
-          for (let i = 1; i <= lanesToAdd; i++) {
-            this.participants.push({
-              first_name: "",
-              last_name: "",
-              birth_year: "",
-            })
-            this.lanes.push({
-              lane: i + currentLength,
-              bib: ""
-            })
-          }
-        } else if (this.lanes.length > newCount) {
-          const lanesToRemove = this.lanes.length - newCount
-          for (let i = 1; i <= lanesToRemove; i++) {
-            this.participants.pop()
-            this.lanes.pop()
-          }
-        }
+        this.generateLaneAssignments(newCount)
       },
       immediate: true
     }
@@ -101,6 +82,35 @@ export default {
   computed: {
   },
   methods: {
+    generateLaneAssignments(targetCount) {
+      if (this.lanes.length < targetCount) {
+        const lanesToAdd = targetCount - this.lanes.length
+        const currentLength = this.lanes.length
+        for (let i = 1; i <= lanesToAdd; i++) {
+          this.participants.push({
+            first_name: "",
+            last_name: "",
+            birth_year: "",
+          })
+          this.lanes.push({
+            lane: i + currentLength,
+            bib: ""
+          })
+        }
+      } else if (this.lanes.length > targetCount) {
+        const lanesToRemove = this.lanes.length - targetCount
+        for (let i = 1; i <= lanesToRemove; i++) {
+          this.participants.pop()
+          this.lanes.pop()
+        }
+      }
+    },
+    saveHeat() {
+      console.log(this.lanes)
+      updateHeat(this.$route.params.raceId, this.$route.params.eventId, this.id, this.lanes).then(() => {
+        console.log("Finished")
+      })
+    },
     activateHeat(heat) {
       if (this.id != "") {
         console.log("update the heat")
@@ -109,12 +119,16 @@ export default {
 
       if (heat.assignments.length !== 0)
         this.lanes = heat.assignments
+      else
+        this.lanes = []
 
       if (this.lanes.length == 0) {
         this.laneCount = 8
       } else {
         this.laneCount = this.lanes.length
       }
+
+      this.generateLaneAssignments(this.laneCount)
     },
     async newHeat() {
       const heat = await createNewHeat(this.$route.params.raceId, this.$route.params.eventId, [])
