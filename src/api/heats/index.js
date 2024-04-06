@@ -39,7 +39,15 @@ async function updateHeat(raceId, eventId, heatId, assignments) {
       }),
     }),
   );
-
 }
 
-export { listHeats, createNewHeat, updateHeat }
+async function deleteHeat(raceId, eventId, heatId) {
+  const res = await fetch(
+    `/api/v1/races/${raceId}/events/${eventId}/heats/${heatId}`,
+    await setAuthHeader({
+      method: "DELETE"
+    })
+  )
+}
+
+export { listHeats, createNewHeat, updateHeat, deleteHeat }

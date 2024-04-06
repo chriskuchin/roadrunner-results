@@ -101,7 +101,13 @@ func HandleHeatUpdate(db *sqlx.DB) http.HandlerFunc {
 
 func HandleHeatDelete(db *sqlx.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusNotImplemented)
+		ctx := r.Context()
+		err := services.DeleteHeat(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetTimerIDFromContext(ctx))
+		if err != nil {
+			apiutil.HandleServerError(err, w, r)
+			return
+		}
+		w.WriteHeader(http.StatusAccepted)
 	}
 }
 

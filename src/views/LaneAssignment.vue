@@ -4,8 +4,10 @@
     <div class="tabs">
       <ul>
         <li :class="{ 'is-active': heat.timer_id == id }" v-for="(heat, index) in heats" :key="heat.timer_id"
-          @click="activateHeat(heat)"><a>Heat {{
-          index + 1 }}</a>
+          @click="activateHeat(heat)">
+          <a>
+            Heat {{ index + 1 }}
+          </a>
         </li>
         <li :class="{ 'is-active': id == '' }"><a @click="newHeat">New +</a></li>
       </ul>
@@ -16,6 +18,7 @@
           <option v-for=" n  in  8 " :value="n + 3">{{ n + 3 }} Lanes</option>
         </select>
         <button class="button" @click="saveHeat">Save</button>
+        <button class="button" @click="deleteHeat">Delete</button>
       </div>
       <table class="table" style="margin: 0 auto;">
         <thead>
@@ -53,7 +56,7 @@
 
 <script>
 
-import { createNewHeat, listHeats, updateHeat } from '../api/heats';
+import { createNewHeat, listHeats, updateHeat, deleteHeat } from '../api/heats';
 import { getParticipantByBib } from '../api/participants';
 import DropdownMenu from '../components/DropdownMenu.vue'
 
@@ -104,6 +107,14 @@ export default {
           this.lanes.pop()
         }
       }
+    },
+    deleteHeat() {
+      deleteHeat(this.$route.params.raceId, this.$route.params.eventId, this.id).then(() => {
+        listHeats(this.$route.params.raceId, this.$route.params.eventId).then((heats) => {
+          this.heats = heats
+          this.id = ""
+        })
+      })
     },
     saveHeat() {
       console.log(this.lanes)

@@ -64,7 +64,12 @@ const (
 )
 
 func DeleteHeat(ctx context.Context, db *sqlx.DB, race_id, event_id, timer_id string) error {
-	return nil
+	_, err := db.ExecContext(ctx, DeleteLaneAssignmentsQuery, race_id, event_id, timer_id)
+	if err != nil {
+		return err
+	}
+
+	return DeleteTimer(ctx, db, race_id, event_id, timer_id)
 }
 
 func CreateLaneAssignment(ctx context.Context, db *sqlx.DB, race_id, event_id, timer_id string, assignments AssignmentPayload) error {
