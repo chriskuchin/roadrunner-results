@@ -73,5 +73,18 @@ async function updateResult(raceId, eventId, resultId, result, bib) {
   );
 }
 
+async function getHeatResults(raceId, eventId, timerId) {
+  const url = `/api/v1/races/${raceId}/events/${eventId}/results?timerId=${timerId}`
+  const res =  await fetch(url, await setAuthHeader({
+    method: "GET"
+  }))
 
-export { recordFinish, deleteResult, recordResult, updateResult }
+  if (!res.ok)
+    return []
+
+  return await res.json()
+
+}
+
+
+export { recordFinish, deleteResult, recordResult, updateResult, getHeatResults }

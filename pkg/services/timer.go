@@ -2,6 +2,8 @@ package services
 
 import (
 	"context"
+	"database/sql"
+	"encoding/json"
 	"errors"
 	"fmt"
 
@@ -12,19 +14,26 @@ import (
 
 type (
 	TimerRow struct {
-		Results int    `db:"count"`
-		TimerID string `db:"timer_id"`
-		RaceID  string `db:"race_id"`
-		EventID string `db:"event_id"`
-		Start   int64  `db:"start_ts"`
+		Results     int            `db:"count"`
+		TimerID     string         `db:"timer_id"`
+		RaceID      string         `db:"race_id"`
+		EventID     string         `db:"event_id"`
+		Start       int64          `db:"start_ts"`
+		Assignments sql.NullString `db:"assignments"`
 	}
 
 	TimerResult struct {
-		Results int    `json:"count"`
-		TimerID string `json:"id"`
-		RaceID  string `json:"race_id"`
-		EventID string `json:"event_id"`
-		Start   int64  `json:"timer_start"`
+		Results     int                 `json:"count"`
+		TimerID     string              `json:"id"`
+		RaceID      string              `json:"race_id"`
+		EventID     string              `json:"event_id"`
+		Start       int64               `json:"timer_start"`
+		Assignments []AssignmentsResult `json:"assignments,omitempty"`
+	}
+
+	AssignmentsResult struct {
+		Lane uint   `json:"lane"`
+		Bib  string `json:"bib"`
 	}
 )
 
@@ -41,9 +50,11 @@ const (
 
 	listEventTimersQuery string = `
 		select
-			t.*, count(distinct r.result) as count from timers as t
+			t.*, json_extract(la.assignments, "$") as assignments, count(distinct r.result) as count from timers as t
 		left outer join results r
 			using(timer_id, event_id, race_id)
+		left outer join lane_assignments la
+			using(race_id, event_id, timer_id)
 		where
 			t.race_id = ?
 			AND
@@ -133,8 +144,25 @@ func ListTimers(ctx context.Context, db *sqlx.DB, raceID, eventID string, limit,
 
 	var results []TimerResult
 	for _, row := range rows {
+		resolvedRow := TimerResult{
+			Results: row.Results,
+			TimerID: row.TimerID,
+			EventID: row.EventID,
+			RaceID:  row.RaceID,
+			Start:   row.Start,
+		}
 
-		results = append(results, TimerResult(row))
+		var assignments map[string][]AssignmentsResult
+		if row.Assignments.Valid {
+			err := json.Unmarshal([]byte(row.Assignments.String), &assignments)
+			if err != nil {
+				log.Warn().Err(err).Msg("failed deserializing lane assignments")
+			} else {
+				resolvedRow.Assignments = assignments["assignments"]
+			}
+		}
+
+		results = append(results, resolvedRow)
 	}
 
 	return results, nil

@@ -26,11 +26,11 @@ export const useEventStore = defineStore("event", {
 			}
 
 			const url = `/api/v1/races/${raceID}/events/${eventID}`
-			let res = await fetch(url, setAuthHeader({ method: "GET" }))
+			const res = await fetch(url, setAuthHeader({ method: "GET" }))
 			if (!res.ok)
 				return
 
-			let event = await res.json()
+			const event = await res.json()
 
 			this.loadEvent(event)
 		},

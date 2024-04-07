@@ -8,10 +8,13 @@
         </option>
       </select>
     </div>
-    <div class="tabs">
+    <div class="tabs mt-4">
       <ul>
         <li @click="tabSelect('manual')" :class="{ 'is-active': isActiveTab('manual') }">
           <a>Manual</a>
+        </li>
+        <li v-if="hasLaneAssignments" @click="tabSelect('heat')" :class="{ 'is-active': isActiveTab('heat') }">
+          <a>Heat</a>
         </li>
         <li @click="tabSelect('scan')" :class="{ 'is-active': isActiveTab('scan') }">
           <a>Scanner</a>
@@ -23,6 +26,22 @@
         :total-results="getHeatTotalResults" :race-id="this.$route.params.raceId" :event-id="this.$route.params.eventId"
         :timer-id="this.timerId" @bib="bibInput" />
       <scan v-else-if="isActiveTab('scan')" @bib="bibInput" />
+      <div class="section" v-else-if="isActiveTab('heat')">
+        {{ heatFinish }}
+        <div class="fixed-grid has-3-cols mx-auto">
+          <div class="grid">
+            <div class="cell" v-for="assignment in laneAssignments">
+              <button class="button is-large is-primary is-fullwidth" @click="recordLaneFinish(assignment)"
+                :disabled="assignment.bib === ''">
+                {{ assignment.lane }}
+              </button>
+            </div>
+          </div>
+        </div>
+        <tbl class="mx-auto" :headers="heatResultsHeader" :rows="heatResults" />
+
+        <button class="button">Save</button>
+      </div>
     </div>
   </div>
   <div v-if="results.length > 0 && showResults">
@@ -48,11 +67,13 @@
 
 <script>
 import { formatMilliseconds } from "../utilities";
+import { recordResult, getHeatResults } from "../api/results";
+import { listTimers } from '../api/timers';
 import RacerInput from "../components/ResultsInput.vue";
 import ResultsTable from "../components/ResultsTable.vue";
 import Notification from '../components/Notification.vue';
-import Scanner from '../components/Scanner.vue'
-import { recordResult } from "../api/results";
+import Scanner from '../components/Scanner.vue';
+import Table from '../components/Table.vue';
 
 export default {
   components: {
@@ -60,6 +81,7 @@ export default {
     "results-table": ResultsTable,
     "not": Notification,
     "scan": Scanner,
+    "tbl": Table,
   },
   mounted: function () {
     this.refreshData()
@@ -75,13 +97,49 @@ export default {
       timers: [],
       timerId: "latest",
       results: [],
+      heatFinish: [],
+      heatResultsHeader: [
+        {
+          abbr: "Pos",
+          title: "Position",
+        },
+        {
+          abbr: "Ln",
+          title: "Lane",
+        },
+        {
+          abbr: "Bib",
+          title: "Bib Number"
+        },
+        {
+          abbr: "F. Name",
+          title: "First Name",
+        },
+        {
+          abbr: "L. Name",
+          title: "Last Name"
+        },
+        {
+          abbr: "Year",
+          title: "Birth Year"
+        }
+      ],
       error: {
         show: false,
         msg: "",
       }
     };
   },
+  // <th><abbr title="Lane Assignment">Lane</abbr></th>
+  // <th><abbr title="Athlete Bib Number">Bib</abbr></th>
+  // <th><abbr title="Athlete First Name">F. Name</abbr></th>
+  // <th><abbr title="Athlete Last Name">L. Name</abbr></th>
+  // <th><abbr title="Athlete Birth Year">B. Year</abbr></th>
+
   methods: {
+    recordLaneFinish: function (lane) {
+      this.heatFinish.push(lane)
+    },
     bibInput: async function (e) {
       let ok = await recordResult(this.$route.params.raceId, this.$route.params.eventId, e.bib, this.timerId)
 
@@ -98,20 +156,15 @@ export default {
     refreshData: function () {
       clearTimeout(this.resultsRefresh)
 
-      this.listTimers()
-      this.getHeatResults()
+      var that = this
+      listTimers(this.$route.params.raceId, this.$route.params.eventId).then((timers) => {
+        that.timers = timers
+      })
+      getHeatResults(this.$route.params.raceId, this.$route.params.eventId, this.timerId).then((results) => {
+        that.results = results
+      })
 
       this.resultsRefresh = setTimeout(this.refreshData, 2500)
-    },
-    async getHeatResults() {
-      let url = "/api/v1/races/" + this.$route.params.raceId + "/events/" + this.$route.params.eventId + "/results?timerId=" + this.timerId
-
-      this.results = await (await fetch(url)).json()
-    },
-    async listTimers() {
-      let res = await fetch("/api/v1/races/" + this.$route.params.raceId + "/events/" + this.$route.params.eventId + "/timers")
-
-      this.timers = await res.json()
     },
     formatMilliseconds,
     isActiveTab: function (tab) {
@@ -122,6 +175,36 @@ export default {
     },
   },
   computed: {
+    heatResults: function () {
+      let results = []
+      let pos = 1
+      for (const finishedLane of this.heatFinish) {
+        results.push([
+          pos++,
+          finishedLane.lane,
+          finishedLane.bib,
+          "",
+          "",
+          ""
+        ])
+      }
+
+      return results
+    },
+    hasLaneAssignments: function () {
+      for (const timer of this.timers) {
+        if (timer.id == this.timerId)
+          return (timer.assignments && timer.assignments.length > 0)
+      }
+    },
+    laneAssignments: function () {
+      for (const timer of this.timers) {
+        if (timer.id == this.timerId) {
+          return timer.assignments
+        }
+      }
+
+    },
     getFirstUnmatchedPlace: function () {
       for (let i = 0; i < this.results.length; i++) {
         let result = this.results[i]
