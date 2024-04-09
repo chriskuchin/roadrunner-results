@@ -8,6 +8,13 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+func HandleNotFoundError(err error, w http.ResponseWriter, r *http.Request) {
+	render.Status(r, http.StatusNotFound)
+	render.JSON(w, r, map[string]string{
+		"info": "not_found",
+	})
+}
+
 func HandleBadRequest(err error, w http.ResponseWriter, r *http.Request) {
 	log.Warn().Err(err).Send()
 	render.Status(r, http.StatusBadRequest)

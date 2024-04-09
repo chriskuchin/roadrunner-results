@@ -31,5 +31,22 @@ async function startTimer(raceId, eventId, start) {
   return (await res.json()).id
 }
 
+async function startExistingTimer(raceId, eventId, timerId, start) {
+  const url = `/api/v1/races/${raceId}/events/${eventId}/timers/${timerId}`
 
-export { listTimers, startTimer }
+  const res = await fetch(url, await setAuthHeader({
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      start_ts: start
+    })
+  }))
+
+  if (!res.ok)
+    throw new Error(`failed to start timer: ${res.status}`)
+}
+
+
+export { listTimers, startTimer, startExistingTimer }

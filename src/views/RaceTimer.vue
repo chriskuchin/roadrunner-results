@@ -13,7 +13,7 @@
       <div class="level-item has-text-centered">
         <div class="field has-addons buttons are-large">
           <p class="control">
-          <div v-if="this.timer.id == null" class="button is-primary is-responsive" @click="this.startTimer">Start</div>
+          <div v-if="this.timer.start == 0" class="button is-primary is-responsive" @click="this.startTimer">Start</div>
           <div v-else class="button is-primary is-responsive" @click="this.resumeTimer">Resume</div>
           </p>
           <p class="control">
@@ -58,6 +58,7 @@
         </li>
       </ol>
     </div>
+    {{ timer }}
     <fab @click="fabAction">
       <icon v-if="timerStarted()" icon="fa-solid fa-play"></icon>
       <icon v-else icon="fa-solid fa-stopwatch"></icon>
@@ -68,11 +69,10 @@
 <script>
 import { formatMilliseconds } from '../utilities';
 import FAB from '../components/Fab.vue'
-import { setAuthHeader } from '../api/auth'
 import { useErrorBus } from '../store/error';
 import { useMediaStore } from '../store/media';
 import { mapActions } from 'pinia';
-import { listTimers, startTimer } from '../api/timers';
+import { listTimers, startExistingTimer, startTimer } from '../api/timers';
 import { recordFinish } from '../api/results';
 
 export default {
@@ -140,7 +140,10 @@ export default {
       if (timer) {
         this.timer.id = timer.id
         this.timer.start = timer.timer_start
-        this.timer.elapsed = Date.now() - timer.timer_start
+        if (timer.timer_start > 0)
+          this.timer.elapsed = Date.now() - timer.timer_start
+        else
+          this.timer.elapsed = 0
       } else {
         this.timer.id = null
         this.timer.start = 0
@@ -167,7 +170,10 @@ export default {
       this.timer.timeout = setTimeout(this.tickTimer, 10)
 
       try {
-        this.timer.id = await startTimer(this.raceID, this.eventID, this.timer.start)
+        if (this.timer.id !== null) {
+          await startExistingTimer(this.raceID, this.eventID, this.timer.id, this.timer.start)
+        } else
+          this.timer.id = await startTimer(this.raceID, this.eventID, this.timer.start)
       } catch (err) {
         this.handleError(err)
       }

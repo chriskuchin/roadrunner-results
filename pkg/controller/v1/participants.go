@@ -124,6 +124,11 @@ func HandleParticipantGetByBibNumber(db *sqlx.DB) http.HandlerFunc {
 
 		participant, err := services.GetParticipantByBibNumber(ctx, db, util.GetRaceIDFromContext(ctx), util.GetBibNumberFromContext(ctx))
 		if err != nil {
+			if err == services.RowNotFoundError {
+				apiutil.HandleNotFoundError(err, w, r)
+				return
+			}
+
 			apiutil.HandleServerError(err, w, r)
 			return
 		}

@@ -27,7 +27,6 @@
         :timer-id="this.timerId" @bib="bibInput" />
       <scan v-else-if="isActiveTab('scan')" @bib="bibInput" />
       <div class="section" v-else-if="isActiveTab('heat')">
-        {{ heatFinish }}
         <div class="fixed-grid has-3-cols mx-auto">
           <div class="grid">
             <div class="cell" v-for="assignment in laneAssignments">
@@ -39,8 +38,7 @@
           </div>
         </div>
         <tbl class="mx-auto" :headers="heatResultsHeader" :rows="heatResults" />
-
-        <button class="button">Save</button>
+        <button class="button is-link" @click="saveHeat" :disabled="results.length != heatFinish.length">Save</button>
       </div>
     </div>
   </div>
@@ -69,6 +67,7 @@
 import { formatMilliseconds } from "../utilities";
 import { recordResult, getHeatResults } from "../api/results";
 import { listTimers } from '../api/timers';
+import { getParticipantByBib } from "../api/participants";
 import RacerInput from "../components/ResultsInput.vue";
 import ResultsTable from "../components/ResultsTable.vue";
 import Notification from '../components/Notification.vue';
@@ -98,6 +97,7 @@ export default {
       timerId: "latest",
       results: [],
       heatFinish: [],
+      heatFinisher: new Map(),
       heatResultsHeader: [
         {
           abbr: "Pos",
@@ -124,21 +124,29 @@ export default {
           title: "Birth Year"
         }
       ],
+      heatResultsRows: [],
       error: {
         show: false,
         msg: "",
       }
     };
   },
-  // <th><abbr title="Lane Assignment">Lane</abbr></th>
-  // <th><abbr title="Athlete Bib Number">Bib</abbr></th>
-  // <th><abbr title="Athlete First Name">F. Name</abbr></th>
-  // <th><abbr title="Athlete Last Name">L. Name</abbr></th>
-  // <th><abbr title="Athlete Birth Year">B. Year</abbr></th>
-
+  watch: {
+    timerId: function () {
+      this.heatFinish = []
+      this.heatFinisher.clear()
+      this.heatResultsRows = []
+    }
+  },
   methods: {
     recordLaneFinish: function (lane) {
-      this.heatFinish.push(lane)
+      if (!this.hasFinished(lane)) {
+        this.heatFinish.push(lane)
+        getParticipantByBib(this.$route.params.raceId, lane.bib).then((participant) => {
+          if (Object.keys(participant).length !== 0)
+            this.heatFinisher.set(lane.bib, participant)
+        })
+      }
     },
     bibInput: async function (e) {
       let ok = await recordResult(this.$route.params.raceId, this.$route.params.eventId, e.bib, this.timerId)
@@ -173,6 +181,25 @@ export default {
     tabSelect: function (tab) {
       this.activeTab = tab;
     },
+    hasFinished: function (assignment) {
+      for (const finisher of this.heatFinish) {
+        if (finisher.lane == assignment.lane) {
+          return true
+        }
+      }
+      return false
+    },
+    saveHeat: async function () {
+      for (const finisher of this.heatFinish) {
+        console.log("save", finisher.bib)
+        let ok = await recordResult(this.$route.params.raceId, this.$route.params.eventId, finisher.bib, this.timerId)
+        if (!ok) {
+          return
+        }
+      }
+
+      this.heatFinish = []
+    }
   },
   computed: {
     heatResults: function () {
@@ -183,9 +210,9 @@ export default {
           pos++,
           finishedLane.lane,
           finishedLane.bib,
-          "",
-          "",
-          ""
+          this.heatFinisher.has(finishedLane.bib) ? this.heatFinisher.get(finishedLane.bib).first_name : "",
+          this.heatFinisher.has(finishedLane.bib) ? this.heatFinisher.get(finishedLane.bib).last_name : "",
+          this.heatFinisher.has(finishedLane.bib) ? this.heatFinisher.get(finishedLane.bib).birth_year : "",
         ])
       }
 

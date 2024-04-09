@@ -115,7 +115,7 @@ func GetParticipantByBibNumber(ctx context.Context, db *sqlx.DB, raceID, bibNumb
 	}
 
 	if len(participant) != 1 {
-		return ParticipantRow{}, fmt.Errorf("participant not found")
+		return ParticipantRow{}, RowNotFoundError
 	}
 
 	return participant[0], nil

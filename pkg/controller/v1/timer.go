@@ -74,14 +74,13 @@ func HandleTimerStart(db *sqlx.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		timerR := TimerRequest{}
-		err := render.DecodeJSON(r.Body, timerR)
+		err := render.DecodeJSON(r.Body, &timerR)
 		if err != nil {
 			render.Status(r, http.StatusBadRequest)
 			render.JSON(w, r, map[string]string{
 				"error": fmt.Sprintf("%s", err),
 			})
 			return
-
 		}
 
 		err = services.StartTimer(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetTimerIDFromContext(ctx), timerR.Start)

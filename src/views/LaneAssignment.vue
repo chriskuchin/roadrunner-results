@@ -15,7 +15,7 @@
     <div class="section" v-if="id !== ''">
       <div class="select">
         <select v-model="laneCount">
-          <option v-for=" n  in  8 " :value="n + 3">{{ n + 3 }} Lanes</option>
+          <option v-for=" n in 8 " :value="n + 3">{{ n + 3 }} Lanes</option>
         </select>
         <button class="button" @click="saveHeat">Save</button>
         <button class="button" @click="deleteHeat">Delete</button>
@@ -40,7 +40,7 @@
           </tr>
         </tfoot>
         <tbody>
-          <tr v-for="( lane, index ) in  lanes " class="is-size-4">
+          <tr v-for="( lane, index ) in lanes " class="is-size-4">
             <th>{{ lane.lane }}</th>
             <td><input :tabindex="index + 1" class="input is-medium" type="text" placeholder="Bib Number"
                 @blur="bibBlur" v-model="lanes[index].bib"></td>
@@ -117,7 +117,6 @@ export default {
       })
     },
     saveHeat() {
-      console.log(this.lanes)
       updateHeat(this.$route.params.raceId, this.$route.params.eventId, this.id, this.lanes).then(() => {
         console.log("Finished")
       })
@@ -128,7 +127,7 @@ export default {
       }
       this.id = heat.timer_id
 
-      if (heat.assignments.length !== 0)
+      if (heat.assignments && heat.assignments.length !== 0)
         this.lanes = heat.assignments
       else
         this.lanes = []

@@ -1,11 +1,12 @@
 <template>
   <div class="section">
-    <div class="box mb-4" v-for="event in  raceStore.eventList " :key="event.id">
+    <div class="box mb-4" v-for="event in raceStore.eventList " :key="event.id">
       <div class="has-text-right">
 
         <cm class="is-right" v-if="isLoggedIn">
           <a class="dropdown-item" @click="navigateToAttemptsRecorder(event)" v-if="isDistanceEvent(event)">Attempts</a>
           <a class="dropdown-item" @click="navigateToDiaplayBoard(event)" v-if="isTimerEvent(event)">Display Board</a>
+          <a class="dropdown-item" @click="navigateToLaneAssignment(event)" v-if="isTimerEvent(event)">Assign Lanes</a>
           <router-link class="dropdown-item" :to="getTimerLink(event)" v-if="isTimerEvent(event)">Timer</router-link>
           <router-link class="dropdown-item" :to="getRecordLink(event)"
             v-if="isTimerEvent(event)">Recorder</router-link>
@@ -56,6 +57,10 @@ export default {
     navigateToDiaplayBoard(event) {
       this.loadEvent(event)
       return this.$router.push(`${this.getBaseEventLink(event)}/board`)
+    },
+    navigateToLaneAssignment(event) {
+      this.loadEvent(event)
+      return this.$router.push(`${this.getBaseEventLink(event)}/lanes`)
     },
     navigateToEventResults(event) {
       this.loadEvent(event)

@@ -60,7 +60,7 @@ const (
 			AND
 			t.event_id = ?
 		group by t.timer_id, t.event_id, t.race_id
-		order by t.start_ts ASC
+		order by t.rowid ASC
 	`
 
 	getEventTimerQuery string = `
