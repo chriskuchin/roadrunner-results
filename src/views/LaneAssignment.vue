@@ -17,16 +17,16 @@
         <select v-model="laneCount">
           <option v-for=" n in 8 " :value="n + 3">{{ n + 3 }} Lanes</option>
         </select>
-        <button class="button" @click="saveHeat">Save</button>
-        <button class="button" @click="deleteHeat">Delete</button>
       </div>
+      <button class="button" @click="saveHeat">Save</button>
+      <button class="button" @click="deleteHeat">Delete</button>
       <table class="table" style="margin: 0 auto;">
         <thead>
           <tr>
             <th><abbr title="Lane Assignment">Lane</abbr></th>
             <th><abbr title="Athlete Bib Number">Bib</abbr></th>
-            <th><abbr title="Athlete First Name">F. Name</abbr></th>
-            <th><abbr title="Athlete Last Name">L. Name</abbr></th>
+            <th v-if="view.includeAthleteFirstName"><abbr title="Athlete First Name">F. Name</abbr></th>
+            <th v-if="view.includeAthleteLastName"><abbr title="Athlete Last Name">L. Name</abbr></th>
             <th><abbr title="Athlete Birth Year">B. Year</abbr></th>
           </tr>
         </thead>
@@ -34,19 +34,21 @@
           <tr>
             <th><abbr title="Lane Assignment">Lane</abbr></th>
             <th><abbr title="Athlete Bib Number">Bib</abbr></th>
-            <th><abbr title="Athlete First Name">F. Name</abbr></th>
-            <th><abbr title="Athlete Last Name">L. Name</abbr></th>
+            <th v-if="view.includeAthleteFirstName"><abbr title="Athlete First Name">F. Name</abbr></th>
+            <th v-if="view.includeAthleteLastName"><abbr title="Athlete Last Name">L. Name</abbr></th>
             <th><abbr title="Athlete Birth Year">B. Year</abbr></th>
           </tr>
         </tfoot>
         <tbody>
           <tr v-for="( lane, index ) in lanes " class="is-size-4">
             <th>{{ lane.lane }}</th>
-            <td><input :tabindex="index + 1" class="input is-medium" type="text" placeholder="Bib Number"
-                @blur="bibBlur" v-model="lanes[index].bib"></td>
-            <td>{{ participants[index].first_name }}</td>
-            <td>{{ participants[index].last_name }}</td>
-            <td>{{ participants[index].birth_year }}</td>
+            <td><input :tabindex="index + 1" class="input is-medium" type="number" placeholder="Bib Number"
+                @blur="bibBlur" v-model="lanes[index].bib" style="max-width: 70px;"></td>
+            <td v-if="view.includeAthleteFirstName" :class="{ 'truncate': view.shortFirstName }">
+              {{ participants[index].first_name }}james
+            </td>
+            <td v-if="view.includeAthleteLastName">{{ participants[index].last_name }}</td>
+            <td>{{ participants[index].birth_year }}2016</td>
           </tr>
         </tbody>
       </table>
@@ -58,15 +60,34 @@
 
 import { createNewHeat, listHeats, updateHeat, deleteHeat } from '../api/heats';
 import { getParticipantByBib } from '../api/participants';
-import DropdownMenu from '../components/DropdownMenu.vue'
 
 export default {
   components: {},
   mounted: async function () {
     this.heats = await listHeats(this.$route.params.raceId, this.$route.params.eventId)
+    let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+
+    console.log(vw)
+    if (vw < 380) {
+      this.view.includeAthleteFirstName = false
+      this.view.includeAthleteLastName = false
+    } else if (vw < 425) {
+      this.view.includeAthleteFirstName = true
+      this.view.shortFirstName = true
+      this.view.includeAthleteLastName = false
+    } else if (vw > 500) {
+      this.view.includeAthleteFirstName = true
+      this.view.includeAthleteLastName = true
+      this.view.shortFirstName = false
+    }
   },
   data: function () {
     return {
+      view: {
+        includeAthleteLastName: false,
+        includeAthleteFirstName: true,
+        shortFirstName: true,
+      },
       id: "",
       laneCount: 8,
       lanes: [],
@@ -83,6 +104,9 @@ export default {
     }
   },
   computed: {
+    laneTableHeaders: function () {
+
+    }
   },
   methods: {
     generateLaneAssignments(targetCount) {
@@ -159,3 +183,17 @@ export default {
   }
 };
 </script>
+
+
+<style scoped>
+.truncate {
+  white-space: nowrap;
+  /* Prevents wrapping */
+  overflow: hidden;
+  /* Hides the overflowed content */
+  text-overflow: ellipsis;
+  /* Adds ellipsis (...) to indicate truncated text */
+  max-width: 50px;
+  /* Set maximum width to determine where to truncate */
+}
+</style>
