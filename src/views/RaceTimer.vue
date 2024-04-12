@@ -13,11 +13,15 @@
       <div class="level-item has-text-centered">
         <div class="field has-addons buttons are-large">
           <p class="control">
-          <div v-if="this.timer.start == 0" class="button is-primary is-responsive" @click="this.startTimer">Start</div>
-          <div v-else class="button is-primary is-responsive" @click="this.resumeTimer">Resume</div>
+          <div v-if="this.timer.start == 0" class="button is-primary is-responsive is-large" @click="this.startTimer">
+            Start
+          </div>
+          <div v-else class="button is-primary is-responsive is-large" @click="this.resumeTimer">
+            Resume
+          </div>
           </p>
           <p class="control">
-          <div class="button is-danger is-responsive" @click="this.stopTimer">Stop</div>
+          <div class="button is-danger is-responsive is-large" @click="this.stopTimer">Stop</div>
           </p>
           <!-- <p class="control">
           <div class="button is-warning is-responsive" @click.passive="this.recordFinish">Record</div>
@@ -58,7 +62,6 @@
         </li>
       </ol>
     </div>
-    {{ timer }}
     <fab @click="fabAction">
       <icon v-if="timerStarted()" icon="fa-solid fa-play"></icon>
       <icon v-else icon="fa-solid fa-stopwatch"></icon>
