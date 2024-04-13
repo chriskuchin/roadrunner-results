@@ -67,7 +67,6 @@ export default {
     this.heats = await listHeats(this.$route.params.raceId, this.$route.params.eventId)
     let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
 
-    console.log(vw)
     if (vw < 380) {
       this.view.includeAthleteFirstName = false
       this.view.includeAthleteLastName = false

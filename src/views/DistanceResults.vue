@@ -23,7 +23,7 @@
         Allow Letters
       </label>
     </div>
-    <div class="level" v-if="athlete.info.firstName != ''">
+    <div class="level mb-5" v-if="athlete.info.firstName !== ''">
       <div class="level-item has-text-centered">
         <div>
           <p class="heading">{{ athlete.info.team }}</p>
@@ -111,7 +111,11 @@ export default {
   components: {
     'fab': FAB,
   },
+  unmounted: function () {
+    window.removeEventListener('keypress', this.keyPressEvent)
+  },
   mounted: function () {
+    window.addEventListener('keypress', this.keyPressEvent)
   },
   data: function () {
     return {
@@ -138,15 +142,23 @@ export default {
     }
   },
   methods: {
+    keyPressEvent: function (e) {
+      if (e.key == "Enter") {
+        this.recordAttempt()
+        this.$refs['l-msr'].focus()
+      }
+    },
     lookupAthlete: async function (e) {
       if (this.athlete.bib !== "") {
         let participant = await getParticipantByBib(this.$route.params.raceId, this.athlete.bib)
 
-        this.athlete.info.firstName = participant.first_name
-        this.athlete.info.lastName = participant.last_name
-        this.athlete.info.team = participant.team
-        this.athlete.info.gender = participant.gender
-        this.athlete.info.birthYear = participant.birth_year
+        if (Object.keys(participant).length > 0) {
+          this.athlete.info.firstName = participant.first_name
+          this.athlete.info.lastName = participant.last_name
+          this.athlete.info.team = participant.team
+          this.athlete.info.gender = participant.gender
+          this.athlete.info.birthYear = participant.birth_year
+        }
 
         this.attempts = await listEventAttempts(this.$route.params.raceId, this.$route.params.eventId, this.athlete.bib)
       } else {
