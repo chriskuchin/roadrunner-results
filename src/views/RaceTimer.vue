@@ -54,14 +54,15 @@
         </li>
       </ul>
     </div>
+    <tbl class="mx-auto" :headers="resultsHeader" :rows="tableFinishersPreview" />
     <!-- on load of id existing heat load the times for the heat -->
-    <div style="height: 500px; overflow-y: auto;" class="content">
+    <!-- <div style="height: 500px; overflow-y: auto;" class="content">
       <ol>
         <li v-for="(finisher, index) in reverseOrderedFinishers" :class="{ unselectable: timerIsRunning }">
           {{ finisher }}
         </li>
       </ol>
-    </div>
+    </div> -->
     <fab @click="fabAction">
       <icon v-if="timerStarted()" icon="fa-solid fa-play"></icon>
       <icon v-else icon="fa-solid fa-stopwatch"></icon>
@@ -87,8 +88,6 @@ export default {
   mounted: function () {
     window.addEventListener('keypress', this.handleKeyboardEvent)
 
-    console.log(this.$refs.rslts)
-
     this.listTimers()
     this.loadMedia()
   },
@@ -109,7 +108,22 @@ export default {
       error: {
         show: false,
         msg: ""
-      }
+      },
+      resultsHeader: [
+        {
+          abbr: "Pos",
+          title: "Position",
+        },
+        {
+          abbr: "Time",
+          title: "Finish Time",
+        },
+        {
+          abbr: "Diff",
+          title: "Difference From First"
+        }
+      ],
+
     };
   },
   methods: {
@@ -203,8 +217,8 @@ export default {
 
       window.navigator.vibrate(50)
       let finishTime = Date.now()
-      var elapsedTime = formatMilliseconds(finishTime - this.timer.start)
-      this.finishers.push(elapsedTime)
+      var elapsedTime = finishTime - this.timer.start
+      this.finishers.push(elapsedTime) // needs to be the raw time not formatted
       this.takePicture(this.raceID, this.eventID, finishTime, elapsedTime)
 
       try {
@@ -235,6 +249,35 @@ export default {
     },
     finisherCount: function () {
       return this.finishers.length
+    },
+    tableFinishersPreview: function () {
+      const sourceArray = this.finishers
+      if (sourceArray.length === 0) {
+        return [];
+      }
+
+      // Create an empty array to hold the selected elements and their index
+      const resultArray = [];
+      const firstTime = this.finishers[0]
+
+      // Calculate the number of elements to retrieve
+      const firstThreeCount = Math.min(3, sourceArray.length);
+      const lastTenCount = Math.min(5, sourceArray.length - firstThreeCount);
+
+      // Add the first three elements and their index to resultArray
+      for (let i = 0; i < firstThreeCount; i++) {
+        resultArray.push([i + 1, formatMilliseconds(sourceArray[i]), formatMilliseconds(sourceArray[i] - firstTime)]);
+      }
+
+      if (sourceArray.length > firstThreeCount + lastTenCount)
+        resultArray.push(["", "", ""])
+
+      // Add the last ten elements and their index to resultArray
+      const startLastTen = sourceArray.length - lastTenCount;
+      for (let i = startLastTen; i < sourceArray.length; i++) {
+        resultArray.push([i + 1, formatMilliseconds(sourceArray[i]), formatMilliseconds(sourceArray[i] - firstTime)]);
+      }
+      return resultArray
     },
     reverseOrderedFinishers: function () {
       let reversed = []
