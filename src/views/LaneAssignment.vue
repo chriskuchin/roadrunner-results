@@ -27,7 +27,7 @@
             <th><abbr title="Athlete Bib Number">Bib</abbr></th>
             <th v-if="view.includeAthleteFirstName"><abbr title="Athlete First Name">F. Name</abbr></th>
             <th v-if="view.includeAthleteLastName"><abbr title="Athlete Last Name">L. Name</abbr></th>
-            <th><abbr title="Athlete Birth Year">B. Year</abbr></th>
+            <th><abbr title="Athlete Birth Year">B. Yr</abbr></th>
           </tr>
         </thead>
         <tfoot>
