@@ -16,7 +16,7 @@ function formatCentimeters(cm, format) {
   switch (format) {
     case "ftin": {
       const ft = Math.floor(cm / centimeters_per_foot);
-      const remainingCM = cm % centimeters_per_foot;
+      const remainingCM = cm - (ft *centimeters_per_foot);
 
       const inches = remainingCM / centimeters_per_inch;
 
@@ -36,7 +36,7 @@ function formatCentimeters(cm, format) {
     case "cm":
       return `${cm} cm`
     default:
-      return "" + cm;
+      return `${cm}`;
   }
 }
 
