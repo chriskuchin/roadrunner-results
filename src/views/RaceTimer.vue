@@ -266,7 +266,8 @@ export default {
 
       // Add the first three elements and their index to resultArray
       for (let i = 0; i < firstThreeCount; i++) {
-        resultArray.push([i + 1, formatMilliseconds(sourceArray[i]), formatMilliseconds(sourceArray[i] - firstTime)]);
+        // <icon v-if="key == 0" icon="fas fa-crown"></icon>
+        resultArray.push([`${i + 1}`, formatMilliseconds(sourceArray[i]), formatMilliseconds(sourceArray[i] - firstTime)]);
       }
 
       if (sourceArray.length > firstThreeCount + lastTenCount)
