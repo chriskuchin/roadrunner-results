@@ -55,7 +55,7 @@
       </ul>
     </div>
     <!-- on load of id existing heat load the times for the heat -->
-    <div class="content">
+    <div style="height: 500px; overflow-y: auto;" class="content">
       <ol>
         <li v-for="(finisher, index) in reverseOrderedFinishers" :class="{ unselectable: timerIsRunning }">
           {{ finisher }}
@@ -72,6 +72,7 @@
 <script>
 import { formatMilliseconds } from '../utilities';
 import FAB from '../components/Fab.vue'
+import Table from '../components/Table.vue';
 import { useErrorBus } from '../store/error';
 import { useMediaStore } from '../store/media';
 import { mapActions } from 'pinia';
@@ -81,9 +82,12 @@ import { recordFinish } from '../api/results';
 export default {
   components: {
     'fab': FAB,
+    'tbl': Table,
   },
   mounted: function () {
     window.addEventListener('keypress', this.handleKeyboardEvent)
+
+    console.log(this.$refs.rslts)
 
     this.listTimers()
     this.loadMedia()
