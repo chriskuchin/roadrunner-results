@@ -45,10 +45,10 @@
             <td><input :tabindex="index + 1" class="input is-medium" type="number" placeholder="Bib Number"
                 @blur="bibBlur" v-model="lanes[index].bib" style="max-width: 70px;"></td>
             <td v-if="view.includeAthleteFirstName" :class="{ 'truncate': view.shortFirstName }">
-              {{ participants[index].first_name }}james
+              {{ participants[index].first_name }}
             </td>
             <td v-if="view.includeAthleteLastName">{{ participants[index].last_name }}</td>
-            <td>{{ participants[index].birth_year }}2016</td>
+            <td>{{ participants[index].birth_year }}</td>
           </tr>
         </tbody>
       </table>
