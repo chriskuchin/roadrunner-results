@@ -2,6 +2,8 @@ module github.com/chriskuchin/roadrunner-results
 
 go 1.21
 
+toolchain go1.21.5
+
 require (
 	firebase.google.com/go/v4 v4.14.0
 	github.com/aws/aws-sdk-go-v2 v1.26.1
