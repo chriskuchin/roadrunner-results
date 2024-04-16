@@ -71,6 +71,10 @@ func (db *DBLayer) ExecContext(ctx context.Context, query string, args ...interf
 	return db.write.ExecContext(ctx, query, args...)
 }
 
+func (db *DBLayer) NamedExecContext(ctx context.Context, query string, arg interface{}) (sql.Result, error) {
+	return db.write.NamedExecContext(ctx, query, arg)
+}
+
 func (db *DBLayer) SelectContext(ctx context.Context, destination interface{}, query string, args ...interface{}) error {
 	return db.read.SelectContext(ctx, destination, query, args...)
 }

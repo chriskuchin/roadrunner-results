@@ -3,6 +3,6 @@ package services
 import "errors"
 
 var (
-	RowNotFoundError = errors.New("desired row not found")
-	InvalidArgument  = errors.New("invalid argument")
+	ErrorRowNotFound     = errors.New("desired row not found")
+	ErrorInvalidArgument = errors.New("invalid argument")
 )

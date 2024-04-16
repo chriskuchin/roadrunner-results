@@ -97,7 +97,7 @@ type (
 )
 
 func AddParticipant(ctx context.Context, db *db.DBLayer, participant ParticipantRow) error {
-	_, err := db.ExecContext(ctx, addParticipantQuery, participant)
+	_, err := db.NamedExecContext(ctx, addParticipantQuery, participant)
 	return err
 }
 
@@ -115,7 +115,7 @@ func GetParticipantByBibNumber(ctx context.Context, db *db.DBLayer, raceID, bibN
 	}
 
 	if len(participant) != 1 {
-		return ParticipantRow{}, RowNotFoundError
+		return ParticipantRow{}, ErrorRowNotFound
 	}
 
 	return participant[0], nil
