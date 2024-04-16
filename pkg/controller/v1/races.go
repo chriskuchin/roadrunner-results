@@ -15,7 +15,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func HandleRaceImportSheet(db *db.DBLayer) http.HandlerFunc {
+func HandleRaceImportSheet(db db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		sheetId := r.URL.Query().Get("sheetId")
 		if sheetId == "" {
@@ -29,7 +29,7 @@ func HandleRaceImportSheet(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleRaceGet(db *db.DBLayer) http.HandlerFunc {
+func HandleRaceGet(db db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		race, err := services.GetRace(ctx, db, util.GetRaceIDFromContext(ctx))
@@ -42,7 +42,7 @@ func HandleRaceGet(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleRacesList(db *db.DBLayer) http.HandlerFunc {
+func HandleRacesList(db db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var err error
 		limit := 20
@@ -73,7 +73,7 @@ func HandleRacesList(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleRacesCreate(db *db.DBLayer) http.HandlerFunc {
+func HandleRacesCreate(db db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 
@@ -123,7 +123,7 @@ func HandleRacesCreate(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleRaceDelete(db *db.DBLayer) http.HandlerFunc {
+func HandleRaceDelete(db db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id := chi.URLParam(r, "raceID")
 		ctx := r.Context()

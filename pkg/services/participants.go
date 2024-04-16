@@ -96,7 +96,7 @@ type (
 	}
 )
 
-func AddParticipant(ctx context.Context, db *db.DBLayer, participant ParticipantRow) error {
+func AddParticipant(ctx context.Context, db db.DB, participant ParticipantRow) error {
 	_, err := db.NamedExecContext(ctx, addParticipantQuery, participant)
 	return err
 }
@@ -107,7 +107,7 @@ select rowid, * from participants
 		race_id = ?
 `
 
-func GetParticipantByBibNumber(ctx context.Context, db *db.DBLayer, raceID, bibNumber string) (ParticipantRow, error) {
+func GetParticipantByBibNumber(ctx context.Context, db db.DB, raceID, bibNumber string) (ParticipantRow, error) {
 	var participant []ParticipantRow
 	err := db.SelectContext(ctx, &participant, selectRaceParticipantByBibNumber, raceID, bibNumber)
 	if err != nil {
@@ -121,7 +121,7 @@ func GetParticipantByBibNumber(ctx context.Context, db *db.DBLayer, raceID, bibN
 	return participant[0], nil
 }
 
-func ListParticipants(ctx context.Context, db *db.DBLayer, raceID string, limit, offset int, filters map[string]string) ([]ParticipantObject, error) {
+func ListParticipants(ctx context.Context, db db.DB, raceID string, limit, offset int, filters map[string]string) ([]ParticipantObject, error) {
 	var query string = listParticipantsQuery
 
 	var values []interface{} = []interface{}{}
@@ -178,7 +178,7 @@ func ListParticipants(ctx context.Context, db *db.DBLayer, raceID string, limit,
 	return results, nil
 }
 
-func GetEventFinisherCount(ctx context.Context, db *db.DBLayer, raceID, eventID string) (int, error) {
+func GetEventFinisherCount(ctx context.Context, db db.DB, raceID, eventID string) (int, error) {
 	rows, err := db.QueryContext(ctx, selectEventFinisherCountQuery, raceID, eventID)
 	if err != nil {
 		return 0, err
@@ -193,7 +193,7 @@ func GetEventFinisherCount(ctx context.Context, db *db.DBLayer, raceID, eventID 
 	return 0, nil
 }
 
-func GetRaceFinisherCount(ctx context.Context, db *db.DBLayer, raceID string) (int, error) {
+func GetRaceFinisherCount(ctx context.Context, db db.DB, raceID string) (int, error) {
 	rows, err := db.QueryContext(ctx, selectRaceFinisherCountQuery, raceID)
 	if err != nil {
 		return 0, err
@@ -208,7 +208,7 @@ func GetRaceFinisherCount(ctx context.Context, db *db.DBLayer, raceID string) (i
 	return 0, err
 }
 
-func GetRaceGenderCount(ctx context.Context, db *db.DBLayer, raceID string) (female int, male int, err error) {
+func GetRaceGenderCount(ctx context.Context, db db.DB, raceID string) (female int, male int, err error) {
 	rows, err := db.QueryContext(ctx, selectRaceParticipantGenderCountQuery, raceID)
 	if err != nil {
 		return
@@ -228,7 +228,7 @@ func GetRaceGenderCount(ctx context.Context, db *db.DBLayer, raceID string) (fem
 	return
 }
 
-func GetRaceParticipantCount(ctx context.Context, db *db.DBLayer, raceID string) (int, error) {
+func GetRaceParticipantCount(ctx context.Context, db db.DB, raceID string) (int, error) {
 	row := db.QueryRowContext(ctx, selectRaceParticipantCountQuery, raceID)
 	if row.Err() != nil {
 		return 0, row.Err()
@@ -239,7 +239,7 @@ func GetRaceParticipantCount(ctx context.Context, db *db.DBLayer, raceID string)
 	return count, err
 }
 
-func GetRaceParticipantsBirthYearCount(ctx context.Context, db *db.DBLayer, raceID string) ([]map[string]interface{}, error) {
+func GetRaceParticipantsBirthYearCount(ctx context.Context, db db.DB, raceID string) ([]map[string]interface{}, error) {
 	rows, err := db.QueryContext(ctx, selectRaceParticipantBirthYearCountQuery, raceID)
 	if err != nil {
 		return nil, err
@@ -261,12 +261,12 @@ func GetRaceParticipantsBirthYearCount(ctx context.Context, db *db.DBLayer, race
 	return results, nil
 }
 
-func GetRaceLastBibNumber(ctx context.Context, db *db.DBLayer) (int, error) {
+func GetRaceLastBibNumber(ctx context.Context, db db.DB) (int, error) {
 
 	return 0, nil
 }
 
-func UpdateParticipant(ctx context.Context, db *db.DBLayer, raceID, participantID string, participant ParticipantRow) error {
+func UpdateParticipant(ctx context.Context, db db.DB, raceID, participantID string, participant ParticipantRow) error {
 	query := "UPDATE participants SET first_name = ?, last_name = ?, birth_year = ?, team = ?, gender = ?, bib_number = ? WHERE race_id = ? AND rowid = ?"
 	_, err := db.ExecContext(ctx, query, participant.FirstName, participant.LastName, participant.BirthYear, participant.Team, participant.Gender, participant.BibNumber, raceID, participantID)
 	return err

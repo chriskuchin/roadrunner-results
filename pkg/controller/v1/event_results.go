@@ -19,7 +19,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func HandleEventResultsUpdate(db *db.DBLayer) http.HandlerFunc {
+func HandleEventResultsUpdate(db db.DB) http.HandlerFunc {
 	type PatchResultPayload struct {
 		Result int    `json:"result"`
 		Bib    string `json:"bib_number"`
@@ -63,7 +63,7 @@ func HandleEventResultsUpdate(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleEventResultsDelete(db *db.DBLayer) http.HandlerFunc {
+func HandleEventResultsDelete(db db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 
@@ -77,7 +77,7 @@ func HandleEventResultsDelete(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleEventResultsGet(db *db.DBLayer) http.HandlerFunc {
+func HandleEventResultsGet(db db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		var results []services.ParticipantEventResult
@@ -130,7 +130,7 @@ func HandleEventResultsGet(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleEventResultsCreate(db *db.DBLayer, s3Client *s3.Client, bucket string) http.HandlerFunc {
+func HandleEventResultsCreate(db db.DB, s3Client *s3.Client, bucket string) http.HandlerFunc {
 	type RecordResultRequestPayload struct {
 		Timer       string `json:"timer_id"`
 		End         int64  `json:"end_ts"`

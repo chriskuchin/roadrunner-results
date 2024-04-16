@@ -22,7 +22,7 @@ func HandleParticipantsDistinctTeams() http.HandlerFunc {
 	return apiutil.Unimplemented
 }
 
-func HandleParticipantsImportCSV(db *db.DBLayer) http.HandlerFunc {
+func HandleParticipantsImportCSV(db db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		contentType := r.Header.Get("Content-Type")
 
@@ -109,7 +109,7 @@ func HandleParticipantsImportCSV(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleParticipantGetByBibNumber(db *db.DBLayer) http.HandlerFunc {
+func HandleParticipantGetByBibNumber(db db.DB) http.HandlerFunc {
 	type response struct {
 		BibNumber string `json:"bib_number"`
 		FirstName string `json:"first_name"`
@@ -154,7 +154,7 @@ func HandleParticipantsNextBibNumber() http.HandlerFunc {
 	return apiutil.Unimplemented
 }
 
-func HandleParticipantsList(db *db.DBLayer) http.HandlerFunc {
+func HandleParticipantsList(db db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		var err error
@@ -211,7 +211,7 @@ func HandleParticipantGet() http.HandlerFunc {
 	return apiutil.Unimplemented
 }
 
-func HandleParticipantUpdate(db *db.DBLayer) http.HandlerFunc {
+func HandleParticipantUpdate(db db.DB) http.HandlerFunc {
 	type ParticipantRequest struct {
 		BibNumber int    `json:"bib_number"`
 		FirstName string `json:"first_name"`
@@ -254,7 +254,7 @@ func HandleParticipantUpdate(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleParticipantsCreate(db *db.DBLayer) http.HandlerFunc {
+func HandleParticipantsCreate(db db.DB) http.HandlerFunc {
 	type ParticipantRequest struct {
 		BibNumber int    `json:"bib_number"`
 		FirstName string `json:"first_name"`

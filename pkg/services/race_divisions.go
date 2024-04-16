@@ -43,7 +43,7 @@ type DivisionResults struct {
 	Filters []Filter `json:"filters"`
 }
 
-func CreateDivision(ctx context.Context, db *db.DBLayer, raceID string, display string, filters []Filter) error {
+func CreateDivision(ctx context.Context, db db.DB, raceID string, display string, filters []Filter) error {
 
 	dbFilters, err := json.Marshal(filters)
 	if err != nil {
@@ -58,7 +58,7 @@ func CreateDivision(ctx context.Context, db *db.DBLayer, raceID string, display 
 	return nil
 }
 
-func ListRaceDivisions(ctx context.Context, db *db.DBLayer, raceID string) ([]DivisionResults, error) {
+func ListRaceDivisions(ctx context.Context, db db.DB, raceID string) ([]DivisionResults, error) {
 	divisionRows := []DivisionRow{}
 	err := db.SelectContext(ctx, &divisionRows, listRaceDivisionsQuery, raceID)
 	if err != nil {

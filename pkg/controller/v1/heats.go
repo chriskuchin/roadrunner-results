@@ -10,7 +10,7 @@ import (
 	"github.com/go-chi/render"
 )
 
-func HandleHeatsCreate(db *db.DBLayer) http.HandlerFunc {
+func HandleHeatsCreate(db db.DB) http.HandlerFunc {
 	type assignment struct {
 		Lane int    `json:"lane"`
 		Bib  string `json:"bib"`
@@ -60,7 +60,7 @@ func HandleHeatsCreate(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleHeatUpdate(db *db.DBLayer) http.HandlerFunc {
+func HandleHeatUpdate(db db.DB) http.HandlerFunc {
 	type assignment struct {
 		Lane int    `json:"lane"`
 		Bib  string `json:"bib"`
@@ -99,7 +99,7 @@ func HandleHeatUpdate(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleHeatDelete(db *db.DBLayer) http.HandlerFunc {
+func HandleHeatDelete(db db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		err := services.DeleteHeat(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetTimerIDFromContext(ctx))
@@ -111,7 +111,7 @@ func HandleHeatDelete(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleHeatsList(db *db.DBLayer) http.HandlerFunc {
+func HandleHeatsList(db db.DB) http.HandlerFunc {
 	type assignments struct {
 		Lane int    `json:"lane"`
 		Bib  string `json:"bib"`

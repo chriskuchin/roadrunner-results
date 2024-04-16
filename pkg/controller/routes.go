@@ -22,7 +22,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func Routes(app *firebase.App, db *db.DBLayer, assetsFolder string, debug bool) chi.Router {
+func Routes(app *firebase.App, db db.DB, assetsFolder string, debug bool) chi.Router {
 	authClient, err := app.Auth(context.Background())
 	if err != nil {
 		log.Fatal().Err(err).Msg("auth client failure")

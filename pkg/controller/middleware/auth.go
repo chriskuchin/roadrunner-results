@@ -39,7 +39,7 @@ func AuthenticationMiddleware(verifyToken func(context.Context, string) (*auth.T
 	}
 }
 
-func UserAuthMiddleware(db *db.DBLayer, allowedMethods []string) func(http.Handler) http.Handler {
+func UserAuthMiddleware(db db.DB, allowedMethods []string) func(http.Handler) http.Handler {
 	var isAllowedMethod map[string]bool = map[string]bool{}
 	for _, method := range allowedMethods {
 		isAllowedMethod[method] = true

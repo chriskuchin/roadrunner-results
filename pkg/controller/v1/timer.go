@@ -11,7 +11,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func HandleTimersCreate(db *db.DBLayer) http.HandlerFunc {
+func HandleTimersCreate(db db.DB) http.HandlerFunc {
 	type assignments struct {
 		Lane int    `json:"lane,omitempty"`
 		Bib  string `json:"bib,omitempty"`
@@ -66,7 +66,7 @@ func HandleTimersCreate(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleTimerStart(db *db.DBLayer) http.HandlerFunc {
+func HandleTimerStart(db db.DB) http.HandlerFunc {
 	type TimerRequest struct {
 		Start int64 `json:"start_ts,omitempty"`
 	}
@@ -97,7 +97,7 @@ func HandleTimerStart(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleTimersList(db *db.DBLayer) http.HandlerFunc {
+func HandleTimersList(db db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		result, err := services.ListTimers(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), 10, 0)
@@ -110,7 +110,7 @@ func HandleTimersList(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleTimerGet(db *db.DBLayer) http.HandlerFunc {
+func HandleTimerGet(db db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		result, err := services.GetTimer(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetTimerIDFromContext(ctx))
@@ -127,7 +127,7 @@ func HandleTimerGet(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleTimerDelete(db *db.DBLayer) http.HandlerFunc {
+func HandleTimerDelete(db db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		err := services.DeleteTimer(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetTimerIDFromContext(ctx))

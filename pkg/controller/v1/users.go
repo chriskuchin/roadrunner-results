@@ -7,7 +7,7 @@ import (
 	"github.com/chriskuchin/roadrunner-results/pkg/db"
 )
 
-func HandleGetCurrentUser(db *db.DBLayer, auth *auth.Client) http.HandlerFunc {
+func HandleGetCurrentUser(db db.DB, auth *auth.Client) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 	}
 }

@@ -10,7 +10,7 @@ import (
 	"github.com/go-chi/render"
 )
 
-func HandleAthleteResultsSearch(db *db.DBLayer) http.HandlerFunc {
+func HandleAthleteResultsSearch(db db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var filter map[string]string = map[string]string{}
 

@@ -29,12 +29,12 @@ const (
 	`
 )
 
-func InsertResults(ctx context.Context, db *db.DBLayer, raceID, eventID, bibNumber, result string) error {
+func InsertResults(ctx context.Context, db db.DB, raceID, eventID, bibNumber, result string) error {
 	_, err := db.ExecContext(ctx, addResultQuery, raceID, eventID, bibNumber, result)
 	return err
 }
 
-func InsertPartialResult(ctx context.Context, db *db.DBLayer, raceID, eventID string, result int64, timerID string) error {
+func InsertPartialResult(ctx context.Context, db db.DB, raceID, eventID string, result int64, timerID string) error {
 	var err error
 	if timerID == "" {
 		_, err = db.ExecContext(ctx, insertPartialQuery, raceID, eventID, nil, result)

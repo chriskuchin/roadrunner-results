@@ -31,7 +31,7 @@ type PermissionPayload struct {
 const INSERT_RACE_AUTHORIZATION = `INSERT into race_authorization (user_id, race_id, permissions)
 	VALUES(?, ?, json(?))`
 
-func CreateRaceAuthorization(ctx context.Context, db *db.DBLayer, raceID, userID string) error {
+func CreateRaceAuthorization(ctx context.Context, db db.DB, raceID, userID string) error {
 	payload, _ := json.Marshal(PermissionPayload{
 		Actions: []string{"volunteer"},
 		Events:  []string{"all"},
@@ -48,7 +48,7 @@ func CreateRaceAuthorization(ctx context.Context, db *db.DBLayer, raceID, userID
 
 const LOOKUP_RACE_AUTHORIZATION = `SELECT user_id FROM race_authorization WHERE race_id = ?`
 
-func GetRaceAuthorizedUsers(ctx context.Context, db *db.DBLayer, raceID string) (map[string]bool, error) {
+func GetRaceAuthorizedUsers(ctx context.Context, db db.DB, raceID string) (map[string]bool, error) {
 	rows, err := db.QueryContext(ctx, LOOKUP_RACE_AUTHORIZATION, raceID)
 	if err != nil {
 		return nil, err
@@ -67,7 +67,7 @@ func GetRaceAuthorizedUsers(ctx context.Context, db *db.DBLayer, raceID string) 
 
 const LOOKUP_EVENT_RACE_AUTHORIZATION = `SELECT user_id FROM race_authorization as ra JOIN json_each(race_authorization.permissions, "$.events") as events WHERE ra.race_id = ? AND (events.value = "all" OR events.value = ?);`
 
-func GetEventAuthorizedUsers(ctx context.Context, db *db.DBLayer, raceID, eventID string) (map[string]bool, error) {
+func GetEventAuthorizedUsers(ctx context.Context, db db.DB, raceID, eventID string) (map[string]bool, error) {
 	rows, err := db.QueryContext(ctx, LOOKUP_EVENT_RACE_AUTHORIZATION, raceID, eventID)
 	if err != nil {
 		return nil, err
@@ -85,7 +85,7 @@ func GetEventAuthorizedUsers(ctx context.Context, db *db.DBLayer, raceID, eventI
 
 const LIST_VOLUNTEER_USER_IDS = `SELECT user_id FROM race_authorization WHERE race_id = ?`
 
-func ListRaceVolunteersUserIDs(ctx context.Context, db *db.DBLayer, raceID string) ([]string, error) {
+func ListRaceVolunteersUserIDs(ctx context.Context, db db.DB, raceID string) ([]string, error) {
 	rows, err := db.QueryContext(ctx, LIST_VOLUNTEER_USER_IDS, raceID)
 	if err != nil {
 		return nil, err

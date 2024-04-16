@@ -16,7 +16,7 @@ import (
 	"google.golang.org/api/sheets/v4"
 )
 
-func ImportFromSheet(ctx context.Context, db *db.DBLayer, sheetId string) {
+func ImportFromSheet(ctx context.Context, db db.DB, sheetId string) {
 	sheets, err := sheets.NewService(ctx, option.WithHTTPClient(ctx.Value(util.GoogleClient).(*http.Client)))
 	if err != nil {
 		log.Error().Err(err).Send()

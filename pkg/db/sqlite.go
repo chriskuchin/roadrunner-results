@@ -11,7 +11,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-type DBLayer struct {
+type SQLiteDB struct {
 	read  *sqlx.DB
 	write *sqlx.DB
 }
@@ -20,9 +20,9 @@ const (
 	dbURL = "%s?_journal_mode=WAL&mode=rwc&cache=shared&_txlock=immediate&_busy_timeout=5000&_synchronous=NORMAL&_cache_size=1000000000&_foreign_keys=true"
 )
 
-func NewSQLite(dbPath string) *DBLayer {
+func NewSQLite(dbPath string) *SQLiteDB {
 
-	db := &DBLayer{}
+	db := &SQLiteDB{}
 	log.Debug().Str("db", dbPath).Send()
 	write, err := sqlx.Open("sqlite3", fmt.Sprintf(dbURL, dbPath))
 	if err != nil {
@@ -67,26 +67,26 @@ func configureSQLite(db *sqlx.DB) (err error) {
 	return nil
 }
 
-func (db *DBLayer) ExecContext(ctx context.Context, query string, args ...interface{}) (sql.Result, error) {
+func (db *SQLiteDB) ExecContext(ctx context.Context, query string, args ...interface{}) (sql.Result, error) {
 	return db.write.ExecContext(ctx, query, args...)
 }
 
-func (db *DBLayer) NamedExecContext(ctx context.Context, query string, arg interface{}) (sql.Result, error) {
+func (db *SQLiteDB) NamedExecContext(ctx context.Context, query string, arg interface{}) (sql.Result, error) {
 	return db.write.NamedExecContext(ctx, query, arg)
 }
 
-func (db *DBLayer) SelectContext(ctx context.Context, destination interface{}, query string, args ...interface{}) error {
+func (db *SQLiteDB) SelectContext(ctx context.Context, destination interface{}, query string, args ...interface{}) error {
 	return db.read.SelectContext(ctx, destination, query, args...)
 }
 
-func (db *DBLayer) QueryRowContext(ctx context.Context, query string, args ...interface{}) *sql.Row {
+func (db *SQLiteDB) QueryRowContext(ctx context.Context, query string, args ...interface{}) *sql.Row {
 	return db.read.QueryRowContext(ctx, query, args...)
 }
 
-func (db *DBLayer) GetContext(ctx context.Context, destination interface{}, query string, args ...interface{}) error {
+func (db *SQLiteDB) GetContext(ctx context.Context, destination interface{}, query string, args ...interface{}) error {
 	return db.read.GetContext(ctx, destination, query, args...)
 }
 
-func (db *DBLayer) QueryContext(ctx context.Context, query string, args ...interface{}) (*sql.Rows, error) {
+func (db *SQLiteDB) QueryContext(ctx context.Context, query string, args ...interface{}) (*sql.Rows, error) {
 	return db.read.QueryContext(ctx, query, args...)
 }

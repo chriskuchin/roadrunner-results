@@ -70,7 +70,7 @@ type ParticipantStats struct {
 	BirthYearHistogram []map[string]interface{} `json:"birth_year_distribution,omitempty"`
 }
 
-func GetRaceOwnerID(ctx context.Context, db *db.DBLayer, id string) (string, error) {
+func GetRaceOwnerID(ctx context.Context, db db.DB, id string) (string, error) {
 	var ownerID []string
 	err := db.SelectContext(ctx, &ownerID, getRaceOwnerQuery, id)
 	if err != nil {
@@ -84,7 +84,7 @@ func GetRaceOwnerID(ctx context.Context, db *db.DBLayer, id string) (string, err
 	return ownerID[0], nil
 }
 
-func GetRace(ctx context.Context, db *db.DBLayer, raceID string) (RaceResult, error) {
+func GetRace(ctx context.Context, db db.DB, raceID string) (RaceResult, error) {
 	dto := []RaceRow{}
 	err := db.SelectContext(ctx, &dto, "select * from races where race_id = ?", raceID)
 	if err != nil {
@@ -154,7 +154,7 @@ func GetRace(ctx context.Context, db *db.DBLayer, raceID string) (RaceResult, er
 	}, nil
 }
 
-func ImportRaceFromURL(ctx context.Context, db *db.DBLayer, url string, date time.Time, name string) (string, error) {
+func ImportRaceFromURL(ctx context.Context, db db.DB, url string, date time.Time, name string) (string, error) {
 	eventInfo := client.GetEventInformation(ctx, url)
 	raceID, err := CreateRace(ctx, db, name, date)
 	ctx = context.WithValue(ctx, util.RaceID, raceID)
@@ -196,13 +196,13 @@ func ImportRaceFromURL(ctx context.Context, db *db.DBLayer, url string, date tim
 	return raceID, nil
 }
 
-func CreateRace(ctx context.Context, db *db.DBLayer, name string, date time.Time) (string, error) {
+func CreateRace(ctx context.Context, db db.DB, name string, date time.Time) (string, error) {
 	id := uuid.NewString()
 	err := CreateRaceWithID(ctx, db, id, name, date)
 	return id, err
 }
 
-func CreateRaceWithID(ctx context.Context, db *db.DBLayer, id, name string, date time.Time) error {
+func CreateRaceWithID(ctx context.Context, db db.DB, id, name string, date time.Time) error {
 	dateNum, err := strconv.Atoi(date.Format("20060102"))
 	if err != nil {
 		log.Error().Err(err).Send()
@@ -212,7 +212,7 @@ func CreateRaceWithID(ctx context.Context, db *db.DBLayer, id, name string, date
 	return err
 }
 
-func ListRaces(ctx context.Context, db *db.DBLayer, limit, offset int) ([]RaceResult, error) {
+func ListRaces(ctx context.Context, db db.DB, limit, offset int) ([]RaceResult, error) {
 	races := []RaceRow{}
 	err := db.SelectContext(ctx, &races, "select * from races ORDER BY race_date DESC LIMIT ? OFFSET ?", limit, offset)
 	if err != nil {
@@ -249,7 +249,7 @@ var raceTables []string = []string{
 	"timer_results",
 }
 
-func DeleteRace(ctx context.Context, db *db.DBLayer, id string) (err error) {
+func DeleteRace(ctx context.Context, db db.DB, id string) (err error) {
 	var failedObjects []string = []string{}
 	for _, table := range raceTables {
 		_, err := db.ExecContext(ctx, fmt.Sprintf("DELETE FROM %s WHERE race_id = ?", table), id)

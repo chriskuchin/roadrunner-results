@@ -24,12 +24,12 @@ const (
 	listAttemptsQuery = `SELECT * FROM attempts where race_id = ? AND event_id = ? AND bib = ? ORDER BY result DESC`
 )
 
-func RecordAttempt(ctx context.Context, db *db.DBLayer, raceID, eventID, bib string, attemptNo int, result float32) error {
+func RecordAttempt(ctx context.Context, db db.DB, raceID, eventID, bib string, attemptNo int, result float32) error {
 	_, err := db.ExecContext(ctx, insertAttemptQuery, raceID, eventID, bib, attemptNo, result)
 	return err
 }
 
-func ListAttempts(ctx context.Context, db *db.DBLayer, raceID, eventID, bib string) ([]AttemptsRow, error) {
+func ListAttempts(ctx context.Context, db db.DB, raceID, eventID, bib string) ([]AttemptsRow, error) {
 	var attempts []AttemptsRow
 	err := db.SelectContext(ctx, &attempts, listAttemptsQuery, raceID, eventID, bib)
 	if err != nil {
@@ -39,7 +39,7 @@ func ListAttempts(ctx context.Context, db *db.DBLayer, raceID, eventID, bib stri
 	return attempts, nil
 }
 
-func UpsertBestAttemptResults(ctx context.Context, db *db.DBLayer, raceID, eventID, bib string) error {
+func UpsertBestAttemptResults(ctx context.Context, db db.DB, raceID, eventID, bib string) error {
 	_, err := db.ExecContext(ctx, upsertResultQuery, raceID, eventID, bib)
 	if err != nil {
 		return err

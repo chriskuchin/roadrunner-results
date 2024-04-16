@@ -12,7 +12,7 @@ import (
 	"github.com/go-chi/render"
 )
 
-func HandleDivisionsList(db *db.DBLayer) http.HandlerFunc {
+func HandleDivisionsList(db db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		results, err := services.ListRaceDivisions(ctx, db, util.GetRaceIDFromContext(ctx))
@@ -25,7 +25,7 @@ func HandleDivisionsList(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleDivisionsCreate(db *db.DBLayer) http.HandlerFunc {
+func HandleDivisionsCreate(db db.DB) http.HandlerFunc {
 	type Filter struct {
 		Key    string   `json:"key"`
 		Values []string `json:"values,omitempty"`

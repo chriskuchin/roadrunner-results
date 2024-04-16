@@ -63,7 +63,7 @@ const (
 	`
 )
 
-func DeleteHeat(ctx context.Context, db *db.DBLayer, race_id, event_id, timer_id string) error {
+func DeleteHeat(ctx context.Context, db db.DB, race_id, event_id, timer_id string) error {
 	_, err := db.ExecContext(ctx, DeleteLaneAssignmentsQuery, race_id, event_id, timer_id)
 	if err != nil {
 		return err
@@ -72,7 +72,7 @@ func DeleteHeat(ctx context.Context, db *db.DBLayer, race_id, event_id, timer_id
 	return DeleteTimer(ctx, db, race_id, event_id, timer_id)
 }
 
-func CreateLaneAssignment(ctx context.Context, db *db.DBLayer, race_id, event_id, timer_id string, assignments AssignmentPayload) error {
+func CreateLaneAssignment(ctx context.Context, db db.DB, race_id, event_id, timer_id string, assignments AssignmentPayload) error {
 	payload, err := json.Marshal(assignments)
 	if err != nil {
 		return err
@@ -82,7 +82,7 @@ func CreateLaneAssignment(ctx context.Context, db *db.DBLayer, race_id, event_id
 	return err
 }
 
-func UpdateLaneAssignments(ctx context.Context, db *db.DBLayer, race_id, event_id, timer_id string, assigments AssignmentPayload) error {
+func UpdateLaneAssignments(ctx context.Context, db db.DB, race_id, event_id, timer_id string, assigments AssignmentPayload) error {
 	payload, err := json.Marshal(assigments)
 	if err != nil {
 		return err
@@ -93,7 +93,7 @@ func UpdateLaneAssignments(ctx context.Context, db *db.DBLayer, race_id, event_i
 	return err
 }
 
-func ListHeatDefinitions(ctx context.Context, db *db.DBLayer, race_id, event_id string) ([]Heat, error) {
+func ListHeatDefinitions(ctx context.Context, db db.DB, race_id, event_id string) ([]Heat, error) {
 	var rows []heatRow
 	err := db.SelectContext(ctx, &rows, listHeatsQuery, race_id, event_id)
 	if err != nil {

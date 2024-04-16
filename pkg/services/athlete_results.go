@@ -35,7 +35,7 @@ type AthleteResult struct {
 	Result    float64     `json:"result"`
 }
 
-func FindAthleteResults(ctx context.Context, db *db.DBLayer, filters map[string]string) ([]AthleteResult, error) {
+func FindAthleteResults(ctx context.Context, db db.DB, filters map[string]string) ([]AthleteResult, error) {
 	if len(filters) == 0 {
 		return nil, fmt.Errorf("invalid filters")
 	}

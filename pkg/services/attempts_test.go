@@ -13,7 +13,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func dbSetup(dbName string) *db.DBLayer {
+func dbSetup(dbName string) db.DB {
 	dbPath := fmt.Sprintf("./testdata/%s.db", dbName)
 	cmd := exec.Command("dbmate", fmt.Sprintf("--url=sqlite:%s", dbPath), "--migrations-dir=../../db/migrations", "--no-dump-schema", "up")
 	out, err := cmd.CombinedOutput()

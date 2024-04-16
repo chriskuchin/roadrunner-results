@@ -7,7 +7,7 @@ import (
 
 type DB interface {
 	ExecContext(ctx context.Context, query string, args ...interface{}) (sql.Result, error)
-	SelectContext(ctx context.Context, destination interface{}, query string, args ...interface{})
+	SelectContext(ctx context.Context, destination interface{}, query string, args ...interface{}) error
 	NamedExecContext(ctx context.Context, query string, arg interface{}) (sql.Result, error)
 	QueryRowContext(ctx context.Context, query string, args ...interface{}) *sql.Row
 	GetContext(ctx context.Context, destination interface{}, query string, args ...interface{}) error

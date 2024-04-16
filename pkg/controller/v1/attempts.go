@@ -11,7 +11,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func HandleEventAttemptsCreate(db *db.DBLayer) http.HandlerFunc {
+func HandleEventAttemptsCreate(db db.DB) http.HandlerFunc {
 	type request struct {
 		BibNumber     string  `json:"bib"`
 		Distance      float32 `json:"distance"`
@@ -62,7 +62,7 @@ func HandleEventAttemptsCreate(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleEventAttemptsList(db *db.DBLayer) http.HandlerFunc {
+func HandleEventAttemptsList(db db.DB) http.HandlerFunc {
 	type attemptResponse struct {
 		AttemptNumber int     `json:"attempt_number"`
 		Result        float32 `json:"result"`

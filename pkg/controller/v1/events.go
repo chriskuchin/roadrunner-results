@@ -11,7 +11,7 @@ import (
 	"github.com/go-chi/render"
 )
 
-func HandleEventDelete(db *db.DBLayer) http.HandlerFunc {
+func HandleEventDelete(db db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		err := services.DeleteRaceEvent(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))
@@ -23,7 +23,7 @@ func HandleEventDelete(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleEventGet(db *db.DBLayer) http.HandlerFunc {
+func HandleEventGet(db db.DB) http.HandlerFunc {
 	type response struct {
 		EventID     string  `json:"eventId"`
 		Description string  `json:"description"`
@@ -48,7 +48,7 @@ func HandleEventGet(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleEventsList(db *db.DBLayer) http.HandlerFunc {
+func HandleEventsList(db db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		if util.GetRaceIDFromContext(ctx) == "" {
@@ -67,7 +67,7 @@ func HandleEventsList(db *db.DBLayer) http.HandlerFunc {
 	}
 }
 
-func HandleEventsCreate(db *db.DBLayer) http.HandlerFunc {
+func HandleEventsCreate(db db.DB) http.HandlerFunc {
 	type EventRequest struct {
 		Description string  `json:"description"`
 		Type        string  `json:"type"`

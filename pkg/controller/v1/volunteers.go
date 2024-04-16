@@ -15,7 +15,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
-func HandleVolunteersCreate(db *db.DBLayer, app *firebase.App) http.HandlerFunc {
+func HandleVolunteersCreate(db db.DB, app *firebase.App) http.HandlerFunc {
 	type VolunteerEmail struct {
 		Email string `json:"email"`
 	}
@@ -76,7 +76,7 @@ func HandleVolunteersCreate(db *db.DBLayer, app *firebase.App) http.HandlerFunc 
 	}
 }
 
-func HandleVolunteersList(db *db.DBLayer, app *firebase.App) http.HandlerFunc {
+func HandleVolunteersList(db db.DB, app *firebase.App) http.HandlerFunc {
 	type Volunteer struct {
 		Email  string `json:"email"`
 		UserID string `json:"userId"`

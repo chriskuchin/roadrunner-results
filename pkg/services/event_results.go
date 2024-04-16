@@ -46,22 +46,22 @@ var (
 	order_allowed map[string]string = map[string]string{"asc": "ASC", "desc": "DESC"}
 )
 
-func UpdateResultResult(ctx context.Context, db *db.DBLayer, resultId string, result int) error {
+func UpdateResultResult(ctx context.Context, db db.DB, resultId string, result int) error {
 	_, err := db.ExecContext(ctx, updateResultsResultQuery, result, resultId)
 	return err
 }
 
-func UpdateResultBib(ctx context.Context, db *db.DBLayer, resultId, bib string) error {
+func UpdateResultBib(ctx context.Context, db db.DB, resultId, bib string) error {
 	_, err := db.ExecContext(ctx, updateResultsBibQuery, bib, resultId)
 	return err
 }
 
-func DeleteEventResult(ctx context.Context, db *db.DBLayer, resultId string) error {
+func DeleteEventResult(ctx context.Context, db db.DB, resultId string) error {
 	_, err := db.ExecContext(ctx, "DELETE FROM results where rowid = ?", resultId)
 	return err
 }
 
-func GetEventResults(ctx context.Context, db *db.DBLayer, filters map[string][]string, order string) ([]ParticipantEventResult, error) {
+func GetEventResults(ctx context.Context, db db.DB, filters map[string][]string, order string) ([]ParticipantEventResult, error) {
 	queryOrder, ok := order_allowed[order]
 	if !ok {
 		return nil, fmt.Errorf("non allowed order arg: %s", order)
@@ -112,7 +112,7 @@ func GetEventResults(ctx context.Context, db *db.DBLayer, filters map[string][]s
 	return runEventResultsQuery(ctx, db, query, filterValues...)
 }
 
-func runEventResultsQuery(ctx context.Context, db *db.DBLayer, query string, args ...interface{}) ([]ParticipantEventResult, error) {
+func runEventResultsQuery(ctx context.Context, db db.DB, query string, args ...interface{}) ([]ParticipantEventResult, error) {
 	var results []EventResultsRow
 	err := db.SelectContext(ctx, &results, query, args...)
 	if err != nil {
@@ -138,11 +138,11 @@ func runEventResultsQuery(ctx context.Context, db *db.DBLayer, query string, arg
 	return participantResults, nil
 }
 
-func RecordElapsedTimeResult(ctx context.Context, db *db.DBLayer, raceID, eventID string, elapsed int64) error {
+func RecordElapsedTimeResult(ctx context.Context, db db.DB, raceID, eventID string, elapsed int64) error {
 	return InsertPartialResult(ctx, db, raceID, eventID, elapsed, "")
 }
 
-func RecordTimerResult(ctx context.Context, db *db.DBLayer, raceID, eventID string, endTS int64) error {
+func RecordTimerResult(ctx context.Context, db db.DB, raceID, eventID string, endTS int64) error {
 	start, timerID, err := GetActiveTimerStart(ctx, db, raceID, eventID)
 	if err != nil {
 		log.Error().Err(err).Send()
@@ -168,7 +168,7 @@ WHERE rowid in (
 )
 `
 
-func RecordFinisherResult(ctx context.Context, db *db.DBLayer, race_id, event_id, timer_id, bib string) error {
+func RecordFinisherResult(ctx context.Context, db db.DB, race_id, event_id, timer_id, bib string) error {
 	result, err := db.ExecContext(ctx, recordFinisherQuery, bib, race_id, event_id, timer_id)
 	if err != nil {
 		log.Error().Err(err).Send()
