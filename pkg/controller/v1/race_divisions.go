@@ -6,13 +6,13 @@ import (
 	"net/http"
 
 	apiutil "github.com/chriskuchin/roadrunner-results/pkg/controller/api-util"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/render"
-	"github.com/jmoiron/sqlx"
 )
 
-func HandleDivisionsList(db *sqlx.DB) http.HandlerFunc {
+func HandleDivisionsList(db *db.DBLayer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		results, err := services.ListRaceDivisions(ctx, db, util.GetRaceIDFromContext(ctx))
@@ -25,7 +25,7 @@ func HandleDivisionsList(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleDivisionsCreate(db *sqlx.DB) http.HandlerFunc {
+func HandleDivisionsCreate(db *db.DBLayer) http.HandlerFunc {
 	type Filter struct {
 		Key    string   `json:"key"`
 		Values []string `json:"values,omitempty"`

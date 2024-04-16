@@ -8,14 +8,14 @@ import (
 
 	firebase "firebase.google.com/go/v4"
 	apiutil "github.com/chriskuchin/roadrunner-results/pkg/controller/api-util"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/render"
-	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 )
 
-func HandleVolunteersCreate(db *sqlx.DB, app *firebase.App) http.HandlerFunc {
+func HandleVolunteersCreate(db *db.DBLayer, app *firebase.App) http.HandlerFunc {
 	type VolunteerEmail struct {
 		Email string `json:"email"`
 	}
@@ -76,7 +76,7 @@ func HandleVolunteersCreate(db *sqlx.DB, app *firebase.App) http.HandlerFunc {
 	}
 }
 
-func HandleVolunteersList(db *sqlx.DB, app *firebase.App) http.HandlerFunc {
+func HandleVolunteersList(db *db.DBLayer, app *firebase.App) http.HandlerFunc {
 	type Volunteer struct {
 		Email  string `json:"email"`
 		UserID string `json:"userId"`

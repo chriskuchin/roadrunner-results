@@ -8,11 +8,10 @@ import (
 
 	firebase "firebase.google.com/go/v4"
 	"github.com/chriskuchin/roadrunner-results/pkg/controller"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
-	"github.com/jmoiron/sqlx"
 
-	_ "github.com/mattn/go-sqlite3"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/urfave/cli/v2"
@@ -74,11 +73,7 @@ func main() {
 						log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 					}
 
-					log.Debug().Str("db", dbPath).Send()
-					db, err := sqlx.Open("sqlite3", fmt.Sprintf("%s?_journal_mode=WAL&mode=rwc&cache=shared", dbPath))
-					if err != nil {
-						log.Fatal().Err(err).Send()
-					}
+					db := db.NewSQLite(dbPath)
 
 					app, err := firebase.NewApp(context.Background(), nil)
 					if err != nil {

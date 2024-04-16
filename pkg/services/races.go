@@ -9,9 +9,9 @@ import (
 	"time"
 
 	"github.com/chriskuchin/roadrunner-results/pkg/client"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/google/uuid"
-	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 )
 
@@ -70,9 +70,9 @@ type ParticipantStats struct {
 	BirthYearHistogram []map[string]interface{} `json:"birth_year_distribution,omitempty"`
 }
 
-func GetRaceOwnerID(ctx context.Context, db *sqlx.DB, id string) (string, error) {
+func GetRaceOwnerID(ctx context.Context, db *db.DBLayer, id string) (string, error) {
 	var ownerID []string
-	err := db.Select(&ownerID, getRaceOwnerQuery, id)
+	err := db.SelectContext(ctx, &ownerID, getRaceOwnerQuery, id)
 	if err != nil {
 		return "", err
 	}
@@ -84,9 +84,9 @@ func GetRaceOwnerID(ctx context.Context, db *sqlx.DB, id string) (string, error)
 	return ownerID[0], nil
 }
 
-func GetRace(ctx context.Context, db *sqlx.DB, raceID string) (RaceResult, error) {
+func GetRace(ctx context.Context, db *db.DBLayer, raceID string) (RaceResult, error) {
 	dto := []RaceRow{}
-	err := db.Select(&dto, "select * from races where race_id = ?", raceID)
+	err := db.SelectContext(ctx, &dto, "select * from races where race_id = ?", raceID)
 	if err != nil {
 		return RaceResult{}, err
 	}
@@ -154,7 +154,7 @@ func GetRace(ctx context.Context, db *sqlx.DB, raceID string) (RaceResult, error
 	}, nil
 }
 
-func ImportRaceFromURL(ctx context.Context, db *sqlx.DB, url string, date time.Time, name string) (string, error) {
+func ImportRaceFromURL(ctx context.Context, db *db.DBLayer, url string, date time.Time, name string) (string, error) {
 	eventInfo := client.GetEventInformation(ctx, url)
 	raceID, err := CreateRace(ctx, db, name, date)
 	ctx = context.WithValue(ctx, util.RaceID, raceID)
@@ -196,25 +196,25 @@ func ImportRaceFromURL(ctx context.Context, db *sqlx.DB, url string, date time.T
 	return raceID, nil
 }
 
-func CreateRace(ctx context.Context, db *sqlx.DB, name string, date time.Time) (string, error) {
+func CreateRace(ctx context.Context, db *db.DBLayer, name string, date time.Time) (string, error) {
 	id := uuid.NewString()
 	err := CreateRaceWithID(ctx, db, id, name, date)
 	return id, err
 }
 
-func CreateRaceWithID(ctx context.Context, db *sqlx.DB, id, name string, date time.Time) error {
+func CreateRaceWithID(ctx context.Context, db *db.DBLayer, id, name string, date time.Time) error {
 	dateNum, err := strconv.Atoi(date.Format("20060102"))
 	if err != nil {
 		log.Error().Err(err).Send()
 		return err
 	}
-	_, err = db.Exec(createRaceQuery, id, name, util.GetCurrentUserID(ctx), dateNum)
+	_, err = db.ExecContext(ctx, createRaceQuery, id, name, util.GetCurrentUserID(ctx), dateNum)
 	return err
 }
 
-func ListRaces(ctx context.Context, db *sqlx.DB, limit, offset int) ([]RaceResult, error) {
+func ListRaces(ctx context.Context, db *db.DBLayer, limit, offset int) ([]RaceResult, error) {
 	races := []RaceRow{}
-	err := db.Select(&races, "select * from races ORDER BY race_date DESC LIMIT ? OFFSET ?", limit, offset)
+	err := db.SelectContext(ctx, &races, "select * from races ORDER BY race_date DESC LIMIT ? OFFSET ?", limit, offset)
 	if err != nil {
 		log.Error().Err(err).Send()
 		return nil, err
@@ -249,7 +249,7 @@ var raceTables []string = []string{
 	"timer_results",
 }
 
-func DeleteRace(ctx context.Context, db *sqlx.DB, id string) (err error) {
+func DeleteRace(ctx context.Context, db *db.DBLayer, id string) (err error) {
 	var failedObjects []string = []string{}
 	for _, table := range raceTables {
 		_, err := db.ExecContext(ctx, fmt.Sprintf("DELETE FROM %s WHERE race_id = ?", table), id)

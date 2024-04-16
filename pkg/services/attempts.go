@@ -3,7 +3,7 @@ package services
 import (
 	"context"
 
-	"github.com/jmoiron/sqlx"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 )
 
 type AttemptsRow struct {
@@ -24,14 +24,14 @@ const (
 	listAttemptsQuery = `SELECT * FROM attempts where race_id = ? AND event_id = ? AND bib = ? ORDER BY result DESC`
 )
 
-func RecordAttempt(ctx context.Context, db *sqlx.DB, raceID, eventID, bib string, attemptNo int, result float32) error {
-	_, err := db.Exec(insertAttemptQuery, raceID, eventID, bib, attemptNo, result)
+func RecordAttempt(ctx context.Context, db *db.DBLayer, raceID, eventID, bib string, attemptNo int, result float32) error {
+	_, err := db.ExecContext(ctx, insertAttemptQuery, raceID, eventID, bib, attemptNo, result)
 	return err
 }
 
-func ListAttempts(ctx context.Context, db *sqlx.DB, raceID, eventID, bib string) ([]AttemptsRow, error) {
+func ListAttempts(ctx context.Context, db *db.DBLayer, raceID, eventID, bib string) ([]AttemptsRow, error) {
 	var attempts []AttemptsRow
-	err := db.Select(&attempts, listAttemptsQuery, raceID, eventID, bib)
+	err := db.SelectContext(ctx, &attempts, listAttemptsQuery, raceID, eventID, bib)
 	if err != nil {
 		return nil, err
 	}
@@ -39,8 +39,8 @@ func ListAttempts(ctx context.Context, db *sqlx.DB, raceID, eventID, bib string)
 	return attempts, nil
 }
 
-func UpsertBestAttemptResults(ctx context.Context, db *sqlx.DB, raceID, eventID, bib string) error {
-	_, err := db.Exec(upsertResultQuery, raceID, eventID, bib)
+func UpsertBestAttemptResults(ctx context.Context, db *db.DBLayer, raceID, eventID, bib string) error {
+	_, err := db.ExecContext(ctx, upsertResultQuery, raceID, eventID, bib)
 	if err != nil {
 		return err
 	}

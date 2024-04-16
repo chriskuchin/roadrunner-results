@@ -14,14 +14,15 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/s3"
 	"github.com/chriskuchin/roadrunner-results/pkg/controller/middleware"
 	v1 "github.com/chriskuchin/roadrunner-results/pkg/controller/v1"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/chriskuchin/roadrunner-results/pkg/google"
+	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
-	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 )
 
-func Routes(app *firebase.App, db *sqlx.DB, assetsFolder string, debug bool) chi.Router {
+func Routes(app *firebase.App, db *db.DBLayer, assetsFolder string, debug bool) chi.Router {
 	authClient, err := app.Auth(context.Background())
 	if err != nil {
 		log.Fatal().Err(err).Msg("auth client failure")
@@ -70,7 +71,7 @@ func Routes(app *firebase.App, db *sqlx.DB, assetsFolder string, debug bool) chi
 						r.Get("/", v1.HandleRaceImportSheet(db))
 					})
 					r.Route("/{raceID}", func(r chi.Router) {
-						r.Use(middleware.RaceCtx)
+						r.Use(middleware.PathArgCtx("raceID", util.RaceID))
 						r.Use(middleware.UserAuthMiddleware(db, []string{http.MethodGet, http.MethodOptions}))
 
 						r.Delete("/", v1.HandleRaceDelete(db))
@@ -85,12 +86,12 @@ func Routes(app *firebase.App, db *sqlx.DB, assetsFolder string, debug bool) chi
 							r.Get("/next_bib", v1.HandleParticipantsNextBibNumber())
 							r.Get("/teams", v1.HandleParticipantsDistinctTeams())
 							r.Post("/csv", v1.HandleParticipantsImportCSV(db))
-							r.Route("/bib/{bib_number}", func(r chi.Router) {
-								r.Use(middleware.BibNumberCtx)
+							r.Route("/bib/{bibNumber}", func(r chi.Router) {
+								r.Use(middleware.PathArgCtx("bibNumber", util.BibNumber))
 								r.Get("/", v1.HandleParticipantGetByBibNumber(db))
 							})
 							r.Route("/{participantID}", func(r chi.Router) {
-								r.Use(middleware.ParticipantCtx)
+								r.Use(middleware.PathArgCtx("participantID", util.ParticipantID))
 								r.Get("/", v1.HandleParticipantGet())
 								r.Put("/", v1.HandleParticipantUpdate(db))
 							})
@@ -100,13 +101,13 @@ func Routes(app *firebase.App, db *sqlx.DB, assetsFolder string, debug bool) chi
 							r.Post("/", v1.HandleEventsCreate(db))
 
 							r.Route("/{eventID}", func(r chi.Router) {
-								r.Use(middleware.EventCtx)
+								r.Use(middleware.PathArgCtx("eventID", util.EventID))
 								r.Get("/", v1.HandleEventGet(db))
 								r.Delete("/", v1.HandleEventDelete(db))
 								r.Route("/attempts", func(r chi.Router) {
 									r.Post("/", v1.HandleEventAttemptsCreate(db))
-									r.Route("/{bib_number}", func(r chi.Router) {
-										r.Use(middleware.BibNumberCtx)
+									r.Route("/{bibNumber}", func(r chi.Router) {
+										r.Use(middleware.PathArgCtx("bibNumber", util.BibNumber))
 										r.Get("/", v1.HandleEventAttemptsList(db))
 									})
 								})
@@ -115,7 +116,7 @@ func Routes(app *firebase.App, db *sqlx.DB, assetsFolder string, debug bool) chi
 									r.Post("/", v1.HandleEventResultsCreate(db, s3, "photo-finish"))
 									r.Put("/", v1.HandleEventResultsCreate(db, s3, "photo-finish"))
 									r.Route("/{resultID}", func(r chi.Router) {
-										r.Use(middleware.ResultCtx)
+										r.Use(middleware.PathArgCtx("resultID", util.ResultID))
 										r.Patch("/", v1.HandleEventResultsUpdate(db))
 										r.Delete("/", v1.HandleEventResultsDelete(db))
 									})
@@ -124,7 +125,7 @@ func Routes(app *firebase.App, db *sqlx.DB, assetsFolder string, debug bool) chi
 									r.Get("/", v1.HandleHeatsList(db))
 									r.Post("/", v1.HandleHeatsCreate(db))
 									r.Route("/{timerID}", func(r chi.Router) {
-										r.Use(middleware.TimerCtx)
+										r.Use(middleware.PathArgCtx("timerID", util.TimerID))
 										r.Put("/", v1.HandleHeatUpdate(db))
 										r.Delete("/", v1.HandleHeatDelete(db))
 									})
@@ -134,7 +135,7 @@ func Routes(app *firebase.App, db *sqlx.DB, assetsFolder string, debug bool) chi
 									r.Get("/", v1.HandleTimersList(db))
 
 									r.Route("/{timerID}", func(r chi.Router) {
-										r.Use(middleware.TimerCtx)
+										r.Use(middleware.PathArgCtx("timerID", util.TimerID))
 										r.Put("/", v1.HandleTimerStart(db))
 										r.Get("/", v1.HandleTimerGet(db))
 										r.Delete("/", v1.HandleTimerDelete(db))

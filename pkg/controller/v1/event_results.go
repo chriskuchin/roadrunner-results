@@ -10,16 +10,16 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
-	"github.com/jmoiron/sqlx"
 
 	apiutil "github.com/chriskuchin/roadrunner-results/pkg/controller/api-util"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/render"
 	"github.com/rs/zerolog/log"
 )
 
-func HandleEventResultsUpdate(db *sqlx.DB) http.HandlerFunc {
+func HandleEventResultsUpdate(db *db.DBLayer) http.HandlerFunc {
 	type PatchResultPayload struct {
 		Result int    `json:"result"`
 		Bib    string `json:"bib_number"`
@@ -63,7 +63,7 @@ func HandleEventResultsUpdate(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleEventResultsDelete(db *sqlx.DB) http.HandlerFunc {
+func HandleEventResultsDelete(db *db.DBLayer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 
@@ -77,7 +77,7 @@ func HandleEventResultsDelete(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleEventResultsGet(db *sqlx.DB) http.HandlerFunc {
+func HandleEventResultsGet(db *db.DBLayer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		var results []services.ParticipantEventResult
@@ -130,7 +130,7 @@ func HandleEventResultsGet(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleEventResultsCreate(db *sqlx.DB, s3Client *s3.Client, bucket string) http.HandlerFunc {
+func HandleEventResultsCreate(db *db.DBLayer, s3Client *s3.Client, bucket string) http.HandlerFunc {
 	type RecordResultRequestPayload struct {
 		Timer       string `json:"timer_id"`
 		End         int64  `json:"end_ts"`
@@ -191,7 +191,6 @@ func HandleEventResultsCreate(db *sqlx.DB, s3Client *s3.Client, bucket string) h
 				return
 			}
 
-			ctx := util.SetDB(r.Context(), db)
 			if payload.End > 0 {
 				err = services.RecordTimerResult(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), payload.End)
 				if err != nil {

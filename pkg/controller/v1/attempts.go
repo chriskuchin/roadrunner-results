@@ -4,14 +4,14 @@ import (
 	"net/http"
 
 	apiutil "github.com/chriskuchin/roadrunner-results/pkg/controller/api-util"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/render"
-	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 )
 
-func HandleEventAttemptsCreate(db *sqlx.DB) http.HandlerFunc {
+func HandleEventAttemptsCreate(db *db.DBLayer) http.HandlerFunc {
 	type request struct {
 		BibNumber     string  `json:"bib"`
 		Distance      float32 `json:"distance"`
@@ -62,7 +62,7 @@ func HandleEventAttemptsCreate(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleEventAttemptsList(db *sqlx.DB) http.HandlerFunc {
+func HandleEventAttemptsList(db *db.DBLayer) http.HandlerFunc {
 	type attemptResponse struct {
 		AttemptNumber int     `json:"attempt_number"`
 		Result        float32 `json:"result"`

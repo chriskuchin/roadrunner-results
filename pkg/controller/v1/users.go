@@ -4,10 +4,10 @@ import (
 	"net/http"
 
 	"firebase.google.com/go/v4/auth"
-	"github.com/jmoiron/sqlx"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 )
 
-func HandleGetCurrentUser(db *sqlx.DB, auth *auth.Client) http.HandlerFunc {
+func HandleGetCurrentUser(db *db.DBLayer, auth *auth.Client) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 	}
 }

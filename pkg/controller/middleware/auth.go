@@ -6,9 +6,9 @@ import (
 
 	"firebase.google.com/go/v4/auth"
 	apiutil "github.com/chriskuchin/roadrunner-results/pkg/controller/api-util"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
-	"github.com/jmoiron/sqlx"
 )
 
 func AuthenticationMiddleware(verifyToken func(context.Context, string) (*auth.Token, error), allowedMethods []string, getenv func(string) string) func(http.Handler) http.Handler {
@@ -39,7 +39,7 @@ func AuthenticationMiddleware(verifyToken func(context.Context, string) (*auth.T
 	}
 }
 
-func UserAuthMiddleware(db *sqlx.DB, allowedMethods []string) func(http.Handler) http.Handler {
+func UserAuthMiddleware(db *db.DBLayer, allowedMethods []string) func(http.Handler) http.Handler {
 	var isAllowedMethod map[string]bool = map[string]bool{}
 	for _, method := range allowedMethods {
 		isAllowedMethod[method] = true

@@ -5,13 +5,13 @@ import (
 	"net/http"
 
 	apiutil "github.com/chriskuchin/roadrunner-results/pkg/controller/api-util"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/render"
-	"github.com/jmoiron/sqlx"
 )
 
-func HandleEventDelete(db *sqlx.DB) http.HandlerFunc {
+func HandleEventDelete(db *db.DBLayer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		err := services.DeleteRaceEvent(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx))
@@ -23,7 +23,7 @@ func HandleEventDelete(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleEventGet(db *sqlx.DB) http.HandlerFunc {
+func HandleEventGet(db *db.DBLayer) http.HandlerFunc {
 	type response struct {
 		EventID     string  `json:"eventId"`
 		Description string  `json:"description"`
@@ -48,7 +48,7 @@ func HandleEventGet(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleEventsList(db *sqlx.DB) http.HandlerFunc {
+func HandleEventsList(db *db.DBLayer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		if util.GetRaceIDFromContext(ctx) == "" {
@@ -67,7 +67,7 @@ func HandleEventsList(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleEventsCreate(db *sqlx.DB) http.HandlerFunc {
+func HandleEventsCreate(db *db.DBLayer) http.HandlerFunc {
 	type EventRequest struct {
 		Description string  `json:"description"`
 		Type        string  `json:"type"`

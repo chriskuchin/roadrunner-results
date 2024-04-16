@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/jmoiron/sqlx"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/rs/zerolog/log"
 )
 
@@ -35,7 +35,7 @@ type AthleteResult struct {
 	Result    float64     `json:"result"`
 }
 
-func FindAthleteResults(ctx context.Context, db *sqlx.DB, filters map[string]string) ([]AthleteResult, error) {
+func FindAthleteResults(ctx context.Context, db *db.DBLayer, filters map[string]string) ([]AthleteResult, error) {
 	if len(filters) == 0 {
 		return nil, fmt.Errorf("invalid filters")
 	}
@@ -66,7 +66,7 @@ func FindAthleteResults(ctx context.Context, db *sqlx.DB, filters map[string]str
 	}
 
 	var results []AthleteResultsRow
-	err := db.Select(&results, query, values...)
+	err := db.SelectContext(ctx, &results, query, values...)
 	if err != nil {
 		return nil, err
 	}

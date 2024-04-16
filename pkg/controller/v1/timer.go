@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/render"
-	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 )
 
-func HandleTimersCreate(db *sqlx.DB) http.HandlerFunc {
+func HandleTimersCreate(db *db.DBLayer) http.HandlerFunc {
 	type assignments struct {
 		Lane int    `json:"lane,omitempty"`
 		Bib  string `json:"bib,omitempty"`
@@ -66,7 +66,7 @@ func HandleTimersCreate(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleTimerStart(db *sqlx.DB) http.HandlerFunc {
+func HandleTimerStart(db *db.DBLayer) http.HandlerFunc {
 	type TimerRequest struct {
 		Start int64 `json:"start_ts,omitempty"`
 	}
@@ -97,7 +97,7 @@ func HandleTimerStart(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleTimersList(db *sqlx.DB) http.HandlerFunc {
+func HandleTimersList(db *db.DBLayer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		result, err := services.ListTimers(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), 10, 0)
@@ -110,7 +110,7 @@ func HandleTimersList(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleTimerGet(db *sqlx.DB) http.HandlerFunc {
+func HandleTimerGet(db *db.DBLayer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		result, err := services.GetTimer(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetTimerIDFromContext(ctx))
@@ -127,7 +127,7 @@ func HandleTimerGet(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleTimerDelete(db *sqlx.DB) http.HandlerFunc {
+func HandleTimerDelete(db *db.DBLayer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		err := services.DeleteTimer(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetTimerIDFromContext(ctx))

@@ -3,8 +3,8 @@ package services
 import (
 	"context"
 
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/google/uuid"
-	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 )
 
@@ -60,15 +60,15 @@ const (
 	`
 )
 
-func AddEvent(ctx context.Context, db *sqlx.DB, raceID, description, eventType string, distance float64) (string, error) {
+func AddEvent(ctx context.Context, db *db.DBLayer, raceID, description, eventType string, distance float64) (string, error) {
 	id := uuid.NewString()
-	_, err := db.Exec(addEventQuery, raceID, id, description, eventType, distance)
+	_, err := db.ExecContext(ctx, addEventQuery, raceID, id, description, eventType, distance)
 	return id, err
 }
 
-func GetRaceEvents(ctx context.Context, db *sqlx.DB, raceID string) ([]EventObject, error) {
+func GetRaceEvents(ctx context.Context, db *db.DBLayer, raceID string) ([]EventObject, error) {
 	var dbEvents []EventRow
-	err := db.Select(&dbEvents, listRaceEventsQuery, raceID)
+	err := db.SelectContext(ctx, &dbEvents, listRaceEventsQuery, raceID)
 	if err != nil {
 		log.Error().Err(err).Send()
 		return nil, err
@@ -87,10 +87,10 @@ func GetRaceEvents(ctx context.Context, db *sqlx.DB, raceID string) ([]EventObje
 	return results, nil
 }
 
-func GetRaceEvent(ctx context.Context, db *sqlx.DB, raceID, eventID string) (EventObject, error) {
+func GetRaceEvent(ctx context.Context, db *db.DBLayer, raceID, eventID string) (EventObject, error) {
 	var event EventRow
 
-	err := db.Get(&event, selectEventQuery, raceID, eventID)
+	err := db.GetContext(ctx, &event, selectEventQuery, raceID, eventID)
 	if err != nil {
 		return EventObject{}, err
 	}
@@ -103,8 +103,8 @@ func GetRaceEvent(ctx context.Context, db *sqlx.DB, raceID, eventID string) (Eve
 	}, nil
 }
 
-func DeleteRaceEvent(ctx context.Context, db *sqlx.DB, raceID, eventID string) error {
-	_, err := db.Exec(deleteEventQuery, raceID, eventID)
+func DeleteRaceEvent(ctx context.Context, db *db.DBLayer, raceID, eventID string) error {
+	_, err := db.ExecContext(ctx, deleteEventQuery, raceID, eventID)
 	if err != nil {
 		return err
 	}
@@ -112,8 +112,8 @@ func DeleteRaceEvent(ctx context.Context, db *sqlx.DB, raceID, eventID string) e
 	return nil
 }
 
-func GetRaceEventCount(ctx context.Context, db *sqlx.DB, raceID string) (int, error) {
-	row := db.QueryRow(selectRaceEventCountQuery, raceID)
+func GetRaceEventCount(ctx context.Context, db *db.DBLayer, raceID string) (int, error) {
+	row := db.QueryRowContext(ctx, selectRaceEventCountQuery, raceID)
 	if row.Err() != nil {
 		return 0, row.Err()
 	}

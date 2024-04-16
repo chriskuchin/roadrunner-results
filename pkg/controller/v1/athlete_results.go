@@ -5,12 +5,12 @@ import (
 	"net/http"
 
 	apiutil "github.com/chriskuchin/roadrunner-results/pkg/controller/api-util"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
 	"github.com/go-chi/render"
-	"github.com/jmoiron/sqlx"
 )
 
-func HandleAthleteResultsSearch(db *sqlx.DB) http.HandlerFunc {
+func HandleAthleteResultsSearch(db *db.DBLayer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var filter map[string]string = map[string]string{}
 

@@ -4,13 +4,13 @@ import (
 	"net/http"
 
 	apiutil "github.com/chriskuchin/roadrunner-results/pkg/controller/api-util"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/render"
-	"github.com/jmoiron/sqlx"
 )
 
-func HandleHeatsCreate(db *sqlx.DB) http.HandlerFunc {
+func HandleHeatsCreate(db *db.DBLayer) http.HandlerFunc {
 	type assignment struct {
 		Lane int    `json:"lane"`
 		Bib  string `json:"bib"`
@@ -60,7 +60,7 @@ func HandleHeatsCreate(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleHeatUpdate(db *sqlx.DB) http.HandlerFunc {
+func HandleHeatUpdate(db *db.DBLayer) http.HandlerFunc {
 	type assignment struct {
 		Lane int    `json:"lane"`
 		Bib  string `json:"bib"`
@@ -99,7 +99,7 @@ func HandleHeatUpdate(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleHeatDelete(db *sqlx.DB) http.HandlerFunc {
+func HandleHeatDelete(db *db.DBLayer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		err := services.DeleteHeat(ctx, db, util.GetRaceIDFromContext(ctx), util.GetEventIDFromContext(ctx), util.GetTimerIDFromContext(ctx))
@@ -111,7 +111,7 @@ func HandleHeatDelete(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleHeatsList(db *sqlx.DB) http.HandlerFunc {
+func HandleHeatsList(db *db.DBLayer) http.HandlerFunc {
 	type assignments struct {
 		Lane int    `json:"lane"`
 		Bib  string `json:"bib"`

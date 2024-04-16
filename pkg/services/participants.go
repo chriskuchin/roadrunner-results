@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/jmoiron/sqlx"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/rs/zerolog/log"
 )
 
@@ -96,8 +96,8 @@ type (
 	}
 )
 
-func AddParticipant(ctx context.Context, db *sqlx.DB, participant ParticipantRow) error {
-	_, err := db.NamedExec(addParticipantQuery, participant)
+func AddParticipant(ctx context.Context, db *db.DBLayer, participant ParticipantRow) error {
+	_, err := db.ExecContext(ctx, addParticipantQuery, participant)
 	return err
 }
 
@@ -107,9 +107,9 @@ select rowid, * from participants
 		race_id = ?
 `
 
-func GetParticipantByBibNumber(ctx context.Context, db *sqlx.DB, raceID, bibNumber string) (ParticipantRow, error) {
+func GetParticipantByBibNumber(ctx context.Context, db *db.DBLayer, raceID, bibNumber string) (ParticipantRow, error) {
 	var participant []ParticipantRow
-	err := db.Select(&participant, selectRaceParticipantByBibNumber, raceID, bibNumber)
+	err := db.SelectContext(ctx, &participant, selectRaceParticipantByBibNumber, raceID, bibNumber)
 	if err != nil {
 		return ParticipantRow{}, err
 	}
@@ -121,7 +121,7 @@ func GetParticipantByBibNumber(ctx context.Context, db *sqlx.DB, raceID, bibNumb
 	return participant[0], nil
 }
 
-func ListParticipants(ctx context.Context, db *sqlx.DB, raceID string, limit, offset int, filters map[string]string) ([]ParticipantObject, error) {
+func ListParticipants(ctx context.Context, db *db.DBLayer, raceID string, limit, offset int, filters map[string]string) ([]ParticipantObject, error) {
 	var query string = listParticipantsQuery
 
 	var values []interface{} = []interface{}{}
@@ -150,7 +150,7 @@ func ListParticipants(ctx context.Context, db *sqlx.DB, raceID string, limit, of
 	log.Debug().Str("query", query).Interface("filters", filters).Send()
 
 	var dbResults []ParticipantRow
-	err := db.Select(&dbResults, query, values...)
+	err := db.SelectContext(ctx, &dbResults, query, values...)
 	if err != nil {
 		return nil, err
 	}
@@ -178,8 +178,8 @@ func ListParticipants(ctx context.Context, db *sqlx.DB, raceID string, limit, of
 	return results, nil
 }
 
-func GetEventFinisherCount(ctx context.Context, db *sqlx.DB, raceID, eventID string) (int, error) {
-	rows, err := db.Query(selectEventFinisherCountQuery, raceID, eventID)
+func GetEventFinisherCount(ctx context.Context, db *db.DBLayer, raceID, eventID string) (int, error) {
+	rows, err := db.QueryContext(ctx, selectEventFinisherCountQuery, raceID, eventID)
 	if err != nil {
 		return 0, err
 	}
@@ -193,8 +193,8 @@ func GetEventFinisherCount(ctx context.Context, db *sqlx.DB, raceID, eventID str
 	return 0, nil
 }
 
-func GetRaceFinisherCount(ctx context.Context, db *sqlx.DB, raceID string) (int, error) {
-	rows, err := db.Query(selectRaceFinisherCountQuery, raceID)
+func GetRaceFinisherCount(ctx context.Context, db *db.DBLayer, raceID string) (int, error) {
+	rows, err := db.QueryContext(ctx, selectRaceFinisherCountQuery, raceID)
 	if err != nil {
 		return 0, err
 	}
@@ -208,8 +208,8 @@ func GetRaceFinisherCount(ctx context.Context, db *sqlx.DB, raceID string) (int,
 	return 0, err
 }
 
-func GetRaceGenderCount(ctx context.Context, db *sqlx.DB, raceID string) (female int, male int, err error) {
-	rows, err := db.Query(selectRaceParticipantGenderCountQuery, raceID)
+func GetRaceGenderCount(ctx context.Context, db *db.DBLayer, raceID string) (female int, male int, err error) {
+	rows, err := db.QueryContext(ctx, selectRaceParticipantGenderCountQuery, raceID)
 	if err != nil {
 		return
 	}
@@ -228,8 +228,8 @@ func GetRaceGenderCount(ctx context.Context, db *sqlx.DB, raceID string) (female
 	return
 }
 
-func GetRaceParticipantCount(ctx context.Context, db *sqlx.DB, raceID string) (int, error) {
-	row := db.QueryRow(selectRaceParticipantCountQuery, raceID)
+func GetRaceParticipantCount(ctx context.Context, db *db.DBLayer, raceID string) (int, error) {
+	row := db.QueryRowContext(ctx, selectRaceParticipantCountQuery, raceID)
 	if row.Err() != nil {
 		return 0, row.Err()
 	}
@@ -239,8 +239,8 @@ func GetRaceParticipantCount(ctx context.Context, db *sqlx.DB, raceID string) (i
 	return count, err
 }
 
-func GetRaceParticipantsBirthYearCount(ctx context.Context, db *sqlx.DB, raceID string) ([]map[string]interface{}, error) {
-	rows, err := db.Query(selectRaceParticipantBirthYearCountQuery, raceID)
+func GetRaceParticipantsBirthYearCount(ctx context.Context, db *db.DBLayer, raceID string) ([]map[string]interface{}, error) {
+	rows, err := db.QueryContext(ctx, selectRaceParticipantBirthYearCountQuery, raceID)
 	if err != nil {
 		return nil, err
 	}
@@ -261,12 +261,12 @@ func GetRaceParticipantsBirthYearCount(ctx context.Context, db *sqlx.DB, raceID 
 	return results, nil
 }
 
-func GetRaceLastBibNumber(ctx context.Context, db *sqlx.DB) (int, error) {
+func GetRaceLastBibNumber(ctx context.Context, db *db.DBLayer) (int, error) {
 
 	return 0, nil
 }
 
-func UpdateParticipant(ctx context.Context, db *sqlx.DB, raceID, participantID string, participant ParticipantRow) error {
+func UpdateParticipant(ctx context.Context, db *db.DBLayer, raceID, participantID string, participant ParticipantRow) error {
 	query := "UPDATE participants SET first_name = ?, last_name = ?, birth_year = ?, team = ?, gender = ?, bib_number = ? WHERE race_id = ? AND rowid = ?"
 	_, err := db.ExecContext(ctx, query, participant.FirstName, participant.LastName, participant.BirthYear, participant.Team, participant.Gender, participant.BibNumber, raceID, participantID)
 	return err

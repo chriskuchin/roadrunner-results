@@ -4,25 +4,23 @@ import (
 	"context"
 
 	"firebase.google.com/go/v4/auth"
-	"github.com/jmoiron/sqlx"
-	"github.com/rs/zerolog/log"
 )
 
-type key int
+type Key int
 
 const (
-	OAuthTokenID  key = 0
-	RaceID        key = 1
-	EventID       key = 2
-	GoogleClient  key = 3
-	ParticipantID key = 4
-	TimerID       key = 5
-	DB            key = 6
-	HeatID        key = 7
-	PhotoKey      key = 8
-	UserToken     key = 9
-	ResultID      key = 10
-	BibNumber     key = 11
+	OAuthTokenID  Key = 0
+	RaceID        Key = 1
+	EventID       Key = 2
+	GoogleClient  Key = 3
+	ParticipantID Key = 4
+	TimerID       Key = 5
+	DB            Key = 6
+	HeatID        Key = 7
+	PhotoKey      Key = 8
+	UserToken     Key = 9
+	ResultID      Key = 10
+	BibNumber     Key = 11
 )
 
 func GetCurrentUserToken(ctx context.Context) auth.Token {
@@ -40,7 +38,7 @@ func GetCurrentUserID(ctx context.Context) string {
 	return GetCurrentUserToken(ctx).UID
 }
 
-func getValueFromContext(ctx context.Context, k key) string {
+func getValueFromContext(ctx context.Context, k Key) string {
 	val := ctx.Value(k)
 	result, ok := val.(string)
 	if !ok {
@@ -76,17 +74,4 @@ func GetTimerIDFromContext(ctx context.Context) string {
 
 func GetPhotoKeyFromContext(ctx context.Context) string {
 	return getValueFromContext(ctx, PhotoKey)
-}
-
-func SetDB(ctx context.Context, db *sqlx.DB) context.Context {
-	return context.WithValue(ctx, DB, db)
-}
-
-func GetDB(ctx context.Context) *sqlx.DB {
-	db := ctx.Value(DB)
-	if db == nil {
-		log.Fatal().Msg("db not found in context")
-	}
-
-	return db.(*sqlx.DB)
 }

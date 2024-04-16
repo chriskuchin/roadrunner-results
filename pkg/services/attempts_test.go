@@ -8,12 +8,12 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/jmoiron/sqlx"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/rs/zerolog/log"
 )
 
-func dbSetup(dbName string) *sqlx.DB {
+func dbSetup(dbName string) *db.DBLayer {
 	dbPath := fmt.Sprintf("./testdata/%s.db", dbName)
 	cmd := exec.Command("dbmate", fmt.Sprintf("--url=sqlite:%s", dbPath), "--migrations-dir=../../db/migrations", "--no-dump-schema", "up")
 	out, err := cmd.CombinedOutput()
@@ -21,12 +21,7 @@ func dbSetup(dbName string) *sqlx.DB {
 		log.Fatal().Err(err).Msgf("%s", out)
 	}
 
-	db, err := sqlx.Open("sqlite3", fmt.Sprintf("%s?mode=rwc&cache=shared", dbPath))
-	if err != nil {
-		log.Fatal().Err(err).Send()
-	}
-
-	return db
+	return db.NewSQLite(dbPath)
 }
 
 func dbCleanup(dbName string) {

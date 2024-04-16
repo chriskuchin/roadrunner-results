@@ -3,13 +3,13 @@ package services
 import (
 	"context"
 
-	"github.com/jmoiron/sqlx"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 )
 
-func CreateUser(ctx context.Context, db *sqlx.DB) {
+func CreateUser(ctx context.Context, db *db.DBLayer) {
 
 }
 
-func GetUser(ctx context.Context, db *sqlx.DB) {
+func GetUser(ctx context.Context, db *db.DBLayer) {
 
 }

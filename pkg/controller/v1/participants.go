@@ -11,10 +11,10 @@ import (
 	"strings"
 
 	apiutil "github.com/chriskuchin/roadrunner-results/pkg/controller/api-util"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/render"
-	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 )
 
@@ -22,7 +22,7 @@ func HandleParticipantsDistinctTeams() http.HandlerFunc {
 	return apiutil.Unimplemented
 }
 
-func HandleParticipantsImportCSV(db *sqlx.DB) http.HandlerFunc {
+func HandleParticipantsImportCSV(db *db.DBLayer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		contentType := r.Header.Get("Content-Type")
 
@@ -109,7 +109,7 @@ func HandleParticipantsImportCSV(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleParticipantGetByBibNumber(db *sqlx.DB) http.HandlerFunc {
+func HandleParticipantGetByBibNumber(db *db.DBLayer) http.HandlerFunc {
 	type response struct {
 		BibNumber string `json:"bib_number"`
 		FirstName string `json:"first_name"`
@@ -154,7 +154,7 @@ func HandleParticipantsNextBibNumber() http.HandlerFunc {
 	return apiutil.Unimplemented
 }
 
-func HandleParticipantsList(db *sqlx.DB) http.HandlerFunc {
+func HandleParticipantsList(db *db.DBLayer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		var err error
@@ -211,7 +211,7 @@ func HandleParticipantGet() http.HandlerFunc {
 	return apiutil.Unimplemented
 }
 
-func HandleParticipantUpdate(db *sqlx.DB) http.HandlerFunc {
+func HandleParticipantUpdate(db *db.DBLayer) http.HandlerFunc {
 	type ParticipantRequest struct {
 		BibNumber int    `json:"bib_number"`
 		FirstName string `json:"first_name"`
@@ -254,7 +254,7 @@ func HandleParticipantUpdate(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleParticipantsCreate(db *sqlx.DB) http.HandlerFunc {
+func HandleParticipantsCreate(db *db.DBLayer) http.HandlerFunc {
 	type ParticipantRequest struct {
 		BibNumber int    `json:"bib_number"`
 		FirstName string `json:"first_name"`

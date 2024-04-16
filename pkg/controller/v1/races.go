@@ -7,15 +7,15 @@ import (
 	"time"
 
 	apiutil "github.com/chriskuchin/roadrunner-results/pkg/controller/api-util"
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/chriskuchin/roadrunner-results/pkg/services"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/render"
-	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 )
 
-func HandleRaceImportSheet(db *sqlx.DB) http.HandlerFunc {
+func HandleRaceImportSheet(db *db.DBLayer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		sheetId := r.URL.Query().Get("sheetId")
 		if sheetId == "" {
@@ -29,7 +29,7 @@ func HandleRaceImportSheet(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleRaceGet(db *sqlx.DB) http.HandlerFunc {
+func HandleRaceGet(db *db.DBLayer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 		race, err := services.GetRace(ctx, db, util.GetRaceIDFromContext(ctx))
@@ -42,7 +42,7 @@ func HandleRaceGet(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleRacesList(db *sqlx.DB) http.HandlerFunc {
+func HandleRacesList(db *db.DBLayer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var err error
 		limit := 20
@@ -73,7 +73,7 @@ func HandleRacesList(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleRacesCreate(db *sqlx.DB) http.HandlerFunc {
+func HandleRacesCreate(db *db.DBLayer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		ctx := r.Context()
 
@@ -123,7 +123,7 @@ func HandleRacesCreate(db *sqlx.DB) http.HandlerFunc {
 	}
 }
 
-func HandleRaceDelete(db *sqlx.DB) http.HandlerFunc {
+func HandleRaceDelete(db *db.DBLayer) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		id := chi.URLParam(r, "raceID")
 		ctx := r.Context()

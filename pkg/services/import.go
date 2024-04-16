@@ -9,14 +9,14 @@ import (
 	"strings"
 	"time"
 
+	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/chriskuchin/roadrunner-results/pkg/util"
-	"github.com/jmoiron/sqlx"
 	"github.com/rs/zerolog/log"
 	"google.golang.org/api/option"
 	"google.golang.org/api/sheets/v4"
 )
 
-func ImportFromSheet(ctx context.Context, db *sqlx.DB, sheetId string) {
+func ImportFromSheet(ctx context.Context, db *db.DBLayer, sheetId string) {
 	sheets, err := sheets.NewService(ctx, option.WithHTTPClient(ctx.Value(util.GoogleClient).(*http.Client)))
 	if err != nil {
 		log.Error().Err(err).Send()
