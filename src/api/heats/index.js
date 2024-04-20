@@ -14,12 +14,19 @@ async function listHeats(raceID, eventID) {
 }
 
 async function createNewHeat(raceID, eventID, assignments) {
+  const processed = []
+  for (const assgnmnt of assignments) {
+    processed.push({
+      lane: assgnmnt.lane,
+      bib: String(assgnmnt.bib)
+    })
+  }
   const response = await fetch(
     `/api/v1/races/${raceID}/events/${eventID}/heats`,
     await setAuthHeader({
       method: "POST",
       body: JSON.stringify({
-        assignments: assignments,
+        assignments: processed,
       }),
     }),
   );
