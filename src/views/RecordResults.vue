@@ -1,5 +1,5 @@
 <template>
-  <div class="section">
+  <div class="mx-auto">
     <div class="select is-small">
       <select @change="refreshData()" v-model="timerId">
         <option value="latest" selected>Latest ({{ results.length }})</option>
@@ -27,18 +27,29 @@
         :timer-id="this.timerId" @bib="bibInput" />
       <scan v-else-if="isActiveTab('scan')" @bib="bibInput" />
       <div class="section" v-else-if="isActiveTab('heat')">
-        <div class="fixed-grid has-3-cols mx-auto">
-          <div class="grid">
-            <div class="cell" v-for="assignment in laneAssignments">
-              <button class="button is-large is-primary is-fullwidth" @click="recordLaneFinish(assignment)"
-                :disabled="assignment.bib === ''">
-                {{ assignment.lane }}
-              </button>
+        <div class="columns">
+          <div class="column">
+            <div class="fixed-grid has-3-cols mx-auto">
+              <div class="grid">
+                <div class="cell" v-for="assignment in laneAssignments">
+                  <button class="button is-large is-primary is-fullwidth" @click="recordLaneFinish(assignment)"
+                    :disabled="assignment.bib === ''">
+                    {{ assignment.lane }}
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="buttons is-right">
+              <button class="button is-link" @click="saveHeat"
+                :disabled="results.length != heatFinish.length">Save</button>
+            </div>
+          </div>
+          <div class="column">
+            <div class="table-container">
+              <tbl class="mx-auto is-narrow" :headers="heatResultsHeader" :rows="heatResults" />
             </div>
           </div>
         </div>
-        <tbl class="mx-auto" :headers="heatResultsHeader" :rows="heatResults" />
-        <button class="button is-link" @click="saveHeat" :disabled="results.length != heatFinish.length">Save</button>
       </div>
     </div>
   </div>
