@@ -49,25 +49,6 @@
   </div>
 </template>
 
-<style scoped>
-.timer-container {
-  display: flex;
-  flex-direction: column;
-  height: 80vh;
-  /* Adjust as needed */
-  overflow: hidden;
-  /* Prevent page from scrolling */
-}
-
-.results-block {
-  flex: 1;
-  /* Grow to fill remaining space */
-  overflow-y: auto;
-  /* Enable vertical scrolling */
-}
-</style>
-
-
 <script>
 import { formatMilliseconds } from '../utilities';
 import FAB from '../components/Fab.vue'
@@ -95,13 +76,13 @@ export default {
   data: function () {
     return {
       timers: [],
-      finishers: [],
       enableCamera: false,
       timer: {
         id: null,
         timeout: null,
         start: 0,
         elapsed: 0,
+        finishers: [],
       },
       error: {
         show: false,
@@ -136,18 +117,6 @@ export default {
         this.stopCamera(video)
       }
     },
-    generateFile() {
-      const csvContent = this.finishers.map(row => `${row}\n`).join('');
-      const csvData = new Blob([csvContent], { type: 'text/csv' });
-      const csvUrl = URL.createObjectURL(csvData);
-
-      const link = document.createElement('a');
-      link.href = csvUrl;
-      link.download = 'results.csv';
-
-      link.click();
-      URL.revokeObjectURL(csvUrl);
-    },
     fabAction() {
       if (this.timerStarted()) {
         this.startTimer()
@@ -159,6 +128,7 @@ export default {
       if (timer) {
         this.timer.id = timer.id
         this.timer.start = timer.timer_start
+        this.timer.finishers = []
         if (timer.timer_start > 0)
           this.timer.elapsed = Date.now() - timer.timer_start
         else
@@ -167,6 +137,7 @@ export default {
         this.timer.id = null
         this.timer.start = 0
         this.timer.elapsed = 0
+        this.timer.finishers = []
       }
     },
     timerStarted() {
@@ -216,7 +187,7 @@ export default {
       window.navigator.vibrate(50)
       let finishTime = Date.now()
       var elapsedTime = finishTime - this.timer.start
-      this.finishers.push(elapsedTime) // needs to be the raw time not formatted
+      this.timer.finishers.push(elapsedTime) // needs to be the raw time not formatted
       this.takePicture(this.raceID, this.eventID, finishTime, elapsedTime)
 
       try {
@@ -246,17 +217,17 @@ export default {
       return this.timer.timeout != null
     },
     finisherCount: function () {
-      return this.finishers.length
+      return this.timer.finishers.length
     },
     tableFinishersPreview: function () {
-      const sourceArray = this.finishers
+      const sourceArray = this.timer.finishers
       if (sourceArray.length === 0) {
         return [];
       }
 
       // Create an empty array to hold the selected elements and their index
       const resultArray = [];
-      const firstTime = this.finishers[0]
+      const firstTime = this.timer.finishers[0]
 
       // Calculate the number of elements to retrieve
       const firstThreeCount = Math.min(3, sourceArray.length);
@@ -278,13 +249,24 @@ export default {
       }
       return resultArray
     },
-    reverseOrderedFinishers: function () {
-      let reversed = []
-      for (let i = this.finishers.length; i > 0; i--) {
-        reversed.push(this.finishers[i - 1])
-      }
-      return reversed
-    }
   },
 };
 </script>
+
+<style scoped>
+.timer-container {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  /* Adjust as needed */
+  overflow: hidden;
+  /* Prevent page from scrolling */
+}
+
+.results-block {
+  flex: 1;
+  /* Grow to fill remaining space */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+}
+</style>
