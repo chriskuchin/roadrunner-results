@@ -53,25 +53,6 @@
       </div>
     </div>
   </div>
-  <div v-if="results.length > 0 && showResults">
-    <table class="table" style="margin: 0px auto;">
-      <thead>
-        <th>Position</th>
-        <th>Time</th>
-        <th>Bib</th>
-      </thead>
-      <tbody>
-        <tr v-for="(result, index) in results" :key="result.bib_number">
-          <td>{{ index + 1 }}</td>
-          <td>
-            {{ formatMilliseconds(result.result_ms) }}
-          </td>
-          <td>{{ result.bib_number }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <!-- <not :show="error.show" type="is-danger is-light" @close="dismissError">{{ error.msg }}</not> -->
-  </div>
 </template>
 
 <script>
@@ -81,7 +62,6 @@ import { listTimers } from '../api/timers';
 import { getParticipantByBib } from "../api/participants";
 import RacerInput from "../components/ResultsInput.vue";
 import ResultsTable from "../components/ResultsTable.vue";
-import Notification from '../components/Notification.vue';
 import Scanner from '../components/Scanner.vue';
 import Table from '../components/Table.vue';
 
@@ -89,7 +69,6 @@ export default {
   components: {
     "result-input": RacerInput,
     "results-table": ResultsTable,
-    "not": Notification,
     "scan": Scanner,
     "tbl": Table,
   },
@@ -101,7 +80,6 @@ export default {
   },
   data: function () {
     return {
-      showResults: false,
       resultsRefresh: null,
       activeTab: "manual",
       timers: [],
@@ -136,10 +114,6 @@ export default {
         }
       ],
       heatResultsRows: [],
-      error: {
-        show: false,
-        msg: "",
-      }
     };
   },
   watch: {
