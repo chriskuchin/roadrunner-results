@@ -1,8 +1,7 @@
 <template>
   <div class="mx-auto">
     <div class="select is-small">
-      <select @change="refreshData()" v-model="timerId">
-        <option value="latest" selected>Latest ({{ results.length }})</option>
+      <select @change="refreshData" v-model="timerId">
         <option v-for="(timer, index) in timers" :key="timer.id" :value="timer.id">
           Heat {{ index + 1 }} ({{ timer.count }})
         </option>
@@ -146,16 +145,25 @@ export default {
         }
       }
     },
-    refreshData: function () {
+    refreshData: function (e) {
       clearTimeout(this.resultsRefresh)
 
-      var that = this
       listTimers(this.$route.params.raceId, this.$route.params.eventId).then((timers) => {
-        that.timers = timers
+        this.timers = timers
+        if (this.timerId && (this.timerId == "" || this.timerId == "latest")) {
+          this.timerId = this.timers[0].id
+
+          if (this.timers[0].assignments && this.timers[0].assignments.length > 0) {
+            this.tabSelect("heat")
+          }
+        }
       })
-      getHeatResults(this.$route.params.raceId, this.$route.params.eventId, this.timerId).then((results) => {
-        that.results = results
-      })
+
+      if (this.timerId && this.timerId != "") {
+        getHeatResults(this.$route.params.raceId, this.$route.params.eventId, this.timerId).then((results) => {
+          this.results = results
+        })
+      }
 
       this.resultsRefresh = setTimeout(this.refreshData, 2500)
     },
@@ -176,7 +184,6 @@ export default {
     },
     saveHeat: async function () {
       for (const finisher of this.heatFinish) {
-        console.log("save", finisher.bib)
         let ok = await recordResult(this.$route.params.raceId, this.$route.params.eventId, finisher.bib, this.timerId)
         if (!ok) {
           return
