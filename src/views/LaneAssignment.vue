@@ -21,13 +21,6 @@
           <button class="button is-danger" @click="deleteHeat">Delete</button>
         </div>
       </div>
-      <!-- <div class="select">
-        <select v-model="laneCount">
-          <option v-for=" n in 8 " :value="n + 3">{{ n + 3 }} Lanes</option>
-        </select>
-      </div> -->
-      <!-- <button class="button" @click="saveHeat">Save</button>
-      <button class="button" @click="deleteHeat">Delete</button> -->
       <table class="table is-narrow" style="margin: 0 auto;">
         <thead>
           <tr>
