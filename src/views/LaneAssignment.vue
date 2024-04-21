@@ -65,7 +65,6 @@
 
 import { createNewHeat, listHeats, updateHeat, deleteHeat } from '../api/heats';
 import { useParticipantsStore } from '../store/participants';
-
 import { mapState, mapActions } from 'pinia';
 
 export default {
