@@ -1,5 +1,5 @@
 <template>
-  <div class="section">
+  <div class="mx-auto timer-container">
     <div class="level mt-3">
       <video ref="finish-line-camera" id="finish-line-camera" :class="{ active: enableCamera }"></video>
       <div class="level-item has-text-centered">
@@ -23,25 +23,10 @@
           <p class="control">
           <div class="button is-danger is-responsive is-large" @click="this.stopTimer">Stop</div>
           </p>
-          <!-- <p class="control">
-          <div class="button is-warning is-responsive" @click.passive="this.recordFinish">Record</div>
-          </p> -->
         </div>
       </div>
     </div>
-    <!-- <div class="level-item">
-      <div class="field">
-        <label class="checkbox">
-          <input type="checkbox" v-model="enableCamera" @click="manageCamera">
-          Finish Line Photos
-        </label>
-      </div>
-    </div> -->
-
-    <button class="button is-small is-pulled-right" @click="generateFile">
-      <icon icon="fa-solid fa-download"></icon>
-    </button>
-    <div class="tabs is-boxed">
+    <div class="tabs is-boxed mt-4">
       <ul>
         <li :class="{ 'is-active': this.timer.id == null }" @click="this.clickTab(null)"><a>New Heat</a></li>
         <li :class="{ 'is-active': this.timer.id == timer.id }" v-for="(timer, index) in timers" :key="timer.id"
@@ -54,21 +39,34 @@
         </li>
       </ul>
     </div>
-    <tbl class="mx-auto" :headers="resultsHeader" :rows="tableFinishersPreview" />
-    <!-- on load of id existing heat load the times for the heat -->
-    <!-- <div style="height: 500px; overflow-y: auto;" class="content">
-      <ol>
-        <li v-for="(finisher, index) in reverseOrderedFinishers" :class="{ unselectable: timerIsRunning }">
-          {{ finisher }}
-        </li>
-      </ol>
-    </div> -->
+    <div class="results-block">
+      <tbl class="mx-auto" :headers="resultsHeader" :rows="tableFinishersPreview" />
+    </div>
     <fab @click="fabAction">
       <icon v-if="timerStarted()" icon="fa-solid fa-play"></icon>
       <icon v-else icon="fa-solid fa-stopwatch"></icon>
     </fab>
   </div>
 </template>
+
+<style scoped>
+.timer-container {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  /* Adjust as needed */
+  overflow: hidden;
+  /* Prevent page from scrolling */
+}
+
+.results-block {
+  flex: 1;
+  /* Grow to fill remaining space */
+  overflow-y: auto;
+  /* Enable vertical scrolling */
+}
+</style>
+
 
 <script>
 import { formatMilliseconds } from '../utilities';
