@@ -20,7 +20,7 @@ require (
 	github.com/rs/zerolog v1.32.0
 	github.com/urfave/cli/v2 v2.27.1
 	golang.org/x/oauth2 v0.19.0
-	google.golang.org/api v0.175.0
+	google.golang.org/api v0.176.0
 )
 
 require (
