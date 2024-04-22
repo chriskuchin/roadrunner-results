@@ -21,13 +21,20 @@
       </ul>
     </div>
     <div class="container">
-      <result-input v-if="isActiveTab('manual')" :time="getFirstUnmatchedTime" :finisher="getFirstUnmatchedPlace"
-        :total-results="getHeatTotalResults" :race-id="this.$route.params.raceId" :event-id="this.$route.params.eventId"
-        :timer-id="this.timerId" @bib="bibInput" />
-      <scan v-else-if="isActiveTab('scan')" @bib="bibInput" />
-      <div class="section" v-else-if="isActiveTab('heat')">
+      <div class="mx-2 mt-4" v-if="isActiveTab('manual')">
         <div class="columns">
-          <div class="column">
+          <result-input class="column recorder" :time="getFirstUnmatchedTime" :finisher="getFirstUnmatchedPlace"
+            :total-results="getHeatTotalResults" :race-id="this.$route.params.raceId"
+            :event-id="this.$route.params.eventId" :timer-id="this.timerId" @bib="bibInput" />
+          <div class="column results">
+            <tbl class="mx-auto is-narrow" :headers="heatResultsHeader" :rows="heatResults" />
+          </div>
+        </div>
+      </div>
+      <scan v-else-if="isActiveTab('scan')" @bib="bibInput" />
+      <div class="mx-2 mt-4" v-else-if="isActiveTab('heat')">
+        <div class="columns">
+          <div class="column recorder">
             <div class="fixed-grid has-3-cols mx-auto">
               <div class="grid">
                 <div class="cell" v-for="assignment in laneAssignments">
@@ -43,10 +50,8 @@
                 :disabled="results.length != heatFinish.length">Save</button>
             </div>
           </div>
-          <div class="column">
-            <div class="table-container">
-              <tbl class="mx-auto is-narrow" :headers="heatResultsHeader" :rows="heatResults" />
-            </div>
+          <div class="column table-container">
+            <tbl class="mx-auto is-narrow" :headers="heatResultsHeader" :rows="heatResults" />
           </div>
         </div>
       </div>
@@ -59,19 +64,20 @@ import { formatMilliseconds } from "../utilities";
 import { recordResult, getHeatResults } from "../api/results";
 import { listTimers } from '../api/timers';
 import { getParticipantByBib } from "../api/participants";
+import { mapState, mapActions } from "pinia";
+import { useParticipantsStore } from '../store/participants';
 import RacerInput from "../components/ResultsInput.vue";
-import ResultsTable from "../components/ResultsTable.vue";
 import Scanner from '../components/Scanner.vue';
 import Table from '../components/Table.vue';
 
 export default {
   components: {
     "result-input": RacerInput,
-    "results-table": ResultsTable,
     "scan": Scanner,
     "tbl": Table,
   },
   mounted: function () {
+    this.loadParticipants(this.$route.params.raceId, "", "", "", "", 500, 0)
     this.refreshData()
   },
   unmounted: function () {
@@ -90,6 +96,10 @@ export default {
         {
           abbr: "Pos",
           title: "Position",
+        },
+        {
+          abbr: "Time",
+          title: "Finished Time"
         },
         {
           abbr: "Ln",
@@ -123,6 +133,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(useParticipantsStore, ['loadParticipants']),
     recordLaneFinish: function (lane) {
       if (!this.hasFinished(lane)) {
         this.heatFinish.push(lane)
@@ -157,15 +168,14 @@ export default {
             this.tabSelect("heat")
           }
         }
+
+        if (this.timerId && this.timerId != "") {
+          getHeatResults(this.$route.params.raceId, this.$route.params.eventId, this.timerId).then((results) => {
+            this.results = results
+            this.resultsRefresh = setTimeout(this.refreshData, 2500)
+          })
+        }
       })
-
-      if (this.timerId && this.timerId != "") {
-        getHeatResults(this.$route.params.raceId, this.$route.params.eventId, this.timerId).then((results) => {
-          this.results = results
-        })
-      }
-
-      this.resultsRefresh = setTimeout(this.refreshData, 2500)
     },
     formatMilliseconds,
     isActiveTab: function (tab) {
@@ -194,17 +204,55 @@ export default {
     }
   },
   computed: {
+    ...mapState(useParticipantsStore, {
+      first_name: (store) => (bib) => {
+        const participant = store.participants.find((entry) => entry.bibNumber == bib)
+        if (participant)
+          return participant.firstName
+
+        return '-'
+      },
+      last_name: (store) => (bib) => {
+        const participant = store.participants.find((entry) => entry.bibNumber == bib)
+        if (participant)
+          return participant.lastName
+
+        return '-'
+
+      },
+      birth_year: (store) => (bib) => {
+        const participant = store.participants.find((entry) => entry.bibNumber == bib)
+        if (participant)
+          return participant.birthYear
+
+        return '-'
+
+      },
+    }),
     heatResults: function () {
       let results = []
       let pos = 1
-      for (const finishedLane of this.heatFinish) {
+      for (const finishTime of this.results) {
+        let finishedLane = this.heatFinish[pos - 1]
+        let bib = finishTime.bib_number
+        if (bib === "" && finishedLane) {
+          bib = finishedLane.bib
+        } else if (bib === "")
+          bib = "-"
+
+        if (!finishedLane)
+          finishedLane = { bib: '-', lane: "-" }
+
+        console.log(bib)
+
         results.push([
           pos++,
+          formatMilliseconds(finishTime.result_ms),
           finishedLane.lane,
-          finishedLane.bib,
-          this.heatFinisher.has(finishedLane.bib) ? this.heatFinisher.get(finishedLane.bib).first_name : "",
-          this.heatFinisher.has(finishedLane.bib) ? this.heatFinisher.get(finishedLane.bib).last_name : "",
-          this.heatFinisher.has(finishedLane.bib) ? this.heatFinisher.get(finishedLane.bib).birth_year : "",
+          bib,
+          this.first_name(bib),
+          this.last_name(bib),
+          this.birth_year(bib),
         ])
       }
 
@@ -250,3 +298,26 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.columns {
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+  /* Adjust as needed */
+  overflow: hidden;
+  /* Prevent page from scrolling */
+}
+
+.column.recorder {
+  flex-grow: 0;
+}
+
+.column.results {
+  flex: 1;
+  /* Grow to fill remaining space */
+  overflow-y: auto;
+  overflow-x: auto;
+  /* Enable vertical scrolling */
+}
+</style>
