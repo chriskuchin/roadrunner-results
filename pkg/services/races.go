@@ -125,16 +125,16 @@ func GetRace(ctx context.Context, db db.DB, raceID string) (RaceResult, error) {
 
 	eventResults := []EventStats{}
 	for _, event := range events {
-		finisherCount, err := GetEventFinisherCount(ctx, db, raceID, event.EventID)
-		if err != nil {
-			log.Error().Err(err).Send()
-		}
+		// finisherCount, err := GetEventFinisherCount(ctx, db, raceID, event.EventID)
+		// if err != nil {
+		// 	log.Error().Err(err).Send()
+		// }
 		eventResults = append(eventResults, EventStats{
 			Description: event.Description,
 			EventID:     event.EventID,
 			Type:        event.Type,
 			Distance:    event.Distance,
-			Finishers:   finisherCount,
+			// Finishers:   finisherCount,
 		})
 	}
 
