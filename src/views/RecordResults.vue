@@ -27,7 +27,9 @@
             :total-results="getHeatTotalResults" :race-id="this.$route.params.raceId"
             :event-id="this.$route.params.eventId" :timer-id="this.timerId" @bib="bibInput" />
           <div class="column results">
-            <tbl class="mx-auto is-narrow" :headers="heatResultsHeader" :rows="heatResults" />
+            <div class="table-container">
+              <tbl class="mx-auto is-narrow" :headers="heatResultsHeader" :rows="heatResults" />
+            </div>
           </div>
         </div>
       </div>
@@ -50,8 +52,10 @@
                 :disabled="results.length != heatFinish.length">Save</button>
             </div>
           </div>
-          <div class="column table-container">
-            <tbl class="mx-auto is-narrow" :headers="heatResultsHeader" :rows="heatResults" />
+          <div class="column">
+            <div class="table-container">
+              <tbl class="mx-auto is-narrow" :headers="heatResultsHeader" :rows="heatResults" />
+            </div>
           </div>
         </div>
       </div>
@@ -243,8 +247,6 @@ export default {
         if (!finishedLane)
           finishedLane = { bib: '-', lane: "-" }
 
-        console.log(bib)
-
         results.push([
           pos++,
           formatMilliseconds(finishTime.result_ms),
@@ -300,24 +302,26 @@ export default {
 </script>
 
 <style scoped>
-.columns {
-  display: flex;
-  flex-direction: column;
-  height: 80vh;
-  /* Adjust as needed */
-  overflow: hidden;
-  /* Prevent page from scrolling */
-}
+@media only screen and (max-width: 768px) {
+  .columns {
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    /* Adjust as needed */
+    overflow: hidden;
+    /* Prevent page from scrolling */
+  }
 
-.column.recorder {
-  flex-grow: 0;
-}
+  .column.recorder {
+    flex-grow: 0;
+  }
 
-.column.results {
-  flex: 1;
-  /* Grow to fill remaining space */
-  overflow-y: auto;
-  overflow-x: auto;
-  /* Enable vertical scrolling */
+  .column.results {
+    flex: 1;
+    /* Grow to fill remaining space */
+    overflow-y: auto;
+    overflow-x: auto;
+    /* Enable vertical scrolling */
+  }
 }
 </style>
