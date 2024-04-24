@@ -155,7 +155,7 @@ export default {
       }
     },
     async startTimer() {
-      window.navigator.vibrate(50)
+      // window.navigator.vibrate(50)
       this.timer.start = Date.now()
       this.timer.timeout = setTimeout(this.tickTimer, 10)
 
@@ -169,7 +169,7 @@ export default {
       }
     },
     stopTimer: function () {
-      window.navigator.vibrate(50)
+      // window.navigator.vibrate(50)
       if (this.timer.timeout != null) {
         this.saveVideo()
         clearTimeout(this.timer.timeout)
@@ -184,7 +184,7 @@ export default {
       if (e)
         e.stopPropagation()
 
-      window.navigator.vibrate(50)
+      // window.navigator.vibrate(50)
       let finishTime = Date.now()
       var elapsedTime = finishTime - this.timer.start
       this.timer.finishers.push(elapsedTime) // needs to be the raw time not formatted
