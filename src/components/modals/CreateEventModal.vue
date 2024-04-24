@@ -62,7 +62,7 @@
 <script>
 import { mapStores } from "pinia";
 import { createRaceEvent } from "../../api/events"
-import { useRaceStore } from "../../store/race";
+import { useRaceStore } from "../../store/raceInfo";
 
 import Modal from '../Modal.vue';
 

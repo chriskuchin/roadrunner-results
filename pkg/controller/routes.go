@@ -76,6 +76,11 @@ func Routes(app *firebase.App, db db.DB, assetsFolder string, debug bool) chi.Ro
 
 						r.Delete("/", v1.HandleRaceDelete(db))
 						r.Get("/", v1.HandleRaceGet(db))
+
+						r.Route("/stats", func(r chi.Router) {
+							r.Get("/", v1.HandleRaceStatsGet(db))
+						})
+
 						r.Route("/volunteers", func(r chi.Router) {
 							r.Put("/", v1.HandleVolunteersCreate(db, app))
 							r.Get("/", v1.HandleVolunteersList(db, app))

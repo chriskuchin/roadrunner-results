@@ -1,6 +1,6 @@
 <template>
   <div class="section">
-    <div class="box mb-4" v-for="event in raceStore.eventList " :key="event.id">
+    <div class="box mb-4" v-for="event in raceStore.events " :key="event.id">
       <div class="has-text-right">
 
         <cm class="is-right" v-if="isLoggedIn">
@@ -36,7 +36,6 @@
 import { mapStores, mapState, mapActions } from "pinia";
 import { useRaceStore } from "../store/race";
 import { useUserStore } from "../store/user"
-import { useEventStore } from "../store/event";
 import { deleteRaceEvent } from "../api/events"
 import FAB from '../components/Fab.vue'
 import ContextMenu from '../components/DropdownMenu.vue'
@@ -53,7 +52,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useEventStore, ['loadEvent']),
+    ...mapActions(useRaceStore, ['']),
     navigateToDiaplayBoard(event) {
       this.loadEvent(event)
       return this.$router.push(`${this.getBaseEventLink(event)}/board`)
@@ -78,10 +77,9 @@ export default {
       this.$refs['create-event-modal'].toggle()
     },
     deleteEvent: function (event) {
-      var self = this
       let raceID = this.$route.params.raceId
       deleteRaceEvent(raceID, event.eventId).then(() => {
-        self.raceStore.loadRace(raceID)
+        this.loadRace()
       })
     },
     getResultsLink: function (page, event) {

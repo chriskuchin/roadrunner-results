@@ -79,4 +79,16 @@ async function getRaceVolunteers(raceID) {
 	return [];
 }
 
-export { getRaces, createRace, importRace, deleteRace, getRaceVolunteers };
+async function getRace(raceId) {
+	const url = `/api/v1/races/${raceId}`
+	const res = await fetch(url, await setAuthHeader({}));
+
+	if (res.ok) {
+		return await res.json()
+	}
+
+	return {}
+}
+
+
+export { getRace, getRaces, createRace, importRace, deleteRace, getRaceVolunteers };

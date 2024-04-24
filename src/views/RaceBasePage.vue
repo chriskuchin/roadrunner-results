@@ -33,12 +33,12 @@
       <ul>
         <li :class="{ 'is-active': !isEventPage }">
           <router-link :to="'/races/' + this.$route.params.raceId + '/events'">
-            {{ getName }}
+            {{ raceName }}
           </router-link>
         </li>
         <li :class="{ 'is-active': isEventPage }" v-if="isEventPage" class="is-active">
           <a href="#" aria-current="page">
-            {{ eventName(getEventId) }}
+            {{ eventName }}
           </a>
         </li>
       </ul>
@@ -58,13 +58,17 @@ export default {
     }
   },
   mounted: function () {
-    this.loadRace(this.$route.params.raceId)
+    this.loadRace()
+    this.loadEvents()
   },
   methods: {
-    ...mapActions(useRaceStore, ['loadRace']),
+    ...mapActions(useRaceStore, ['loadRace', 'loadEvents']),
   },
   computed: {
-    ...mapState(useRaceStore, ["getName", "eventName"]),
+    ...mapState(useRaceStore, {
+      raceName: (store) => store.name,
+      eventName: 'eventName'
+    }),
     getEventId: function () {
       if (this.$route.params.eventId && this.$route.params.eventId !== "")
         return this.$route.params.eventId

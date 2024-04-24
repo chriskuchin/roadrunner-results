@@ -42,6 +42,21 @@ func HandleRaceGet(db db.DB) http.HandlerFunc {
 	}
 }
 
+func HandleRaceStatsGet(db db.DB) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		ctx := r.Context()
+		results, err := services.GetRaceStats(ctx, db, util.GetRaceIDFromContext(ctx))
+		if err != nil {
+			switch err.(type) {
+			default:
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
+		}
+		render.JSON(w, r, results)
+	}
+}
+
 func HandleRacesList(db db.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		var err error
