@@ -1,6 +1,6 @@
 <template>
   <div class="section">
-    <div class="box mb-4" v-for="race in racesStore.getRaces" :key="race.id">
+    <div class="box mb-4" v-for="race in racesStore.races" :key="race.id">
       <div class="has-text-right">
         <cm class="is-right" v-if="isLoggedIn">
           <!-- <a class="dropdown-item">Edit Race</a> -->

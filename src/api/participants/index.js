@@ -14,6 +14,7 @@ async function getParticipantByBib(raceID, bibNumber) {
 }
 
 async function getParticipants(raceId, limit, offset) {
+  const params = {}
   params.limit = limit || 500;
   params.offset = offset || 0;
 

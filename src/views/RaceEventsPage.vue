@@ -52,25 +52,19 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useRaceStore, ['']),
     navigateToDiaplayBoard(event) {
-      this.loadEvent(event)
       return this.$router.push(`${this.getBaseEventLink(event)}/board`)
     },
     navigateToLaneAssignment(event) {
-      this.loadEvent(event)
       return this.$router.push(`${this.getBaseEventLink(event)}/lanes`)
     },
     navigateToEventResults(event) {
-      this.loadEvent(event)
       return this.$router.push(`${this.getBaseEventLink(event)}/results`)
     },
     navigateToDivisionResults(event) {
-      this.loadEvent(event)
       return this.$router.push(`/races/${this.$route.params.raceId}/divisions?eventId=${event.eventId}`)
     },
     navigateToAttemptsRecorder(event) {
-      this.loadEvent(event)
       return this.$router.push(`${this.getBaseEventLink(event)}/distance`)
     },
     openModal: function () {
@@ -123,7 +117,6 @@ export default {
   },
   computed: {
     ...mapState(useUserStore, ['isLoggedIn']),
-    raceID: () => this.$route.params.raceId,
     ...mapStores(useRaceStore),
   }
 };

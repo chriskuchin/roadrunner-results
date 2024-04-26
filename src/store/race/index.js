@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { useRoute } from 'vue-router'
-import { ref, computed, reactive } from 'vue'
+import { ref, computed } from 'vue'
 import { getRace, getRaceVolunteers } from '../../api/races'
 import { getParticipants } from '../../api/participants'
 import { getRaceEvents } from '../../api/events'
@@ -15,27 +15,57 @@ export const useRaceStore = defineStore('race', () => {
   const participants = ref([])
   const volunteers = ref([])
 
-  const getParticipant = computed(() => (bib) => participants.value.find((entry) => entry.bibNumber === bib))
+  const getRaceId = computed(() => route.params.raceId)
+  const getParticipant = computed(() => (bib) => participants.value.find((entry) => entry.bibNumber === bib.toString()))
+
+  const participantFirstName = computed(() => (bib) => {
+    const participant = participants.value.find((entry) => entry.bibNumber === bib.toString())
+    if (participant)
+      return participant.firstName
+
+    return '-'
+  })
+  const participantLastName = computed(() => (bib) => {
+    const participant = participants.value.find((entry) => entry.bibNumber === bib.toString())
+    if (participant)
+      return participant.lastName
+
+    return '-'
+  })
+  const participantBirthYear = computed(() => (bib) => {
+    const participant = participants.value.find((entry) => entry.bibNumber === bib.toString())
+    if (participant)
+      return participant.birthYear
+
+    return '-'
+  })
+
   const eventName = computed(()  => {
-    const event = events.value.find((entry) => entry.eventId === route.params.eventId)
+    const event = events.value.find((entry) => {
+      console.log(entry)
+      return entry.eventId === route.params.eventId
+    })
     if (event) {
       return event.description
     }
-
-    "-"
+    return "-"
   })
 
-  async function loadRace() {
-    getRace(route.params.raceId).then((race) => {
-      id.value = race.id
-      name.value = race.name
-      ownerId.value = race.owner_id
-    })
+  function loadRace() {
+    if (id !== route.params.raceId) {
+      getRace(route.params.raceId).then((race) => {
+        id.value = race.id
+        name.value = race.name
+        ownerId.value = race.owner_id
+      })
+    }
   }
 
   function loadParticipants() {
     getParticipants(route.params.raceId, 500, 0).then((result) => {
+      console.log(result)
       participants.value = result
+      console.log("getParticipants", participants)
     })
   }
 
@@ -51,5 +81,5 @@ export const useRaceStore = defineStore('race', () => {
     })
   }
 
-  return { id, name, ownerId, events, participants, volunteers, loadRace, loadParticipants, loadEvents, loadVolunteers, getParticipant, eventName }
+  return { id, name, ownerId, events, participants, volunteers, loadRace, loadParticipants, loadEvents, loadVolunteers, getParticipant, eventName, getRaceId, participantFirstName, participantLastName, participantBirthYear }
 })
