@@ -1,8 +1,8 @@
 import { setAuthHeader } from "../auth";
 
-async function getRaceEvents(raceID) {
+async function getRaceEvents(raceId) {
 	const res = await fetch(
-		`/api/v1/races/${raceID}/events`,
+		`/api/v1/races/${raceId}/events`,
 		await setAuthHeader({
 			method: "GET",
 		}),
@@ -13,19 +13,18 @@ async function getRaceEvents(raceID) {
 	return [];
 }
 
-async function deleteRaceEvent(raceID, eventID) {
+async function deleteRaceEvent(raceId, eventId) {
 	await fetch(
-		`/api/v1/races/${raceID}/events/${eventID}`,
+		`/api/v1/races/${raceId}/events/${eventId}`,
 		await setAuthHeader({
 			method: "DELETE",
 		}),
 	);
 }
 
-async function createRaceEvent(raceID, description, eventType, distance) {
-	console.log(distance)
+async function createRaceEvent(raceId, description, eventType, distance) {
 	await fetch(
-		`/api/v1/races/${raceID}/events`,
+		`/api/v1/races/${raceId}/events`,
 		await setAuthHeader({
 			method: "POST",
 			body: JSON.stringify({
@@ -38,8 +37,8 @@ async function createRaceEvent(raceID, description, eventType, distance) {
 }
 
 async function getEventResults(
-	raceID,
-	eventID,
+	raceId,
+	eventId,
 	name,
 	gender,
 	team,
@@ -47,7 +46,7 @@ async function getEventResults(
 	timers,
 	order,
 ) {
-	const url = `/api/v1/races/${raceID}/events/${eventID}/results`;
+	const url = `/api/v1/races/${raceId}/events/${eventId}/results`;
 	const filters = new URLSearchParams();
 
 	if (name !== "") {

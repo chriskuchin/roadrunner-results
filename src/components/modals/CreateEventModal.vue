@@ -60,7 +60,7 @@
 </template>
 
 <script>
-import { mapStores } from "pinia";
+import { mapActions } from "pinia";
 import { createRaceEvent } from "../../api/events"
 import { useRaceStore } from "../../store/race";
 
@@ -82,6 +82,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(useRaceStore, ['loadEvents']),
     toggle: function () {
       this.$refs['create-event-modal'].toggle()
     },
@@ -90,9 +91,8 @@ export default {
       let eventDistance = this.eventDistance()
       let description = this.description != "" ? this.description : this.eventDescription()
 
-      var self = this
       createRaceEvent(raceID, description, this.type, eventDistance).then(() => {
-        self.raceStore.loadRace(raceID)
+        this.loadEvents()
       })
 
       this.toggle()
@@ -135,7 +135,6 @@ export default {
     },
   },
   computed: {
-    ...mapStores(useRaceStore),
   }
 }
 </script>

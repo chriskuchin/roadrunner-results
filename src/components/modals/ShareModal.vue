@@ -30,9 +30,8 @@
 </template>
 
 <script>
-import { mapActions } from 'pinia'
 import Modal from '../Modal.vue'
-import { useRaceStore } from '../../store/race'
+import { shareRace } from '../../api/races'
 
 export default {
   components: {
@@ -43,11 +42,10 @@ export default {
       emailInput: "",
       raceID: "",
       emails: [],
-      volunteers: [],
+      volunteers: []
     }
   },
   methods: {
-    ...mapActions(useRaceStore, ['shareRace']),
     open: function (raceID) {
       this.$refs['share-modal'].toggle()
 
@@ -90,7 +88,7 @@ export default {
       }
     },
     addVolunteers: async function () {
-      await this.shareRace(this.raceID, this.emails)
+      await shareRace(this.raceID, this.emails)
 
       this.$refs['share-modal'].toggle()
     },

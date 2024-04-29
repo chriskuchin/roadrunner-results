@@ -67,10 +67,14 @@ async function deleteRace(raceID) {
 	throw new Error(`failed to delete race: ${res.status}`);
 }
 
-async function getRaceVolunteers(raceID) {
-	const url = `/api/v1/races/${raceID}/volunteers`;
+async function getRaceVolunteers(raceId) {
+	const url = `/api/v1/races/${raceId}/volunteers`;
+
+	console.log(url)
 
 	const res = await fetch(url, await setAuthHeader({}));
+
+	console.log("other")
 
 	if (res.ok) {
 		return await res.json();
@@ -79,4 +83,38 @@ async function getRaceVolunteers(raceID) {
 	return [];
 }
 
-export { getRaces, createRace, importRace, deleteRace, getRaceVolunteers };
+async function getRace(raceId) {
+	const url = `/api/v1/races/${raceId}`
+	const res = await fetch(url, await setAuthHeader({}));
+
+	if (res.ok) {
+		return await res.json()
+	}
+
+	return {}
+}
+
+async function shareRace(raceId, emails) {
+	const url = `/api/v1/races/${raceId}/volunteers`;
+	const payload = {
+		emails: emails,
+	};
+
+	const res = await fetch(
+		url,
+		await setAuthHeader({
+			method: "PUT",
+			body: JSON.stringify(payload),
+		}),
+	);
+
+	if (res.ok) {
+		// added volunteers
+		// handle failed adds
+	} else
+		throw new Error("failed to add volunteers");
+}
+
+
+
+export { getRace, getRaces, createRace, importRace, deleteRace, getRaceVolunteers, shareRace };

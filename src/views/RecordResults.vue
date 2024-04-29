@@ -69,10 +69,10 @@ import { recordResult, getHeatResults } from "../api/results";
 import { listTimers } from '../api/timers';
 import { getParticipantByBib } from "../api/participants";
 import { mapState, mapActions } from "pinia";
-import { useParticipantsStore } from '../store/participants';
 import RacerInput from "../components/ResultsInput.vue";
 import Scanner from '../components/Scanner.vue';
 import Table from '../components/Table.vue';
+import { useRaceStore } from "../store/race";
 
 export default {
   components: {
@@ -81,7 +81,7 @@ export default {
     "tbl": Table,
   },
   mounted: function () {
-    this.loadParticipants(this.$route.params.raceId, "", "", "", "", 500, 0)
+    this.loadParticipants()
     this.refreshData()
   },
   unmounted: function () {
@@ -137,7 +137,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useParticipantsStore, ['loadParticipants']),
+    ...mapActions(useRaceStore, ['loadParticipants']),
     recordLaneFinish: function (lane) {
       if (!this.hasFinished(lane)) {
         this.heatFinish.push(lane)
@@ -208,30 +208,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(useParticipantsStore, {
-      first_name: (store) => (bib) => {
-        const participant = store.participants.find((entry) => entry.bibNumber == bib)
-        if (participant)
-          return participant.firstName
-
-        return '-'
-      },
-      last_name: (store) => (bib) => {
-        const participant = store.participants.find((entry) => entry.bibNumber == bib)
-        if (participant)
-          return participant.lastName
-
-        return '-'
-
-      },
-      birth_year: (store) => (bib) => {
-        const participant = store.participants.find((entry) => entry.bibNumber == bib)
-        if (participant)
-          return participant.birthYear
-
-        return '-'
-
-      },
+    ...mapState(useRaceStore, {
+      first_name: 'participantFirstName',
+      last_name: 'participantLastName',
+      birth_year: 'participantBirthYear',
     }),
     heatResults: function () {
       let results = []

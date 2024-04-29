@@ -64,13 +64,13 @@
 <script>
 
 import { createNewHeat, listHeats, updateHeat, deleteHeat } from '../api/heats';
-import { useParticipantsStore } from '../store/participants';
 import { mapState, mapActions } from 'pinia';
+import { useRaceStore } from '../store/race';
 
 export default {
   components: {},
   mounted: async function () {
-    this.loadParticipants(this.$route.params.raceId, "", "", "", "", 500, 0)
+    this.loadParticipants()
     listHeats(this.$route.params.raceId, this.$route.params.eventId).then((heats) => {
       this.heats = heats
     })
@@ -122,34 +122,14 @@ export default {
     },
   },
   computed: {
-    ...mapState(useParticipantsStore, {
-      first_name: (store) => (bib) => {
-        const participant = store.participants.find((entry) => entry.bibNumber == bib)
-        if (participant)
-          return participant.firstName
-
-        return '-'
-      },
-      last_name: (store) => (bib) => {
-        const participant = store.participants.find((entry) => entry.bibNumber == bib)
-        if (participant)
-          return participant.lastName
-
-        return '-'
-
-      },
-      birth_year: (store) => (bib) => {
-        const participant = store.participants.find((entry) => entry.bibNumber == bib)
-        if (participant)
-          return participant.birthYear
-
-        return '-'
-
-      },
+    ...mapState(useRaceStore, {
+      first_name: 'participantFirstName',
+      last_name: 'participantLastName',
+      birth_year: 'participantBirthYear',
     })
   },
   methods: {
-    ...mapActions(useParticipantsStore, ['loadParticipants']),
+    ...mapActions(useRaceStore, ['loadParticipants']),
     generateLaneAssignments(targetCount) {
       if (this.lanes.length < targetCount) {
         const lanesToAdd = targetCount - this.lanes.length

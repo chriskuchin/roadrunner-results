@@ -1,117 +1,85 @@
-import { defineStore } from "pinia";
-import { setAuthHeader } from "../../api/auth";
+import { defineStore } from 'pinia'
+import { useRoute } from 'vue-router'
+import { ref, computed } from 'vue'
+import { getRace, getRaceVolunteers } from '../../api/races'
+import { getParticipants } from '../../api/participants'
+import { getRaceEvents } from '../../api/events'
 
-export const useRaceStore = defineStore("race", {
-	state: () => ({
-		id: "",
-		name: "",
-		ownerID: "",
-		eventCount: 0,
-		events: [],
-		participantStats: {
-			total: 0,
-			finishers: 0,
-			male: 0,
-			female: 0,
-			birthYearDistro: [],
-		},
-	}),
-	getters: {
-		getID: (state) => state.id,
-		getName: (state) => state.name,
-		yearLabels: (state) => [
-			...new Set(state.participantStats.birthYearDistro.map((row) => row.year)),
-		],
-		totalParticipants: (state) => state.participantStats.total,
-		totalFinishers: (state) => state.participantStats.finishers,
-		eventTotal: (state) => state.eventCount,
-		eventList: (state) => state.events,
-		eventName: (state) => {
-			return (eventID) => {
-				const event = state.events.filter((val) => val.eventId === eventID)[0];
+export const useRaceStore = defineStore('race', () => {
+  const route = useRoute()
 
-				if (event) return event.description;
+  const id = ref(route.params.raceId)
+  const name = ref('')
+  const ownerId = ref('')
+  const events = ref([])
+  const participants = ref([])
+  const volunteers = ref([])
 
-				return "";
-			};
-		},
-		maleValues() {
-			const values = [];
-			for (const year of this.yearLabels) {
-				const val = this.participantStats.birthYearDistro
-					.filter((val) => val.gender === "Male" && val.year === year)
-					.map((val) => val.count);
+  const getRaceId = computed(() => route.params.raceId)
+  const getParticipant = computed(() => (bib) => participants.value.find((entry) => entry.bibNumber === bib.toString()))
 
-				if (val.length > 0) values.push(val[0]);
-				else values.push(0);
-			}
+  const participantFirstName = computed(() => (bib) => {
+    const participant = participants.value.find((entry) => entry.bibNumber === bib.toString())
+    if (participant)
+      return participant.firstName
 
-			return values;
-		},
-		femaleValues() {
-			const values = [];
-			for (const year of this.yearLabels) {
-				const val = this.participantStats.birthYearDistro
-					.filter((val) => val.gender === "Female" && val.year === year)
-					.map((val) => val.count);
+    return '-'
+  })
+  const participantLastName = computed(() => (bib) => {
+    const participant = participants.value.find((entry) => entry.bibNumber === bib.toString())
+    if (participant)
+      return participant.lastName
 
-				if (val.length > 0) values.push(val[0]);
-				else values.push(0);
-			}
+    return '-'
+  })
+  const participantBirthYear = computed(() => (bib) => {
+    const participant = participants.value.find((entry) => entry.bibNumber === bib.toString())
+    if (participant)
+      return participant.birthYear
 
-			return values;
-		},
-		yearValues: (state) =>
-			state.participantStats.birthYearDistro.map((row) => row.count),
-	},
-	actions: {
-		async listVolunteers(id) {
-			const url = `/api/v1/races/${id}/volunteers`;
+    return '-'
+  })
 
-			const res = await fetch(url, await setAuthHeader({}));
+  const eventName = computed(()  => {
+    const event = events.value.find((entry) => {
+      console.log(entry)
+      return entry.eventId === route.params.eventId
+    })
+    if (event) {
+      return event.description
+    }
+    return "-"
+  })
 
-			if (res.ok) {
-				return await res.json();
-			}
+  function loadRace() {
+    if (id !== route.params.raceId) {
+      getRace(route.params.raceId).then((race) => {
+        id.value = race.id
+        name.value = race.name
+        ownerId.value = race.owner_id
+      })
+    }
+  }
 
-			return [];
-		},
-		async shareRace(id, emails) {
-			const url = `/api/v1/races/${id}/volunteers`;
-			const payload = {
-				emails: emails,
-			};
+  function loadParticipants() {
+    getParticipants(route.params.raceId, 500, 0).then((result) => {
+      participants.value = result
+    })
+  }
 
-			const res = await fetch(
-				url,
-				await setAuthHeader({
-					method: "PUT",
-					body: JSON.stringify(payload),
-				}),
-			);
+  function loadEvents() {
+    getRaceEvents(route.params.raceId).then((result) => {
+      events.value = result
+    })
+  }
 
-			if (res.ok) {
-				// added volunteers
-				// handle failed adds
-			} else {
-				// whole request failed
-			}
-		},
-		async loadRace(id) {
-			const race = await (
-				await fetch(`/api/v1/races/${id}`, { method: "GET" })
-			).json();
-			this.name = race.name;
-			this.id = race.id;
-			this.eventCount = race.event_count;
-			this.participantStats.birthYearDistro =
-				race.participant_stats.birth_year_distribution;
-			this.participantStats.male = race.participant_stats.male;
-			this.participantStats.female = race.participant_stats.female;
-			this.participantStats.total = race.participant_stats.total;
-			this.participantStats.finishers = race.participant_stats.finishers;
-			this.eventCount = race.eventCount;
-			this.events = race.events;
-		},
-	},
-});
+  function loadVolunteers() {
+    console.log("load")
+    getRaceVolunteers(route.params.raceId).then((result) => {
+      console.log(result)
+      volunteers.value = result
+    })
+  }
+
+  return { id, name, ownerId, events, participants, volunteers, loadRace, loadParticipants, loadEvents, loadVolunteers, getParticipant, eventName, getRaceId, participantFirstName, participantLastName, participantBirthYear }
+})

@@ -3,7 +3,6 @@ import { createRouter, createWebHistory } from "vue-router";
 const HomePage = () => import("../views/HomePage.vue");
 const RaceTimer = () => import("../views/RaceTimer.vue");
 const RecordResults = () => import("../views/RecordResults.vue");
-const HeatPage = () => import("../views/HeatPage.vue");
 const LoginPage = () => import("../views/LoginPage.vue");
 const SignupPage = () => import("../views/SignupPage.vue");
 const RaceBasePage = () => import("../views/RaceBasePage.vue");
@@ -23,7 +22,6 @@ const LaneAssignment = () => import("../views/LaneAssignment.vue");
 const routes = [
 	{ path: "/", component: HomePage },
 	{ path: "/athlete", component: AthletePage },
-	{ path: "/heats", name: "heats", component: HeatPage },
 	{
 		path: "/races/:raceId",
 		component: RaceBasePage,

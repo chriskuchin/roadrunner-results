@@ -54,6 +54,15 @@ type RaceResult struct {
 	ParticipantStats *ParticipantStats `json:"participant_stats,omitempty"`
 }
 
+type Race struct {
+	Name         string              `json:"name"`
+	Date         *string             `json:"date,omitempty"`
+	Id           string              `json:"id"`
+	OwnerId      string              `json:"owner_id"`
+	Events       []EventObject       `json:"events,omitempty"`
+	Participants []ParticipantObject `json:"participants,omitempty"`
+}
+
 type EventStats struct {
 	EventID     string  `json:"eventId"`
 	Description string  `json:"description"`
@@ -84,61 +93,62 @@ func GetRaceOwnerID(ctx context.Context, db db.DB, id string) (string, error) {
 	return ownerID[0], nil
 }
 
-func GetRace(ctx context.Context, db db.DB, raceID string) (RaceResult, error) {
+func GetRaceStats(ctx context.Context, db db.DB, raceId string) (*RaceResult, error) {
 	dto := []RaceRow{}
-	err := db.SelectContext(ctx, &dto, "select * from races where race_id = ?", raceID)
+	err := db.SelectContext(ctx, &dto, "select * from races where race_id = ?", raceId)
 	if err != nil {
-		return RaceResult{}, err
+		return nil, err
 	}
 
 	race := dto[0]
 
-	eventCount, err := GetRaceEventCount(ctx, db, raceID)
+	eventCount, err := GetRaceEventCount(ctx, db, raceId)
 	if err != nil {
 		log.Error().Err(err).Send()
 	}
 
-	participantCount, err := GetRaceParticipantCount(ctx, db, raceID)
+	participantCount, err := GetRaceParticipantCount(ctx, db, raceId)
 	if err != nil {
 		log.Error().Err(err).Send()
 	}
 
-	finisherCount, err := GetRaceFinisherCount(ctx, db, raceID)
+	finisherCount, err := GetRaceFinisherCount(ctx, db, raceId)
 	if err != nil {
 		log.Error().Err(err).Send()
 	}
 
-	femaleCount, maleCount, err := GetRaceGenderCount(ctx, db, raceID)
+	femaleCount, maleCount, err := GetRaceGenderCount(ctx, db, raceId)
 	if err != nil {
 		log.Error().Err(err).Send()
 	}
 
-	birthYearDistro, err := GetRaceParticipantsBirthYearCount(ctx, db, raceID)
+	birthYearDistro, err := GetRaceParticipantsBirthYearCount(ctx, db, raceId)
 	if err != nil {
 		log.Error().Err(err).Send()
 	}
 
-	events, err := GetRaceEvents(ctx, db, raceID)
+	events, err := GetRaceEvents(ctx, db, raceId)
 	if err != nil {
 		log.Error().Err(err).Send()
 	}
 
 	eventResults := []EventStats{}
 	for _, event := range events {
-		// finisherCount, err := GetEventFinisherCount(ctx, db, raceID, event.EventID)
-		// if err != nil {
-		// 	log.Error().Err(err).Send()
-		// }
+		finisherCount, err := GetEventFinisherCount(ctx, db, raceId, event.EventID)
+		if err != nil {
+			log.Error().Err(err).Send()
+		}
+
 		eventResults = append(eventResults, EventStats{
 			Description: event.Description,
 			EventID:     event.EventID,
 			Type:        event.Type,
 			Distance:    event.Distance,
-			// Finishers:   finisherCount,
+			Finishers:   finisherCount,
 		})
 	}
 
-	return RaceResult{
+	return &RaceResult{
 		Name:       race.Name,
 		ID:         race.ID,
 		OwnerID:    race.OwnerID,
@@ -151,6 +161,21 @@ func GetRace(ctx context.Context, db db.DB, raceID string) (RaceResult, error) {
 			MaleCount:          maleCount,
 			BirthYearHistogram: birthYearDistro,
 		},
+	}, nil
+
+}
+
+func GetRace(ctx context.Context, db db.DB, raceId string) (*Race, error) {
+	dto := []RaceRow{}
+	err := db.SelectContext(ctx, &dto, "select * from races where race_id = ?", raceId)
+	if err != nil {
+		return nil, err
+	}
+
+	return &Race{
+		Name:    dto[0].Name,
+		Id:      dto[0].ID,
+		OwnerId: dto[0].OwnerID,
 	}, nil
 }
 

@@ -5,8 +5,6 @@
                 <label class="label">Email</label>
                 <div class="control">
                     <input class="input" type="email" placeholder="e.g. alex@example.com" v-model="user.username">
-                    {{ user.username }}
-                    {{ user.password }}
                 </div>
             </div>
 
@@ -38,7 +36,9 @@ export default {
     methods: {
         ...mapActions(useUserStore, ['register']),
         submit: async function () {
-            await this.register(this.user.username, this.user.password)
+            this.register(this.user.username, this.user.password).then(() => {
+                this.$router.push('/')
+            })
         }
     }
 }

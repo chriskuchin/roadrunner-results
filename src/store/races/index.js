@@ -1,17 +1,15 @@
 import { defineStore } from "pinia";
+import { getRaces } from "../../api/races";
+import { ref } from 'vue'
 
-export const useRacesStore = defineStore("races", {
-	state: () => ({
-		races: [],
-	}),
-	getters: {
-		getRaces: (state) => state.races,
-	},
-	actions: {
-		async loadRaces() {
-			this.races = await (
-				await fetch("/api/v1/races", { method: "GET" })
-			).json();
-		},
-	},
-});
+export const useRacesStore = defineStore('races', () => {
+	const races = ref([])
+
+	function loadRaces() {
+		getRaces().then((result) => {
+			races.value = result
+		})
+	}
+
+	return { races, loadRaces }
+})
