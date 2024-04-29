@@ -51,20 +51,20 @@
 
 <script>
 import Chart from 'chart.js/auto'
-import { useRaceStore } from "../store/race";
-import { mapState } from "pinia";
+import { useStatsStore } from "../store/stats";
+import { mapActions, mapState } from "pinia";
 import { RouterLink } from 'vue-router';
-
-const raceState = useRaceStore()
 
 export default {
   components: {
     "router-link": RouterLink
   },
   mounted: function () {
-    if (this.maleValues.length > 0) {
-      this.updateCharts()
-    }
+    this.loadStats(this.$route.params.raceId).then(() => {
+      if (this.maleValues.length > 0) {
+        this.updateCharts()
+      }
+    })
     raceState.$subscribe(this.updateCharts)
   },
   unmounted: function () {
@@ -79,6 +79,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(useStatsStore, ['loadStats']),
     updateCharts: function () {
       if (this.birthYearChart == null) {
         this.birthYearChart = new Chart(document.getElementById('birth-year'),
@@ -113,7 +114,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(useRaceStore, ['yearLabels', 'maleValues', 'femaleValues', 'totalParticipants', 'totalFinishers', 'eventTotal', 'events'])
+    ...mapState(useStatsStore, ['yearLabels', 'maleValues', 'femaleValues', 'totalParticipants', 'totalFinishers', 'eventTotal', 'events'])
   }
 };
 </script>

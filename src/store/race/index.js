@@ -63,9 +63,7 @@ export const useRaceStore = defineStore('race', () => {
 
   function loadParticipants() {
     getParticipants(route.params.raceId, 500, 0).then((result) => {
-      console.log(result)
       participants.value = result
-      console.log("getParticipants", participants)
     })
   }
 
@@ -76,7 +74,9 @@ export const useRaceStore = defineStore('race', () => {
   }
 
   function loadVolunteers() {
+    console.log("load")
     getRaceVolunteers(route.params.raceId).then((result) => {
+      console.log(result)
       volunteers.value = result
     })
   }

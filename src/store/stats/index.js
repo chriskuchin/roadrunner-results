@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { setAuthHeader } from "../../api/auth";
 
-export const useRaceStore = defineStore("raceInfo", {
+export const useStatsStore = defineStore("stats", {
 	state: () => ({
 		id: "",
 		name: "",
@@ -65,41 +65,9 @@ export const useRaceStore = defineStore("raceInfo", {
 			state.participantStats.birthYearDistro.map((row) => row.count),
 	},
 	actions: {
-		async listVolunteers(id) {
-			const url = `/api/v1/races/${id}/volunteers`;
-
-			const res = await fetch(url, await setAuthHeader({}));
-
-			if (res.ok) {
-				return await res.json();
-			}
-
-			return [];
-		},
-		async shareRace(id, emails) {
-			const url = `/api/v1/races/${id}/volunteers`;
-			const payload = {
-				emails: emails,
-			};
-
-			const res = await fetch(
-				url,
-				await setAuthHeader({
-					method: "PUT",
-					body: JSON.stringify(payload),
-				}),
-			);
-
-			if (res.ok) {
-				// added volunteers
-				// handle failed adds
-			} else {
-				// whole request failed
-			}
-		},
-		async loadRace(id) {
+		async loadStats(id) {
 			const race = await (
-				await fetch(`/api/v1/races/${id}`, { method: "GET" })
+				await fetch(`/api/v1/races/${id}/stats`, await setAuthHeader({ method: "GET" }))
 			).json();
 			this.name = race.name;
 			this.id = race.id;

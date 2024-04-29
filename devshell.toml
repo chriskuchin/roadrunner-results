@@ -16,7 +16,8 @@ packages = [
   "nomad",
   "vault",
   "dig",
-  "vegeta"
+  "vegeta",
+  "dbmate"
 ]
 
 [[commands]]

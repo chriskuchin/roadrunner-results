@@ -34,7 +34,6 @@
 <script>
 import { mapStores, mapState, mapActions } from 'pinia'
 import { useRacesStore } from "../store/races"
-import { useRaceStore } from '../store/race'
 import { useUserStore } from '../store/user'
 import { useDivisionsStore } from '../store/divisions'
 import { deleteRace } from "../api/races"
@@ -137,7 +136,6 @@ export default {
       })
     },
     ...mapActions(useDivisionsStore, ['createDivision', 'load']),
-    ...mapActions(useRaceStore, ['shareRace', 'listVolunteers'])
   },
   computed: {
     ...mapStores(useRacesStore),

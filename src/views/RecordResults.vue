@@ -81,7 +81,7 @@ export default {
     "tbl": Table,
   },
   mounted: function () {
-    this.loadParticipants(this.$route.params.raceId, "", "", "", "", 500, 0)
+    this.loadParticipants()
     this.refreshData()
   },
   unmounted: function () {
