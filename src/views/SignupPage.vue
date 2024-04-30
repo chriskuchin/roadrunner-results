@@ -43,3 +43,10 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+#signup-form {
+    max-width: 800px;
+    margin: 100px auto 0px;
+}
+</style>
