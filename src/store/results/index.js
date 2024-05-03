@@ -52,13 +52,12 @@ export const useResultsStore = defineStore("results", {
 			}
 			return this.results;
 		},
-		updateResultByRowId: async function(rowId, result, bib) {
+		updateResultByRowId: async function (rowId, result, bib) {
 			this.results[rowId]
-			console.log(this.results[rowId].result_id, result, bib)
 
 			await updateResult(this.raceId, this.eventId, this.results[rowId].result_id, result, bib)
 		},
-		getResultByRowId: function(rowId) {
+		getResultByRowId: function (rowId) {
 			return this.results[rowId]
 		},
 		deleteResultByRowId: async function (rowId) {

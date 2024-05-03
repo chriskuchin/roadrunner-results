@@ -10,7 +10,7 @@ async function listHeats(raceID, eventID) {
 
   if (res.ok) return await res.json();
 
-  return [];
+  throw new Error(`Failed to list heats: ${res.statusText}`);
 }
 
 async function createNewHeat(raceID, eventID, assignments) {
@@ -33,7 +33,7 @@ async function createNewHeat(raceID, eventID, assignments) {
 
   if (response.ok) return await response.json()
 
-  return {}
+  throw new Error(`Failed to create new heat: ${response.statusText}`)
 }
 
 async function updateHeat(raceId, eventId, heatId, assignments) {
@@ -53,6 +53,10 @@ async function updateHeat(raceId, eventId, heatId, assignments) {
       }),
     }),
   );
+
+  if (response.ok) return await response.json();
+
+  throw new Error(`Failed to update heat: ${response.statusText}`);
 }
 
 async function deleteHeat(raceId, eventId, heatId) {

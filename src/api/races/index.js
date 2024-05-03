@@ -70,11 +70,7 @@ async function deleteRace(raceID) {
 async function getRaceVolunteers(raceId) {
 	const url = `/api/v1/races/${raceId}/volunteers`;
 
-	console.log(url)
-
 	const res = await fetch(url, await setAuthHeader({}));
-
-	console.log("other")
 
 	if (res.ok) {
 		return await res.json();

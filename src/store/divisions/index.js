@@ -42,8 +42,6 @@ export const useDivisionsStore = defineStore("divisions", {
 					body: JSON.stringify(payload),
 				}),
 			);
-
-			console.log(payload, res.ok);
 		},
 	},
 });

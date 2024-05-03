@@ -28,7 +28,7 @@ async function recordEventAttempt(raceID, eventID, bibNumber, attempt, distance)
 
   if (attemptResponse.ok) return await attemptResponse.json()
 
-  return []
+  throw new Error(`Failed to record attempt: ${attemptResponse.statusText}`)
 }
 
 export { listEventAttempts, recordEventAttempt }

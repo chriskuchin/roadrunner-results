@@ -48,9 +48,10 @@
               </div>
             </div>
             <div class="buttons is-right">
-              <button class="button is-link" @click="saveHeat"
+              <button :class="['button', 'is-link', processing ? 'is-loading' : '']" @click="saveHeat"
                 :disabled="results.length != heatFinish.length">Save</button>
             </div>
+            {{ processing }}
           </div>
           <div class="column">
             <div class="table-container">
@@ -73,6 +74,7 @@ import RacerInput from "../components/ResultsInput.vue";
 import Scanner from '../components/Scanner.vue';
 import Table from '../components/Table.vue';
 import { useRaceStore } from "../store/race";
+import { useErrorBus } from "../store/error";
 
 export default {
   components: {
@@ -89,6 +91,7 @@ export default {
   },
   data: function () {
     return {
+      processing: false,
       resultsRefresh: null,
       activeTab: "manual",
       timers: [],
@@ -138,6 +141,7 @@ export default {
   },
   methods: {
     ...mapActions(useRaceStore, ['loadParticipants']),
+    ...mapActions(useErrorBus, { 'handleError': 'handle' }),
     recordLaneFinish: function (lane) {
       if (!this.hasFinished(lane)) {
         this.heatFinish.push(lane)
@@ -148,17 +152,12 @@ export default {
       }
     },
     bibInput: async function (e) {
-      let ok = await recordResult(this.$route.params.raceId, this.$route.params.eventId, e.bib, this.timerId)
-
-      if (ok) {
-        if (e.success) {
-          e.success()
-        }
-      } else {
-        if (e.error) {
-          e.error()
-        }
-      }
+      recordResult(this.$route.params.raceId, this.$route.params.eventId, e.bib, this.timerId).then(() => {
+        e.success()
+      }).catch((err) => {
+        e.error()
+        this.handleError(err)
+      })
     },
     refreshData: function (e) {
       clearTimeout(this.resultsRefresh)
@@ -197,14 +196,17 @@ export default {
       return false
     },
     saveHeat: async function () {
-      for (const finisher of this.heatFinish) {
-        let ok = await recordResult(this.$route.params.raceId, this.$route.params.eventId, finisher.bib, this.timerId)
-        if (!ok) {
-          return
+      this.processing = true
+      try {
+        for (const finisher of this.heatFinish) {
+          await recordResult(this.$route.params.raceId, this.$route.params.eventId, finisher.bib, this.timerId)
         }
+        this.heatFinish = []
+      } catch (err) {
+        this.handleError(err)
       }
 
-      this.heatFinish = []
+      this.processing = false
     }
   },
   computed: {

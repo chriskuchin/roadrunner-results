@@ -2,7 +2,9 @@
   <div id="app">
     <site-navigation></site-navigation>
     <router-view></router-view>
-    <notification :show="showNotification" type="is-danger is-light" @close="dismissError">{{ errorMsg }}</notification>
+    <notification :show="hasError" type="is-danger is-light" @close="dismissError">
+      {{ errorMsg }} (1/{{ errorCount }})
+    </notification>
   </div>
 </template>
 
@@ -18,7 +20,7 @@ export default {
     "notification": Notification
   },
   computed: {
-    ...mapState(useErrorBus, ['showNotification', 'errorMsg'])
+    ...mapState(useErrorBus, ['hasError', 'errorMsg', 'errorCount'])
   },
   methods: {
     ...mapActions(useErrorBus, { dismissError: 'hide' })

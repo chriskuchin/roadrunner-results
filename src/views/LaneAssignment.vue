@@ -14,11 +14,13 @@
           </div>
         </div>
         <div class="control">
-          <button type="submit" class="button is-primary" @click="newHeat" v-if="id == ''">Create Heat</button>
-          <button type="submit" class="button is-primary" @click="saveHeat" v-else>Update Heat</button>
+          <button type="submit" :class="['button', 'is-primary', processing ? 'is-loading' : '']" @click="newHeat"
+            v-if="id == ''">Create Heat</button>
+          <button type="submit" :class="['button', 'is-primary', processing ? 'is-loading' : '']" @click="saveHeat"
+            v-else>Update Heat</button>
         </div>
         <div class="control" v-if="id != ''">
-          <button class="button is-danger" @click="deleteHeat">Delete</button>
+          <button :class="['button', 'is-danger', processing ? 'is-loading' : '']" @click="deleteHeat">Delete</button>
         </div>
       </div>
       <table class="table is-narrow" style="margin: 0 auto;">
@@ -41,7 +43,7 @@
           </tr>
         </tfoot>
         <tbody>
-          <tr v-for="( lane, index ) in lanes" :key="index" class="is-size-4">
+          <tr v-for="( lane, index ) in lanes" :key="index" :class="['is-size-4', lane.bib !== '' ? 'is-link' : '']">
             <th>{{ lane.lane }}</th>
             <td><input :tabindex="index + 1" class="input is-medium" type="number" placeholder="Bib Number"
                 v-model="lanes[index].bib" style="max-width: 70px;"></td>
@@ -66,13 +68,19 @@
 import { createNewHeat, listHeats, updateHeat, deleteHeat } from '../api/heats';
 import { mapState, mapActions } from 'pinia';
 import { useRaceStore } from '../store/race';
+import { useErrorBus } from '../store/error';
 
 export default {
   components: {},
   mounted: async function () {
     this.loadParticipants()
+    this.processing = true
     listHeats(this.$route.params.raceId, this.$route.params.eventId).then((heats) => {
       this.heats = heats
+      this.processing = false
+    }).catch((err) => {
+      this.processing = false
+      this.handleError(err)
     })
 
     let vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
@@ -92,6 +100,7 @@ export default {
   },
   data: function () {
     return {
+      processing: false,
       view: {
         includeAthleteLastName: false,
         includeAthleteFirstName: true,
@@ -129,6 +138,7 @@ export default {
     })
   },
   methods: {
+    ...mapActions(useErrorBus, { handleError: 'handle' }),
     ...mapActions(useRaceStore, ['loadParticipants']),
     generateLaneAssignments(targetCount) {
       if (this.lanes.length < targetCount) {
@@ -148,16 +158,32 @@ export default {
       }
     },
     deleteHeat() {
+      this.processing = true
       deleteHeat(this.$route.params.raceId, this.$route.params.eventId, this.id).then(() => {
         listHeats(this.$route.params.raceId, this.$route.params.eventId).then((heats) => {
+          this.processing = false
           this.heats = heats
           this.id = ""
+        }).catch((err) => {
+          this.processing = false
+          this.handleError(`Failed the list heats: ${err}`)
         })
+      }).catch(() => {
+        this.processing = false
       })
     },
     saveHeat() {
+      this.processing = true
       updateHeat(this.$route.params.raceId, this.$route.params.eventId, this.id, this.lanes).then(() => {
-        console.log("Finished")
+        listHeats(this.$route.params.raceId, this.$route.params.eventId).then((heats) => {
+          this.processing = false
+        }).catch((err) => {
+          this.processing = false
+          this.handleError(err)
+        })
+      }).catch((err) => {
+        this.processing = false
+        this.handleError(err)
       })
     },
     activateHeat(heat) {
@@ -169,14 +195,20 @@ export default {
       this.generateLaneAssignments(this.laneCount)
     },
     async newHeat() {
-      const heatId = await createNewHeat(this.$route.params.raceId, this.$route.params.eventId, this.lanes)
-      this.heats.push({
-        assignments: this.lanes,
-        timer_id: heatId
-      })
+      try {
+        this.processing = true
+        const heatId = await createNewHeat(this.$route.params.raceId, this.$route.params.eventId, this.lanes)
+        this.heats.push({
+          assignments: this.lanes,
+          timer_id: heatId
+        })
 
-      this.lanes = []
-      this.generateLaneAssignments(this.laneCount)
+        this.lanes = []
+        this.generateLaneAssignments(this.laneCount)
+      } catch (err) {
+        this.handleError(err)
+      }
+      this.processing = false
     },
   }
 };

@@ -40,9 +40,8 @@ export const useRaceStore = defineStore('race', () => {
     return '-'
   })
 
-  const eventName = computed(()  => {
+  const eventName = computed(() => {
     const event = events.value.find((entry) => {
-      console.log(entry)
       return entry.eventId === route.params.eventId
     })
     if (event) {
@@ -74,9 +73,7 @@ export const useRaceStore = defineStore('race', () => {
   }
 
   function loadVolunteers() {
-    console.log("load")
     getRaceVolunteers(route.params.raceId).then((result) => {
-      console.log(result)
       volunteers.value = result
     })
   }

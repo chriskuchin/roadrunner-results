@@ -7,7 +7,7 @@
             {{ attempts.length }}
           </a>
         </p>
-        <p class="control is-expanded has-icons-left">
+        <p :class="['control', 'is-expanded', 'has-icons-left', processing ? 'is-loading' : '']">
           <input :class="['input', 'is-large']" ref="input" :type="getInputType" placeholder="Bib Number"
             v-on:blur="lookupAthlete" v-model="athlete.bib" />
           <span class="icon is-large is-left">
@@ -56,14 +56,14 @@
             </div>
           </div>
         </div> -->
-        <div class="control is-expanded has-icons-left">
-          <input class="input is-large" placeholder="Feet" type="number" ref="l-msr">
+        <div :class="['control', 'is-expanded', 'has-icons-left', processing ? 'is-loading' : '']">
+          <input :class="['input', 'is-large']" placeholder="Feet" type="number" ref="l-msr">
           <span class="icon is-large is-left">
             <icon :icon="['fas', 'fa-ruler']"></icon>
           </span>
         </div>
-        <div class="control is-expanded has-icons-left">
-          <input class="input is-large" placeholder="Inches" type="number" ref="s-msr">
+        <div :class="['control', 'is-expanded', 'has-icons-left', processing ? 'is-loading' : '']">
+          <input :class="['input', 'is-large']" placeholder="Inches" type="number" ref="s-msr">
           <span class="icon is-large is-left">
             <icon :icon="['fas', 'fa-ruler']"></icon>
           </span>
@@ -106,6 +106,8 @@ import { formatCentimeters, calculateCentimeters } from '../utilities'
 import { getParticipantByBib } from '../api/participants'
 import { listEventAttempts, recordEventAttempt } from '../api/attempts'
 import FAB from '../components/Fab.vue'
+import { useErrorBus } from '../store/error'
+import { mapActions } from 'pinia'
 
 export default {
   components: {
@@ -119,6 +121,7 @@ export default {
   },
   data: function () {
     return {
+      processing: false,
       athlete: {
         info: {
           firstName: "",
@@ -142,6 +145,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(useErrorBus, { 'handleError': 'handle' }),
     keyPressEvent: function (e) {
       if (e.key == "Enter") {
         this.recordAttempt()
@@ -149,6 +153,7 @@ export default {
       }
     },
     lookupAthlete: async function (e) {
+      this.processing = true
       if (this.athlete.bib !== "") {
         let participant = await getParticipantByBib(this.$route.params.raceId, this.athlete.bib)
 
@@ -170,16 +175,22 @@ export default {
 
         this.attempts = []
       }
+      this.processing = false
     },
     recordAttempt: async function () {
+      this.processing = true
       const largeVal = Number(this.$refs['l-msr'].value)
       const smallVal = Number(this.$refs['s-msr'].value)
       const distance = calculateCentimeters(largeVal, smallVal, this.format)
 
-      this.attempts = await recordEventAttempt(this.$route.params.raceId, this.$route.params.eventId, this.athlete.bib, this.attempts.length + 1, distance)
-
-      this.$refs['l-msr'].value = ""
-      this.$refs['s-msr'].value = ""
+      recordEventAttempt(this.$route.params.raceId, this.$route.params.eventId, this.athlete.bib, this.attempts.length + 1, distance).then(() => {
+        this.$refs['l-msr'].value = ""
+        this.$refs['s-msr'].value = ""
+        this.processing = false
+      }).catch((err) => {
+        this.processing = false
+        this.handleError(err)
+      })
     },
     formatCentimeters,
   }

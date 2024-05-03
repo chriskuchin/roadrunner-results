@@ -51,6 +51,10 @@ async function recordResult(raceId, eventId, bib, timerId) {
     }),
   );
 
+  if (!res.ok) {
+    throw new Error(`failed to record result: ${res.status}`);
+  }
+
   return res.ok;
 }
 
@@ -75,7 +79,7 @@ async function updateResult(raceId, eventId, resultId, result, bib) {
 
 async function getHeatResults(raceId, eventId, timerId) {
   const url = `/api/v1/races/${raceId}/events/${eventId}/results?timerId=${timerId}`
-  const res =  await fetch(url, await setAuthHeader({
+  const res = await fetch(url, await setAuthHeader({
     method: "GET"
   }))
 
