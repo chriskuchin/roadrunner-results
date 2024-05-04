@@ -20,6 +20,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/cors"
 	"github.com/rs/zerolog/log"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 )
 
 func Routes(app *firebase.App, db db.DB, assetsFolder string, debug bool) chi.Router {
@@ -61,101 +62,112 @@ func Routes(app *firebase.App, db db.DB, assetsFolder string, debug bool) chi.Ro
 			r.Get("/healthcheck", HandleHealthcheckGet())
 			r.Route("/v1", func(r chi.Router) {
 				r.Route("/me", func(r chi.Router) {
-					r.Get("/", v1.HandleGetCurrentUser(db, authClient))
+					r.Method(http.MethodGet, "/", otelhttp.NewHandler(v1.HandleGetCurrentUser(db, authClient), "GetCurrentUser"))
 				})
 				r.Route("/races", func(r chi.Router) {
-					r.Get("/", v1.HandleRacesList(db))
-					r.Post("/", v1.HandleRacesCreate(db))
+					r.Method(http.MethodGet, "/", otelhttp.NewHandler(v1.HandleRacesList(db), "HandleRacesList"))
+					r.Method(http.MethodPost, "/", otelhttp.NewHandler(v1.HandleRacesCreate(db), "HandleRacesCreate"))
 					r.Route("/import", func(r chi.Router) {
 						r.Use(google.HandleOAuth2Creds)
-						r.Get("/", v1.HandleRaceImportSheet(db))
+						r.Method(http.MethodGet, "/", otelhttp.NewHandler(v1.HandleRaceImportSheet(db), "HandleRaceImportSheet"))
 					})
 					r.Route("/{raceID}", func(r chi.Router) {
 						r.Use(middleware.PathArgCtx("raceID", util.RaceID))
 						r.Use(middleware.UserAuthMiddleware(db, []string{http.MethodGet, http.MethodOptions}))
 
-						r.Delete("/", v1.HandleRaceDelete(db))
-						r.Get("/", v1.HandleRaceGet(db))
+						r.Method(http.MethodDelete, "/", otelhttp.NewHandler(v1.HandleRaceDelete(db), "HandleRaceDelete"))
+						r.Method(http.MethodGet, "/", otelhttp.NewHandler(v1.HandleRaceGet(db), "HandleRaceGet"))
 
 						r.Route("/stats", func(r chi.Router) {
-							r.Get("/", v1.HandleRaceStatsGet(db))
+							r.Method(http.MethodGet, "/", otelhttp.NewHandler(v1.HandleRaceStatsGet(db), "HandleRaceStatsGet"))
 						})
 
 						r.Route("/volunteers", func(r chi.Router) {
-							r.Put("/", v1.HandleVolunteersCreate(db, app))
-							r.Get("/", v1.HandleVolunteersList(db, app))
+							r.Method(http.MethodGet, "/", otelhttp.NewHandler(v1.HandleVolunteersList(db, app), "HandleVolunteersList"))
+							r.Method(http.MethodPut, "/", otelhttp.NewHandler(v1.HandleVolunteersCreate(db, app), "HandleVolunteersCreate"))
 						})
+
 						r.Route("/participants", func(r chi.Router) {
-							r.Get("/", v1.HandleParticipantsList(db))
-							r.Post("/", v1.HandleParticipantsCreate(db))
-							r.Get("/next_bib", v1.HandleParticipantsNextBibNumber())
-							r.Get("/teams", v1.HandleParticipantsDistinctTeams())
-							r.Post("/csv", v1.HandleParticipantsImportCSV(db))
+							r.Method(http.MethodGet, "/", otelhttp.NewHandler(v1.HandleParticipantsList(db), "HandleParticipantsList"))
+							r.Method(http.MethodPost, "/", otelhttp.NewHandler(v1.HandleParticipantsCreate(db), "HandleParticipantsCreate"))
+							r.Method(http.MethodGet, "/next_bib", otelhttp.NewHandler(v1.HandleParticipantsNextBibNumber(), "HandleParticipantsNextBibNumber"))
+							r.Method(http.MethodGet, "/teams", otelhttp.NewHandler(v1.HandleParticipantsDistinctTeams(), "HandleParticipantsDistinctTeams"))
+							r.Method(http.MethodPost, "/csv", otelhttp.NewHandler(v1.HandleParticipantsImportCSV(db), "HandleParticipantsImportCSV"))
+
 							r.Route("/bib/{bibNumber}", func(r chi.Router) {
 								r.Use(middleware.PathArgCtx("bibNumber", util.BibNumber))
-								r.Get("/", v1.HandleParticipantGetByBibNumber(db))
+								r.Method(http.MethodGet, "/", otelhttp.NewHandler(v1.HandleParticipantGetByBibNumber(db), "HandleParticipantGetByBibNumber"))
 							})
 							r.Route("/{participantID}", func(r chi.Router) {
 								r.Use(middleware.PathArgCtx("participantID", util.ParticipantID))
-								r.Get("/", v1.HandleParticipantGet())
-								r.Put("/", v1.HandleParticipantUpdate(db))
+								r.Method(http.MethodGet, "/", otelhttp.NewHandler(v1.HandleParticipantGet(), "HandleParticipantGet"))
+								r.Method(http.MethodPut, "/", otelhttp.NewHandler(v1.HandleParticipantUpdate(db), "HandleParticipantUpdate"))
 							})
 						})
+
 						r.Route("/events", func(r chi.Router) {
-							r.Get("/", v1.HandleEventsList(db))
-							r.Post("/", v1.HandleEventsCreate(db))
+							r.Method(http.MethodGet, "/", otelhttp.NewHandler(v1.HandleEventsList(db), "HandleEventsList"))
+							r.Method(http.MethodPost, "/", otelhttp.NewHandler(v1.HandleEventsCreate(db), "HandleEventsCreate"))
 
 							r.Route("/{eventID}", func(r chi.Router) {
 								r.Use(middleware.PathArgCtx("eventID", util.EventID))
-								r.Get("/", v1.HandleEventGet(db))
-								r.Delete("/", v1.HandleEventDelete(db))
+								r.Method(http.MethodGet, "/", otelhttp.NewHandler(v1.HandleEventGet(db), "HandleEventGet"))
+								r.Method(http.MethodDelete, "/", otelhttp.NewHandler(v1.HandleEventDelete(db), "HandleEventDelete"))
+
 								r.Route("/attempts", func(r chi.Router) {
-									r.Post("/", v1.HandleEventAttemptsCreate(db))
+									r.Method(http.MethodPost, "/", otelhttp.NewHandler(v1.HandleEventAttemptsCreate(db), "HandleEventAttemptsCreate"))
+
 									r.Route("/{bibNumber}", func(r chi.Router) {
 										r.Use(middleware.PathArgCtx("bibNumber", util.BibNumber))
-										r.Get("/", v1.HandleEventAttemptsList(db))
+										r.Method(http.MethodGet, "/", otelhttp.NewHandler(v1.HandleEventAttemptsList(db), "HandleEventAttemptsList"))
 									})
 								})
 								r.Route("/results", func(r chi.Router) {
-									r.Get("/", v1.HandleEventResultsGet(db))
-									r.Post("/", v1.HandleEventResultsCreate(db, s3, "photo-finish"))
-									r.Put("/", v1.HandleEventResultsCreate(db, s3, "photo-finish"))
+									r.Method(http.MethodGet, "/", otelhttp.NewHandler(v1.HandleEventResultsGet(db), "HandleEventResultsGet"))
+									r.Method(http.MethodPost, "/", otelhttp.NewHandler(v1.HandleEventResultsCreate(db, s3, "photo-finish"), "HandleEventResultsCreate"))
+									r.Method(http.MethodPut, "/", otelhttp.NewHandler(v1.HandleEventResultsCreate(db, s3, "photo-finish"), "HandleEventResultsCreate"))
+
 									r.Route("/{resultID}", func(r chi.Router) {
 										r.Use(middleware.PathArgCtx("resultID", util.ResultID))
-										r.Patch("/", v1.HandleEventResultsUpdate(db))
-										r.Delete("/", v1.HandleEventResultsDelete(db))
+										r.Method(http.MethodPatch, "/", otelhttp.NewHandler(v1.HandleEventResultsUpdate(db), "HandleEventResultsUpdate"))
+										r.Method(http.MethodDelete, "/", otelhttp.NewHandler(v1.HandleEventResultsDelete(db), "HandleEventResultsDelete"))
 									})
 								})
+
 								r.Route("/heats", func(r chi.Router) {
-									r.Get("/", v1.HandleHeatsList(db))
-									r.Post("/", v1.HandleHeatsCreate(db))
-									r.Route("/{timerID}", func(r chi.Router) {
-										r.Use(middleware.PathArgCtx("timerID", util.TimerID))
-										r.Put("/", v1.HandleHeatUpdate(db))
-										r.Delete("/", v1.HandleHeatDelete(db))
-									})
-								})
-								r.Route("/timers", func(r chi.Router) {
-									r.Post("/", v1.HandleTimersCreate(db))
-									r.Get("/", v1.HandleTimersList(db))
+									r.Method(http.MethodGet, "/", otelhttp.NewHandler(v1.HandleHeatsList(db), "HandleHeatsList"))
+									r.Method(http.MethodPost, "/", otelhttp.NewHandler(v1.HandleHeatsCreate(db), "HandleHeatsCreate"))
 
 									r.Route("/{timerID}", func(r chi.Router) {
 										r.Use(middleware.PathArgCtx("timerID", util.TimerID))
-										r.Put("/", v1.HandleTimerStart(db))
-										r.Get("/", v1.HandleTimerGet(db))
-										r.Delete("/", v1.HandleTimerDelete(db))
+										r.Method(http.MethodPut, "/", otelhttp.NewHandler(v1.HandleHeatUpdate(db), "HandleHeatUpdate"))
+										r.Method(http.MethodDelete, "/", otelhttp.NewHandler(v1.HandleHeatDelete(db), "HandleHeatDelete"))
+									})
+								})
+
+								r.Route("/timers", func(r chi.Router) {
+									r.Method(http.MethodPost, "/", otelhttp.NewHandler(v1.HandleTimersCreate(db), "HandleTimersCreate"))
+									r.Method(http.MethodGet, "/", otelhttp.NewHandler(v1.HandleTimersList(db), "HandleTimersList"))
+
+									r.Route("/{timerID}", func(r chi.Router) {
+										r.Use(middleware.PathArgCtx("timerID", util.TimerID))
+										r.Method(http.MethodPut, "/", otelhttp.NewHandler(v1.HandleTimerStart(db), "HandleTimerStart"))
+										r.Method(http.MethodGet, "/", otelhttp.NewHandler(v1.HandleTimerGet(db), "HandleTimerGet"))
+										r.Method(http.MethodDelete, "/", otelhttp.NewHandler(v1.HandleTimerDelete(db), "HandleTimerDelete"))
 									})
 								})
 							})
 						})
+
 						r.Route("/divisions", func(r chi.Router) {
-							r.Get("/", v1.HandleDivisionsList(db))
-							r.Post("/", v1.HandleDivisionsCreate(db))
+							r.Method(http.MethodGet, "/", otelhttp.NewHandler(v1.HandleDivisionsList(db), "HandleDivisionsList"))
+							r.Method(http.MethodPost, "/", otelhttp.NewHandler(v1.HandleDivisionsCreate(db), "HandleDivisionsCreate"))
 						})
 					})
 				})
+
 				r.Route("/athletes/results", func(r chi.Router) {
-					r.Get("/search", v1.HandleAthleteResultsSearch(db))
+					r.Method(http.MethodGet, "/", otelhttp.NewHandler(v1.HandleAthleteResultsSearch(db), "HandleAthleteResultsSearch"))
 				})
 			})
 		})

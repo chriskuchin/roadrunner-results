@@ -9,11 +9,14 @@ import (
 	"github.com/jmoiron/sqlx"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/rs/zerolog/log"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/trace"
 )
 
 type SQLiteDB struct {
-	read  *sqlx.DB
-	write *sqlx.DB
+	read   *sqlx.DB
+	write  *sqlx.DB
+	tracer trace.Tracer
 }
 
 const (
@@ -43,6 +46,7 @@ func NewSQLite(dbPath string) *SQLiteDB {
 
 	db.write = write
 	db.read = read
+	db.tracer = otel.Tracer("db.sqlite")
 
 	return db
 }
@@ -68,25 +72,37 @@ func configureSQLite(db *sqlx.DB) (err error) {
 }
 
 func (db *SQLiteDB) ExecContext(ctx context.Context, query string, args ...interface{}) (sql.Result, error) {
+	ctx, span := db.tracer.Start(ctx, "db.ExecContext")
+	defer span.End()
 	return db.write.ExecContext(ctx, query, args...)
 }
 
 func (db *SQLiteDB) NamedExecContext(ctx context.Context, query string, arg interface{}) (sql.Result, error) {
+	ctx, span := db.tracer.Start(ctx, "db.NamedExecContext")
+	defer span.End()
 	return db.write.NamedExecContext(ctx, query, arg)
 }
 
 func (db *SQLiteDB) SelectContext(ctx context.Context, destination interface{}, query string, args ...interface{}) error {
+	ctx, span := db.tracer.Start(ctx, "db.SelectContext")
+	defer span.End()
 	return db.read.SelectContext(ctx, destination, query, args...)
 }
 
 func (db *SQLiteDB) QueryRowContext(ctx context.Context, query string, args ...interface{}) *sql.Row {
+	ctx, span := db.tracer.Start(ctx, "db.QueryRowContext")
+	defer span.End()
 	return db.read.QueryRowContext(ctx, query, args...)
 }
 
 func (db *SQLiteDB) GetContext(ctx context.Context, destination interface{}, query string, args ...interface{}) error {
+	ctx, span := db.tracer.Start(ctx, "db.GetContext")
+	defer span.End()
 	return db.read.GetContext(ctx, destination, query, args...)
 }
 
 func (db *SQLiteDB) QueryContext(ctx context.Context, query string, args ...interface{}) (*sql.Rows, error) {
+	ctx, span := db.tracer.Start(ctx, "db.QueryContext")
+	defer span.End()
 	return db.read.QueryContext(ctx, query, args...)
 }

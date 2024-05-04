@@ -11,6 +11,8 @@ import (
 	"github.com/chriskuchin/roadrunner-results/pkg/db"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/honeycombio/honeycomb-opentelemetry-go"
+	"github.com/honeycombio/otel-config-go/otelconfig"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -88,6 +90,18 @@ func main() {
 					r.Use(middleware.Recoverer)
 
 					r.Mount("/", controller.Routes(app, db, frontendFolder, debug))
+
+					bsp := honeycomb.NewBaggageSpanProcessor()
+
+					otelshutdown, err := otelconfig.ConfigureOpenTelemetry(
+						otelconfig.WithSpanProcessor(bsp),
+						otelconfig.WithServiceName("rslts.run"),
+					)
+					if err != nil {
+						log.Fatal().Err(err).Send()
+					}
+
+					defer otelshutdown()
 
 					log.Debug().Msgf("Launching server listening on: %s", port)
 					err = http.ListenAndServe(fmt.Sprintf(":%s", port), r)
