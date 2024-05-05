@@ -4,9 +4,11 @@ import { ref, computed } from 'vue'
 import { getRace, getRaceVolunteers } from '../../api/races'
 import { getParticipants } from '../../api/participants'
 import { getRaceEvents } from '../../api/events'
+import { useErrorBus } from '../error'
 
 export const useRaceStore = defineStore('race', () => {
   const route = useRoute()
+  const errorBus = useErrorBus()
 
   const id = ref(route.params.raceId)
   const name = ref('')
@@ -75,6 +77,8 @@ export const useRaceStore = defineStore('race', () => {
   function loadVolunteers() {
     getRaceVolunteers(route.params.raceId).then((result) => {
       volunteers.value = result
+    }).catch((error) => {
+      errorBus.handle(error)
     })
   }
 

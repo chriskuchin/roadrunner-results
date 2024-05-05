@@ -83,6 +83,7 @@ func Routes(app *firebase.App, db db.DB, assetsFolder string, debug bool) chi.Ro
 						})
 
 						r.Route("/volunteers", func(r chi.Router) {
+							r.Use(middleware.RaceOwnerAuthMiddleware(db, []string{http.MethodOptions}))
 							r.Method(http.MethodGet, "/", otelhttp.NewHandler(v1.HandleVolunteersList(db, app), "HandleVolunteersList"))
 							r.Method(http.MethodPut, "/", otelhttp.NewHandler(v1.HandleVolunteersCreate(db, app), "HandleVolunteersCreate"))
 						})

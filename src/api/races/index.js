@@ -71,12 +71,11 @@ async function getRaceVolunteers(raceId) {
 	const url = `/api/v1/races/${raceId}/volunteers`;
 
 	const res = await fetch(url, await setAuthHeader({}));
-
 	if (res.ok) {
 		return await res.json();
 	}
 
-	return [];
+	throw new Error(`failed to get volunteers: ${res.status}`);
 }
 
 async function getRace(raceId) {

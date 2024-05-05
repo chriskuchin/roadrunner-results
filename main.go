@@ -95,7 +95,6 @@ func main() {
 
 					otelshutdown, err := otelconfig.ConfigureOpenTelemetry(
 						otelconfig.WithSpanProcessor(bsp),
-						otelconfig.WithServiceName("rslts.run"),
 					)
 					if err != nil {
 						log.Fatal().Err(err).Send()

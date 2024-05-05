@@ -82,25 +82,26 @@ func HandleVolunteersList(db db.DB, app *firebase.App) http.HandlerFunc {
 		UserID string `json:"userId"`
 	}
 	return func(w http.ResponseWriter, r *http.Request) {
-		ownerID, err := services.GetRaceOwnerID(r.Context(), db, util.GetRaceIDFromContext(r.Context()))
+		ctx := r.Context()
+		ownerID, err := services.GetRaceOwnerID(ctx, db, util.GetRaceIDFromContext(ctx))
 		if err != nil {
 			log.Error().Err(err).Send()
 			apiutil.HandleBadRequest(err, w, r)
 			return
 		}
 
-		if ownerID != util.GetCurrentUserID(r.Context()) {
+		if ownerID != util.GetCurrentUserID(ctx) {
 			w.WriteHeader(http.StatusForbidden)
 			return
 		}
 
-		userIds, err := services.ListRaceVolunteersUserIDs(r.Context(), db, util.GetRaceIDFromContext(r.Context()))
+		userIds, err := services.ListRaceVolunteersUserIDs(ctx, db, util.GetRaceIDFromContext(ctx))
 		if err != nil {
 			apiutil.HandleBadRequest(err, w, r)
 			return
 		}
 
-		client, err := app.Auth(r.Context())
+		client, err := app.Auth(ctx)
 		if err != nil {
 			// Need a server error
 			apiutil.HandleBadRequest(err, w, r)
@@ -109,7 +110,7 @@ func HandleVolunteersList(db db.DB, app *firebase.App) http.HandlerFunc {
 
 		response := []Volunteer{}
 		for _, userId := range userIds {
-			ur, err := client.GetUser(r.Context(), userId)
+			ur, err := client.GetUser(ctx, userId)
 			if err != nil {
 				continue
 			}

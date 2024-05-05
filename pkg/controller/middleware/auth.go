@@ -52,19 +52,13 @@ func UserAuthMiddleware(db db.DB, allowedMethods []string) func(http.Handler) ht
 				return
 			}
 
-			raceID := util.GetRaceIDFromContext(r.Context())
-			uid := util.GetCurrentUserID(r.Context())
-			ownerID, err := services.GetRaceOwnerID(r.Context(), db, raceID)
-			if err != nil {
-				apiutil.HandleServiceUnavailable(err, w, r)
-				return
-			}
-
-			if uid == ownerID {
+			if isRaceOwner(r.Context(), db) {
 				next.ServeHTTP(w, r)
 				return
 			}
 
+			raceID := util.GetRaceIDFromContext(r.Context())
+			uid := util.GetCurrentUserID(r.Context())
 			authorizedUsers, err := services.GetRaceAuthorizedUsers(r.Context(), db, raceID)
 			if err != nil {
 				apiutil.HandleServiceUnavailable(err, w, r)
@@ -77,6 +71,40 @@ func UserAuthMiddleware(db db.DB, allowedMethods []string) func(http.Handler) ht
 			}
 
 			apiutil.HandleUnauthorized(w, r)
+		})
+	}
+}
+
+func isRaceOwner(ctx context.Context, db db.DB) bool {
+	raceID := util.GetRaceIDFromContext(ctx)
+	uid := util.GetCurrentUserID(ctx)
+	ownerID, err := services.GetRaceOwnerID(ctx, db, raceID)
+	if err != nil {
+		return false
+	}
+
+	return uid == ownerID
+}
+
+func RaceOwnerAuthMiddleware(db db.DB, allowedMethods []string) func(http.Handler) http.Handler {
+	var isAllowedMethod map[string]bool = map[string]bool{}
+	for _, method := range allowedMethods {
+		isAllowedMethod[method] = true
+	}
+
+	return func(next http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			if _, ok := isAllowedMethod[r.Method]; ok {
+				next.ServeHTTP(w, r)
+				return
+			}
+
+			if !isRaceOwner(r.Context(), db) {
+				apiutil.HandleForbidden(w, r)
+				return
+			}
+
+			next.ServeHTTP(w, r)
 		})
 	}
 }
