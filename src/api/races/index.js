@@ -89,7 +89,7 @@ async function getRace(raceId) {
 	return {}
 }
 
-async function shareRace(raceId, emails) {
+async function addRaceVolunteers(raceId, emails) {
 	const url = `/api/v1/races/${raceId}/volunteers`;
 	const payload = {
 		emails: emails,
@@ -104,12 +104,11 @@ async function shareRace(raceId, emails) {
 	);
 
 	if (res.ok) {
-		// added volunteers
-		// handle failed adds
+		return await res.json()
 	} else
 		throw new Error("failed to add volunteers");
 }
 
 
 
-export { getRace, getRaces, createRace, importRace, deleteRace, getRaceVolunteers, shareRace };
+export { getRace, getRaces, createRace, importRace, deleteRace, getRaceVolunteers, addRaceVolunteers };

@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { useRaceStore } from "../store/race";
+import { useRaceStore } from "../../store/race";
 import { mapState, mapActions } from "pinia";
 
 export default {

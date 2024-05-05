@@ -50,14 +50,14 @@
 </template>
 
 <script>
-import { formatMilliseconds } from '../utilities';
-import FAB from '../components/Fab.vue'
-import Table from '../components/Table.vue';
-import { useErrorBus } from '../store/error';
-import { useMediaStore } from '../store/media';
+import { formatMilliseconds } from '../../utilities';
+import FAB from '../../components/Fab.vue'
+import Table from '../../components/Table.vue';
+import { useErrorBus } from '../../store/error';
+import { useMediaStore } from '../../store/media';
 import { mapActions } from 'pinia';
-import { listTimers, startExistingTimer, startTimer } from '../api/timers';
-import { recordFinish } from '../api/results';
+import { listTimers, startExistingTimer, startTimer } from '../../api/timers';
+import { recordFinish } from '../../api/results';
 
 export default {
   components: {

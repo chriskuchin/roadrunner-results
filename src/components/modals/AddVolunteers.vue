@@ -31,7 +31,10 @@
 
 <script>
 import Modal from '../Modal.vue'
-import { shareRace } from '../../api/races'
+import { useErrorBus } from '../../store/error'
+import { useRaceStore } from '../../store/race'
+import { mapActions } from 'pinia'
+import { addRaceVolunteers } from '../../api/races'
 
 export default {
   components: {
@@ -46,6 +49,8 @@ export default {
     }
   },
   methods: {
+    ...mapActions(useErrorBus, { handleError: 'handle' }),
+    ...mapActions(useRaceStore, ['loadVolunteers']),
     open: function (raceID) {
       this.$refs['share-modal'].toggle()
 
@@ -88,9 +93,20 @@ export default {
       }
     },
     addVolunteers: async function () {
-      await shareRace(this.raceID, this.emails)
+      addRaceVolunteers(this.raceID, this.emails).then((result) => {
+        if (result.failure.length > 0) {
+          this.handleError(`Failed to add volunteers: ${result.failure.join(", ")}`)
+        }
 
-      this.$refs['share-modal'].toggle()
+        if (result.success.length > 0) {
+          this.loadVolunteers()
+        }
+
+        this.$refs['share-modal'].toggle()
+      }).catch((err) => {
+        this.handleError(err)
+      })
+
     },
   }
 }

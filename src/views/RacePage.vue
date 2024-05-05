@@ -65,7 +65,6 @@ export default {
         this.updateCharts()
       }
     })
-    raceState.$subscribe(this.updateCharts)
   },
   unmounted: function () {
     this.birthYearChart = null

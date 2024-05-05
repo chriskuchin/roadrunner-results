@@ -1,18 +1,22 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 const HomePage = () => import("../views/HomePage.vue");
-const RaceTimer = () => import("../views/RaceTimer.vue");
+
+const LoginPage = () => import("../views/Login.vue");
+const SignupPage = () => import("../views/Signup.vue");
+
+const RaceBasePage = () => import("../views/races/BasePage.vue");
+const RaceVolunteersPage = () => import("../views/races/Volunteers.vue");
+
+const Timer = () => import("../views/events/Timer.vue");
+
 const RecordResults = () => import("../views/RecordResults.vue");
-const LoginPage = () => import("../views/LoginPage.vue");
-const SignupPage = () => import("../views/SignupPage.vue");
-const RaceBasePage = () => import("../views/RaceBasePage.vue");
 const RaceEventsPage = () => import("../views/RaceEventsPage.vue");
 const RaceEventsResultsPage = () =>
 	import("../views/RaceEventsResultsPage.vue");
 const RaceParticipants = () => import("../views/RaceParticipants.vue");
 const RaceDivisionResultsPage = () =>
 	import("../views/RaceDivisionResultsPage.vue");
-const RaceVolunteersPage = () => import("../views/RaceVolunteers.vue");
 const RaceInfoPage = () => import("../views/RacePage.vue");
 const AthletePage = () => import("../views/AthletePage.vue");
 const DistanceResults = () => import("../views/DistanceResults.vue");
@@ -46,9 +50,9 @@ const routes = [
 				name: "record",
 			},
 			{ path: "events/:eventId/results", component: RaceEventsResultsPage },
-			{ path: "events/:eventId/timer", component: RaceTimer, name: "timer" },
+			{ path: "events/:eventId/timer", component: Timer, name: "timer" },
 			{ path: "events/:eventId/distance", component: DistanceResults, name: "distance" },
-			{ path: "events/:eventId/board", component: DisplayBoard, name: "display"}
+			{ path: "events/:eventId/board", component: DisplayBoard, name: "display" }
 		],
 	},
 	{ path: "/login", component: LoginPage },
