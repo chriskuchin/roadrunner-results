@@ -152,6 +152,8 @@ export default {
     handleKeyboardEvent(e) {
       if (this.timer.timeout != null && e.keyCode == 32) {
         this.recordFinish()
+      } else if (this.timer.timeout == null && e.keyCode == 32) {
+        this.startTimer()
       }
     },
     async startTimer() {
