@@ -76,9 +76,6 @@ export default {
         this.raceStore.loadEvents()
       })
     },
-    getResultsLink: function (page, event) {
-      return this.getBaseEventLink(event) + `/${page}`
-    },
     getTimerLink: function (event) {
       return this.getBaseEventLink(event) + "/timer"
     },
