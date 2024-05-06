@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <aside class="menu primary">
+    <aside class="menu primary" ref="meet-navigation">
       <p class="menu-label">General</p>
       <ul class="menu-list">
         <li><a>Dashboard</a></li>
@@ -43,6 +43,7 @@
         </li>
       </ul>
     </nav>
+    <!-- <button class="button is-primary" @click="toggleMenu">Toggle Menu</button> -->
     <router-view></router-view>
   </div>
 </template>
@@ -63,6 +64,9 @@ export default {
   },
   methods: {
     ...mapActions(useRaceStore, ['loadRace', 'loadEvents']),
+    toggleMenu: function () {
+      this.$refs['meet-navigation'].classList.toggle('is-active')
+    }
   },
   computed: {
     ...mapState(useRaceStore, {
