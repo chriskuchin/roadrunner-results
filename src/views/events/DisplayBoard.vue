@@ -27,9 +27,9 @@
 </template>
 
 <script>
-import { getEventResults } from '../api/events';
-import { listTimers } from '../api/timers';
-import { formatMilliseconds } from '../utilities';
+import { getEventResults } from '../../api/events';
+import { listTimers } from '../../api/timers';
+import { formatMilliseconds } from '../../utilities';
 
 
 export default {

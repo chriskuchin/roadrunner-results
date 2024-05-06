@@ -34,12 +34,12 @@
 
 <script>
 import { mapStores, mapState, mapActions } from "pinia";
-import { useRaceStore } from "../store/race";
-import { useUserStore } from "../store/user"
-import { deleteRaceEvent } from "../api/events"
-import FAB from '../components/Fab.vue'
-import ContextMenu from '../components/DropdownMenu.vue'
-import CreateEventModal from "../components/modals/CreateEventModal.vue";
+import { useRaceStore } from "../../store/race";
+import { useUserStore } from "../../store/user"
+import { deleteRaceEvent } from "../../api/events"
+import FAB from '../../components/Fab.vue'
+import ContextMenu from '../../components/DropdownMenu.vue'
+import CreateEventModal from "../../components/modals/CreateEventModal.vue";
 
 export default {
   components: {
@@ -73,7 +73,7 @@ export default {
     deleteEvent: function (event) {
       let raceID = this.$route.params.raceId
       deleteRaceEvent(raceID, event.eventId).then(() => {
-        this.loadRace()
+        this.raceStore.loadEvents()
       })
     },
     getResultsLink: function (page, event) {

@@ -94,13 +94,13 @@
 </template>
 
 <script>
-import { useEventStore } from "../store/event";
-import { useResultsStore } from "../store/results"
+import { useEventStore } from "../../store/event";
+import { useResultsStore } from "../../store/results"
 import { mapActions, mapState } from "pinia";
-import { useErrorBus } from "../store/error";
-import { useUserStore } from "../store/user";
-import { formatMilliseconds, formatCentimeters } from "../utilities";
-import EditResultsModal from '../components/modals/EditResults.vue'
+import { useErrorBus } from "../../store/error";
+import { useUserStore } from "../../store/user";
+import { formatMilliseconds, formatCentimeters } from "../../utilities";
+import EditResultsModal from '../../components/modals/EditResults.vue'
 
 export default {
   components: {

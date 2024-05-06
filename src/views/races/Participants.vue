@@ -33,13 +33,13 @@
 </template>
 
 <script>
-import FAB from '../components/Fab.vue'
+import FAB from '../../components/Fab.vue'
 
 import { mapActions, mapState } from 'pinia'
-import { useUserStore } from '../store/user'
-import { useParticipantsStore } from '../store/participants'
-import EditParticipantModal from '../components/modals/EditParticipantModal.vue'
-import RegisterParticipantModal from '../components/modals/RegisterParticipantModal.vue'
+import { useUserStore } from '../../store/user'
+import { useParticipantsStore } from '../../store/participants'
+import EditParticipantModal from '../../components/modals/EditParticipantModal.vue'
+import RegisterParticipantModal from '../../components/modals/RegisterParticipantModal.vue'
 
 export default {
   components: {

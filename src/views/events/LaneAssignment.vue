@@ -65,10 +65,10 @@
 
 <script>
 
-import { createNewHeat, listHeats, updateHeat, deleteHeat } from '../api/heats';
+import { createNewHeat, listHeats, updateHeat, deleteHeat } from '../../api/heats';
 import { mapState, mapActions } from 'pinia';
-import { useRaceStore } from '../store/race';
-import { useErrorBus } from '../store/error';
+import { useRaceStore } from '../../store/race';
+import { useErrorBus } from '../../store/error';
 
 export default {
   components: {},

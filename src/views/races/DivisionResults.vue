@@ -19,7 +19,7 @@
         </div>
       </div> -->
     </div>
-    <div class="box mb-6" v-for="(division) in  divisionTables" :key="division">
+    <div class="box mb-6" v-for="(division) in divisionTables" :key="division">
       <h1 class="title">{{ division.display }}</h1>
       <div class="table-container">
         <table class="table" style="min-width: 100%;">
@@ -35,7 +35,7 @@
             <th>Other</th>
           </thead>
           <tbody>
-            <tr v-for="(result, place) in  division.results " :key="place" class="is-size-4">
+            <tr v-for="(result, place) in division.results " :key="place" class="is-size-4">
               <td>{{ place + 1 }}</td>
               <td>{{ formatResults(result.result_ms) }}</td>
               <td>
@@ -64,10 +64,10 @@
 
 <script>
 import { mapActions, mapState } from 'pinia';
-import { useDivisionsStore } from '../store/divisions';
-import { useEventStore } from '../store/event';
-import { getEventResults, getRaceEvents } from '../api/events';
-import { formatMilliseconds, formatCentimeters } from "../utilities";
+import { useDivisionsStore } from '../../store/divisions';
+import { useEventStore } from '../../store/event';
+import { getEventResults, getRaceEvents } from '../../api/events';
+import { formatMilliseconds, formatCentimeters } from "../../utilities";
 
 export default {
   data: function () {

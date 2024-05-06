@@ -51,7 +51,7 @@
 
 <script>
 import Chart from 'chart.js/auto'
-import { useStatsStore } from "../store/stats";
+import { useStatsStore } from "../../store/stats";
 import { mapActions, mapState } from "pinia";
 import { RouterLink } from 'vue-router';
 

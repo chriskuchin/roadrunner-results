@@ -7,7 +7,6 @@
           <router-link class="dropdown-item" :to="'/races/' + race.id + '/volunteers'">Volunteers</router-link>
           <a class="dropdown-item" @click="openDivisionsModal(race.id)">Manage Divisions</a>
           <a class="dropdown-item" @click="generateDivisions(race.id)">Generate Divisions</a>
-          <router-link class="dropdown-item" :to="'/races/' + race.id">Race Info</router-link>
           <hr class="dropdown-divider" />
           <a class="dropdown-item" @click="deleteRace(race.id)">Delete Race</a>
         </cm>

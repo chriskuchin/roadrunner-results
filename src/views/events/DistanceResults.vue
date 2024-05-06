@@ -102,11 +102,11 @@
 </template>
 
 <script>
-import { formatCentimeters, calculateCentimeters } from '../utilities'
-import { getParticipantByBib } from '../api/participants'
-import { listEventAttempts, recordEventAttempt } from '../api/attempts'
-import FAB from '../components/Fab.vue'
-import { useErrorBus } from '../store/error'
+import { formatCentimeters, calculateCentimeters } from '../../utilities'
+import { getParticipantByBib } from '../../api/participants'
+import { listEventAttempts, recordEventAttempt } from '../../api/attempts'
+import FAB from '../../components/Fab.vue'
+import { useErrorBus } from '../../store/error'
 import { mapActions } from 'pinia'
 
 export default {

@@ -65,16 +65,16 @@
 </template>
 
 <script>
-import { formatMilliseconds } from "../utilities";
-import { recordResult, getHeatResults } from "../api/results";
-import { listTimers } from '../api/timers';
-import { getParticipantByBib } from "../api/participants";
+import { formatMilliseconds } from "../../utilities";
+import { recordResult, getHeatResults } from "../../api/results";
+import { listTimers } from '../../api/timers';
+import { getParticipantByBib } from "../../api/participants";
 import { mapState, mapActions } from "pinia";
-import RacerInput from "../components/ResultsInput.vue";
-import Scanner from '../components/Scanner.vue';
-import Table from '../components/Table.vue';
-import { useRaceStore } from "../store/race";
-import { useErrorBus } from "../store/error";
+import RacerInput from "../../components/ResultsInput.vue";
+import Scanner from '../../components/Scanner.vue';
+import Table from '../../components/Table.vue';
+import { useRaceStore } from "../../store/race";
+import { useErrorBus } from "../../store/error";
 
 export default {
   components: {
