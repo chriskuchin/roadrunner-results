@@ -40,6 +40,9 @@
       </ul>
     </div>
     <div class="results-block">
+      <button class="button is-pulled-right mt-2 mr-2" @click="downloadResults">
+        <icon icon="fa-solid fa-download"></icon>
+      </button>
       <tbl class="mx-auto" :headers="resultsHeader" :rows="tableFinishersPreview" />
     </div>
     <fab @click="fabAction">
@@ -58,6 +61,7 @@ import { useMediaStore } from '../../store/media';
 import { mapActions } from 'pinia';
 import { listTimers, startExistingTimer, startTimer } from '../../api/timers';
 import { recordFinish } from '../../api/results';
+import { icon } from '@fortawesome/fontawesome-svg-core';
 
 export default {
   components: {
@@ -155,6 +159,18 @@ export default {
       } else if (this.timer.timeout == null && e.keyCode == 32) {
         this.startTimer()
       }
+    },
+    downloadResults() {
+      let csvContent = "position, time\n"
+      csvContent += this.timer.finishers.map((time, index) => `${index + 1}, ${formatMilliseconds(time)}`).join('\n')
+
+      const blob = new Blob([csvContent], { type: 'text/csv' });
+      const link = document.createElement('a');
+      const filename = 'results.csv';
+
+      link.href = window.URL.createObjectURL(blob);
+      link.download = filename;
+      link.click();
     },
     async startTimer() {
       // window.navigator.vibrate(50)
