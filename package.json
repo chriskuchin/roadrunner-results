@@ -10,7 +10,7 @@
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
-		"@vue/compiler-sfc": "^3.4.20",
+		"@vue/compiler-sfc": "^3.4.27",
 		"bulma": "^1.0.0",
 		"css-loader": "^7.0.0",
 		"html-webpack-plugin": "^5.6.0",
