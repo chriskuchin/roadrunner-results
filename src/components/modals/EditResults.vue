@@ -8,9 +8,9 @@
       <div class="field-body">
         <div class="field">
           <p class="control">
-            <input class="input" type="number" placeholder="Time" v-model="result">
+            <input class="input" type="input" placeholder="Time" v-model="formattedResult">
           </p>
-          <p class="help">{{ formatResults }}</p>
+          <p class="help">{{ result }}</p>
         </div>
         <div class="field">
           <p class="control is-expanded">
@@ -35,7 +35,7 @@
 
 <script>
 import { mapActions } from 'pinia'
-import { formatMilliseconds } from '../../utilities'
+import { formatMilliseconds, calculateMilliseconds } from '../../utilities'
 import { useResultsStore } from '../../store/results'
 import Modal from '../Modal.vue'
 
@@ -44,11 +44,17 @@ export default {
   components: {
     modal: Modal,
   },
+  watch: {
+    formattedResult: function (val) {
+      this.result = calculateMilliseconds(val)
+    }
+  },
   data: function () {
     return {
       rowId: 0,
       bib: "",
-      result: 0
+      result: 0,
+      formattedResult: ""
     }
   },
   methods: {
@@ -57,8 +63,11 @@ export default {
       this.rowId = rowId
 
       const result = this.getResultByRowId(rowId)
+
       this.bib = result.bib_number
       this.result = result.result_ms
+      this.formattedResult = formatMilliseconds(result.result_ms)
+
       this.$refs.modal.toggle()
     },
     close: function () {

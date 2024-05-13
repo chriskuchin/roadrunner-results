@@ -1,5 +1,5 @@
 import { expect, test } from 'vitest'
-import { formatCentimeters, calculateCentimeters } from ".";
+import { formatCentimeters, calculateCentimeters, calculateMilliseconds } from ".";
 
 test('formatCentimeters ftin', () => {
     expect(formatCentimeters(2.54, "ftin")).toBe("1\"")
@@ -17,4 +17,14 @@ test('formatCentimeters cm', () => {
 test('calculateCentimeters ftin', () => {
     expect(calculateCentimeters(5, 4, "ftin")).toBe(162.56)
     expect(calculateCentimeters(5, 0, "ftin")).toBe(152.4)
+})
+
+test('calculateMilliseconds', () => {
+    expect(calculateMilliseconds("1:00")).toBe(60000)
+    expect(calculateMilliseconds("1:00.00")).toBe(60000)
+    expect(calculateMilliseconds("1:00.001")).toBe(60001)
+    expect(calculateMilliseconds("1:00.01")).toBe(60010)
+    expect(calculateMilliseconds("1:00.10")).toBe(60100)
+    expect(calculateMilliseconds("1:10.00")).toBe(70000)
+    expect(calculateMilliseconds("1:11.00")).toBe(71000)
 })

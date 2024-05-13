@@ -90,6 +90,9 @@
       </table>
     </div>
     <edit-results ref="edit-results" @reload="calculateResults" />
+    <!-- <fab>
+      <icon icon="fa-solid fa-plus"></icon>
+    </fab> -->
   </div>
 </template>
 
@@ -101,10 +104,12 @@ import { useErrorBus } from "../../store/error";
 import { useUserStore } from "../../store/user";
 import { formatMilliseconds, formatCentimeters } from "../../utilities";
 import EditResultsModal from '../../components/modals/EditResults.vue'
+import Fab from "../../components/Fab.vue";
 
 export default {
   components: {
     'edit-results': EditResultsModal,
+    'fab': Fab,
   },
   data: function () {
     return {
