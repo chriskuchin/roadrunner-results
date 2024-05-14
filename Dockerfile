@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM node:21-alpine AS webpack
+FROM --platform=$BUILDPLATFORM node:22-alpine AS webpack
 
 ADD . /public
 WORKDIR /public
